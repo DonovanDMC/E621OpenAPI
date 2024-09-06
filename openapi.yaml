@@ -3,6 +3,12 @@ info:
   title: "E621"
   version: "84dcafc8c"
 
+servers:
+  - url: https://e621.net
+    description: E621 (production)
+  - url: http://localhost:3000
+    description: E621 (Development)
+
 x-constants:
   - &modaction-actions
     - artist_page_rename
