@@ -24,6 +24,9 @@ importers:
         specifier: ^5.17.14
         version: 5.17.14(ramda@0.30.1)
     devDependencies:
+      '@types/node':
+        specifier: ^22.5.4
+        version: 22.5.4
       '@types/swagger-ui':
         specifier: ^3.52.4
         version: 3.52.4
