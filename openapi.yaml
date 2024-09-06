@@ -2801,13 +2801,13 @@ paths:
                   allOf:
                     - $ref: "#/components/schemas/Artist"
                     - type: object
-                      examples: [["e621.net", 1]]
                       required:
                         - domains
                         - urls
                       properties:
                         domains:
                           type: array
+                          example: [["e621.net", 1]]
                           items:
                             type: array
                             items:
@@ -2829,30 +2829,30 @@ paths:
         Individual `other_names` are silently truncated to 100 characters.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - name
+                - artist[name]
               properties:
-                name:
+                artist[name]:
                   type: string
-                other_names:
+                artist[other_names]:
                   type: array
                   items:
                     type: string
-                other_names_string:
+                artist[other_names_string]:
                   type: string
-                url_string:
+                artist[url_string]:
                   type: string
-                notes:
+                artist[notes]:
                   type: string
-                group_name:
+                artist[group_name]:
                   type: string
-                linked_user_id:
+                artist[linked_user_id]:
                   type: ["number", "null"]
                   description: Only usable for Janitor+
-                is_locked:
+                artist[is_locked]:
                   type: boolean
                   description: Only usable for Janitor+
       responses:
@@ -2887,7 +2887,6 @@ paths:
                 allOf:
                   - $ref: "#/components/schemas/Artist"
                   - type: object
-                    examples: [["e621.net", 1]]
                     required:
                       - domains
                       - urls
@@ -2896,6 +2895,7 @@ paths:
                         type: array
                         items:
                           type: array
+                          example: [["e621.net", 1]]
                           items:
                             - type: string
                             - type: number
@@ -2926,29 +2926,29 @@ paths:
             type: ["number", "string"]
       requestBody:
         content:
-          application/json:
+          application/c-www-form-urlencoded:
             schema:
               type: object
               properties:
-                name:
+                artist[name]:
                   type: string
                   description: Only usable for Janitor+
-                other_names:
+                artist[other_names]:
                   type: array
                   items:
                     type: string
-                other_names_string:
+                artist[other_names_string]:
                   type: string
-                url_string:
+                artist[url_string]:
                   type: string
-                notes:
+                artist[notes]:
                   type: string
-                group_name:
+                artist[group_name]:
                   type: string
-                linked_user_id:
+                artist[linked_user_id]:
                   type: ["number", "null"]
                   description: Only usable for Janitor+
-                is_locked:
+                artist[is_locked]:
                   type: boolean
                   description: Only usable for Janitor+
       responses:
@@ -3227,38 +3227,31 @@ paths:
       description: Must have the bd staff user flag.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
-              required:
-                - artist_attributes
               properties:
-                details:
+                avoid_posting[details]:
                   type: string
-                staff_notes:
+                avoid_posting[staff_notes]:
                   type: string
-                is_active:
+                avoid_posting[is_active]:
                   type: boolean
-                artist_attributes:
-                  type: object
-                  description: Name or ID is required. If name is provided and the artist does not exist, an artist will be created.
-                  required:
-                    type: object
-                    properties:
-                      id:
-                        type: number
-                      name:
-                        type: string
-                      other_names_string:
-                        type: string
-                      other_names:
-                        type: array
-                        items:
-                          type: string
-                      group_name:
-                        type: string
-                      linked_user_id:
-                        type: number
+                avoid_posting[artist_attributes][id]:
+                  type: number
+                avoid_posting[artist_attributes][name]:
+                  type: string
+                  description: If provided and the artist does not exist, an artist will be created.
+                avoid_posting[artist_attributes][other_names_string]:
+                  type: string
+                avoid_posting[artist_attributes][other_names]:
+                  type: array
+                  items:
+                    type: string
+                avoid_posting[artist_attributes][group_name]:
+                  type: string
+                avoid_posting[artist_attributes][linked_user_id]:
+                  type: number
       responses:
         201:
           description: Success
@@ -3307,33 +3300,28 @@ paths:
             type: string
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                details:
+                avoid_posting[details]:
                   type: string
-                staff_notes:
+                avoid_posting[staff_notes]:
                   type: string
-                is_active:
+                avoid_posting[is_active]:
                   type: boolean
-                artist_attributes:
-                  type: object
-                  required:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      other_names_string:
-                        type: string
-                      other_names:
-                        type: array
-                        items:
-                          type: string
-                      group_name:
-                        type: string
-                      linked_user_id:
-                        type: number
+                avoid_posting[artist_attributes][name]:
+                  type: string
+                avoid_posting[artist_attributes][other_names_string]:
+                  type: string
+                avoid_posting[artist_attributes][other_names]:
+                  type: array
+                  items:
+                    type: string
+                avoid_posting[artist_attributes][group_name]:
+                  type: string
+                avoid_posting[artist_attributes][linked_user_id]:
+                  type: number
       responses:
         200:
           description: Success
@@ -3609,6 +3597,37 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Blip"
+    post:
+      summary: Create Blip
+      tags:
+        - Blips
+      security:
+        - basicAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - blip[body]
+              properties:
+                blip[body]:
+                  type: string
+                blip[response_to]:
+                  type: number
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Blip"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+        404:
+          $ref: "#/components/responses/NotFound"
+        422:
+          $ref: "#/components/responses/ExpectedError"
   /blips/{id}.json:
     get:
       summary: Get Blip
@@ -3643,13 +3662,11 @@ paths:
       description: Unless Admin+, blips cannot be edited after 5 minutes. Marked blips cannot be edited.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
-              required:
-                - body
               properties:
-                body:
+                blip[body]:
                   type: string
       responses:
         200:
@@ -3657,7 +3674,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BulkUpdateRequest"
+                $ref: "#/components/schemas/Blip"
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -3846,23 +3863,23 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - script
-                - title
-                - reason
+                - bulk_update_request[script]
+                - bulk_update_request[title]
+                - bulk_update_request[reason]
               properties:
-                script:
+                bulk_update_request[script]:
                   type: string
-                title:
+                bulk_update_request[title]:
                   type: string
-                reason:
+                bulk_update_request[reason]:
                   type: string
-                forum_topic_id:
+                bulk_update_request[forum_topic_id]:
                   type: number
-                skip_forum:
+                bulk_update_request[skip_forum]:
                   type: boolean
                   description: Only usable for Admin+
       responses:
@@ -3913,16 +3930,16 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                script:
+                bulk_update_request[script]:
                   type: string
-                forum_topic_id:
+                bulk_update_request[forum_topic_id]:
                   description: You must be Admin+.
                   type: string
-                forum_post_id:
+                bulk_update_request[forum_post_id]:
                   description: You must be Admin+.
                   type: string
       responses:
@@ -4063,23 +4080,23 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - body
-                - post_id
+                - comment[body]
+                - comment[post_id]
               properties:
-                body:
+                comment[body]:
                   type: string
-                post_id:
+                comment[post_id]:
                   type: number
-                do_not_bump_post:
+                comment[do_not_bump_post]:
                   type: boolean
-                is_sticky:
+                comment[is_sticky]:
                   type: boolean
                   description: Only usable for Janitor+
-                is_hidden:
+                comment[is_hidden]:
                   type: boolean
                   description: Only usable for Moderator+
       responses:
@@ -4134,16 +4151,16 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                body:
+                comment[body]:
                   type: string
-                is_sticky:
+                comment[is_sticky]:
                   type: boolean
-                  description: Only usable for Moderator+
-                is_hidden:
+                  description: Only usable for Janitor+
+                comment[is_hidden]:
                   type: boolean
                   description: Only usable for Moderator+
       responses:
@@ -4600,16 +4617,16 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - domain
-                - reason
+                - email_blacklist[domain]
+                - email_blacklist[reason]
               properties:
-                domain:
+                email_blacklist[domain]:
                   type: string
-                reason:
+                email_blacklist[reason]:
                   type: string
       responses:
         201:
@@ -4792,16 +4809,16 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - body
-                - topic_id
+                - forum_post[body]
+                - forum_post[topic_id]
               properties:
-                body:
+                forum_post[body]:
                   type: string
-                topic_id:
+                forum_post[topic_id]:
                   type: number
       responses:
         201:
@@ -4854,13 +4871,11 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
-              required:
-                - body
               properties:
-                body:
+                forum_post[body]:
                   type: string
       responses:
         204:
@@ -5091,32 +5106,28 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - title
-                - category_id
-                - original_post_attributes
+                - forum_topic[title]
+                - forum_topic[category_id]
               properties:
-                title:
+                forum_topic[title]:
                   type: string
-                category_id:
+                forum_topic[category_id]:
                   type: number
-                original_post_attributes:
-                  type: object
-                  description: Mutually exclusive, at least one must be provided.
                   properties:
-                    id:
-                      type: number
-                      description: Forum post ID.
-                    body:
-                      type: string
-                      description: First forum post body.
-                is_sticky:
+                forum_topic[original_post_attributes][id]:
+                  type: number
+                  description: Forum post ID. Mutually exclusive with body, one must be provided.
+                forum_topic[original_post_attributes][body]:
+                  type: string
+                  description: First forum post body. Mutually exclusive with id, one must be provided.
+                forum_topic[is_sticky]:
                   type: boolean
                   description: You must be Moderator+.
-                is_locked:
+                forum_topic[is_locked]:
                   type: boolean
                   description: You must be Moderator+.
       responses:
@@ -5169,24 +5180,27 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                title:
+                forum_topic[title]:
                   type: string
-                category_id:
+                forum_topic[category_id]:
                   type: number
-                original_post_attributes:
-                  type: object
-                  description: Mutually exclusive.
                   properties:
-                    id:
-                      type: number
-                      description: Forum post ID. Silently ignored.
-                    body:
-                      type: string
-                      description: First forum post body.
+                forum_topic[original_post_attributes][id]:
+                  type: number
+                  description: Forum post ID. Silently ignored
+                forum_topic[original_post_attributes][body]:
+                  type: string
+                  description: First forum post body.
+                forum_topic[is_sticky]:
+                  type: boolean
+                  description: You must be Moderator+.
+                forum_topic[is_locked]:
+                  type: boolean
+                  description: You must be Moderator+.
       responses:
         204:
           description: Success
@@ -5526,16 +5540,16 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - ip_addr
-                - reason
+                - ip_ban[ip_addr]
+                - ip_ban[reason]
               properties:
-                ip_addr:
+                ip_ban[ip_addr]:
                   type: string
-                reason:
+                ip_ban[reason]:
                   type: string
       responses:
         201:
@@ -5857,13 +5871,13 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - message
+                - news_update[message]
               properties:
-                message:
+                news_update[message]:
                   type: string
       responses:
         201:
@@ -5893,13 +5907,13 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - message
+                - news_update[message]
               properties:
-                message:
+                news_update[message]:
                   type: string
       responses:
         204:
@@ -5997,30 +6011,30 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - post_id
-                - x
-                - y
-                - width
-                - height
-                - body
+                - note[post_id]
+                - note[x]
+                - note[y]
+                - note[width]
+                - note[height]
+                - note[body]
               properties:
-                post_id:
+                note[post_id]:
                   type: number
-                x:
+                note[x]:
                   type: number
-                y:
+                note[y]:
                   type: number
-                width:
+                note[width]:
                   type: number
-                height:
+                note[height]:
                   type: number
-                body:
+                note[body]:
                   type: string
-                html_id:
+                note[html_id]:
                   type: string
                   description: Passthrough, used in frontend.
       responses:
@@ -6078,19 +6092,19 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                x:
+                note[x]:
                   type: number
-                y:
+                note[y]:
                   type: number
-                width:
+                note[width]:
                   type: number
-                height:
+                note[height]:
                   type: number
-                body:
+                note[body]:
                   type: string
       responses:
         204:
@@ -6264,25 +6278,25 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - name
+                - pool[name]
               properties:
-                name:
+                pool[name]:
                   type: string
-                description:
+                pool[description]:
                   type: string
-                category:
+                pool[category]:
                   type: string
                   enum: *pool-categories
-                is_active:
+                ipool[s_active]:
                   type: boolean
-                post_ids_string:
+                pool[post_ids_string]:
                   type: string
                   description: Space separated list of post IDs. Mutually exclusive with post_ids.
-                post_ids:
+                pool[post_ids]:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
@@ -6334,24 +6348,24 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                name:
+                pool[name]:
                   type: string
-                description:
+                pool[description]:
                   type: string
-                is_active:
+                pool[is_active]:
                   type: boolean
-                category:
+                pool[category]:
                   type: string
                   enum: *pool-categories
                   description: If the pool has more than 30 posts, you must be Janitor+.
-                post_ids_string:
+                pool[post_ids_string]:
                   type: string
                   description: Space separated list of post IDs. Mutually exclusive with post_ids.
-                post_ids:
+                pool[post_ids]:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
@@ -6426,7 +6440,7 @@ paths:
       description: Note that the extension is JS, this route will not return JSON.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -6434,8 +6448,10 @@ paths:
               properties:
                 pool_id:
                   type: number
+                  description:  Mutually exclusive with pool_name.
                 pool_name:
                   type: string
+                  description:  Mutually exclusive with pool_id.
                 post_id:
                   type: number
       responses:
@@ -6450,7 +6466,7 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -6618,66 +6634,66 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                tag_string:
+                post[tag_string]:
                   type: string
                   description: Replaces all tags on the post.
-                old_tag_string:
+                post[old_tag_string]:
                   type: string
                   description: The tag string before your edits, used to reconcile conflicts.
-                tag_string_diff:
+                post[tag_string_diff]:
                   type: string
                   description: Tags with a minus are removed, else they are added. Mutually exclusive with tag_string.
-                source_diff:
+                post[source_diff]:
                   type: string
                   description: Sources with a minus are removed, else they are added. It is not possible to add inactive sources through this. Mutually exclusive with source.
-                source:
+                post[source]:
                   type: string
                   description: Replaces all sources on the post.
-                old_source:
+                post[old_source]:
                   type: string
                   description: The sources before your edits, used to reconcile conflicts.
-                parent_id:
+                post[parent_id]:
                   type: number
-                old_parent_id:
+                post[old_parent_id]:
                   type: number
-                description:
+                post[description]:
                   type: string
-                old_description:
+                post[old_description]:
                   type: string
-                rating:
+                post[rating]:
                   type: string
                   enum: *ratings
-                old_rating:
+                post[old_rating]:
                   type: string
                   enum: *ratings
-                edit_reason:
+                post[edit_reason]:
                   type: string
-                is_rating_locked:
+                post[is_rating_locked]:
                   type: boolean
                   description: You must be Privileged+.
-                is_note_locked:
+                post[is_note_locked]:
                   type: boolean
                   description: You must be Janitor+.
-                bg_color:
+                post[bg_colo]r:
                   type: string
                   description: You must be Janitor+.
-                is_comment_locked:
+                post[is_comment_locked]:
                   type: boolean
                   description: You must be Admin+.
-                is_status_locked:
+                post[is_status_locked]:
                   type: boolean
                   description: You must be Admin+.
-                locked_tags:
+                post[locked_tags]:
                   type: string
                   description: You must be Admin+.
-                hide_from_anonymous:
+                post[hide_from_anonymous]:
                   type: boolean
                   description: You must be Admin+.
-                hide_from_search_engines:
+                post[hide_from_search_engines]:
                   type: boolean
                   description: You must be Admin+.
       responses:
@@ -6770,76 +6786,6 @@ paths:
           $ref: "#/components/responses/NotFound"
         422:
           $ref: "#/components/responses/ExpectedError"
-  /posts/{id}/add_to_pool.json:
-    put:
-      summary: Add Post To Pool
-      tags:
-        - Posts
-      security:
-        - basicAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the post.
-          schema:
-            type: number
-        - name: pool_id
-          in: query
-          description: The ID of the pool to add the post to. Mutually exclusive with pool_name.
-          schema:
-            type: number
-        - name: pool_name
-          in: query
-          description: The name of the pool to add the post to. Mutually exclusive with pool_id.
-          schema:
-            type: string
-      responses:
-        201:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Pool"
-        403:
-          $ref: "#/components/responses/AccessDenied"
-        404:
-          $ref: "#/components/responses/NotFound"
-  /posts/{id}/remove_from_pool.json:
-    put:
-      summary: Remove Post From Pool
-      tags:
-        - Posts
-      security:
-        - basicAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the post.
-          schema:
-            type: number
-        - name: pool_id
-          in: query
-          description: The ID of the pool to remove the post from. Mutually exclusive with pool_name.
-          schema:
-            type: number
-        - name: pool_name
-          in: query
-          description: The name of the pool to remove the post from. Mutually exclusive with pool_id.
-          schema:
-            type: string
-      responses:
-        201:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Pool"
-        403:
-          $ref: "#/components/responses/AccessDenied"
-        404:
-          $ref: "#/components/responses/NotFound"
   /posts/{id}/copy_notes.json:
     put:
       summary: Copy Notes To Post
@@ -6897,7 +6843,7 @@ paths:
           $ref: "#/components/responses/ExpectedError"
   /posts/{id}/show_seq.json:
     get:
-      summary: Get Post Sequence
+      summary: Get Post In Sequence
       tags:
         - Posts
       parameters:
@@ -6950,7 +6896,7 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
@@ -7060,22 +7006,22 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - name
-                - shortname
+                - post_set[name]
+                - post_set[shortname]
               properties:
-                name:
+                post_set[name]:
                   type: string
-                shortname:
+                post_set[shortname]:
                   type: string
-                description:
+                post_set[description]:
                   type: string
-                is_public:
+                post_set[is_public]:
                   type: boolean
-                transfer_on_delete:
+                post_set[ransfer_on_delete]:
                   type: boolean
       responses:
         201:
@@ -7128,19 +7074,19 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                name:
+                post_set[name]:
                   type: string
-                shortname:
+                post_set[shortname]:
                   type: string
-                description:
+                post_set[description]:
                   type: string
-                is_public:
+                post_set[is_public]:
                   type: boolean
-                transfer_on_delete:
+                post_set[transfer_on_delete]:
                   type: boolean
       responses:
         204:
@@ -7182,19 +7128,14 @@ paths:
       description: You must be the owner of the set, a maintainer (if public), or Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - post_set
+                - post_set[post_ids_string]
               properties:
-                post_set:
-                  type: object
-                  required:
-                    - post_ids_string
-                  properties:
-                    post_ids_string:
-                      type: string
+                post_set[post_ids_string]:
+                  type: string
       responses:
         200:
           description: Success
@@ -7218,7 +7159,7 @@ paths:
       description: You must be the owner of the set, a maintainer (if public), or Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -7226,8 +7167,9 @@ paths:
               properties:
                 post_ids:
                   type: array
+                  description: post_ids[]=1&post_ids[]=2
                   items:
-                    type: string
+                    type: number
       responses:
         201:
           description: Success
@@ -7251,7 +7193,7 @@ paths:
       description: You must be the owner of the set, a maintainer (if public), or Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -7259,8 +7201,9 @@ paths:
               properties:
                 post_ids:
                   type: array
+                  description: post_ids[]=1&post_ids[]=2
                   items:
-                    type: string
+                    type: number
       responses:
         201:
           description: Success
@@ -8065,16 +8008,14 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                category:
+                tag[category]:
                   type: number
                   enum: *tag-categories
-                reason:
-                  type: string
-                is_locked:
+                tag[is_locked]:
                   description: Must be Admin+.
                   type: boolean
       responses:
@@ -8096,7 +8037,7 @@ paths:
       description: You must be Janitor+. `commit=Fix` must be set.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -8278,13 +8219,15 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                antecedent_name:
+                tag_alias[antecedent_name]:
                   type: string
-                consequent_name:
+                tag_alias[consequent_name]:
+                  type: string
+                tag_alias[forum_topic_id]:
                   type: string
       responses:
         204:
@@ -8343,21 +8286,21 @@ paths:
       description: Errors will result in a 406 with no information.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - antecedent_name
-                - consequent_name
-                - reason
+                - tag_alias[antecedent_name]
+                - tag_alias[consequent_name]
+                - tag_alias[reason]
               properties:
-                antecedent_name:
+                tag_alias[antecedent_name]:
                   type: string
-                consequent_name:
+                tag_alias[consequent_name]:
                   type: string
-                reason:
+                tag_alias[reason]:
                   type: string
-                skip_forum:
+                tag_alias[skip_forum]:
                   type: boolean
                   description: Must be Admin+.
       responses:
@@ -8477,13 +8420,15 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                antecedent_name:
+                tag_implication[antecedent_name]:
                   type: string
-                consequent_name:
+                tag_implication[consequent_name]:
+                  type: string
+                tag_implication[forum_topic_id]:
                   type: string
       responses:
         204:
@@ -8542,21 +8487,21 @@ paths:
       description: Errors will result in a 406 with no information.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - antecedent_name
-                - consequent_name
-                - reason
+                - tag_implication[antecedent_name]
+                - tag_implication[consequent_name]
+                - tag_implication[reason]
               properties:
-                antecedent_name:
+                tag_implication[antecedent_name]:
                   type: string
-                consequent_name:
+                tag_implication[consequent_name]:
                   type: string
-                reason:
+                tag_implication[reason]:
                   type: string
-                skip_forum:
+                tag_implication[skip_forum]:
                   type: boolean
                   description: Must be Admin+.
       responses:
@@ -8693,36 +8638,39 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - email
-                - reason
+                - takedown[email]
+                - takedown[reason]
               properties:
-                email:
+                takedown[email]:
                   type: string
-                source:
+                takedown[source]:
                   type: string
-                instructions:
+                takedown[instructions]:
                   type: string
-                reason:
+                takedown[reason]:
                   type: string
-                post_ids:
+                takedown[post_ids]:
                   type: array
+                  description: takedown[post_ids][]=1&takedown[post_ids][]=2
                   items:
                     type: number
-                reason_hidden:
+                takedown[reason_hidden]:
                   type: boolean
-                notes:
+                takedown[notes]:
                   type: string
                   description: Must have the bd staff user flag to use.
-                del_post_ids:
+                takedown[del_post_ids]:
                   type: array
-                  description: Must have the bd staff user flag to use.
+                  description: |
+                    Must have the bd staff user flag to use.
+                    takedown[del_post_ids][]=1&takedown[del_post_ids][]=2
                   items:
                     type: number
-                status:
+                takedown[status]:
                   type: string
                   description: Must have the bd staff user flag to use.
       responses:
@@ -8773,24 +8721,21 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                takedown:
-                  type: object
-                  properties:
-                    notes:
-                      type: string
-                    reason_hidden:
-                      type: boolean
+                takedown[notes]:
+                  type: string
+                takedown[reason_hidden]:
+                  type: boolean
                 takedown_posts:
                   type: string
                 process_takedown:
                   type: boolean
                   description: If not truthy, the takedown will be denied.
                 delete_reason:
-                  type: boolean
+                  type: string
       responses:
         204:
           description: Success
@@ -8806,8 +8751,7 @@ paths:
         - Takedowns
       security:
         - basicAuth: []
-        
-
+      description: You must have the bd staff user flag.
       parameters:
         - name: id
           in: path
@@ -8832,7 +8776,7 @@ paths:
       description: You must have the bd staff user flag.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -8871,7 +8815,7 @@ paths:
       description: You must have the bd staff user flag.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -8910,7 +8854,7 @@ paths:
       description: You must have the bd staff user flag.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -8944,7 +8888,7 @@ paths:
       description: You must have the bd staff user flag.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -9066,23 +9010,23 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - response
+                - ticket[response]
               properties:
-                status:
+                ticket[status]:
                   type: string
                   enum:
                     - partial
                     - approved
-                response:
+                ticket[response]:
                   type: string                  
-                record_type:
+                ticket[record_type]:
                   type: string
                   enum: *warning-types
-                send_update_dmail:
+                ticket[send_update_dmail]:
                   type: boolean
                   description: An update dmail will always be sent when the status is changed.
       responses:
@@ -9226,9 +9170,8 @@ paths:
             schema:
               type: object
               required:
-                - source
-                - tag_string
-                - rating
+                - upload[tag_string]
+                - upload[rating]
               properties:
                 upload[file]:
                   type: binary
@@ -9326,22 +9269,22 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - allowed
-                - pattern
+                - upload_whitelist[allowed]
+                - upload_whitelist[pattern]
               properties:
-                allowed:
+                upload_whitelist[allowed]:
                   type: string
-                pattern:
+                upload_whitelist[pattern]:
                   type: string
-                reason:
+                upload_whitelist[reason]:
                   type: string
-                note:
+                upload_whitelist[note]:
                   type: string
-                hidden:
+                upload_whitelist[hidden]:
                   type: boolean
   /upload_whitelists/{id}.json:
     patch:
@@ -9359,19 +9302,19 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                allowed:
+                upload_whitelist[allowed]:
                   type: string
-                pattern:
+                upload_whitelist[pattern]:
                   type: string
-                reason:
+                upload_whitelist[reason]:
                   type: string
-                note:
+                upload_whitelist[note]:
                   type: string
-                hidden:
+                upload_whitelist[hidden]:
                   type: boolean
       responses:
         204:
@@ -9558,72 +9501,69 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                comment_threshold:
+                user[comment_threshold]:
                   type: number
-                default_image_size:
+                user[default_image_size]:
                   type: string
                   enum:
                     - large
                     - fit
                     - fitv
                     - original
-                favorite_tags:
+                user[favorite_tags]:
                   type: string
-                blacklisted_tags:
+                user[blacklisted_tags]:
                   type: string
-                time_zone:
+                user[time_zone]:
                   type: string
                   description: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-                per_page:
+                user[per_page]:
                   type: number
-                custom_style:
+                user[custom_style]:
                   type: string
-                description_collapsed_initially:
+                user[description_collapsed_initially]:
                   type: boolean
-                hide_comments:
+                user[hide_comments]:
                   type: boolean
-                receive_email_notifications:
+                user[receive_email_notifications]:
                   type: boolean
-                enable_keyboard_navigation:
+                user[enable_keyboard_navigation]:
                   type: boolean
-                enable_privacy_mode:
+                user[enable_privacy_mode]:
                   type: boolean
-                disable_user_dmails:
+                user[disable_user_dmails]:
                   type: boolean
-                blacklist_users:
+                user[blacklist_users]:
                   type: boolean
-                show_post_statistics:
+                user[show_post_statistics]:
                   type: boolean
-                style_usernames:
+                user[style_usernames]:
                   type: boolean
-                show_hidden_comments:
+                user[show_hidden_comments]:
                   type: boolean
-                enable_autocomplete:
+                user[enable_autocomplete]:
                   type: boolean
-                disable_cropped_thumbnails:
+                user[disable_cropped_thumbnails]:
                   type: boolean
-                enable_safe_mode:
+                user[enable_safe_mode]:
                   type: boolean
-                disable_responsive_mode:
+                user[disable_responsive_mode]:
                   type: boolean
-                dmail_filter_attributes:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                    words:
-                      type: string
-                profile_about:
-                  type: string
-                profile_artinfo:
-                  type: string
-                avatar_id:
+                user[dmail_filter_attributes][id]:
                   type: number
-                enable_compact_uploader:
+                user[dmail_filter_attributes][words]:
+                  type: string
+                user[profile_about]:
+                  type: string
+                user[profile_artinfo]:
+                  type: string
+                user[avatar_id]:
+                  type: number
+                user[enable_compact_uploader]:
                   type: boolean
                   description: You must have uploaded at least 10 posts.
       responses:
@@ -9680,11 +9620,13 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
+              required:
+                - dmail_filter[words]
               properties:
-                words:
+                dmail_filter[words]:
                   type: string
       responses:
         204:
@@ -9760,20 +9702,20 @@ paths:
       description: You must be Moderator+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - body
-                - category
+                - user_feedback[body]
+                - user_feedback[category]
               properties:
-                user_id:
+                user_feedback[user_id]:
                   type: number
-                user_name:
+                user_feedback[user_name]:
                   type: string
-                body:
+                user_feedback[body]:
                   type: string
-                category:
+                user_feedback[category]:
                   type: string
                   enum: *feedback-categories
       responses:
@@ -9827,13 +9769,13 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                body:
+                user_feedback[body]:
                   type: string
-                category:
+                user_feedback[category]:
                   type: string
                   enum: *feedback-categories
       responses:
@@ -9964,15 +9906,15 @@ paths:
       description: You must be Moderator+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - desired_name
+                - user_name_change_request[desired_name]
               properties:
-                desired_name:
+                user_name_change_request[desired_name]:
                   type: string
-                change_reason:
+                user_name_change_request[change_reason]:
                   type: string
       responses:
         302:
@@ -10106,29 +10048,29 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - title
-                - body
+                - wiki_page[title]
+                - wiki_page[body]
               properties:
-                title:
+                wiki_page[title]:
                   type: string
-                body:
+                wiki_page[body]:
                   type: string
-                edit_reason:
+                wiki_page[edit_reason]:
                   type: string
-                parent:
+                wiki_page[parent]:
                   type: string
                   description: Must be Privileged+ to use.
-                is_locked:
+                wiki_page[is_locked]:
                   type: boolean
                   description: Must be Janitor+ to use.
-                is_deleted:
+                wiki_page[is_deleted]:
                   type: boolean
                   description: Must be Janitor+ to use.
-                skip_secondary_validations:
+                wiki_page[skip_secondary_validations]:
                   type: boolean
                   description: Must be Janitor+ to use.
       responses:
@@ -10179,27 +10121,27 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                body:
+                wiki_page[body]:
                   type: string
-                edit_reason:
+                wiki_page[edit_reason]:
                   type: string
-                parent:
+                wiki_page[parent]:
                   type: string
                   description: Must be Privileged+ to use.
-                title:
+                wiki_page[title]:
                   type: string
                   description: Must be Janitor+ to use.
-                is_locked:
+                wiki_page[is_locked]:
                   type: boolean
                   description: Must be Janitor+ to use.
-                is_deleted:
+                wiki_page[is_deleted]:
                   type: boolean
                   description: Must be Janitor+ to use.
-                skip_secondary_validations:
+                wiki_page[skip_secondary_validations]:
                   type: boolean
                   description: Must be Janitor+ to use.
       responses:
@@ -10387,36 +10329,36 @@ paths:
           type: number
     requestBody:
       content:
-        application/json:
+        application/x-www-form-urlencoded:
           schema:
             type: object
             properties:
-              verified:
+              user[verified]:
                 type: boolean
                 description: Must have the bd staff user flag to use.
-              level:
+              user[level]:
                 type: number
                 description: Must have the bd staff user flag to promote to Admin+.
-              name:
+              user[name]:
                 type: string
-              profile_about:
+              user[profile_about]:
                 type: string
-              profile_artinfo:
+              user[profile_artinfo]:
                 type: string
-              base_upload_limit:
+              user[base_upload_limit]:
                 type: number
-              enable_privacy_mode:
+              user[enable_privacy_mode]:
                 type: boolean
-              email:
+              user[email]:
                 type: string
                 description: Must have the bd staff user flag to use.
-              can_approve_posts:
+              user[can_approve_posts]:
                 type: boolean
-              can_upload_free:
+              user[can_upload_free]:
                 type: boolean
-              no_flagging:
+              user[no_flagging]:
                 type: boolean
-              replacements_beta:
+              user[replacements_beta]:
                 type: boolean
     responses:
       204:
@@ -10446,7 +10388,7 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             type: object
             properties:
               reason:
@@ -10581,6 +10523,13 @@ paths:
           description: The ID of the post.
           schema:
             type: number
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            type: object
+            properties:
+              reason:
+                type: string
       responses:
         201:
           description: Success
@@ -10616,7 +10565,7 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -10644,7 +10593,7 @@ paths:
       description: You must have the "Approve Posts" permission.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -10670,7 +10619,7 @@ paths:
       description: You must have the "Approve Posts" permission. The response does not differ for success or failure.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
@@ -10753,22 +10702,22 @@ paths:
       description: You must have the "Approve Posts" permission.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - post_id
-                - reason
+                - post_disapproval[post_id]
+                - post_disapproval[reason]
               properties:
-                post_id:
+                post_disapproval[post_id]:
                   type: number
-                reason:
+                post_disapproval[reason]:
                   type: string
                   enum:
                     - borderline_quality
                     - borderline_relevancy
                     - other
-                message:
+                post_disapproval[message]:
                   type: string
       responses:
         201:
