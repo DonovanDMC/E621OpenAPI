@@ -1,8 +1,9 @@
 openapi: "3.1.0"
 info:
   title: "E621"
-  summary: OpenAPI definition for E621's API.
-  description: OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)
+  description: |
+    OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)
+    This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).
   contact:
     name: Donovan_DMC
     url: https://e621.net/forum_topics/46279
