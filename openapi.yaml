@@ -142,7 +142,7 @@ x-constants:
     - q
     - e
   - &tag-categories
-    - 0 #general
+    - 0 # general
     - 1 # artist
     - 3 # copyright
     - 4 # character
@@ -290,9 +290,6 @@ components:
           format: date-time
         is_active:
           type: boolean
-        artist:
-          description: Only present in /artist_urls.json
-          $ref: "#/components/schemas/Artist"
     ArtistVersion:
       type: object
       required:
@@ -3157,7 +3154,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ArtistURL"
+                  allOf:
+                    - $ref: "#/components/schemas/ArtistURL"
+                    - type: object
+                      required:
+                        - artist
+                      properties:
+                        artist:
+                          $ref: "#/components/schemas/Artist"
   # Avoid Posting Entries
   /avoid_postings.json:
     get:
@@ -5740,7 +5744,8 @@ paths:
               type: object
               properties:
                 search[file]:
-                  type: binary
+                  type: string
+                  format: binary
                 search[score_cutoff]:
                   type: number
                 search[url]:
@@ -5826,7 +5831,8 @@ paths:
                 - mascot[artist_name]
               properties:
                 mascot[mascot_file]:
-                  type: binary
+                  type: string
+                  format: binary
                 mascot[display_name]:
                   type: string
                 mascot[background_color]:
@@ -5875,7 +5881,8 @@ paths:
               type: object
               properties:
                 mascot[mascot_file]:
-                  type: binary
+                  type: string
+                  format: binary
                 mascot[display_name]:
                   type: string
                 mascot[background_color]:
@@ -7732,7 +7739,8 @@ paths:
                 - post_replacement[reason]
               properties:
                 post_replacement[replacement_file]:
-                  type: binary
+                  type: string
+                  format: binary
                   description: Mutually exclusive with replacement_url.
                 post_replacement[replacement_url]:
                   type: string
@@ -9438,7 +9446,8 @@ paths:
                 - upload[rating]
               properties:
                 upload[file]:
-                  type: binary
+                  type: string
+                  format: binary
                   description: Mutually exclusive with direct_url.
                 upload[direct_url]:
                   type: string
