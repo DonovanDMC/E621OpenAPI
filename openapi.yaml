@@ -3888,7 +3888,7 @@ paths:
     patch:
       summary: Edit Bulk Update Request
       tags:
-        - Bulk Update Request
+        - Bulk Update Requests
       security:
         - basicAuth: []
       description: You must be the creator of the BUR, or Admin+.
@@ -3925,7 +3925,7 @@ paths:
     delete:
       summary: Reject Bulk Update Request
       tags:
-        - Bulk Update Request
+        - Bulk Update Requests
       security:
         - basicAuth: []
       description: You must be the creator of the BUR, or Admin+.
