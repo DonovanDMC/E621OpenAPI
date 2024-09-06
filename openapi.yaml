@@ -3019,7 +3019,7 @@ paths:
       summary: Search Artist Versions
       tags:
         - Artist Versions
-      description: When no results are found, an object with a `artist_versions` key is returned.
+      description: When no results are found, an object with an `artist_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3164,7 +3164,7 @@ paths:
       summary: Search Avoid Posting Entries
       tags:
         - Avoid Posting Entries
-      description: When no results are found, an object with a `avoid_postings` key is returned.
+      description: When no results are found, an object with an `avoid_postings` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3244,7 +3244,7 @@ paths:
         - Avoid Posting Entries
       security:
         - basicAuth: []
-      description: Must have the bd staff user flag. When no results are found, an object with a `avoid_posting_versions` key is returned.
+      description: Must have the bd staff user flag. When no results are found, an object with an `avoid_posting_versions` key is returned.
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -3508,7 +3508,7 @@ paths:
       summary: Search Bans
       tags:
         - Bans
-      description: When no results are found, an object with a `bans` key is returned.
+      description: When no results are found, an object with an `bans` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3597,7 +3597,7 @@ paths:
       summary: Search Blips
       tags:
         - Blips
-      description: When no results are found, an object with a `blips` key is returned.
+      description: When no results are found, an object with an `blips` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3840,7 +3840,7 @@ paths:
       summary: Search Bulk Update Requests
       tags:
         - Bulk Update Requests
-      description: When no results are found, an object with a `bulk_update_requests` key is returned.
+      description: When no results are found, an object with an `bulk_update_requests` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4057,7 +4057,7 @@ paths:
       summary: Search Comments
       tags:
         - Comments
-      description: For searching comments, group_by=comment must be set. When no results are found, an object with a `comments` key is returned.
+      description: For searching comments, group_by=comment must be set. When no results are found, an object with an `comments` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4466,7 +4466,7 @@ paths:
       summary: Search DMails
       tags:
         - DMails
-      description: When no results are found, an object with a `dmails` key is returned.
+      description: When no results are found, an object with an `dmails` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4655,7 +4655,7 @@ paths:
       summary: Search Email Blacklists
       tags:
         - Email Blacklists
-      description: You must be Admin+. When no results are found, an object with a `email_blacklists` key is returned.
+      description: You must be Admin+. When no results are found, an object with an `email_blacklists` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4840,7 +4840,7 @@ paths:
       summary: Search Forum Posts
       tags:
         - Forum Posts
-      description: When no results are found, an object with a `forum_posts` key is returned.
+      description: When no results are found, an object with an `forum_posts` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5594,7 +5594,7 @@ paths:
         - IP Bans
       security:
         - basicAuth: []
-      description: You must be Admin+. When no results are found, an object with a `ip_bans` key is returned.
+      description: You must be Admin+. When no results are found, an object with an `ip_bans` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5783,7 +5783,7 @@ paths:
       summary: Search Mascots
       tags:
         - Mascots
-      description: When no results are found, an object with a `mascots` key is returned.
+      description: When no results are found, an object with an `mascots` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5966,7 +5966,7 @@ paths:
       summary: List News Updates
       tags:
         - News Updates
-      description: When no results are found, an object with a `news_updates` key is returned.
+      description: When no results are found, an object with an `news_updates` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6077,7 +6077,7 @@ paths:
       summary: Search Notes
       tags:
         - Notes
-      description: When no results are found, an object with a `notes` key is returned.
+      description: When no results are found, an object with an `notes` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6306,7 +6306,7 @@ paths:
       summary: Search Note Versions
       tags:
         - Note Versions
-      description: When no results are found, an object with a `note_versions` key is returned.
+      description: When no results are found, an object with an `note_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6632,7 +6632,7 @@ paths:
       summary: Search Pool Versions
       tags:
         - Pool Versions
-      description: When no results are found, an object with a `pool_versions` key is returned.
+      description: When no results are found, an object with an `pool_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7098,7 +7098,7 @@ paths:
       summary: Search Post Sets
       tags:
         - Post Sets
-      description: When no results are found, an object with a `post_sets` key is returned.
+      description: When no results are found, an object with an `post_sets` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7419,7 +7419,7 @@ paths:
       summary: Search Post Approvals
       tags:
         - Post Approvals
-      description: When no results are found, an object with a `post_approvals` key is returned.
+      description: When no results are found, an object with an `post_approvals` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7521,7 +7521,7 @@ paths:
       summary: Search Post Flags
       tags:
         - Post Flags
-      description: When no results are found, an object with a `post_flags` key is returned.
+      description: When no results are found, an object with an `post_flags` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7650,7 +7650,7 @@ paths:
       summary: Search Post Replacements
       tags:
         - Post Replacements
-      description: When no results are found, an object with a `post_replacements` key is returned.
+      description: When no results are found, an object with an `post_replacements` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8113,7 +8113,7 @@ paths:
       summary: Search Tags
       tags:
         - Tags
-      description: When no results are found, an object with a `tags` key is returned.
+      description: When no results are found, an object with an `tags` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8290,7 +8290,7 @@ paths:
       summary: Search Tag Versions
       tags:
         - Tag Versions
-      description: When no results are found, an object with a `tag_type_versions` key is returned.
+      description: When no results are found, an object with an `tag_type_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8331,7 +8331,7 @@ paths:
       summary: Search Tag Aliases
       tags:
         - Tag Aliases
-      description: When no results are found, an object with a `tag_aliases` key is returned.
+      description: When no results are found, an object with an `tag_aliases` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8542,7 +8542,7 @@ paths:
       summary: Search Tag Implications
       tags:
         - Tag Implications
-      description: When no results are found, an object with a `tag_implications` key is returned.
+      description: When no results are found, an object with an `tag_implications` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8788,7 +8788,7 @@ paths:
       summary: Search Takedowns
       tags:
         - Takedowns
-      description: When no results are found, an object with a `takedowns` key is returned.
+      description: When no results are found, an object with an `takedowns` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9155,7 +9155,7 @@ paths:
       summary: Search Tickets
       tags:
         - Tickets
-      description: You must be Janitor+ to see tickets you did not create. When no results are found, an object with a `tickets` key is returned.
+      description: You must be Janitor+ to see tickets you did not create. When no results are found, an object with an `tickets` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9335,7 +9335,7 @@ paths:
       summary: Search Uploads
       tags:
         - Uploads
-      description: You must be Janitor+. When no results are found, an object with a `uploads` key is returned.
+      description: You must be Janitor+. When no results are found, an object with an `uploads` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9493,7 +9493,7 @@ paths:
       summary: Search Upload Whitelists
       tags:
         - Upload Whitelists
-      description: When no results are found, an object with a `upload_whitelists` key is returned.
+      description: When no results are found, an object with an `upload_whitelists` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9939,7 +9939,7 @@ paths:
       summary: Search User Feedbacks
       tags:
         - User Feedbacks
-      description: When no results are found, an object with a `user_feedbacks` key is returned.
+      description: When no results are found, an object with an `user_feedbacks` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -10170,7 +10170,7 @@ paths:
         - User Name Change Requests
       security:
         - basicAuth: []
-      description: You must be Moderator+. When no results are found, an object with a `user_name_change_requests` key is returned.
+      description: You must be Moderator+. When no results are found, an object with an `user_name_change_requests` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -10502,7 +10502,7 @@ paths:
       summary: Search Wiki Page Versions
       tags:
         - Wiki Page Versions
-      description: When no results are found, an object with a `wiki_page_versions` key is returned.
+      description: When no results are found, an object with an `wiki_page_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -10946,7 +10946,7 @@ paths:
         - Post Disapprovals
       security:
         - basicAuth: []
-      description: You must have the "Approve Posts" permission When no results are found, an object with a `post_disapprovals` key is returned.
+      description: You must have the "Approve Posts" permission When no results are found, an object with an `post_disapprovals` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
