@@ -4910,7 +4910,7 @@ paths:
     post:
       summary: Unhide Forum Post
       tags:
-        - Forum Post
+        - Forum Posts
       security:
         - basicAuth: []
       description: You must be Moderator+.
@@ -5354,21 +5354,21 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - name
-                - wiki_page
+                - help_page[name]
+                - help_page[wiki_page]
               properties:
-                name:
+                help_page[name]:
                   type: string
-                wiki_page:
+                help_page[wiki_page]:
                   type: string
-                related:
+                help_page[related]:
                   type: string
                   description: Separate with a comma followed by a space.
-                title:
+                help_page[title]:
                   type: string
       responses:
         201:
@@ -5420,18 +5420,18 @@ paths:
             type: number
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                name:
+                help_page[name]:
                   type: string
-                wiki_page:
+                help_page[wiki_page]:
                   type: string
-                related:
+                help_page[related]:
                   type: string
                   description: Separate with a comma followed by a space.
-                title:
+                help_page[title]:
                   type: string
       responses:
         204:
@@ -9441,7 +9441,7 @@ paths:
     get:
       summary: Search Users
       tags:
-        - Upload Whitelists
+        - Users
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9656,7 +9656,7 @@ paths:
     patch:
       summary: Update User Dmail Filter
       tags:
-        - DMail Filter
+        - DMails
       parameters:
         - name: dmail_id
           in: query
