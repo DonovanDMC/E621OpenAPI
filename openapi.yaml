@@ -3655,7 +3655,7 @@ paths:
     delete:
       summary: Delete Blip
       tags:
-        - Comments
+        - Blips
       security:
         - basicAuth: []
       description: |
@@ -3868,7 +3868,7 @@ paths:
     get:
       summary: Get Bulk Update Request
       tags:
-        - Bulk Update Request
+        - Bulk Update Requests
       parameters:
         - name: id
           in: path
@@ -3947,7 +3947,7 @@ paths:
     post:
       summary: Approve Bulk Update Request
       tags:
-        - Bulk Update Request
+        - Bulk Update Requests
       description: Must be Admin+.
       parameters:
         - name: id
@@ -4884,7 +4884,7 @@ paths:
     post:
       summary: Hide Forum Post
       tags:
-        - Forum Post
+        - Forum Posts
       security:
         - basicAuth: []
       description: You must be the creator or Moderator+.
@@ -5445,7 +5445,7 @@ paths:
     delete:
       summary: Delete Help Page
       tags:
-        - Help Page
+        - Help Pages
       security:
         - basicAuth: []
       description: You must be Admin+.
@@ -5901,7 +5901,7 @@ paths:
     delete:
       summary: Delete News Update
       tags:
-        - News Update
+        - News Updates
       security:
         - basicAuth: []
       description: You must be Admin+.
