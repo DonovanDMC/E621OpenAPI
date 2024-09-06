@@ -3019,6 +3019,7 @@ paths:
       summary: Search Artist Versions
       tags:
         - Artist Versions
+      description: When no results are found, an object with a `artist_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3059,9 +3060,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ArtistVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/ArtistVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - artist_versions
+                    properties:
+                      artist_versions:
+                        type: array
+                        maxItems: 0
   # Artist URLs
   /artist_urls.json:
     get:
@@ -3154,6 +3164,7 @@ paths:
       summary: Search Avoid Posting Entries
       tags:
         - Avoid Posting Entries
+      description: When no results are found, an object with a `avoid_postings` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3215,16 +3226,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/AvoidPosting"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/AvoidPosting"
+                  - type: object
+                    description: No Results
+                    required:
+                      - avoid_postings
+                    properties:
+                      avoid_postings:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Avoid Posting Entry
       tags:
         - Avoid Posting Entries
       security:
         - basicAuth: []
-      description: Must have the bd staff user flag.
+      description: Must have the bd staff user flag. When no results are found, an object with a `avoid_posting_versions` key is returned.
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -3470,15 +3490,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/AvoidPostingVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/AvoidPostingVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - avoid_posting_versions
+                    properties:
+                      avoid_posting_versions:
+                        type: array
+                        maxItems: 0
   # Bans
   /bans.json:
     get:
       summary: Search Bans
       tags:
         - Bans
+      description: When no results are found, an object with a `bans` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3528,9 +3558,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Ban"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Ban"
+                  - type: object
+                    description: No Results
+                    required:
+                      - bans
+                    properties:
+                      bans:
+                        type: array
+                        maxItems: 0
   /bans/{id}.json:
     get:
       summary: Get Ban
@@ -3558,6 +3597,7 @@ paths:
       summary: Search Blips
       tags:
         - Blips
+      description: When no results are found, an object with a `blips` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3594,9 +3634,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Blip"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Blip"
+                  - type: object
+                    description: No Results
+                    required:
+                      - blips
+                    properties:
+                      bli[s]:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Blip
       tags:
@@ -3791,6 +3840,7 @@ paths:
       summary: Search Bulk Update Requests
       tags:
         - Bulk Update Requests
+      description: When no results are found, an object with a `bulk_update_requests` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -3852,9 +3902,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/BulkUpdateRequest"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/BulkUpdateRequest"
+                  - type: object
+                    description: No Results
+                    required:
+                      - bulk_update_requests
+                    properties:
+                      bulk_update_requests:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Bulk Update Request
       tags:
@@ -3996,9 +4055,9 @@ paths:
   /comments.json:
     get:
       summary: Search Comments
-      description: For searching comments, group_by=comment must be set.
       tags:
         - Comments
+      description: For searching comments, group_by=comment must be set. When no results are found, an object with a `comments` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4069,9 +4128,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Comment"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Comment"
+                  - type: object
+                    description: No Results
+                    required:
+                      - comments
+                    properties:
+                      comments:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Comment
       tags:
@@ -4398,6 +4466,7 @@ paths:
       summary: Search DMails
       tags:
         - DMails
+      description: When no results are found, an object with a `dmails` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4444,9 +4513,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DMail"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/DMail"
+                  - type: object
+                    description: No Results
+                    required:
+                      - dmails
+                    properties:
+                      dmails:
+                        type: array
+                        maxItems: 0
   /dmails/{id}.json:
     get:
       summary: Get DMail
@@ -4577,7 +4655,7 @@ paths:
       summary: Search Email Blacklists
       tags:
         - Email Blacklists
-      description: You must be Admin+.
+      description: You must be Admin+. When no results are found, an object with a `email_blacklists` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4605,9 +4683,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/EmailBlacklist"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/EmailBlacklist"
+                  - type: object
+                    description: No Results
+                    required:
+                      - email_blacklists
+                    properties:
+                      email_blacklists:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Email Blacklist
       tags:
@@ -4753,6 +4840,7 @@ paths:
       summary: Search Forum Posts
       tags:
         - Forum Posts
+      description: When no results are found, an object with a `forum_posts` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -4798,9 +4886,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ForumPost"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/ForumPost"
+                  - type: object
+                    description: No Results
+                    required:
+                      - forum_posts
+                    properties:
+                      forum_posts:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Forum Post
       tags:
@@ -5497,7 +5594,7 @@ paths:
         - IP Bans
       security:
         - basicAuth: []
-      description: You must be Admin+.
+      description: You must be Admin+. When no results are found, an object with a `ip_bans` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5528,9 +5625,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/IPBan"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/IPBan"
+                  - type: object
+                    description: No Results
+                    required:
+                      - ip_bans
+                    properties:
+                      ip_bans:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create IP Ban
       tags:
@@ -5677,6 +5783,7 @@ paths:
       summary: Search Mascots
       tags:
         - Mascots
+      description: When no results are found, an object with a `mascots` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5687,9 +5794,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Mascot"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Mascot"
+                  - type: object
+                    description: No Results
+                    required:
+                      - mascots
+                    properties:
+                      mascots:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Mascot
       tags:
@@ -5850,6 +5966,7 @@ paths:
       summary: List News Updates
       tags:
         - News Updates
+      description: When no results are found, an object with a `news_updates` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -5859,9 +5976,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/NewsUpdate"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/NewsUpdate"
+                  - type: object
+                    description: No Results
+                    required:
+                      - news_updates
+                    properties:
+                      news_updates:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create News Update
       tags:
@@ -5951,6 +6077,7 @@ paths:
       summary: Search Notes
       tags:
         - Notes
+      description: When no results are found, an object with a `notes` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6000,9 +6127,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Note"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Note"
+                  - type: object
+                    description: No Results
+                    required:
+                      - notes
+                    properties:
+                      notes:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Note
       tags:
@@ -6166,10 +6302,11 @@ paths:
           $ref: "#/components/responses/ExpectedError"
   # Note Versions
   /note_versions.json:
-    put:
+    get:
       summary: Search Note Versions
       tags:
         - Note Versions
+      description: When no results are found, an object with a `note_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6213,9 +6350,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/NoteVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/NoteVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - note_versions
+                    properties:
+                      note_versions:
+                        type: array
+                        maxItems: 0
   # Pools
   /pools.json:
     get:
@@ -6486,6 +6632,7 @@ paths:
       summary: Search Pool Versions
       tags:
         - Pool Versions
+      description: When no results are found, an object with a `pool_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6517,9 +6664,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PoolVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PoolVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - pool_versions
+                    properties:
+                      pool_versions:
+                        type: array
+                        maxItems: 0
   # Popular
   /popular.json:
     get:
@@ -6942,6 +7098,7 @@ paths:
       summary: Search Post Sets
       tags:
         - Post Sets
+      description: When no results are found, an object with a `post_sets` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -6995,9 +7152,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PostSet"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PostSet"
+                  - type: object
+                    description: No Results
+                    required:
+                      - post_sets
+                    properties:
+                      post_sets:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Post Set
       tags:
@@ -7253,6 +7419,7 @@ paths:
       summary: Search Post Approvals
       tags:
         - Post Approvals
+      description: When no results are found, an object with a `post_approvals` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7286,9 +7453,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PostApproval"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PostApproval"
+                  - type: object
+                    description: No Results
+                    required:
+                      - post_aprovals
+                    properties:
+                      post_approvals:
+                        type: array
+                        maxItems: 0
   # Post Events
   /post_events.json:
     get:
@@ -7345,6 +7521,7 @@ paths:
       summary: Search Post Flags
       tags:
         - Post Flags
+      description: When no results are found, an object with a `post_flags` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7391,9 +7568,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PostFlag"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PostFlag"
+                  - type: object
+                    description: No Results
+                    required:
+                      - post_flags
+                    properties:
+                      post_flags:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Post Flag
       tags:
@@ -7464,6 +7650,7 @@ paths:
       summary: Search Post Replacements
       tags:
         - Post Replacements
+      description: When no results are found, an object with a `post_replacements` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7518,9 +7705,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PostReplacement"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PostReplacement"
+                  - type: object
+                    description: No Results
+                    required:
+                      - post_replacements
+                    properties:
+                      post_replacements:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Post Replacement
       tags:
@@ -7917,6 +8113,7 @@ paths:
       summary: Search Tags
       tags:
         - Tags
+      description: When no results are found, an object with a `tags` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -7968,9 +8165,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Tag"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Tag"
+                  - type: object
+                    description: No Results
+                    required:
+                      - tags
+                    properties:
+                      tags:
+                        type: array
+                        maxItems: 0
   /tags/{id}.json:
     get:
       summary: Get Tag
@@ -8084,6 +8290,7 @@ paths:
       summary: Search Tag Versions
       tags:
         - Tag Versions
+      description: When no results are found, an object with a `tag_type_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8106,15 +8313,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TagTypeVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/TagTypeVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - tag_type_versions
+                    properties:
+                      tag_type_versions:
+                        type: array
+                        maxItems: 0
   # Tag Aliases
   /tag_aliases.json:
     get:
       summary: Search Tag Aliases
       tags:
         - Tag Aliases
+      description: When no results are found, an object with a `tag_aliases` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8179,9 +8396,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TagAlias"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/TagAlias"
+                  - type: object
+                    description: No Results
+                    required:
+                      - tag_aliases
+                    properties:
+                      tag_aliases:
+                        type: array
+                        maxItems: 0
   /tag_aliases/{id}.json:
     get:
       summary: Get Tag Alias
@@ -8316,6 +8542,7 @@ paths:
       summary: Search Tag Implications
       tags:
         - Tag Implications
+      description: When no results are found, an object with a `tag_implications` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8380,9 +8607,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TagImplication"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/TagImplication"
+                  - type: object
+                    description: No Results
+                    required:
+                      - tag_implications
+                    properties:
+                      tag_implications:
+                        type: array
+                        maxItems: 0
   /tag_implications/{id}.json:
     get:
       summary: Get Tag Implication
@@ -8552,6 +8788,7 @@ paths:
       summary: Search Takedowns
       tags:
         - Takedowns
+      description: When no results are found, an object with a `takedowns` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8627,9 +8864,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Takedown"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Takedown"
+                  - type: object
+                    description: No Results
+                    required:
+                      - takedowns
+                    properties:
+                      takedowns:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Takedown
       tags:
@@ -8909,7 +9155,7 @@ paths:
       summary: Search Tickets
       tags:
         - Tickets
-      description: You must be Janitor+ to see tickets you did not create.
+      description: You must be Janitor+ to see tickets you did not create. When no results are found, an object with a `tickets` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8970,9 +9216,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Ticket"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Ticket"
+                  - type: object
+                    description: No Results
+                    required:
+                      - tickets
+                    properties:
+                      tickets:
+                        type: array
+                        maxItems: 0
         403:
           $ref: "#/components/responses/AccessDenied"
   /tickets/{id}.json:
@@ -9080,7 +9335,7 @@ paths:
       summary: Search Uploads
       tags:
         - Uploads
-      description: You must be Janitor+.
+      description: You must be Janitor+. When no results are found, an object with a `uploads` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9154,9 +9409,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Upload"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Upload"
+                  - type: object
+                    description: No Results
+                    required:
+                      - uploads
+                    properties:
+                      uploads:
+                        type: array
+                        maxItems: 0
     post:
       summary: Upload Post
       tags:
@@ -9229,6 +9493,7 @@ paths:
       summary: Search Upload Whitelists
       tags:
         - Upload Whitelists
+      description: When no results are found, an object with a `upload_whitelists` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9257,9 +9522,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UploadWhitelist"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/UploadWhitelist"
+                  - type: object
+                    description: No Results
+                    required:
+                      - upload_whitelists
+                    properties:
+                      upload_whitelists:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Upload Whitelist
       tags:
@@ -9605,6 +9879,32 @@ paths:
         403:
           $ref: "#/components/responses/AccessDenied"
   /maintenance/user/dmail_filter.json:
+    get:
+      summary: Get User Name Change Request
+      tags:
+        - User Name Change Requests
+      security:
+        - basicAuth: []
+      description: You must be the creator of the request or Moderator+.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the name change request.
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserNameChangeRequest"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+        404:
+          $ref: "#/components/responses/NotFound"
+  /user_revert.json:
     patch:
       summary: Update User Dmail Filter
       tags:
@@ -9639,6 +9939,7 @@ paths:
       summary: Search User Feedbacks
       tags:
         - User Feedbacks
+      description: When no results are found, an object with a `user_feedbacks` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9690,9 +9991,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UserFeedback"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/UserFeedback"
+                  - type: object
+                    description: No Results
+                    required:
+                      - user_feedbacks
+                    properties:
+                      user_feedbacks:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create User Feedback
       tags:
@@ -9860,7 +10170,7 @@ paths:
         - User Name Change Requests
       security:
         - basicAuth: []
-      description: You must be Moderator+.
+      description: You must be Moderator+. When no results are found, an object with a `user_name_change_requests` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -9894,9 +10204,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UserNameChangeRequest"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/UserNameChangeRequest"
+                  - type: object
+                    description: No Results
+                    required:
+                      - user_name_change_requests
+                    properties:
+                      user_name_change_requests:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create User Name Change Request
       tags:
@@ -9924,32 +10243,6 @@ paths:
         422:
           $ref: "#/components/responses/ExpectedError"
   /user_name_change_request/{id}.json:
-    get:
-      summary: Get User Name Change Request
-      tags:
-        - User Name Change Requests
-      security:
-        - basicAuth: []
-      description: You must be the creator of the request or Moderator+.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the name change request.
-          schema:
-            type: number
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserNameChangeRequest"
-        403:
-          $ref: "#/components/responses/AccessDenied"
-        404:
-          $ref: "#/components/responses/NotFound"
-  /user_revert.json:
     post:
       summary: Revert User
       tags:
@@ -10209,6 +10502,7 @@ paths:
       summary: Search Wiki Page Versions
       tags:
         - Wiki Page Versions
+      description: When no results are found, an object with a `wiki_page_versions` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -10255,9 +10549,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/WikiPageVersion"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/WikiPageVersion"
+                  - type: object
+                    description: No Results
+                    required:
+                      - wiki_page_versions
+                    properties:
+                      wiki_page_versions:
+                        type: array
+                        maxItems: 0
   /wiki_page_versions/{id}.json:
     get:
       summary: Get Wiki Page Version
@@ -10312,65 +10615,66 @@ paths:
                       description: ID of suspected alt.
                 examples:
                   - [[1,[2]],[2,[1]]]
-/admins/users/{id}.json:
-  patch:
-    summary: Admin Edit User
-    tags:
-      - Admin Users
-    security:
-      - basicAuth: []
-    description: You must be Admin+. If editing an Admin+, you must be Owner+.
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: The ID of the user.
-        schema:
-          type: number
-    requestBody:
-      content:
-        application/x-www-form-urlencoded:
+  /admins/users/{id}.json:
+    patch:
+      summary: Admin Edit User
+      tags:
+        - Admin Users
+      security:
+        - basicAuth: []
+      description: You must be Admin+. If editing an Admin+, you must be Owner+.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user.
           schema:
-            type: object
-            properties:
-              user[verified]:
-                type: boolean
-                description: Must have the bd staff user flag to use.
-              user[level]:
-                type: number
-                description: Must have the bd staff user flag to promote to Admin+.
-              user[name]:
-                type: string
-              user[profile_about]:
-                type: string
-              user[profile_artinfo]:
-                type: string
-              user[base_upload_limit]:
-                type: number
-              user[enable_privacy_mode]:
-                type: boolean
-              user[email]:
-                type: string
-                description: Must have the bd staff user flag to use.
-              user[can_approve_posts]:
-                type: boolean
-              user[can_upload_free]:
-                type: boolean
-              user[no_flagging]:
-                type: boolean
-              user[replacements_beta]:
-                type: boolean
-    responses:
-      204:
-        description: Success
-      400:
-        $ref: "#/components/responses/MessageError"
-      403:
-        $ref: "#/components/responses/AccessDenied"
-      404:
-        $ref: "#/components/responses/NotFound"
-      422:
-        $ref: "#/components/responses/ExpectedError"
+            type: number
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user[verified]:
+                  type: boolean
+                  description: Must have the bd staff user flag to use.
+                user[level]:
+                  type: number
+                  description: Must have the bd staff user flag to promote to Admin+.
+                user[name]:
+                  type: string
+                user[profile_about]:
+                  type: string
+                user[profile_artinfo]:
+                  type: string
+                user[base_upload_limit]:
+                  type: number
+                user[enable_privacy_mode]:
+                  type: boolean
+                user[email]:
+                  type: string
+                  description: Must have the bd staff user flag to use.
+                user[can_approve_posts]:
+                  type: boolean
+                user[can_upload_free]:
+                  type: boolean
+                user[no_flagging]:
+                  type: boolean
+                user[replacements_beta]:
+                  type: boolean
+      responses:
+        204:
+          description: Success
+        400:
+          $ref: "#/components/responses/MessageError"
+        403:
+          $ref: "#/components/responses/AccessDenied"
+        404:
+          $ref: "#/components/responses/NotFound"
+        422:
+          $ref: "#/components/responses/ExpectedError"
+  # Moderator Posts
   /moderator/post/posts/{id}/delete.json:
     post:
       summary: Delete Post
@@ -10484,7 +10788,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         422:
           $ref: "#/components/responses/ExpectedError"
-  /posts/{id}/regenerate_videos.json:
+  /moderator/posts/{id}/regenerate_videos.json:
     post:
       summary: Regenerate Post Videos
       tags:
@@ -10642,7 +10946,7 @@ paths:
         - Post Disapprovals
       security:
         - basicAuth: []
-      description: You must have the "Approve Posts" permission.
+      description: You must have the "Approve Posts" permission When no results are found, an object with a `post_disapprovals` key is returned.
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -10690,9 +10994,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PostDisapproval"
+                anyOf:
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/PostDisapproval"
+                  - type: object
+                    description: No Results
+                    required:
+                      - post_disapprovals
+                    properties:
+                      post_disapprovals:
+                        type: array
+                        maxItems: 0
     post:
       summary: Create Post Disapproval
       tags:
