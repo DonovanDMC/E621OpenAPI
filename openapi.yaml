@@ -5435,7 +5435,7 @@ paths:
         404:
           $ref: "#/components/responses/NotFound"
   /forum_topics/mark_all_as_read.json:
-    put:
+    post:
       summary: Mark All Forum Topics As Read
       tags:
         - Forum Topics
@@ -6025,9 +6025,9 @@ paths:
           $ref: "#/components/responses/ExpectedError"
   /news_updates/{id}.json:
     patch:
-      summary: Edit News Updates
+      summary: Edit News Update
       tags:
-        - Help Pages
+        - News Updates
       security:
         - basicAuth: []
       description: You must be Admin+
@@ -8493,7 +8493,7 @@ paths:
           $ref: "#/components/responses/AccessDenied"
         404:
           $ref: "#/components/responses/NotFound"
-  /tags/aliases/{id}/approve.json:
+  /tag_aliases/{id}/approve.json:
     post:
       summary: Approve Tag Alias
       tags:
@@ -8704,7 +8704,7 @@ paths:
           $ref: "#/components/responses/AccessDenied"
         404:
           $ref: "#/components/responses/NotFound"
-  /tags/implications/{id}/approve.json:
+  /tag_implications/{id}/approve.json:
     post:
       summary: Approve Tag Implication
       tags:
@@ -9888,32 +9888,6 @@ paths:
         403:
           $ref: "#/components/responses/AccessDenied"
   /maintenance/user/dmail_filter.json:
-    get:
-      summary: Get User Name Change Request
-      tags:
-        - User Name Change Requests
-      security:
-        - basicAuth: []
-      description: You must be the creator of the request or Moderator+.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The ID of the name change request.
-          schema:
-            type: number
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserNameChangeRequest"
-        403:
-          $ref: "#/components/responses/AccessDenied"
-        404:
-          $ref: "#/components/responses/NotFound"
-  /user_revert.json:
     patch:
       summary: Update User Dmail Filter
       tags:
@@ -10251,27 +10225,30 @@ paths:
           $ref: "#/components/responses/AccessDenied"
         422:
           $ref: "#/components/responses/ExpectedError"
-  /user_name_change_request/{id}.json:
-    post:
-      summary: Revert User
+  /user_name_change_requests/{id}.json:
+    get:
+      summary: Get User Name Change Request
       tags:
-        - Users
+        - User Name Change Requests
       security:
         - basicAuth: []
-      description: You must be Moderator+.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - user_id
-              properties:
-                user_id:
-                  type: number
+      description: You must be the creator of the request or Moderator+.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the name change request.
+          schema:
+            type: number
       responses:
-        302:
+        200:
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserNameChangeRequest"
+        403:
+          $ref: "#/components/responses/AccessDenied"
         404:
           $ref: "#/components/responses/NotFound"
   # Wiki Pages
@@ -10901,6 +10878,7 @@ paths:
       summary: Approve Post
       tags:
         - Posts
+        - Post Approvals
       security:
         - basicAuth: []
       description: You must have the "Approve Posts" permission.
@@ -10927,6 +10905,7 @@ paths:
       summary: Unapprove Post
       tags:
         - Posts
+        - Post Approvals
       security:
         - basicAuth: []
       description: You must have the "Approve Posts" permission. The response does not differ for success or failure.
