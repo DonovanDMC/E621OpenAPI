@@ -6587,7 +6587,7 @@ paths:
     post:
       summary: Add Post To Pool
       tags:
-        - Posts
+        - Pools
       security:
         - basicAuth: []
       description: Note that the extension is JS, this route will not return JSON.
@@ -6614,7 +6614,7 @@ paths:
     delete:
       summary: Remove Post From Pool
       tags:
-        - Posts
+        - Pools
       security:
         - basicAuth: []
       requestBody:
@@ -10797,7 +10797,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         422:
           $ref: "#/components/responses/ExpectedError"
-  /moderator/posts/{id}/regenerate_videos.json:
+  /moderator/post/posts/{id}/regenerate_videos.json:
     post:
       summary: Regenerate Post Videos
       tags:
