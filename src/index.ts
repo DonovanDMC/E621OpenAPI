@@ -1,7 +1,9 @@
 import SwaggerUI from "swagger-ui";
 import "swagger-ui/dist/swagger-ui.css";
 import "swagger-themes/themes/dark.css";
-import "jquery";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare function plausible(event: string, properties?: { props: Record<string, string>; }): void;
 
 function addEvent(selector: string, event: string, properties: (element: Element) => Record<string, string>): void {
     const items = Array.from(document.querySelectorAll(selector));

@@ -22,7 +22,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.6.0",
-    "jquery": "^3.7.1",
     "swagger-themes": "^1.4.3",
     "swagger-ui": "^5.17.14"
   },
