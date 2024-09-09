@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "build:production": "NODE_ENV=production webpack",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "lint": "eslint src",
+    "lint:api": "redocly lint openapi.yaml"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "swagger-ui": "^5.17.14"
   },
   "devDependencies": {
+    "@redocly/cli": "^1.23.1",
     "@types/node": "^22.5.4",
     "@types/swagger-ui": "^3.52.4",
     "@typescript-eslint/eslint-plugin": "^7.0.0",

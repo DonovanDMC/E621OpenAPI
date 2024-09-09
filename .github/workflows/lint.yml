@@ -1,0 +1,39 @@
+name: Lint
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint Code
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile --ignore-scripts
+      - name: Build
+        run: pnpm run build
+      - name: Lint
+        run: pnpm run lint
+  lint-api:
+    runs-on: ubuntu-latest
+    name: Lint API
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile --ignore-scripts
+      - name: Build
+        run: pnpm run build
+      - name: Lint
+        run: pnpm run lint:api
