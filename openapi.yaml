@@ -2,8 +2,10 @@ openapi: "3.1.0"
 info:
   title: "E621"
   description: |
-    OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)
-    This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).
+    OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)<br>
+    This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).<br>
+    Note if E621's api is under attack and/or cloudflare protections are enabled, the "Try it out" buttons here will not work.<br>
+    If they are not working, you can check this [Unofficial Status Page](https://status.e621.ws).
   license:
     name: "MIT"
     url: "https://opensource.org/licenses/MIT"
@@ -11,7 +13,7 @@ info:
   contact:
     name: Donovan_DMC
     url: https://e621.net/forum_topics/46279
-  version: "db1dc38"
+  version: "d69c34e"
 
 servers:
   - url: https://e621.net
@@ -4709,6 +4711,7 @@ paths:
       operationId: previewDText
       tags:
         - DText
+      description: Note while this route does not require auth, without auth it requires a CSRF token. For that reason it has been marked as requiring auth.
       security:
         - basicAuth: []
       requestBody:
@@ -6053,6 +6056,13 @@ paths:
       operationId: searchModActions
       tags:
         - Mod Actions
+      description: |
+        Note that some mod actions are not in use anymore. Their entries exist for historical purposes only.<br>
+        The current legacy actions are as follows:<br>
+        * `created_positive_record`, `created_neutral_record`, `created_negative_record`
+        * `created_flag_reason`, `edited_flag_reason`, `deleted_flag_reason`
+        * `post_move_favorites`, `post_delete`, `post_undelete`, `post_destroy`, `post_rating_lock`, `post_unapprove`
+        * `post_replacement_accept`, `post_replacement_reject`, `post_replacement_delete`
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/page"
@@ -8517,6 +8527,7 @@ paths:
       operationId: previewTags
       tags:
         - Tags
+      description: Note while this route does not require auth, without auth it requires a CSRF token. For that reason it has been marked as requiring auth.
       security:
         - basicAuth: []
       parameters:
