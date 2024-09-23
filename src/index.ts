@@ -26,6 +26,7 @@ SwaggerUI({
         addEvent(".json-schema-2020-12-accordion", "Toggle Schema", element => ({ schema: element.querySelector(".json-schema-2020-12__title")!.textContent! }));
         addEvent(".json-schema-2020-12-expand-deep-button", "Toggle Schema", element => ({ schema: element.parentNode!.querySelector(".json-schema-2020-12__title")!.textContent! }));
     },
-    supportedSubmitMethods: ["get", "head"],
+    tryItOutEnabled:        false,
+    supportedSubmitMethods: [],
     validatorUrl:           "none"
 });
