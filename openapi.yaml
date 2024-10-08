@@ -32,13 +32,13 @@ components:
       in: query
       description: Search for a specific id.
       schema:
-        type: number
+        type: integer
     limit:
       name: limit
       in: query
       description: The maximum number of results to return. Between 0 and 320.
       schema:
-        type: number
+        type: integer
         minimum: 0
         maximum: 500
     page:
@@ -46,7 +46,7 @@ components:
       in: query
       description: The page number of results to get. Between 1 and 750.
       schema:
-        type: number
+        type: integer
         minimum: 1
         maximum: 750
     ip_addr:
@@ -188,7 +188,7 @@ components:
         - q
         - e
     TagCategories:
-      type: number
+      type: integer
       enum:
         - 0 # general
         - 1 # artist
@@ -260,7 +260,7 @@ components:
         - urls
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         updated_at:
@@ -280,7 +280,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         is_locked:
           type: boolean
         notes:
@@ -297,9 +297,9 @@ components:
         - is_active
       properties:
         id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         url:
           type: string
           format: uri
@@ -329,13 +329,13 @@ components:
         - urls
       properties:
         id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         name:
           type: string
         updater_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -368,13 +368,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         staff_notes:
           type: string
           description: Only visible to Janitor+
@@ -399,11 +399,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         avoid_posting_id:
-          type: number
+          type: integer
         details:
           type: string
         staff_notes:
@@ -426,16 +426,16 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         reason:
           type: string
         expires_at:
           type: ["string", "null"]
           format: date-time
         banner_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -458,13 +458,13 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         body:
           type: string
         response_to:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -476,9 +476,9 @@ components:
         warning_type:
           "$ref": "#/components/schemas/WarningTypes"
         warning_user_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         creator_name:
           type: string
     BulkRelatedTag:
@@ -489,7 +489,7 @@ components:
             - count
           properties:
             count:
-              type: number
+              type: integer
     BulkUpdateRequest:
       type: object
       required:
@@ -505,9 +505,9 @@ components:
         - title
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         forum_topic_id:
           type: ["number", "null"]
         script:
@@ -552,14 +552,14 @@ components:
         - updater_name
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         body:
           type: string
         score:
@@ -568,7 +568,7 @@ components:
           type: string
           format: date-time
         updater_id:
-          type: number
+          type: integer
         do_not_bump_post:
           type: boolean
           deprecated: true
@@ -693,11 +693,11 @@ components:
             time_zone:
               type: string
             per_page:
-              type: number
+              type: integer
             custom_style:
               type: string
             favorite_count:
-              type: number
+              type: integer
             api_regen_multiplier:
               type: number
             api_burst_limit:
@@ -707,9 +707,9 @@ components:
             statement_timeout:
               type: number
             favorite_limit:
-              type: number
+              type: integer
             tag_query_limit:
-              type: number
+              type: integer
             has_mail:
               type: boolean
     DMail:
@@ -727,13 +727,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         owner_id:
-          type: number
+          type: integer
         from_id:
-          type: number
+          type: integer
         to_id:
-          type: number
+          type: integer
         title:
           type: string
         body:
@@ -774,7 +774,7 @@ components:
         - preview_height
       properties:
         id:
-          type: number
+          type: integer
         flags:
           type: string
         tags:
@@ -795,17 +795,17 @@ components:
         uploader:
           type: string
         uploader_id:
-          type: number
+          type: integer
         score:
           type: number
         fav_count:
-          type: number
+          type: integer
         is_favorited:
           type: boolean
         pools:
           type: array
           items:
-            type: number
+            type: integer
         md5:
           type: string
         preview_url:
@@ -842,7 +842,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
         updated_at:
@@ -868,13 +868,13 @@ components:
         - warning_user_id
       properties:
         id:
-          type: number
+          type: integer
         topic:
           type: number
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         body:
           type: string
         is_hidden:
@@ -902,11 +902,11 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         forum_post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         score:
           type: number
         created_at:
@@ -933,15 +933,15 @@ components:
         - category_id
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         title:
           type: string
         response_count:
-          type: number
+          type: integer
         is_sticky:
           type: boolean
         is_locked:
@@ -955,7 +955,7 @@ components:
           type: string
           format: date-time
         category_id:
-          type: number
+          type: integer
     FullCurrentUser:
       type: object
       allOf:
@@ -981,27 +981,27 @@ components:
             - profile_artinfo
           properties:
             wiki_page_version_count:
-              type: number
+              type: integer
             artist_version_count:
-              type: number
+              type: integer
             pool_version_count:
-              type: number
+              type: integer
             forum_post_count:
-              type: number
+              type: integer
             comment_count:
-              type: number
+              type: integer
             flag_count:
-              type: number
+              type: integer
             favorite_count:
-              type: number
+              type: integer
             positive_feedback_count:
-              type: number
+              type: integer
             neutral_feedback_count:
-              type: number
+              type: integer
             negative_feedback_count:
-              type: number
+              type: integer
             upload_limit:
-              type: number
+              type: integer
             profile_about:
               type: string
             profile_artinfo:
@@ -1018,7 +1018,7 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         title:
@@ -1044,9 +1044,9 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         reason:
           type: string
         created_at:
@@ -1113,7 +1113,7 @@ components:
         - is_favorited
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1121,9 +1121,9 @@ components:
           type: string
           format: date-time
         up_score:
-          type: number
+          type: integer
         down_score:
-          type: number
+          type: integer
         score:
           type: number
         source:
@@ -1145,9 +1145,9 @@ components:
         is_deleted:
           type: boolean
         uploader_id:
-          type: number
+          type: integer
         approver_id:
-          type: number
+          type: integer
         last_noted_at:
           type: ["null", "string"]
           format: date-time
@@ -1155,19 +1155,19 @@ components:
           type: ["null", "string"]
           format: date-time
         fav_count:
-          type: number
+          type: integer
         tag_string:
           type: string
         tag_count:
-          type: number
+          type: integer
         tag_count_general:
-          type: number
+          type: integer
         tag_count_artist:
-          type: number
+          type: integer
         tag_count_character:
-          type: number
+          type: integer
         tag_count_copyright:
-          type: number
+          type: integer
         file_ext:
           type: string
         file_size:
@@ -1188,21 +1188,21 @@ components:
         bit_flags:
           type: number
         tag_count_meta:
-          type: number
+          type: integer
         locked_tags:
           type: ["null", "string"]
         tag_count_species:
-          type: number
+          type: integer
         tag_count_invalid:
-          type: number
+          type: integer
         description:
           type: string
         comment_count:
-          type: number
+          type: integer
         change_seq:
-          type: number
+          type: integer
         tag_count_lore:
-          type: number
+          type: integer
         bg_color:
           type: ["null", "string"]
         generated_samples:
@@ -1228,7 +1228,7 @@ components:
         pool_ids:
           type: array
           items:
-            type: number
+            type: integer
         is_favorited:
           type: boolean
         file_url:
@@ -1248,7 +1248,7 @@ components:
         hash:
           type: string
         post_id:
-          type: number
+          type: integer
         score:
           type: number
         post:
@@ -1276,9 +1276,9 @@ components:
         - url_path
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         display_name:
           type: string
         md5:
@@ -1317,9 +1317,9 @@ components:
         - action
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1339,13 +1339,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         message:
           type: string
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1370,7 +1370,7 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1378,7 +1378,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         x:
           type: number
         y:
@@ -1392,7 +1392,7 @@ components:
         is_active:
           type: boolean
         post_id:
-          type: number
+          type: integer
         body:
           type: string
         creator_name:
@@ -1415,7 +1415,7 @@ components:
         - updater_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1437,11 +1437,11 @@ components:
         is_active:
           type: boolean
         note_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
     Pool:
       type: object
       required:
@@ -1458,14 +1458,14 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         updated_at:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         description:
           type: string
         is_active:
@@ -1475,14 +1475,14 @@ components:
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
         created_at:
           type: string
           format: date-time
         creator_name:
           type: string
         post_count:
-          type: number
+          type: integer
     PoolVersion:
       type: object
       required:
@@ -1504,13 +1504,13 @@ components:
         - removed_post_ids
       properties:
         id:
-          type: number
+          type: integer
         pool_id:
-          type: number
+          type: integer
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
         created_at:
           type: string
           format: date-time
@@ -1518,7 +1518,7 @@ components:
           type: string
           format: date-time
         updater_id:
-          type: number
+          type: integer
         name:
           type: string
         name_changed:
@@ -1538,11 +1538,11 @@ components:
         added_post_ids:
           type: array
           items:
-            type: number
+            type: integer
         removed_post_ids:
           type: array
           items:
-            type: number
+            type: integer
     Post:
       type: object
       required:
@@ -1571,7 +1571,7 @@ components:
         - duration
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
