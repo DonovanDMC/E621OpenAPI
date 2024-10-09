@@ -1727,7 +1727,7 @@ components:
         rating:
           "$ref": "#/components/schemas/Ratings"
         fav_count:
-          type: number
+          type: integer
         sources:
           type: array
           items:
@@ -1735,7 +1735,7 @@ components:
         pools:
           type: array
           items:
-            type: number
+            type: integer
         relationships:
           type: object
           required:
@@ -1757,11 +1757,11 @@ components:
         approver_id:
           type: ["number", "null"]
         uploader_id:
-          type: number
+          type: integer
         description:
           type: string
         comment_count:
-          type: number
+          type: integer
         is_favorited:
           type: boolean
         has_notes:
@@ -1778,11 +1778,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1801,11 +1801,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         reason:
           type: string
           enum:
@@ -1830,11 +1830,11 @@ components:
         - created_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
         post_id:
-          type: number
+          type: integer
         action:
           "$ref": "#/components/schemas/PostEventActions"
         created_at:
@@ -1854,12 +1854,12 @@ components:
         - type
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         reason:
           type: string
         creator_id:
@@ -1896,7 +1896,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1904,11 +1904,11 @@ components:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         approver_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
         file_ext:
           type: string
         file_size:
@@ -1972,7 +1972,7 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1980,7 +1980,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         is_public:
           type: boolean
         name:
@@ -1990,13 +1990,13 @@ components:
         description:
           type: string
         post_count:
-          type: number
+          type: integer
         transfer_on_delete:
           type: boolean
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
     PostVersion:
       type: object
       required:
@@ -2026,13 +2026,13 @@ components:
         - updater_name
       properties:
         id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         tags:
           type: string
         updater_id:
-          type: number
+          type: integer
         updated_at:
           type: string
           format: date-time
@@ -2106,11 +2106,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         post_count:
-          type: number
+          type: integer
         related_tags:
           type: array
           items:
@@ -2145,13 +2145,13 @@ components:
         - approver_id
       properties:
         id:
-          type: number
+          type: integer
         antecedent_name:
           type: string
         reason:
           type: string
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: ["string", "null"]
           format: date-time
@@ -2169,7 +2169,7 @@ components:
             Note: The "error" status will be proceeded by an error, ex: "error: Validation failed: A tag alias for tag_name already exists"
           "$ref": "#/components/schemas/TagRequestStatuses"
         post_count:
-          type: number
+          type: integer
         approver_id:
           type: ["number", "null"]
     TagImplication:
@@ -2189,11 +2189,11 @@ components:
         - approver_id
       properties:
         id:
-          type: number
+          type: integer
         reason:
           type: string
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2256,7 +2256,7 @@ components:
         - creator_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2270,9 +2270,9 @@ components:
         is_locked:
           type: boolean
         tag_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
     Takedown:
       type: object
       required:
@@ -2285,7 +2285,7 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         status:
           type: string
           enum:
@@ -2304,7 +2304,7 @@ components:
           type: string
           format: date-time
         post_count:
-          type: number
+          type: integer
     Ticket:
       type: object
       required:
@@ -2322,9 +2322,9 @@ components:
         - accused_id
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         reason:
           type: string
         disp_id:
@@ -2363,7 +2363,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2404,13 +2404,13 @@ components:
         - uploader_name
       properties:
         id:
-          type: number
+          type: integer
         source:
           type: string
         rating:
           "$ref": "#/components/schemas/Ratings"
         uploader_id:
-          type: number
+          type: integer
         tag_string:
           type: string
         status:
@@ -2470,7 +2470,7 @@ components:
         - avatar_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2479,13 +2479,13 @@ components:
         level:
           type: number
         base_upload_limit:
-          type: number
+          type: integer
         post_upload_count:
-          type: number
+          type: integer
         post_update_count:
-          type: number
+          type: integer
         note_update_count:
-          type: number
+          type: integer
         is_banned:
           type: boolean
         can_approve_posts:
@@ -2495,7 +2495,33 @@ components:
         level_string:
           type: string
         avatar_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
+        artist_version_count:
+          type: integer
+        comment_count:
+          type: integer
+        favorites_count:
+          type: integer
+        flag_count:
+          type: number
+        forum_post_count:
+          type: integer
+        negative_feedback_count:
+          type: integer
+        neutral_feedback_count:
+          type: integer
+        pool_version_count:
+          type: integer
+        positive_feedback_count:
+          type: integer
+        profile_about:
+          type: string
+        profile_artinfo:
+          type: string
+        upload_limit:
+          tpe: integer
+        wiki_page_version_count:
+          type: integer
     UserFeedback:
       type: object
       required:
@@ -2510,11 +2536,11 @@ components:
         - is_deleted
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         category:
           "$ref": "#/components/schemas/FeedbackCategories"
         body:
@@ -2542,11 +2568,11 @@ components:
         - status
       properties:
         id:
-          type: number
+          type: integer
         approver_id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         original_name:
           type: string
         desired_name:
@@ -10095,7 +10121,7 @@ paths:
           required: true
           description: The ID of the user.
           schema:
-            type: number
+            type: 'string'
       responses:
         200:
           description: Success
@@ -10119,7 +10145,7 @@ paths:
           required: true
           description: The ID of the user. The actual value is ignored, but something must be supplied.
           schema:
-            type: number
+            type: integer
       security:
         - basicAuth: []
       requestBody:
@@ -10185,7 +10211,7 @@ paths:
                 user[profile_artinfo]:
                   type: string
                 user[avatar_id]:
-                  type: number
+                  type: integer
                 user[enable_compact_uploader]:
                   type: boolean
                   description: You must have uploaded at least 10 posts.
