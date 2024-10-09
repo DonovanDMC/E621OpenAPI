@@ -10119,7 +10119,7 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the user.
+          description: The ID or Username of the user.
           schema:
             type: 'string'
       responses:
