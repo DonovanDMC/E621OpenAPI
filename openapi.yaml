@@ -600,7 +600,7 @@ components:
             - enable_privacy_mode
             - style_usernames
             - enable_auto_complete
-            - disabled_cropped_thumbnails
+            - disable_cropped_thumbnails
             - enable_safe_mode
             - disable_responsive_mode
             - no_flagging
@@ -650,7 +650,7 @@ components:
               type: boolean
             can_approve_posts:
               type: boolean
-            disabled_cropped_thumbnails:
+            disable_cropped_thumbnails:
               type: boolean
             enable_safe_mode:
               type: boolean
@@ -10129,7 +10129,7 @@ paths:
             application/json:
               schema:
                 anyOf:
-                  - $ref: "#/components/schemas/User"
+                  - $ref: "#/components/schemas/FullUser"
                   - $ref: "#/components/schemas/FullCurrentUser"
                     description: Extra properties included for the current user.
         404:
