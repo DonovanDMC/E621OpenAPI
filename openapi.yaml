@@ -21,175 +21,6 @@ servers:
   - url: http://localhost:3000
     description: E621 (Development)
 
-x-constants:
-  - &modaction-actions
-    - artist_page_rename
-    - artist_page_lock
-    - artist_page_unlock
-    - artist_user_linked
-    - artist_user_unlinked
-    - avoid_posting_create
-    - avoid_posting_update
-    - avoid_posting_delete
-    - avoid_posting_undelete
-    - avoid_posting_destroy
-    - blip_delete
-    - blip_hide
-    - blip_unhide
-    - blip_update
-    - comment_delete
-    - comment_hide
-    - comment_unhide
-    - comment_update
-    - forum_category_create
-    - forum_category_delete
-    - forum_category_update
-    - forum_post_delete
-    - forum_post_hide
-    - forum_post_unhide
-    - forum_post_update
-    - forum_topic_delete
-    - forum_topic_hide
-    - forum_topic_unhide
-    - forum_topic_lock
-    - forum_topic_unlock
-    - forum_topic_stick
-    - forum_topic_unstick
-    - forum_topic_update
-    - help_create
-    - help_delete
-    - help_update
-    - ip_ban_create
-    - ip_ban_delete
-    - mascot_create
-    - mascot_update
-    - mascot_delete
-    - pool_delete
-    - report_reason_create
-    - report_reason_delete
-    - report_reason_update
-    - set_update
-    - set_delete
-    - set_change_visibility
-    - tag_alias_create
-    - tag_alias_update
-    - tag_implication_create
-    - tag_implication_update
-    - ticket_claim
-    - ticket_unclaim
-    - ticket_update
-    - upload_whitelist_create
-    - upload_whitelist_update
-    - upload_whitelist_delete
-    - user_blacklist_changed
-    - user_text_change
-    - user_upload_limit_change
-    - user_flags_change
-    - user_level_change
-    - user_name_change
-    - user_delete
-    - user_ban
-    - user_ban_update
-    - user_unban
-    - user_feedback_create
-    - user_feedback_update
-    - user_feedback_delete
-    - user_feedback_undelete
-    - user_feedback_destroy
-    - wiki_page_rename
-    - wiki_page_delete
-    - wiki_page_lock
-    - wiki_page_unlock
-    - mass_update
-    - nuke_tag
-    - takedown_delete
-    - takedown_process
-    # legacy
-    - created_positive_record
-    - created_neutral_record
-    - created_negative_record
-    - created_flag_reason
-    - edited_flag_reason
-    - deleted_flag_reason
-    - post_move_favorites
-    - post_delete
-    - post_undelete
-    - post_destroy
-    - post_rating_lock
-    - post_unapprove
-    - post_replacement_accept
-    - post_replacement_reject
-    - post_replacement_delete
-  - &post-event-actions
-    - deleted
-    - undeleted
-    - approved
-    - unapproved
-    - flag_created
-    - flag_removed
-    - favorites_moved
-    - favorites_received
-    - rating_locked
-    - rating_unlocked
-    - status_locked
-    - status_unlocked
-    - note_locked
-    - note_unlocked
-    - comment_locked
-    - comment_unlocked
-    - replacement_accepted
-    - replacement_rejected
-    - replacement_promoted
-    - replacement_deleted
-    - expunged
-    - changed_bg_color
-  - &ratings
-    - s
-    - q
-    - e
-  - &tag-categories
-    - 0 # general
-    - 1 # artist
-    - 3 # copyright
-    - 4 # character
-    - 5 # species
-    - 6 # invalid
-    - 7 # meta
-    - 8 # lore
-  - &feedback-categories
-    - negative
-    - neutral
-    - positive
-  - &tag-request-statuses
-    - active
-    - deleted
-    - processing
-    - queued
-    - retired
-    - error
-    - pending
-  - &warning-types
-    - warning
-    - record
-    - ban
-  - &pool-categories
-    - collection
-    - series
-  - &ticket-types
-    - blip
-    - comment
-    - dmail
-    - forum
-    - pool
-    - post
-    - set
-    - user
-    - wiki
-  - &ticket-statuses
-    - pending
-    - partial
-    - approved
-
 components:
   securitySchemes:
     basicAuth:
@@ -201,13 +32,13 @@ components:
       in: query
       description: Search for a specific id.
       schema:
-        type: number
+        type: integer
     limit:
       name: limit
       in: query
       description: The maximum number of results to return. Between 0 and 320.
       schema:
-        type: number
+        type: integer
         minimum: 0
         maximum: 500
     page:
@@ -215,7 +46,7 @@ components:
       in: query
       description: The page number of results to get. Between 1 and 750.
       schema:
-        type: number
+        type: integer
         minimum: 1
         maximum: 750
     ip_addr:
@@ -225,6 +56,193 @@ components:
       schema:
         type: string
   schemas:
+    ModactionActions:
+      type: string
+      enum:
+        - artist_page_rename
+        - artist_page_lock
+        - artist_page_unlock
+        - artist_user_linked
+        - artist_user_unlinked
+        - avoid_posting_create
+        - avoid_posting_update
+        - avoid_posting_delete
+        - avoid_posting_undelete
+        - avoid_posting_destroy
+        - blip_delete
+        - blip_hide
+        - blip_unhide
+        - blip_update
+        - comment_delete
+        - comment_hide
+        - comment_unhide
+        - comment_update
+        - forum_category_create
+        - forum_category_delete
+        - forum_category_update
+        - forum_post_delete
+        - forum_post_hide
+        - forum_post_unhide
+        - forum_post_update
+        - forum_topic_delete
+        - forum_topic_hide
+        - forum_topic_unhide
+        - forum_topic_lock
+        - forum_topic_unlock
+        - forum_topic_stick
+        - forum_topic_unstick
+        - forum_topic_update
+        - help_create
+        - help_delete
+        - help_update
+        - ip_ban_create
+        - ip_ban_delete
+        - mascot_create
+        - mascot_update
+        - mascot_delete
+        - pool_delete
+        - report_reason_create
+        - report_reason_delete
+        - report_reason_update
+        - set_update
+        - set_delete
+        - set_change_visibility
+        - tag_alias_create
+        - tag_alias_update
+        - tag_implication_create
+        - tag_implication_update
+        - ticket_claim
+        - ticket_unclaim
+        - ticket_update
+        - upload_whitelist_create
+        - upload_whitelist_update
+        - upload_whitelist_delete
+        - user_blacklist_changed
+        - user_text_change
+        - user_upload_limit_change
+        - user_flags_change
+        - user_level_change
+        - user_name_change
+        - user_delete
+        - user_ban
+        - user_ban_update
+        - user_unban
+        - user_feedback_create
+        - user_feedback_update
+        - user_feedback_delete
+        - user_feedback_undelete
+        - user_feedback_destroy
+        - wiki_page_rename
+        - wiki_page_delete
+        - wiki_page_lock
+        - wiki_page_unlock
+        - mass_update
+        - nuke_tag
+        - takedown_delete
+        - takedown_process
+        # legacy
+        - created_positive_record
+        - created_neutral_record
+        - created_negative_record
+        - created_flag_reason
+        - edited_flag_reason
+        - deleted_flag_reason
+        - post_move_favorites
+        - post_delete
+        - post_undelete
+        - post_destroy
+        - post_rating_lock
+        - post_unapprove
+        - post_replacement_accept
+        - post_replacement_reject
+        - post_replacement_delete
+    PostEventActions:
+      type: string
+      enum:
+        - deleted
+        - undeleted
+        - approved
+        - unapproved
+        - flag_created
+        - flag_removed
+        - favorites_moved
+        - favorites_received
+        - rating_locked
+        - rating_unlocked
+        - status_locked
+        - status_unlocked
+        - note_locked
+        - note_unlocked
+        - comment_locked
+        - comment_unlocked
+        - replacement_accepted
+        - replacement_rejected
+        - replacement_promoted
+        - replacement_deleted
+        - expunged
+        - changed_bg_color
+    Ratings:
+      type: string
+      enum:
+        - s
+        - q
+        - e
+    TagCategories:
+      type: integer
+      enum:
+        - 0 # general
+        - 1 # artist
+        - 3 # copyright
+        - 4 # character
+        - 5 # species
+        - 6 # invalid
+        - 7 # meta
+        - 8 # lore
+    FeedbackCategories:
+      type: string
+      enum:
+        - negative
+        - neutral
+        - positive
+    TagRequestStatuses:
+      type: string
+      enum:
+        - active
+        - deleted
+        - processing
+        - queued
+        - retired
+        - error
+        - pending
+    WarningTypes:
+      types: string
+      enum:
+        - warning
+        - record
+        - ban
+    PoolCategories:
+      type: string
+      enum:
+        - collection
+        - series
+    TicketTypes:
+      type: string
+      enum:
+        - blip
+        - comment
+        - dmail
+        - forum
+        - pool
+        - post
+        - set
+        - user
+        - wiki
+    TicketStatuses:
+      type: string
+      enum:
+        - pending
+        - partial
+        - approved
     Artist:
       type: object
       required:
@@ -242,7 +260,7 @@ components:
         - urls
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         updated_at:
@@ -262,7 +280,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         is_locked:
           type: boolean
         notes:
@@ -279,9 +297,9 @@ components:
         - is_active
       properties:
         id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         url:
           type: string
           format: uri
@@ -311,13 +329,13 @@ components:
         - urls
       properties:
         id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         name:
           type: string
         updater_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -350,13 +368,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         artist_id:
-          type: number
+          type: integer
         staff_notes:
           type: string
           description: Only visible to Janitor+
@@ -381,11 +399,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         avoid_posting_id:
-          type: number
+          type: integer
         details:
           type: string
         staff_notes:
@@ -408,16 +426,16 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         reason:
           type: string
         expires_at:
           type: ["string", "null"]
           format: date-time
         banner_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -440,13 +458,13 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         body:
           type: string
         response_to:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -456,12 +474,11 @@ components:
         is_hidden:
           type: boolean
         warning_type:
-          type: string
-          enum: *warning-types
+          "$ref": "#/components/schemas/WarningTypes"
         warning_user_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         creator_name:
           type: string
     BulkRelatedTag:
@@ -472,7 +489,7 @@ components:
             - count
           properties:
             count:
-              type: number
+              type: integer
     BulkUpdateRequest:
       type: object
       required:
@@ -488,9 +505,9 @@ components:
         - title
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         forum_topic_id:
           type: ["number", "null"]
         script:
@@ -535,14 +552,14 @@ components:
         - updater_name
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         body:
           type: string
         score:
@@ -551,7 +568,7 @@ components:
           type: string
           format: date-time
         updater_id:
-          type: number
+          type: integer
         do_not_bump_post:
           type: boolean
           deprecated: true
@@ -561,7 +578,7 @@ components:
           type: boolean
         warning_type:
           type: ["string", "null"]
-          enum: *warning-types
+          "$ref": "#/components/schemas/WarningTypes"
         warning_user_id:
           type: ["number", "null"]
         creator_name:
@@ -583,7 +600,7 @@ components:
             - enable_privacy_mode
             - style_usernames
             - enable_auto_complete
-            - disabled_cropped_thumbnails
+            - disable_cropped_thumbnails
             - enable_safe_mode
             - disable_responsive_mode
             - no_flagging
@@ -633,7 +650,7 @@ components:
               type: boolean
             can_approve_posts:
               type: boolean
-            disabled_cropped_thumbnails:
+            disable_cropped_thumbnails:
               type: boolean
             enable_safe_mode:
               type: boolean
@@ -676,11 +693,11 @@ components:
             time_zone:
               type: string
             per_page:
-              type: number
+              type: integer
             custom_style:
               type: string
             favorite_count:
-              type: number
+              type: integer
             api_regen_multiplier:
               type: number
             api_burst_limit:
@@ -690,9 +707,9 @@ components:
             statement_timeout:
               type: number
             favorite_limit:
-              type: number
+              type: integer
             tag_query_limit:
-              type: number
+              type: integer
             has_mail:
               type: boolean
     DMail:
@@ -710,13 +727,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         owner_id:
-          type: number
+          type: integer
         from_id:
-          type: number
+          type: integer
         to_id:
-          type: number
+          type: integer
         title:
           type: string
         body:
@@ -757,14 +774,13 @@ components:
         - preview_height
       properties:
         id:
-          type: number
+          type: integer
         flags:
           type: string
         tags:
           type: string
         rating:
-          type: string
-          enum: *ratings
+          "$ref": "#/components/schemas/Ratings"
         file_ext:
           type: string
         width:
@@ -779,17 +795,17 @@ components:
         uploader:
           type: string
         uploader_id:
-          type: number
+          type: integer
         score:
           type: number
         fav_count:
-          type: number
+          type: integer
         is_favorited:
           type: boolean
         pools:
           type: array
           items:
-            type: number
+            type: integer
         md5:
           type: string
         preview_url:
@@ -826,7 +842,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
         updated_at:
@@ -852,13 +868,13 @@ components:
         - warning_user_id
       properties:
         id:
-          type: number
+          type: integer
         topic:
           type: number
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         body:
           type: string
         is_hidden:
@@ -871,7 +887,7 @@ components:
           format: date-time
         warning_type:
           type: ["string", "null"]
-          enum: *warning-types
+          "$ref": "#/components/schemas/WarningTypes"
         warning_user_id:
           type: ["number", "null"]
     ForumPostVote:
@@ -886,11 +902,11 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         forum_post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         score:
           type: number
         created_at:
@@ -917,15 +933,15 @@ components:
         - category_id
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         title:
           type: string
         response_count:
-          type: number
+          type: integer
         is_sticky:
           type: boolean
         is_locked:
@@ -939,7 +955,7 @@ components:
           type: string
           format: date-time
         category_id:
-          type: number
+          type: integer
     FullCurrentUser:
       type: object
       allOf:
@@ -965,27 +981,27 @@ components:
             - profile_artinfo
           properties:
             wiki_page_version_count:
-              type: number
+              type: integer
             artist_version_count:
-              type: number
+              type: integer
             pool_version_count:
-              type: number
+              type: integer
             forum_post_count:
-              type: number
+              type: integer
             comment_count:
-              type: number
+              type: integer
             flag_count:
-              type: number
+              type: integer
             favorite_count:
-              type: number
+              type: integer
             positive_feedback_count:
-              type: number
+              type: integer
             neutral_feedback_count:
-              type: number
+              type: integer
             negative_feedback_count:
-              type: number
+              type: integer
             upload_limit:
-              type: number
+              type: integer
             profile_about:
               type: string
             profile_artinfo:
@@ -1002,7 +1018,7 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         title:
@@ -1028,9 +1044,9 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         reason:
           type: string
         created_at:
@@ -1097,7 +1113,7 @@ components:
         - is_favorited
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1105,9 +1121,9 @@ components:
           type: string
           format: date-time
         up_score:
-          type: number
+          type: integer
         down_score:
-          type: number
+          type: integer
         score:
           type: number
         source:
@@ -1115,8 +1131,7 @@ components:
         md5:
           type: string
         rating:
-          type: string
-          enum: *ratings
+          "$ref": "#/components/schemas/Ratings"
         is_note_locked:
           type: boolean
         is_rating_locked:
@@ -1130,9 +1145,9 @@ components:
         is_deleted:
           type: boolean
         uploader_id:
-          type: number
+          type: integer
         approver_id:
-          type: number
+          type: integer
         last_noted_at:
           type: ["null", "string"]
           format: date-time
@@ -1140,19 +1155,19 @@ components:
           type: ["null", "string"]
           format: date-time
         fav_count:
-          type: number
+          type: integer
         tag_string:
           type: string
         tag_count:
-          type: number
+          type: integer
         tag_count_general:
-          type: number
+          type: integer
         tag_count_artist:
-          type: number
+          type: integer
         tag_count_character:
-          type: number
+          type: integer
         tag_count_copyright:
-          type: number
+          type: integer
         file_ext:
           type: string
         file_size:
@@ -1173,21 +1188,21 @@ components:
         bit_flags:
           type: number
         tag_count_meta:
-          type: number
+          type: integer
         locked_tags:
           type: ["null", "string"]
         tag_count_species:
-          type: number
+          type: integer
         tag_count_invalid:
-          type: number
+          type: integer
         description:
           type: string
         comment_count:
-          type: number
+          type: integer
         change_seq:
-          type: number
+          type: integer
         tag_count_lore:
-          type: number
+          type: integer
         bg_color:
           type: ["null", "string"]
         generated_samples:
@@ -1213,7 +1228,7 @@ components:
         pool_ids:
           type: array
           items:
-            type: number
+            type: integer
         is_favorited:
           type: boolean
         file_url:
@@ -1233,7 +1248,7 @@ components:
         hash:
           type: string
         post_id:
-          type: number
+          type: integer
         score:
           type: number
         post:
@@ -1261,9 +1276,9 @@ components:
         - url_path
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         display_name:
           type: string
         md5:
@@ -1302,9 +1317,9 @@ components:
         - action
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1312,8 +1327,7 @@ components:
           type: string
           format: date-time
         action:
-          type: string
-          enum: *modaction-actions
+          "$ref": "#/components/schemas/ModactionActions"
     NewsUpdate:
       type: object
       required:
@@ -1325,13 +1339,13 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         message:
           type: string
         creator_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1356,7 +1370,7 @@ components:
         - creator_name
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1364,7 +1378,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         x:
           type: number
         y:
@@ -1378,7 +1392,7 @@ components:
         is_active:
           type: boolean
         post_id:
-          type: number
+          type: integer
         body:
           type: string
         creator_name:
@@ -1401,7 +1415,7 @@ components:
         - updater_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1423,11 +1437,11 @@ components:
         is_active:
           type: boolean
         note_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         updater_id:
-          type: number
+          type: integer
     Pool:
       type: object
       required:
@@ -1444,32 +1458,31 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         updated_at:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         description:
           type: string
         is_active:
           type: boolean
         category:
-          type: string
-          enum: *pool-categories
+          "$ref": "#/components/schemas/PoolCategories"
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
         created_at:
           type: string
           format: date-time
         creator_name:
           type: string
         post_count:
-          type: number
+          type: integer
     PoolVersion:
       type: object
       required:
@@ -1491,13 +1504,13 @@ components:
         - removed_post_ids
       properties:
         id:
-          type: number
+          type: integer
         pool_id:
-          type: number
+          type: integer
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
         created_at:
           type: string
           format: date-time
@@ -1505,7 +1518,7 @@ components:
           type: string
           format: date-time
         updater_id:
-          type: number
+          type: integer
         name:
           type: string
         name_changed:
@@ -1519,18 +1532,17 @@ components:
         is_locked:
           type: boolean
         category:
-          type: string
-          enum: *pool-categories
+          "$ref": "#/components/schemas/PoolCategories"
         version:
           type: number
         added_post_ids:
           type: array
           items:
-            type: number
+            type: integer
         removed_post_ids:
           type: array
           items:
-            type: number
+            type: integer
     Post:
       type: object
       required:
@@ -1559,7 +1571,7 @@ components:
         - duration
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1713,10 +1725,9 @@ components:
             deleted:
               type: boolean
         rating:
-          type: string
-          enum: *ratings
+          "$ref": "#/components/schemas/Ratings"
         fav_count:
-          type: number
+          type: integer
         sources:
           type: array
           items:
@@ -1724,7 +1735,7 @@ components:
         pools:
           type: array
           items:
-            type: number
+            type: integer
         relationships:
           type: object
           required:
@@ -1746,11 +1757,11 @@ components:
         approver_id:
           type: ["number", "null"]
         uploader_id:
-          type: number
+          type: integer
         description:
           type: string
         comment_count:
-          type: number
+          type: integer
         is_favorited:
           type: boolean
         has_notes:
@@ -1767,11 +1778,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1790,11 +1801,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         reason:
           type: string
           enum:
@@ -1819,14 +1830,13 @@ components:
         - created_at
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
         post_id:
-          type: number
+          type: integer
         action:
-          type: string
-          enum: *post-event-actions
+          "$ref": "#/components/schemas/PostEventActions"
         created_at:
           type: string
           format: date-time
@@ -1844,12 +1854,12 @@ components:
         - type
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         reason:
           type: string
         creator_id:
@@ -1886,7 +1896,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1894,11 +1904,11 @@ components:
           type: string
           format: date-time
         post_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         approver_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
         file_ext:
           type: string
         file_size:
@@ -1962,7 +1972,7 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1970,7 +1980,7 @@ components:
           type: string
           format: date-time
         creator_id:
-          type: number
+          type: integer
         is_public:
           type: boolean
         name:
@@ -1980,13 +1990,13 @@ components:
         description:
           type: string
         post_count:
-          type: number
+          type: integer
         transfer_on_delete:
           type: boolean
         post_ids:
           type: array
           items:
-            type: number
+            type: integer
     PostVersion:
       type: object
       required:
@@ -2016,19 +2026,18 @@ components:
         - updater_name
       properties:
         id:
-          type: number
+          type: integer
         post_id:
-          type: number
+          type: integer
         tags:
           type: string
         updater_id:
-          type: number
+          type: integer
         updated_at:
           type: string
           format: date-time
         rating:
-          type: string
-          enum: *ratings
+          "$ref": "#/components/schemas/Ratings"
         parent_id:
           type: ["number", "null"]
         source:
@@ -2082,8 +2091,7 @@ components:
         name:
           type: string
         category_id:
-          type: number
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
     Tag:
       type: object
       required:
@@ -2098,11 +2106,11 @@ components:
         - updated_at
       properties:
         id:
-          type: number
+          type: integer
         name:
           type: string
         post_count:
-          type: number
+          type: integer
         related_tags:
           type: array
           items:
@@ -2111,8 +2119,7 @@ components:
           type: ["string", "null"]
           format: date-time
         category:
-          type: number
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
         is_locked:
           type: boolean
         created_at:
@@ -2138,13 +2145,13 @@ components:
         - approver_id
       properties:
         id:
-          type: number
+          type: integer
         antecedent_name:
           type: string
         reason:
           type: string
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: ["string", "null"]
           format: date-time
@@ -2158,12 +2165,11 @@ components:
         consequent_name:
           type: string
         status:
-          type: string
           description: |
             Note: The "error" status will be proceeded by an error, ex: "error: Validation failed: A tag alias for tag_name already exists"
-          enum: *tag-request-statuses
+          "$ref": "#/components/schemas/TagRequestStatuses"
         post_count:
-          type: number
+          type: integer
         approver_id:
           type: ["number", "null"]
     TagImplication:
@@ -2183,11 +2189,11 @@ components:
         - approver_id
       properties:
         id:
-          type: number
+          type: integer
         reason:
           type: string
         creator_id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2198,10 +2204,9 @@ components:
         consequent_name:
           type: string
         status:
-          type: string
           description: |
             Note: The "error" status will be proceeded by an error, ex: "error: Validation failed: A tag alias for tag_name already exists"
-          enum: *tag-request-statuses
+          "$ref": "#/components/schemas/TagRequestStatuses"
         forum_topic_id:
           type: ["number", "null"]
         updated_at:
@@ -2234,10 +2239,10 @@ components:
             - alias
         tagTypeA:
           type: ["number", "null"]
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
         tagTypeB:
           type: ["number", "null"]
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
     TagTypeVersion:
       type: object
       required:
@@ -2251,7 +2256,7 @@ components:
         - creator_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2259,17 +2264,15 @@ components:
           type: string
           format: date-time
         old_type:
-          type: number
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
         new_type:
-          type: number
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
         is_locked:
           type: boolean
         tag_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
     Takedown:
       type: object
       required:
@@ -2282,7 +2285,7 @@ components:
         - post_count
       properties:
         id:
-          type: number
+          type: integer
         status:
           type: string
           enum:
@@ -2301,7 +2304,7 @@ components:
           type: string
           format: date-time
         post_count:
-          type: number
+          type: integer
     Ticket:
       type: object
       required:
@@ -2319,19 +2322,17 @@ components:
         - accused_id
       properties:
         id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         reason:
           type: string
         disp_id:
           type: number
         qtype:
-          type: string
-          enum: *ticket-types
+          "$ref": "#/components/schemas/TicketTypes"
         status:
-          type: string
-          enum: *ticket-statuses
+          "$ref": "#/components/schemas/TicketStatuses"
         created_at:
           type: string
           format: date-time
@@ -2362,7 +2363,7 @@ components:
         - reason
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2403,14 +2404,13 @@ components:
         - uploader_name
       properties:
         id:
-          type: number
+          type: integer
         source:
           type: string
         rating:
-          type: string
-          enum: *ratings
+          "$ref": "#/components/schemas/Ratings"
         uploader_id:
-          type: number
+          type: integer
         tag_string:
           type: string
         status:
@@ -2470,7 +2470,7 @@ components:
         - avatar_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2479,13 +2479,13 @@ components:
         level:
           type: number
         base_upload_limit:
-          type: number
+          type: integer
         post_upload_count:
-          type: number
+          type: integer
         post_update_count:
-          type: number
+          type: integer
         note_update_count:
-          type: number
+          type: integer
         is_banned:
           type: boolean
         can_approve_posts:
@@ -2495,7 +2495,33 @@ components:
         level_string:
           type: string
         avatar_id:
-          type: ["number", "null"]
+          type: ["integer", "null"]
+        artist_version_count:
+          type: integer
+        comment_count:
+          type: integer
+        favorites_count:
+          type: integer
+        flag_count:
+          type: number
+        forum_post_count:
+          type: integer
+        negative_feedback_count:
+          type: integer
+        neutral_feedback_count:
+          type: integer
+        pool_version_count:
+          type: integer
+        positive_feedback_count:
+          type: integer
+        profile_about:
+          type: string
+        profile_artinfo:
+          type: string
+        upload_limit:
+          tpe: integer
+        wiki_page_version_count:
+          type: integer
     UserFeedback:
       type: object
       required:
@@ -2510,14 +2536,13 @@ components:
         - is_deleted
       properties:
         id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         creator_id:
-          type: number
+          type: integer
         category:
-          type: string
-          enum: *feedback-categories
+          "$ref": "#/components/schemas/FeedbackCategories"
         body:
           type: string
         created_at:
@@ -2543,11 +2568,11 @@ components:
         - status
       properties:
         id:
-          type: number
+          type: integer
         approver_id:
-          type: number
+          type: integer
         user_id:
-          type: number
+          type: integer
         original_name:
           type: string
         desired_name:
@@ -2610,8 +2635,7 @@ components:
         creator_name:
           type: string
         category_id:
-          type: number
-          enum: *tag-categories
+          "$ref": "#/components/schemas/TagCategories"
     WikiPageVersion:
       type: object
       required:
@@ -6085,8 +6109,7 @@ paths:
         - in: query
           name: search[action]
           schema:
-            type: string
-            enum: *modaction-actions
+            "$ref": "#/components/schemas/ModactionActions"
       responses:
         200:
           description: Success
@@ -6549,8 +6572,7 @@ paths:
         - in: query
           name: search[category]
           schema:
-            type: string
-            enum: *pool-categories
+            "$ref": "#/components/schemas/PoolCategories"
         - in: query
           name: search[is_active]
           schema:
@@ -6584,8 +6606,7 @@ paths:
                 pool[description]:
                   type: string
                 pool[category]:
-                  type: string
-                  enum: *pool-categories
+                  "$ref": "#/components/schemas/PoolCategories"
                 ipool[s_active]:
                   type: boolean
                 pool[post_ids_string]:
@@ -6656,8 +6677,7 @@ paths:
                 pool[is_active]:
                   type: boolean
                 pool[category]:
-                  type: string
-                  enum: *pool-categories
+                  "$ref": "#/components/schemas/PoolCategories"
                   description: If the pool has more than 30 posts, you must be Janitor+.
                 pool[post_ids_string]:
                   type: string
@@ -6981,11 +7001,9 @@ paths:
                 post[old_description]:
                   type: string
                 post[rating]:
-                  type: string
-                  enum: *ratings
+                  "$ref": "#/components/schemas/Ratings"
                 post[old_rating]:
-                  type: string
-                  enum: *ratings
+                  "$ref": "#/components/schemas/Ratings"
                 post[edit_reason]:
                   type: string
                 post[is_rating_locked]:
@@ -7197,7 +7215,7 @@ paths:
               schema:
                 type: object
                 required:
-                   - post
+                  - post
                 properties:
                   post:
                     $ref: "#/components/schemas/Post"
@@ -7706,8 +7724,7 @@ paths:
         - in: query
           name: search[action]
           schema:
-            type: string
-            enum: *post-event-actions
+            "$ref": "#/components/schemas/PostEventActions"
       responses:
         200:
           description: Success
@@ -8158,8 +8175,7 @@ paths:
         - in: query
           name: search[rating]
           schema:
-            type: string
-            enum: *ratings
+            "$ref": "#/components/schemas/Ratings"
         - in: query
           name: search[rating_changed]
           schema:
@@ -8396,9 +8412,8 @@ paths:
         - in: query
           name: search[category]
           schema:
-            type: number
             description: Allows multiple, comma separated.
-            enum: *tag-categories
+            "$ref": "#/components/schemas/TagCategories"
         - in: query
           name: search[hide_empty]
           schema:
@@ -8473,8 +8488,7 @@ paths:
               type: object
               properties:
                 tag[category]:
-                  type: number
-                  enum: *tag-categories
+                  "$ref": "#/components/schemas/TagCategories"
                 tag[is_locked]:
                   description: Must be Admin+.
                   type: boolean
@@ -8630,18 +8644,15 @@ paths:
         - in: query
           name: search[status]
           schema:
-            type: string
-            enum: *tag-request-statuses
+            "$ref": "#/components/schemas/TagRequestStatuses"
         - in: query
           name: search[antecedent_tag_category]
           schema:
-            type: number
-            enum: *tag-categories
+            "$ref": "#/components/schemas/TagCategories"
         - in: query
           name: search[consequent_tag_category]
           schema:
-            type: number
-            enum: *tag-categories
+            "$ref": "#/components/schemas/TagCategories"
         - in: query
           name: search[creator_id]
           schema:
@@ -8854,18 +8865,15 @@ paths:
         - in: query
           name: search[status]
           schema:
-            type: string
-            enum: *tag-request-statuses
+            "$ref": "#/components/schemas/TagRequestStatuses"
         - in: query
           name: search[antecedent_tag_category]
           schema:
-            type: number
-            enum: *tag-categories
+            "$ref": "#/components/schemas/TagCategories"
         - in: query
           name: search[consequent_tag_category]
           schema:
-            type: number
-            enum: *tag-categories
+            "$ref": "#/components/schemas/TagCategories"
         - in: query
           name: search[creator_id]
           schema:
@@ -9058,8 +9066,7 @@ paths:
                 query:
                   type: string
                 category_id:
-                  type: number
-                  enum: *tag-categories
+                  "$ref": "#/components/schemas/TagCategories"
       responses:
         200:
           description: Success
@@ -9525,8 +9532,7 @@ paths:
         - in: query
           name: search[qtype]
           schema:
-            type: string
-            enum: *ticket-types
+            "$ref": "#/components/schemas/TicketTypes"
         - in: query
           name: search[reason]
           description: You must be Moderator+.
@@ -9618,10 +9624,9 @@ paths:
                     - partial
                     - approved
                 ticket[response]:
-                  type: string                  
-                ticket[record_type]:
                   type: string
-                  enum: *warning-types
+                ticket[record_type]:
+                  "$ref": "#/components/schemas/WarningTypes"
                 ticket[send_update_dmail]:
                   type: boolean
                   description: An update dmail will always be sent when the status is changed.
@@ -9724,8 +9729,7 @@ paths:
         - in: query
           name: search[rating]
           schema:
-            type: string
-            enum: *ratings
+            "$ref": "#/components/schemas/Ratings"
         - in: query
           name: search[parent_id]
           schema:
@@ -9808,8 +9812,7 @@ paths:
                 upload[tag_string]:
                   type: string
                 upload[rating]:
-                  type: string
-                  enum: *ratings
+                  "$ref": "#/components/schemas/Ratings"
                 upload[parent_id]:
                   type: number
                 upload[description]:
@@ -9922,6 +9925,10 @@ paths:
                   type: string
                 upload_whitelist[hidden]:
                   type: boolean
+      responses:
+        200:
+          description: Success
+
   /upload_whitelists/{id}.json:
     patch:
       summary: Edit Upload Whitelist
@@ -10112,19 +10119,19 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the user.
+          description: The ID or Username of the user.
           schema:
-            type: number
+            type: 'string'
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                  anyOf:
-                    - $ref: "#/components/schemas/User"
-                    - $ref: "#/components/schemas/FullCurrentUser"
-                      description: Extra properties included for the current user.
+                anyOf:
+                  - $ref: "#/components/schemas/FullUser"
+                  - $ref: "#/components/schemas/FullCurrentUser"
+                    description: Extra properties included for the current user.
         404:
           $ref: "#/components/responses/NotFound"
     patch:
@@ -10138,7 +10145,7 @@ paths:
           required: true
           description: The ID of the user. The actual value is ignored, but something must be supplied.
           schema:
-            type: number
+            type: integer
       security:
         - basicAuth: []
       requestBody:
@@ -10204,7 +10211,7 @@ paths:
                 user[profile_artinfo]:
                   type: string
                 user[avatar_id]:
-                  type: number
+                  type: integer
                 user[enable_compact_uploader]:
                   type: boolean
                   description: You must have uploaded at least 10 posts.
@@ -10329,8 +10336,7 @@ paths:
         - in: query
           name: search[category]
           schema:
-            type: string
-            enum: *feedback-categories
+            "$ref": "#/components/schemas/FeedbackCategories"
       responses:
         200:
           description: Success
@@ -10373,8 +10379,7 @@ paths:
                 user_feedback[body]:
                   type: string
                 user_feedback[category]:
-                  type: string
-                  enum: *feedback-categories
+                  "$ref": "#/components/schemas/FeedbackCategories"
       responses:
         201:
           description: Success
@@ -10435,8 +10440,7 @@ paths:
                 user_feedback[body]:
                   type: string
                 user_feedback[category]:
-                  type: string
-                  enum: *feedback-categories
+                  "$ref": "#/components/schemas/FeedbackCategories"
       responses:
         204:
           description: Success
