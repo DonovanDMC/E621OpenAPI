@@ -563,7 +563,7 @@ components:
         body:
           type: string
         score:
-          type: number
+          type: integer
         updated_at:
           type: string
           format: date-time
@@ -701,11 +701,11 @@ components:
             api_regen_multiplier:
               type: number
             api_burst_limit:
-              type: number
+              type: integer
             remaining_api_limit:
-              type: number
+              type: integer
             statement_timeout:
-              type: number
+              type: integer
             favorite_limit:
               type: integer
             tag_query_limit:
@@ -784,11 +784,12 @@ components:
         file_ext:
           type: string
         width:
-          type: number
+          type: integer
         height:
-          type: number
+          type: integer
         size:
-          type: number
+          type: integer
+          format: int64
         created_at:
           type: string
           format: date-time
@@ -797,7 +798,7 @@ components:
         uploader_id:
           type: integer
         score:
-          type: number
+          type: integer
         fav_count:
           type: integer
         is_favorited:
@@ -815,9 +816,9 @@ components:
         file_url:
           type: ["string", "null"]
         preview_width:
-          type: number
+          type: integer
         preview_height:
-          type: number
+          type: integer
     DTextResponse:
       type: object
       required:
@@ -869,8 +870,8 @@ components:
       properties:
         id:
           type: integer
-        topic:
-          type: number
+        topic_id:
+          type: integer
         creator_id:
           type: integer
         updater_id:
@@ -908,7 +909,7 @@ components:
         creator_id:
           type: integer
         score:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1125,7 +1126,7 @@ components:
         down_score:
           type: integer
         score:
-          type: number
+          type: integer
         source:
           type: string
         md5:
@@ -1171,13 +1172,14 @@ components:
         file_ext:
           type: string
         file_size:
-          type: number
+          type: integer
+          format: int64
         image_width:
-          type: number
+          type: integer
         image_height:
-          type: number
+          type: integer
         parent_id:
-          type: ["null", "number"]
+          type: ["null", "integer"]
         has_children:
           type: boolean
         last_commented_at:
@@ -1250,7 +1252,7 @@ components:
         post_id:
           type: integer
         score:
-          type: number
+          type: integer
         post:
           type: object
           required:
@@ -1380,13 +1382,13 @@ components:
         creator_id:
           type: integer
         x:
-          type: number
+          type: integer
         y:
-          type: number
+          type: integer
         width:
-          type: number
+          type: integer
         height:
-          type: number
+          type: integer
         version:
           type: number
         is_active:
@@ -1423,13 +1425,13 @@ components:
           type: string
           format: date-time
         x:
-          type: number
+          type: integer
         y:
-          type: number
+          type: integer
         width:
-          type: number
+          type: integer
         height:
-          type: number
+          type: integer
         body:
           type: string
         version:
@@ -1589,13 +1591,14 @@ components:
             - url
           properties:
             width:
-              type: number
+              type: integer
             height:
-              type: number
+              type: integer
             ext:
               type: string
             size:
-              type: number
+              type: integer
+              format: int64
             md5:
               type: string
             url:
@@ -1608,9 +1611,9 @@ components:
             - url
           properties:
             width:
-              type: number
+              type: integer
             height:
-              type: number
+              type: integer
             url:
               type: ["string", "null"]
         sample:
@@ -1647,11 +1650,11 @@ components:
             - total
           properties:
             up:
-              type: number
+              type: integer
             down:
-              type: number
+              type: integer
             total:
-              type: number
+              type: integer
         tags:
           type: object
           required:
@@ -1753,7 +1756,7 @@ components:
             children:
               type: array
               items:
-                type: number
+                type: integer
         approver_id:
           type: ["number", "null"]
         uploader_id:
@@ -1912,11 +1915,12 @@ components:
         file_ext:
           type: string
         file_size:
-          type: number
+          type: integer
+          format: int64
         image_height:
-          type: number
+          type: integer
         image_width:
-          type: number
+          type: integer
         md5:
           type: string
         source:
@@ -1945,9 +1949,9 @@ components:
           enum:
             - video
         height:
-          type: number
+          type: integer
         width:
-          type: number
+          type: integer
         urls:
           type: array
           items:
@@ -2477,7 +2481,7 @@ components:
         name:
           type: string
         level:
-          type: number
+          type: integer
         base_upload_limit:
           type: integer
         post_upload_count:
@@ -2552,7 +2556,7 @@ components:
           type: string
           format: date-time
         updater_id:
-          type: number
+          type: integer
         is_deleted:
           type: boolean
     UserNameChangeRequest:
@@ -2607,7 +2611,7 @@ components:
         - category_id
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2619,11 +2623,11 @@ components:
         body:
           type: string
         creator_id:
-          type: number
+          type: integer
         is_locked:
           type: boolean
         updater_id:
-          type: number
+          type: integer
         is_deleted:
           type: boolean
         other_names:
@@ -2653,7 +2657,7 @@ components:
         - parent
       properties:
         id:
-          type: number
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -2665,9 +2669,9 @@ components:
         body:
           type: string
         updater_id:
-          type: number
+          type: integer
         wiki_page_id:
-          type: number
+          type: integer
         is_locked:
           type: boolean
         other_names:
@@ -3052,7 +3056,7 @@ paths:
           required: true
           description: The version ID to revert to.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -3318,7 +3322,7 @@ paths:
                 avoid_posting[is_active]:
                   type: boolean
                 avoid_posting[artist_attributes][id]:
-                  type: number
+                  type: integer
                 avoid_posting[artist_attributes][name]:
                   type: string
                   description: If provided and the artist does not exist, an artist will be created.
@@ -3331,7 +3335,7 @@ paths:
                 avoid_posting[artist_attributes][group_name]:
                   type: string
                 avoid_posting[artist_attributes][linked_user_id]:
-                  type: number
+                  type: integer
       responses:
         201:
           description: Success
@@ -3403,7 +3407,7 @@ paths:
                 avoid_posting[artist_attributes][group_name]:
                   type: string
                 avoid_posting[artist_attributes][linked_user_id]:
-                  type: number
+                  type: integer
       responses:
         200:
           description: Success
@@ -3644,7 +3648,7 @@ paths:
           description: The ID of the ban to get.
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -3679,7 +3683,7 @@ paths:
         - name: search[creator_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[creator_name]
           in: query
           schema:
@@ -3691,7 +3695,7 @@ paths:
         - name: search[response_to]
           in: query
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -3728,7 +3732,7 @@ paths:
                 blip[body]:
                   type: string
                 blip[response_to]:
-                  type: number
+                  type: integer
       responses:
         201:
           description: Success
@@ -3754,7 +3758,7 @@ paths:
           description: The ID of the blip to get.
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -3782,7 +3786,7 @@ paths:
           description: The ID of the blip.
           required: true
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -3819,7 +3823,7 @@ paths:
           required: true
           description: The ID of the blip.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -3843,7 +3847,7 @@ paths:
           required: true
           description: The ID of the blip.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -3871,7 +3875,7 @@ paths:
           required: true
           description: The ID of the blip.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -3898,7 +3902,7 @@ paths:
           required: true
           description: The ID of the blip.
           schema:
-            type: number
+            type: integer
       requestBody:
         $ref: "#/components/requestBodies/warning"
       responses:
@@ -3937,7 +3941,7 @@ paths:
         - name: search[user_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[user_name]
           in: query
           schema:
@@ -3945,7 +3949,7 @@ paths:
         - name: search[approver_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[approver_name]
           in: query
           schema:
@@ -3953,11 +3957,11 @@ paths:
         - name: search[forum_topic_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[forum_post_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[status]
           in: query
           schema:
@@ -4017,7 +4021,7 @@ paths:
                 bulk_update_request[reason]:
                   type: string
                 bulk_update_request[forum_topic_id]:
-                  type: number
+                  type: integer
                 bulk_update_request[skip_forum]:
                   type: boolean
                   description: Only usable for Admin+
@@ -4044,7 +4048,7 @@ paths:
           required: true
           description: The ID of the bulk update request.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -4068,7 +4072,7 @@ paths:
           required: true
           description: The ID of the bulk update request.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -4106,7 +4110,7 @@ paths:
           required: true
           description: The ID of the bulk update request.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4127,7 +4131,7 @@ paths:
           required: true
           description: The ID of the bulk update request.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4173,7 +4177,7 @@ paths:
           name: search[post_id]
           description: Accepts a comma separated list.
           schema:
-            type: number
+            type: string
         - in: query
           name: search[post_tags_match]
           schema:
@@ -4185,7 +4189,7 @@ paths:
         - in: query
           name: search[post_note_updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -4193,7 +4197,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[is_sticky]
           schema:
@@ -4244,7 +4248,7 @@ paths:
                 comment[body]:
                   type: string
                 comment[post_id]:
-                  type: number
+                  type: integer
                 comment[do_not_bump_post]:
                   type: boolean
                 comment[is_sticky]:
@@ -4277,7 +4281,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -4304,7 +4308,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -4343,7 +4347,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4367,7 +4371,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -4395,7 +4399,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -4422,7 +4426,7 @@ paths:
           required: true
           description: The ID of the comment.
           schema:
-            type: number
+            type: integer
       requestBody:
         $ref: "#/components/requestBodies/warning"
       responses:
@@ -4456,7 +4460,7 @@ paths:
           in: query
           required: true
           schema:
-            type: number
+            type: integer
             enum:
               - -1
               - 1
@@ -4476,9 +4480,9 @@ paths:
                   - our_score
                 properties:
                   score:
-                    type: number
+                    type: integer
                   our_score:
-                    type: number
+                    type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -4583,7 +4587,7 @@ paths:
         - in: query
           name: search[to_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[from_name]
           schema:
@@ -4591,7 +4595,7 @@ paths:
         - in: query
           name: search[from_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[is_read]
           schema:
@@ -4635,7 +4639,7 @@ paths:
           required: true
           description: The ID of the dmail.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -4661,7 +4665,7 @@ paths:
           required: true
           description: The ID of the dmail.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4683,7 +4687,7 @@ paths:
           required: true
           description: The ID of the dmail.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4705,7 +4709,7 @@ paths:
           required: true
           description: The ID of the dmail.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4847,7 +4851,7 @@ paths:
           required: true
           description: The ID of the email blacklist.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4869,7 +4873,7 @@ paths:
           name: user_id
           description: You must be the user or Moderator+ if the user has their favorites hidden.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -4903,8 +4907,8 @@ paths:
               required:
                 - post_id
               properties:
-                post_ud:
-                  type: number
+                post_id:
+                  type: integer
       responses:
         201:
           description: Success
@@ -4936,7 +4940,7 @@ paths:
           in: path
           required: true
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -4968,7 +4972,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -4976,7 +4980,7 @@ paths:
         - in: query
           name: search[topic_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[topic_title_matches]
           schema:
@@ -4988,7 +4992,7 @@ paths:
         - in: query
           name: search[topic_category_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[is_hidden]
           schema:
@@ -5030,7 +5034,7 @@ paths:
                 forum_post[body]:
                   type: string
                 forum_post[topic_id]:
-                  type: number
+                  type: integer
       responses:
         201:
           description: Success
@@ -5055,7 +5059,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -5081,7 +5085,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -5113,7 +5117,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -5136,7 +5140,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5163,7 +5167,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5191,7 +5195,7 @@ paths:
           required: true
           description: The ID of the forum post.
           schema:
-            type: number
+            type: integer
       requestBody:
         $ref: "#/components/requestBodies/warning"
       responses:
@@ -5230,7 +5234,7 @@ paths:
                 - forum_post_vote[score]
               properties:
                 forum_post_vote[score]:
-                  type: number
+                  type: integer
                   enum:
                     - -1
                     - 0
@@ -5301,7 +5305,7 @@ paths:
         - in: query
           name: search[category_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[is_sticky]
           schema:
@@ -5342,9 +5346,9 @@ paths:
                 forum_topic[title]:
                   type: string
                 forum_topic[category_id]:
-                  type: number
+                  type: integer
                 forum_topic[original_post_attributes][id]:
-                  type: number
+                  type: integer
                   description: Forum post ID. Mutually exclusive with body, one must be provided.
                 forum_topic[original_post_attributes][body]:
                   type: string
@@ -5379,7 +5383,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -5404,7 +5408,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -5414,9 +5418,9 @@ paths:
                 forum_topic[title]:
                   type: string
                 forum_topic[category_id]:
-                  type: number
+                  type: integer
                 forum_topic[original_post_attributes][id]:
-                  type: number
+                  type: integer
                   description: Forum post ID. Silently ignored
                 forum_topic[original_post_attributes][body]:
                   type: string
@@ -5450,7 +5454,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -5473,7 +5477,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5500,7 +5504,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5526,7 +5530,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5552,7 +5556,7 @@ paths:
           required: true
           description: The ID of the forum topic.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -5581,7 +5585,7 @@ paths:
                 - category_id
               properties:
                 category_id:
-                  type: number
+                  type: integer
       responses:
         204:
           description: Success
@@ -5679,7 +5683,7 @@ paths:
           required: true
           description: The ID of the help page.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -5718,7 +5722,7 @@ paths:
           required: true
           description: The ID of the help page.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -5751,7 +5755,7 @@ paths:
         - in: query
           name: search[banner_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[banner_name]
           schema:
@@ -5852,7 +5856,7 @@ paths:
         - name: search[post_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[hash]
           in: query
           schema:
@@ -6017,7 +6021,7 @@ paths:
           required: true
           description: The ID of the mascot.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           multipart/form-data:
@@ -6065,7 +6069,7 @@ paths:
           required: true
           description: The ID of the mascot.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6101,7 +6105,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -6192,7 +6196,7 @@ paths:
           required: true
           description: The ID of the news update.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -6226,7 +6230,7 @@ paths:
           required: true
           description: The ID of the news update.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6264,7 +6268,7 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[post_tags_match]
           schema:
@@ -6272,7 +6276,7 @@ paths:
         - in: query
           name: search[post_note_updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[post_note_updater_name]
           schema:
@@ -6280,7 +6284,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -6324,15 +6328,15 @@ paths:
                 - note[body]
               properties:
                 note[post_id]:
-                  type: number
+                  type: integer
                 note[x]:
-                  type: number
+                  type: integer
                 note[y]:
-                  type: number
+                  type: integer
                 note[width]:
-                  type: number
+                  type: integer
                 note[height]:
-                  type: number
+                  type: integer
                 note[body]:
                   type: string
                 note[html_id]:
@@ -6369,7 +6373,7 @@ paths:
           required: true
           description: The ID of the note.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -6392,7 +6396,7 @@ paths:
           required: true
           description: The ID of the note.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -6400,13 +6404,13 @@ paths:
               type: object
               properties:
                 note[x]:
-                  type: number
+                  type: integer
                 note[y]:
-                  type: number
+                  type: integer
                 note[width]:
-                  type: number
+                  type: integer
                 note[height]:
-                  type: number
+                  type: integer
                 note[body]:
                   type: string
       responses:
@@ -6431,7 +6435,7 @@ paths:
           required: true
           description: The ID of the note.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6453,13 +6457,13 @@ paths:
           required: true
           description: The ID of the note.
           schema:
-            type: number
+            type: integer
         - name: version_id
           in: query
           required: true
           description: The version ID to revert to.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6493,7 +6497,7 @@ paths:
         - in: query
           name: search[updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[updater_name]
           schema:
@@ -6501,11 +6505,11 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[note_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[is_active]
           schema:
@@ -6564,7 +6568,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -6616,7 +6620,7 @@ paths:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
-                    type: number
+                    type: integer
       responses:
         201:
           description: Success
@@ -6640,7 +6644,7 @@ paths:
           required: true
           description: The ID of the pool.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -6663,7 +6667,7 @@ paths:
           required: true
           description: The ID of the pool.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -6686,7 +6690,7 @@ paths:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
-                    type: number
+                    type: integer
       responses:
         204:
           description: Success
@@ -6710,7 +6714,7 @@ paths:
           required: true
           description: The ID of the pool.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6732,13 +6736,13 @@ paths:
           required: true
           description: The ID of the pool.
           schema:
-            type: number
+            type: integer
         - name: version_id
           in: query
           required: true
           description: The version ID to revert to.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -6767,13 +6771,13 @@ paths:
                 - post_id
               properties:
                 pool_id:
-                  type: number
+                  type: integer
                   description:  Mutually exclusive with pool_name.
                 pool_name:
                   type: string
                   description:  Mutually exclusive with pool_id.
                 post_id:
-                  type: number
+                  type: integer
       responses:
         200:
           description: Success
@@ -6795,9 +6799,9 @@ paths:
                 - post_id
               properties:
                 pool_id:
-                  type: number
+                  type: integer
                 post_id:
-                  type: number
+                  type: integer
       responses:
         204:
           description: Success
@@ -6825,7 +6829,7 @@ paths:
         - in: query
           name: search[updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[updater_name]
           schema:
@@ -6833,7 +6837,7 @@ paths:
         - in: query
           name: search[pool_id]
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -6938,7 +6942,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -6967,7 +6971,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -6993,9 +6997,9 @@ paths:
                   type: string
                   description: The sources before your edits, used to reconcile conflicts.
                 post[parent_id]:
-                  type: number
+                  type: integer
                 post[old_parent_id]:
-                  type: number
+                  type: integer
                 post[description]:
                   type: string
                 post[old_description]:
@@ -7058,7 +7062,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -7092,7 +7096,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7136,7 +7140,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/json:
@@ -7146,7 +7150,7 @@ paths:
                 - other_post_id
               properties:
                 other_post_id:
-                  type: number
+                  type: integer
       responses:
         204:
           description: Success
@@ -7170,13 +7174,13 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
         - name: version_id
           in: query
           required: true
           description: The version ID to revert to.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -7198,7 +7202,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
         - name: seq
           in: query
           description: The direction to move in the sequence.
@@ -7240,7 +7244,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -7312,7 +7316,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -7333,11 +7337,11 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[maintainer_id]
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -7406,7 +7410,7 @@ paths:
           required: true
           description: The ID of the post set.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -7432,7 +7436,7 @@ paths:
           required: true
           description: The ID of the post sets.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -7472,7 +7476,7 @@ paths:
           required: true
           description: The ID of the post set.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -7495,7 +7499,7 @@ paths:
           required: true
           description: The ID of the post set.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -7534,7 +7538,7 @@ paths:
           required: true
           description: The ID of the post set.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -7547,7 +7551,7 @@ paths:
                   type: array
                   description: post_ids[]=1&post_ids[]=2
                   items:
-                    type: number
+                    type: integer
       responses:
         201:
           description: Success
@@ -7576,7 +7580,7 @@ paths:
           required: true
           description: The ID of the post set.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -7589,7 +7593,7 @@ paths:
                   type: array
                   description: post_ids[]=1&post_ids[]=2
                   items:
-                    type: number
+                    type: integer
       responses:
         201:
           description: Success
@@ -7662,7 +7666,7 @@ paths:
         - name: search[user_id]
           in: query
           schema:
-            type: number
+            type: integer
         - name: search[user_name]
           in: query
           schema:
@@ -7670,7 +7674,7 @@ paths:
         - name: search[post_id]
           in: query
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -7712,11 +7716,11 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -7766,7 +7770,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -7774,7 +7778,7 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[post_tags_match]
           schema:
@@ -7823,7 +7827,7 @@ paths:
                 - post_flag[reason_name]
               properties:
                 post_flag[post_id]:
-                  type: number
+                  type: integer
                 post_flag[reason_name]:
                   type: string
                   enum:
@@ -7837,7 +7841,7 @@ paths:
                     - corrupt
                     - inferior
                 post_flag[parent_id]:
-                  type: number
+                  type: integer
       responses:
         201:
           description: Success
@@ -7861,7 +7865,7 @@ paths:
           required: true
           description: The ID of the post flag.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -7898,7 +7902,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -7906,7 +7910,7 @@ paths:
         - in: query
           name: search[approver_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[approver_name]
           schema:
@@ -7914,7 +7918,7 @@ paths:
         - in: query
           name: search[rejector_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[rejector_name]
           schema:
@@ -7926,7 +7930,7 @@ paths:
         - in: query
           name: search[uploader_id_on_approve]
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -8013,7 +8017,7 @@ paths:
           required: true
           description: The ID of the post replacement.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -8036,7 +8040,7 @@ paths:
           required: true
           description: The ID of the post replacement.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -8061,7 +8065,7 @@ paths:
           required: true
           description: The ID of the post replacement.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/json:
@@ -8094,7 +8098,7 @@ paths:
           required: true
           description: The ID of the post replacement.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -8128,7 +8132,7 @@ paths:
           required: true
           description: The ID of the post replacement.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -8152,7 +8156,7 @@ paths:
           in: query
           description: The page number of results to get. Between 1 and 750. Note that for post versions specifically, you can only go through the 10,000 most recent results with page numbers.
           schema:
-            type: number
+            type: integer
             minimum: 1
             maximum: 750
         - $ref: "#/components/parameters/id"
@@ -8163,15 +8167,15 @@ paths:
         - in: query
           name: search[updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[start_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[rating]
           schema:
@@ -8188,7 +8192,7 @@ paths:
         - in: query
           name: search[parent_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[parent_id_changed]
           schema:
@@ -8270,7 +8274,7 @@ paths:
           in: query
           required: true
           schema:
-            type: number
+            type: integer
             enum:
               - -1
               - 1
@@ -8292,13 +8296,13 @@ paths:
                   - our_score
                 properties:
                   score:
-                    type: number
+                    type: integer
                   up:
-                    type: number
+                    type: integer
                   down:
-                    type: number
+                    type: integer
                   our_score:
-                    type: number
+                    type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -8480,7 +8484,7 @@ paths:
           required: true
           description: The ID of the tag.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -8516,7 +8520,7 @@ paths:
           required: true
           description: The ID of the tag.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -8656,7 +8660,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -8664,7 +8668,7 @@ paths:
         - in: query
           name: search[approver_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[approver_name]
           schema:
@@ -8699,7 +8703,7 @@ paths:
           required: true
           description: The ID of the tag alias.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -8723,7 +8727,7 @@ paths:
           required: true
           description: The ID of the tag alias.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -8759,7 +8763,7 @@ paths:
           required: true
           description: The ID of the tag alias.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -8782,7 +8786,7 @@ paths:
           required: true
           description: The ID of the tag alias.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -8877,7 +8881,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -8885,7 +8889,7 @@ paths:
         - in: query
           name: search[approver_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[approver_name]
           schema:
@@ -8920,7 +8924,7 @@ paths:
           required: true
           description: The ID of the tag implication.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -8944,7 +8948,7 @@ paths:
           required: true
           description: The ID of the tag implication.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -8980,7 +8984,7 @@ paths:
           required: true
           description: The ID of the tag implication.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -9003,7 +9007,7 @@ paths:
           required: true
           description: The ID of the tag implication.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -9124,7 +9128,7 @@ paths:
           name: search[creator_id]
           description: Must be Moderator+ to use.
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           description: Must be Moderator+ to use.
@@ -9144,7 +9148,7 @@ paths:
           description: Must be Moderator+ to use.
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           description: Must be Moderator+ to use.
           name: search[notes]
@@ -9206,7 +9210,7 @@ paths:
                   type: array
                   description: takedown[post_ids][]=1&takedown[post_ids][]=2
                   items:
-                    type: number
+                    type: integer
                 takedown[reason_hidden]:
                   type: boolean
                 takedown[notes]:
@@ -9218,7 +9222,7 @@ paths:
                     Must have the bd staff user flag to use.
                     takedown[del_post_ids][]=1&takedown[del_post_ids][]=2
                   items:
-                    type: number
+                    type: integer
                 takedown[status]:
                   type: string
                   description: Must have the bd staff user flag to use.
@@ -9245,7 +9249,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -9269,7 +9273,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9310,7 +9314,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -9333,7 +9337,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9356,11 +9360,11 @@ paths:
                   - added_post_ids
                 properties:
                   added_count:
-                    type: number
+                    type: integer
                   added_post_ids:
                     type: array
                     items:
-                      type: number
+                      type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -9380,7 +9384,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9403,11 +9407,11 @@ paths:
                   - added_post_ids
                 properties:
                   added_count:
-                    type: number
+                    type: integer
                   added_post_ids:
                     type: array
                     items:
-                      type: number
+                      type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -9427,7 +9431,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9449,7 +9453,7 @@ paths:
                   - matched_post_count
                 properties:
                   matched_post_count:
-                    type: number
+                    type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         404:
@@ -9469,7 +9473,7 @@ paths:
           required: true
           description: The ID of the takedown.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9508,7 +9512,7 @@ paths:
           name: search[creator_id]
           description: You must be Moderator+ unless providing your own id.
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[claimant_name]
           description: You must be Moderator+.
@@ -9518,7 +9522,7 @@ paths:
           name: search[claimant_id]
           description: You must be Moderator+.
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[accused_name]
           description: You must be Moderator+.
@@ -9528,7 +9532,7 @@ paths:
           name: search[accused_id]
           description: You must be Moderator+.
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[qtype]
           schema:
@@ -9583,7 +9587,7 @@ paths:
           required: true
           description: The ID of the ticket.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -9609,7 +9613,7 @@ paths:
           required: true
           description: The ID of the ticket.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9650,7 +9654,7 @@ paths:
           required: true
           description: The ID of the ticket.
           schema:
-            type: number
+            type: integer
       security:
         - basicAuth: []
       responses:
@@ -9677,7 +9681,7 @@ paths:
           required: true
           description: The ID of the ticket.
           schema:
-            type: number
+            type: integer
       security:
         - basicAuth: []
       responses:
@@ -9713,7 +9717,7 @@ paths:
         - in: query
           name: search[uploader_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[uploader_name]
           schema:
@@ -9733,11 +9737,11 @@ paths:
         - in: query
           name: search[parent_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[has_post]
           schema:
@@ -9814,7 +9818,7 @@ paths:
                 upload[rating]:
                   "$ref": "#/components/schemas/Ratings"
                 upload[parent_id]:
-                  type: number
+                  type: integer
                 upload[description]:
                   type: string
                 upload[as_pending]:
@@ -9845,7 +9849,7 @@ paths:
                   location:
                     type: string
                   post_id:
-                    type: number
+                    type: integer
         403:
           $ref: "#/components/responses/AccessDenied"
         412:
@@ -9943,7 +9947,7 @@ paths:
           required: true
           description: The ID of the upload whitelist entry.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -9983,7 +9987,7 @@ paths:
           required: true
           description: The ID of the upload whitelist.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10005,7 +10009,7 @@ paths:
           required: true
           description: The ID of the upload whitelist.
           schema:
-            type: number
+            type: integer
         - name: url
           in: query
           schema:
@@ -10071,19 +10075,19 @@ paths:
         - in: query
           name: search[avatar_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[level]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[min_level]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[max_level]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[can_upload_free]
           schema:
@@ -10171,7 +10175,7 @@ paths:
                   type: string
                   description: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
                 user[per_page]:
-                  type: number
+                  type: integer
                 user[custom_style]:
                   type: string
                 user[description_collapsed_initially]:
@@ -10203,7 +10207,7 @@ paths:
                 user[disable_responsive_mode]:
                   type: boolean
                 user[dmail_filter_attributes][id]:
-                  type: number
+                  type: integer
                 user[dmail_filter_attributes][words]:
                   type: string
                 user[profile_about]:
@@ -10267,7 +10271,7 @@ paths:
           required: true
           description: Due to the odd way this route works, a dmail is REQUIRED to edit your dmail filter. You must be the owner of the dmail.
           schema:
-            type: number
+            type: integer
       security:
         - basicAuth: []
       requestBody:
@@ -10320,7 +10324,7 @@ paths:
         - in: query
           name: search[user_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[user_name]
           schema:
@@ -10328,7 +10332,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -10373,7 +10377,7 @@ paths:
                 - user_feedback[category]
               properties:
                 user_feedback[user_id]:
-                  type: number
+                  type: integer
                 user_feedback[user_name]:
                   type: string
                 user_feedback[body]:
@@ -10404,7 +10408,7 @@ paths:
           required: true
           description: The ID of the feedback.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -10430,7 +10434,7 @@ paths:
           required: true
           description: The ID of the feedback.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -10464,7 +10468,7 @@ paths:
           required: true
           description: The ID of the feedback.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10487,7 +10491,7 @@ paths:
           required: true
           description: The ID of the feedback.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10510,7 +10514,7 @@ paths:
           required: true
           description: The ID of the feedback.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10542,7 +10546,7 @@ paths:
         - in: query
           name: search[current_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[current_name]
           schema:
@@ -10615,7 +10619,7 @@ paths:
           required: true
           description: The ID of the name change request.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -10666,7 +10670,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -10753,7 +10757,7 @@ paths:
           required: true
           description: The ID or name of the wiki page.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -10777,7 +10781,7 @@ paths:
           required: true
           description: The ID of the wiki page.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -10826,7 +10830,7 @@ paths:
           required: true
           description: The ID of the wiki page.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10848,13 +10852,13 @@ paths:
           required: true
           description: The ID of the wiki page.
           schema:
-            type: number
+            type: integer
         - name: version_id
           in: query
           required: true
           description: The version ID to revert to.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -10887,7 +10891,7 @@ paths:
         - in: query
           name: search[updater_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[updater_name]
           schema:
@@ -10895,7 +10899,7 @@ paths:
         - in: query
           name: search[wiki_page_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[title]
           schema:
@@ -10942,7 +10946,7 @@ paths:
           required: true
           description: The ID of the wiki page version.
           schema:
-            type: number
+            type: integer
       responses:
         200:
           description: Success
@@ -10967,7 +10971,7 @@ paths:
           in: query
           description: The page number of results to get. Between 1 and 9999.
           schema:
-            type: number
+            type: integer
             minimum: 1
             maximum: 9999
       responses:
@@ -10979,11 +10983,11 @@ paths:
                 type: array
                 items:
                   oneOf:
-                    - type: number
+                    - type: integer
                       description: ID of concerned user.
                     - type: array
                       items:
-                        type: number
+                        type: integer
                         description: ID of suspected alt.
                 examples:
                   - [[1,[2]],[2,[1]]]
@@ -11002,7 +11006,7 @@ paths:
           required: true
           description: The ID of the user.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -11013,7 +11017,7 @@ paths:
                   type: boolean
                   description: Must have the bd staff user flag to use.
                 user[level]:
-                  type: number
+                  type: integer
                   description: Must have the bd staff user flag to promote to Admin+.
                 user[name]:
                   type: string
@@ -11063,7 +11067,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -11112,7 +11116,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -11146,7 +11150,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       responses:
         201:
           description: Success
@@ -11180,7 +11184,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       responses:
         204:
           description: Success
@@ -11205,7 +11209,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -11247,7 +11251,7 @@ paths:
           required: true
           description: The ID of the post.
           schema:
-            type: number
+            type: integer
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -11287,7 +11291,7 @@ paths:
                 - post_id
               properties:
                 post_id:
-                  type: number
+                  type: integer
       responses:
         201:
           description: Success
@@ -11315,7 +11319,7 @@ paths:
                 - post_id
               properties:
                 post_id:
-                  type: number
+                  type: integer
       responses:
         204:
           description: Success/Failure
@@ -11349,7 +11353,7 @@ paths:
         - in: query
           name: search[creator_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[creator_name]
           schema:
@@ -11357,7 +11361,7 @@ paths:
         - in: query
           name: search[post_id]
           schema:
-            type: number
+            type: integer
         - in: query
           name: search[message]
           schema:
@@ -11410,7 +11414,7 @@ paths:
                 - post_disapproval[reason]
               properties:
                 post_disapproval[post_id]:
-                  type: number
+                  type: integer
                 post_disapproval[reason]:
                   type: string
                   enum:
