@@ -215,7 +215,7 @@ components:
         - error
         - pending
     WarningTypes:
-      types: string
+      type: string
       enum:
         - warning
         - record
@@ -2519,7 +2519,7 @@ components:
         profile_artinfo:
           type: string
         upload_limit:
-          tpe: integer
+          type: integer
         wiki_page_version_count:
           type: integer
     UserFeedback:
