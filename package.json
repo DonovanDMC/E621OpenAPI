@@ -4,8 +4,9 @@
   "description": "This repository is the home of OpenAPI documentation for https://e621.net. It is maintained by [Donovan_DMC](https://e621.net/users/323290). ## You can find the rendered version [here](https://donovandmc.github.io/E621OpenAPI).",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "build:production": "NODE_ENV=production webpack",
+    "build": "npm run build:openapi && webpack",
+    "build:production": "npm run build:openapi && NODE_ENV=production webpack",
+    "build:openapi":"node node_modules/swagger-cli/swagger-cli.js bundle ./api/api.yaml --outfile ./openapi.yaml --type yaml",
     "start": "webpack-dev-server --open",
     "lint": "eslint src",
     "lint:api": "redocly lint openapi.yaml"
@@ -24,6 +25,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.6.0",
+    "swagger-cli": "^4.0.4",
     "swagger-themes": "^1.4.3",
     "swagger-ui": "^5.17.14"
   },
@@ -32,7 +34,7 @@
     "@types/node": "^22.5.4",
     "@types/swagger-ui": "^3.52.4",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",

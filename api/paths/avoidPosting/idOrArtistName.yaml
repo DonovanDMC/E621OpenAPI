@@ -1,0 +1,80 @@
+get:
+  summary: Get Avoid Posting Entry
+  operationId: getAvoidPosting
+  tags:
+    - Avoid Posting Entries
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/avoidPosting.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Avoid Posting Entry
+  operationId: editAvoidPosting
+  tags:
+    - Avoid Posting Entries
+  security:
+    - basicAuth: []
+  description: Must have the bd staff user flag.
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            avoid_posting[details]:
+              type: string
+            avoid_posting[staff_notes]:
+              type: string
+            avoid_posting[is_active]:
+              type: boolean
+            avoid_posting[artist_attributes][name]:
+              type: string
+            avoid_posting[artist_attributes][other_names_string]:
+              type: string
+            avoid_posting[artist_attributes][other_names]:
+              type: array
+              items:
+                type: string
+            avoid_posting[artist_attributes][group_name]:
+              type: string
+            avoid_posting[artist_attributes][linked_user_id]:
+              type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/avoidPosting.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Destroy Avoid Posting Entry
+  operationId: destroyAvoidPosting
+  tags:
+    - Avoid Posting Entries
+  security:
+    - basicAuth: []
+  description: Must have the bd staff user flag.
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

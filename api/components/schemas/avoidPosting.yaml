@@ -1,0 +1,32 @@
+type: object
+required:
+  - id
+  - creator_id
+  - updater_id
+  - artist_id
+  - details
+  - is_active
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  updater_id:
+    type: integer
+  artist_id:
+    type: integer
+  staff_notes:
+    type: string
+    description: Only visible to Janitor+
+  details:
+    type: string
+  is_active:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

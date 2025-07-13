@@ -1,0 +1,22 @@
+delete:
+  summary: Delete Post Replacement
+  operationId: deletePostReplacement
+  tags:
+    - Post Replacements
+  description: You must be Admin+.
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post replacement.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

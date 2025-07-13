@@ -1,0 +1,21 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - domain
+  - creator_id
+  - reason
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+  updated_at:
+    type: string
+  domain:
+    type: string
+  creator_id:
+    type: string
+  reason:
+    type: string

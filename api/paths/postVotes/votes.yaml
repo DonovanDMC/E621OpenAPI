@@ -1,0 +1,76 @@
+post:
+  summary: Create Post Vote
+  operationId: createPostVote
+  tags:
+    - Post Votes
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: string
+    - name: score
+      in: query
+      required: true
+      schema:
+        type: integer
+        enum:
+          - -1
+          - 1
+    - name: no_unvote
+      in: query
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - score
+              - up
+              - down
+              - our_score
+            properties:
+              score:
+                type: integer
+              up:
+                type: integer
+              down:
+                type: integer
+              our_score:
+                type: integer
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Post Vote
+  operationId: deletePostVote
+  tags:
+    - Post Votes
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

@@ -1,0 +1,8 @@
+allOf:
+  - $ref: "./relatedTag.yaml"
+  - type: object
+    required:
+      - count
+    properties:
+      count:
+        type: integer

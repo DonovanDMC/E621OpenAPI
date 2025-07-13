@@ -1,0 +1,29 @@
+post:
+  summary: Mark Forum Post
+  operationId: markForumPost
+  tags:
+    - Forum Posts
+  security:
+    - basicAuth: []
+  description: |
+    You must be Moderator+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum post.
+      schema:
+        type: integer
+  requestBody:
+    $ref: "../../components/requestBodies/warning.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/dTextResponse.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

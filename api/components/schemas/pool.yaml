@@ -1,0 +1,40 @@
+type: object
+required:
+  - id
+  - name
+  - created_at
+  - updated_at
+  - creator_id
+  - description
+  - is_active
+  - category
+  - post_ids
+  - creator_name
+  - post_count
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  updated_at:
+    type: string
+    format: date-time
+  creator_id:
+    type: integer
+  description:
+    type: string
+  is_active:
+    type: boolean
+  category:
+    $ref: "./poolCategories.yaml"
+  post_ids:
+    type: array
+    items:
+      type: integer
+  created_at:
+    type: string
+    format: date-time
+  creator_name:
+    type: string
+  post_count:
+    type: integer

@@ -1,0 +1,25 @@
+post:
+  summary: Preview DText
+  operationId: previewDText
+  tags:
+    - DText
+  description: Note while this route does not require auth, without auth it requires a CSRF token. For that reason it has been marked as requiring auth.
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - body
+          properties:
+            body:
+              type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/dTextResponse.yaml"

@@ -1,0 +1,82 @@
+get:
+  summary: List IP Bans
+  operationId: listIPBans
+  tags:
+    - IP Bans
+  security:
+    - basicAuth: []
+  description: You must be Admin+. When no results are found, an object with an `ip_bans` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[banner_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[banner_name]
+      schema:
+        type: string
+    - in: query
+      name: search[reason]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/ipBan.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - ip_bans
+                properties:
+                  ip_bans:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create IP Ban
+  operationId: createIPBan
+  tags:
+    - IP Bans
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - ip_ban[ip_addr]
+            - ip_ban[reason]
+          properties:
+            ip_ban[ip_addr]:
+              type: string
+            ip_ban[reason]:
+              type: string
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/ipBan.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

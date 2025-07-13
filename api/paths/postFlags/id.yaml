@@ -1,0 +1,21 @@
+get:
+  summary: Get Post Flag
+  operationId: getPostFlag
+  tags:
+    - Post Flags
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post flag.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/postFlag.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

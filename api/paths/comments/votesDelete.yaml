@@ -1,0 +1,21 @@
+post:
+  summary: Delete Comment Vote
+  operationId: deleteCommentVotes
+  tags:
+    - Comment Votes
+  security:
+    - basicAuth: []
+  description: |
+    You must be Admin+. Errors if ids is not provided.
+  parameters:
+    - name: ids
+      in: query
+      required: true
+      description: The IDs of the comment votes, comma separated.
+      schema:
+        type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

@@ -1,0 +1,56 @@
+get:
+  summary: Get Tag
+  operationId: getTag
+  tags:
+    - Tags
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID or name of the tag.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/tag.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Tag
+  operationId: editTag
+  tags:
+    - Tags
+  security:
+    - basicAuth: []
+  description: Must be Admin+ if the tag is locked or post count is >100.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the tag.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            tag[category]:
+              $ref: "../../components/schemas/tagCategories.yaml"
+            tag[is_locked]:
+              description: Must be Admin+.
+              type: boolean
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

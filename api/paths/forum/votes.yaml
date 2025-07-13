@@ -1,0 +1,64 @@
+post:
+  summary: Create Forum Post Vote
+  operationId: createForumPostVote
+  tags:
+    - Forum Post Votes
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum post.
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - forum_post_vote[score]
+          properties:
+            forum_post_vote[score]:
+              type: integer
+              enum:
+                - -1
+                - 0
+                - 1
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/forumPostVote.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Forum Post Vote
+  operationId: deleteForumPostVote
+  tags:
+    - Forum Post Votes
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum post.
+      schema:
+        type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

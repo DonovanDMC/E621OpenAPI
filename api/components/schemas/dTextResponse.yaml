@@ -1,0 +1,9 @@
+type: object
+required:
+  - html
+  - posts
+properties:
+  html:
+    type: string
+  posts:
+    $ref: "./deferredPost.yaml"

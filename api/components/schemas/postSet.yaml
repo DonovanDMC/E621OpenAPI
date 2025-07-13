@@ -1,0 +1,40 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - creator_id
+  - is_public
+  - name
+  - shortname
+  - description
+  - transfer_on_delete
+  - post_ids
+  - post_count
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  creator_id:
+    type: integer
+  is_public:
+    type: boolean
+  name:
+    type: string
+  shortname:
+    type: string
+  description:
+    type: string
+  post_count:
+    type: integer
+  transfer_on_delete:
+    type: boolean
+  post_ids:
+    type: array
+    items:
+      type: integer

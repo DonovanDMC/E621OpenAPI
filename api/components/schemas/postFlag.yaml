@@ -1,0 +1,36 @@
+type: object
+required:
+  - id
+  - created_at
+  - post_id
+  - reason
+  - creator_id
+  - is_resolved
+  - updated_at
+  - is_deletion
+  - type
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  post_id:
+    type: integer
+  reason:
+    type: string
+  creator_id:
+    type: integer
+    nullable: true
+  is_resolved:
+    type: boolean
+  updated_at:
+    type: string
+    format: date-time
+  is_deletion:
+    type: boolean
+  type:
+    type: string
+    enum:
+      - flag
+      - deletion

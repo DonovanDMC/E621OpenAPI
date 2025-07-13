@@ -1,0 +1,21 @@
+get:
+  summary: Get Ban
+  operationId: getBan
+  tags:
+    - Bans
+  parameters:
+    - name: id
+      in: path
+      description: The ID of the ban to get.
+      required: true
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/ban.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

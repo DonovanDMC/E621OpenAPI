@@ -1,0 +1,54 @@
+post:
+  summary: Approve Post
+  operationId: approvePost
+  tags:
+    - Posts
+    - Post Approvals
+  security:
+    - basicAuth: []
+  description: You must have the "Approve Posts" permission.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_id
+          properties:
+            post_id:
+              type: integer
+  responses:
+    201:
+      description: Success
+    204:
+      description: Failure
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+delete:
+  summary: Unapprove Post
+  operationId: unapprovePost
+  tags:
+    - Posts
+    - Post Approvals
+  security:
+    - basicAuth: []
+  description: You must have the "Approve Posts" permission. The response does not differ for success or failure.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_id
+          properties:
+            post_id:
+              type: integer
+  responses:
+    204:
+      description: Success/Failure
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

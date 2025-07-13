@@ -1,0 +1,23 @@
+delete:
+  summary: Remove Post From Pool
+  operationId: removePostFromPool
+  tags:
+    - Pools
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - pool_id
+            - post_id
+          properties:
+            pool_id:
+              type: integer
+            post_id:
+              type: integer
+  responses:
+    204:
+      description: Success

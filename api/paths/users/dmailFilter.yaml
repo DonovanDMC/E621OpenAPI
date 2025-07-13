@@ -1,0 +1,29 @@
+patch:
+  summary: Update User Dmail Filter
+  operationId: updateUserDmailFilter
+  tags:
+    - DMails
+  parameters:
+    - name: dmail_id
+      in: query
+      required: true
+      description: Due to the odd way this route works, a dmail is REQUIRED to edit your dmail filter. You must be the owner of the dmail.
+      schema:
+        type: integer
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - dmail_filter[words]
+          properties:
+            dmail_filter[words]:
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

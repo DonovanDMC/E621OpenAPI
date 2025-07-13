@@ -1,0 +1,33 @@
+post:
+  summary: Correct Tag
+  operationId: correctTag
+  tags:
+    - Tags
+  security:
+    - basicAuth: []
+  description: You must be Janitor+. `commit=Fix` must be set.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the tag.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - commit
+          properties:
+            commit:
+              type: string
+              description: If not set, nothing will happen.
+  responses:
+    302:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

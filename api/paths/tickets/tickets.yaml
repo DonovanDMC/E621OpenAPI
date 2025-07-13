@@ -1,0 +1,79 @@
+get:
+  summary: Search Tickets
+  operationId: searchTickets
+  tags:
+    - Tickets
+  description: You must be Janitor+ to see tickets you did not create. When no results are found, an object with an `tickets` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - in: query
+      name: search[creator_name]
+      description: You must be Moderator+.
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      description: You must be Moderator+ unless providing your own id.
+      schema:
+        type: integer
+    - in: query
+      name: search[claimant_name]
+      description: You must be Moderator+.
+      schema:
+        type: string
+    - in: query
+      name: search[claimant_id]
+      description: You must be Moderator+.
+      schema:
+        type: integer
+    - in: query
+      name: search[accused_name]
+      description: You must be Moderator+.
+      schema:
+        type: string
+    - in: query
+      name: search[accused_id]
+      description: You must be Moderator+.
+      schema:
+        type: integer
+    - in: query
+      name: search[qtype]
+      schema:
+        $ref: "../../components/schemas/ticketTypes.yaml"
+    - in: query
+      name: search[reason]
+      description: You must be Moderator+.
+      schema:
+        type: string
+    - in: query
+      name: search[status]
+      schema:
+        type: string
+        enum:
+          - pending
+          - partial
+          - approved
+          - pending_claimed
+          - pending_unclaimed
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/ticket.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - tickets
+                properties:
+                  tickets:
+                    type: array
+                    maxItems: 0
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

@@ -1,0 +1,23 @@
+type: object
+required:
+  - id
+  - message
+  - creator_id
+  - updater_id
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  message:
+    type: string
+  creator_id:
+    type: integer
+  updater_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

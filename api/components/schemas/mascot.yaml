@@ -1,0 +1,48 @@
+type: object
+required:
+  - id
+  - creator_id
+  - display_name
+  - md5
+  - file_ext
+  - background_color
+  - artist_url
+  - artist_name
+  - active
+  - created_at
+  - updated_at
+  - available_on
+  - url_path
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  display_name:
+    type: string
+  md5:
+    type: string
+  file_ext:
+    type: string
+  background_color:
+    type: string
+  artist_url:
+    type: string
+    format: uri
+  artist_name:
+    type: string
+  active:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  available_on:
+    type: array
+    items:
+      type: string
+  url_path:
+    type: string
+    format: uri

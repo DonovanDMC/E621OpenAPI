@@ -1,0 +1,79 @@
+get:
+  summary: Get Tag Alias
+  operationId: getTagAlias
+  tags:
+    - Tag Aliases
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the tag alias.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/tagAlias.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Tag Alias
+  operationId: editTagAlias
+  tags:
+    - Tag Aliases
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the tag alias.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            tag_alias[antecedent_name]:
+              type: string
+            tag_alias[consequent_name]:
+              type: string
+            tag_alias[forum_topic_id]:
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Reject Tag Alias
+  operationId: rejectTagAlias
+  tags:
+    - Tag Aliases
+  description: You must be the creator of the request (if pending), or Admin+.
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the tag alias.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

@@ -1,0 +1,80 @@
+get:
+  summary: Search User Name Change Requests
+  operationId: searchUserNameChangeRequests
+  tags:
+    - User Name Change Requests
+  security:
+    - basicAuth: []
+  description: You must be Moderator+. When no results are found, an object with an `user_name_change_requests` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[current_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[current_name]
+      schema:
+        type: string
+    - in: query
+      name: search[original_name]
+      schema:
+        type: string
+    - in: query
+      name: search[desired_name]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/userNameChangeRequest.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - user_name_change_requests
+                properties:
+                  user_name_change_requests:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create User Name Change Request
+  operationId: createUserNameChangeRequest
+  tags:
+    - User Name Change Requests
+  security:
+    - basicAuth: []
+  description: You must be Moderator+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - user_name_change_request[desired_name]
+          properties:
+            user_name_change_request[desired_name]:
+              type: string
+            user_name_change_request[change_reason]:
+              type: string
+  responses:
+    302:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

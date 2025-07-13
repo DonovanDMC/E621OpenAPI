@@ -1,0 +1,47 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - title
+  - body
+  - creator_id
+  - is_locked
+  - updater_id
+  - is_deleted
+  - other_names
+  - parent
+  - creator_name
+  - category_id
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  title:
+    type: string
+  body:
+    type: string
+  creator_id:
+    type: integer
+  is_locked:
+    type: boolean
+  updater_id:
+    type: integer
+  is_deleted:
+    type: boolean
+  other_names:
+    type: array
+    items:
+      type: string
+  parent:
+    type: string
+    nullable: true
+  creator_name:
+    type: string
+  category_id:
+    $ref: "./tagCategories.yaml"

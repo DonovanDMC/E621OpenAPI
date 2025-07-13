@@ -1,0 +1,26 @@
+type: object
+required:
+  - id
+  - name
+  - title
+  - wiki_page
+  - related
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  title:
+    type: string
+  wiki_page:
+    type: string
+  related:
+    type: string
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

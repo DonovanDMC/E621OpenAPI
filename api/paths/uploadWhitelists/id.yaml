@@ -1,0 +1,61 @@
+patch:
+  summary: Edit Upload Whitelist
+  operationId: editUploadWhitelist
+  tags:
+    - Upload Whitelists
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the upload whitelist entry.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            upload_whitelist[allowed]:
+              type: string
+            upload_whitelist[pattern]:
+              type: string
+            upload_whitelist[reason]:
+              type: string
+            upload_whitelist[note]:
+              type: string
+            upload_whitelist[hidden]:
+              type: boolean
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Upload Whitelist
+  operationId: deleteUploadWhitelist
+  tags:
+    - Upload Whitelists
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the upload whitelist.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

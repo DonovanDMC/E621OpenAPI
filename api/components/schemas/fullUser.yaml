@@ -1,0 +1,44 @@
+allOf:
+  - $ref: "./user.yaml"
+  - type: object
+    required:
+      - wiki_page_version_count
+      - artist_version_count
+      - pool_version_count
+      - forum_post_count
+      - comment_count
+      - flag_count
+      - favorite_count
+      - positive_feedback_count
+      - neutral_feedback_count
+      - negative_feedback_count
+      - upload_limit
+      - profile_about
+      - profile_artinfo
+    properties:
+      wiki_page_version_count:
+        type: integer
+      artist_version_count:
+        type: integer
+      pool_version_count:
+        type: integer
+      forum_post_count:
+        type: integer
+      comment_count:
+        type: integer
+      flag_count:
+        type: integer
+      favorite_count:
+        type: integer
+      positive_feedback_count:
+        type: integer
+      neutral_feedback_count:
+        type: integer
+      negative_feedback_count:
+        type: integer
+      upload_limit:
+        type: integer
+      profile_about:
+        type: string
+      profile_artinfo:
+        type: string

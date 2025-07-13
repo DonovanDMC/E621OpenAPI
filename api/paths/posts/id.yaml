@@ -1,0 +1,116 @@
+get:
+  summary: Get Post
+  operationId: getPost
+  tags:
+    - Posts
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Post
+  operationId: editPost
+  tags:
+    - Posts
+  security:
+    - basicAuth: []
+  description: Most errors are silently swallowed.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            post[tag_string]:
+              type: string
+              description: Replaces all tags on the post.
+            post[old_tag_string]:
+              type: string
+              description: The tag string before your edits, used to reconcile conflicts.
+            post[tag_string_diff]:
+              type: string
+              description: Tags with a minus are removed, else they are added. Mutually exclusive with tag_string.
+            post[source_diff]:
+              type: string
+              description: Sources with a minus are removed, else they are added. It is not possible to add inactive sources through this. Mutually exclusive with source.
+            post[source]:
+              type: string
+              description: Replaces all sources on the post.
+            post[old_source]:
+              type: string
+              description: The sources before your edits, used to reconcile conflicts.
+            post[parent_id]:
+              type: integer
+            post[old_parent_id]:
+              type: integer
+            post[description]:
+              type: string
+            post[old_description]:
+              type: string
+            post[rating]:
+              $ref: "../../components/schemas/ratings.yaml"
+            post[old_rating]:
+              $ref: "../../components/schemas/ratings.yaml"
+            post[edit_reason]:
+              type: string
+            post[is_rating_locked]:
+              type: boolean
+              description: You must be Privileged+.
+            post[is_note_locked]:
+              type: boolean
+              description: You must be Janitor+.
+            post[bg_colo]r:
+              type: string
+              description: You must be Janitor+.
+            post[is_comment_locked]:
+              type: boolean
+              description: You must be Admin+.
+            post[is_status_locked]:
+              type: boolean
+              description: You must be Admin+.
+            post[locked_tags]:
+              type: string
+              description: You must be Admin+.
+            post[hide_from_anonymous]:
+              type: boolean
+              description: You must be Admin+.
+            post[hide_from_search_engines]:
+              type: boolean
+              description: You must be Admin+.
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/post.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

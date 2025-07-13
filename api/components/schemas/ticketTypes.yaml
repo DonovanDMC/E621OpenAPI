@@ -1,0 +1,11 @@
+type: string
+enum:
+  - blip
+  - comment
+  - dmail
+  - forum
+  - pool
+  - post
+  - set
+  - user
+  - wiki

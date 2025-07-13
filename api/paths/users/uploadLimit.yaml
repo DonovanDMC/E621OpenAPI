@@ -1,0 +1,19 @@
+get:
+  summary: Get Current User
+  operationId: getCurrentUser
+  tags:
+    - Users
+  security:
+    - basicAuth: []
+  description: |
+    This is a crude but effective way to get the currently authenticated user without scraping HTML.
+    Note that this route does not include some properties included in the show action.
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/currentUser.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

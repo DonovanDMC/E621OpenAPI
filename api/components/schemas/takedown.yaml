@@ -1,0 +1,32 @@
+type: object
+required:
+  - id
+  - status
+  - approver_id
+  - reason_hidden
+  - created_at
+  - updated_at
+  - post_count
+properties:
+  id:
+    type: integer
+  status:
+    type: string
+    enum:
+      - approved
+      - denied
+      - partial
+      - pending
+  approver_id:
+    type: integer
+    nullable: true
+  reason_hidden:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  post_count:
+    type: integer

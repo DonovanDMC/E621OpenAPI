@@ -1,0 +1,33 @@
+post:
+  summary: Promote Post Replacement
+  operationId: promotePostReplacement
+  tags:
+    - Post Replacements
+  security:
+    - basicAuth: []
+  description: You must have the "Approve Posts" permission.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post replacement.
+      schema:
+        type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

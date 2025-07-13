@@ -1,0 +1,38 @@
+type: object
+required:
+  - id
+  - creator_id
+  - body
+  - response_to
+  - created_at
+  - updated_at
+  - is_hidden
+  - warning_type
+  - warning_user_id
+  - updater_id
+  - creator_name
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  body:
+    type: string
+  response_to:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  is_hidden:
+    type: boolean
+  warning_type:
+    $ref: "./warningTypes.yaml"
+  warning_user_id:
+    type: integer
+  updater_id:
+    type: integer
+  creator_name:
+    type: string

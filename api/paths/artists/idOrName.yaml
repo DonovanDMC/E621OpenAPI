@@ -1,0 +1,105 @@
+get:
+  summary: Get Artist
+  operationId: getArtist
+  tags:
+    - Artists
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../../components/schemas/artist.yaml"
+              - type: object
+                required:
+                  - domains
+                  - urls
+                properties:
+                  domains:
+                    type: array
+                    items:
+                      type: array
+                      example: [ [ "e621.net", 1 ] ]
+                      items:
+                        anyOf:
+                          - type: string
+                          - type: number
+                  urls:
+                    type: array
+                    items:
+                      $ref: "../../components/schemas/artistUrl.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Artist
+  operationId: editArtist
+  tags:
+    - Artists
+  security:
+    - basicAuth: [ ]
+  description: |
+    If an artist is locked, you must be Janitor+ to edit them.
+    `other_names` & `urls` are silently truncated to 25 entries.
+    `notes` is silently truncated to the wiki page limit (250,000).
+    Individual `other_names` are silently truncated to 100 characters.
+    If an artist is on the avoid posting list, you must have the bd staff user flag to edit name, other_names, or group_name.
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  requestBody:
+    content:
+      application/c-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            artist[name]:
+              type: string
+              description: Only usable for Janitor+
+            artist[other_names]:
+              type: array
+              items:
+                type: string
+            artist[other_names_string]:
+              type: string
+            artist[url_string]:
+              type: string
+            artist[notes]:
+              type: string
+            artist[group_name]:
+              type: string
+            artist[linked_user_id]:
+              type: integer
+              nullable: true
+              description: Only usable for Janitor+
+            artist[is_locked]:
+              type: boolean
+              description: Only usable for Janitor+
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Artist
+  operationId: deleteArtist
+  tags:
+    - Artists
+  security:
+    - basicAuth: [ ]
+  description: |
+    You must be an Admin+ to delete an artist.
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

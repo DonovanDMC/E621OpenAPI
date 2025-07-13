@@ -1,0 +1,7 @@
+description: Success
+content:
+  application/json:
+    schema:
+      oneOf:
+        - $ref: "../../components/schemas/fullUser.yaml"
+        - $ref: "../../components/schemas/fullCurrentUser.yaml"

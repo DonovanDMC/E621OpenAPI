@@ -1,0 +1,22 @@
+put:
+  summary: Undelete User Feedback
+  operationId: undeleteUserFeedback
+  tags:
+    - User Feedbacks
+  security:
+    - basicAuth: []
+  description: You must be Moderator+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the feedback.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

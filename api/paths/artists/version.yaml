@@ -1,0 +1,58 @@
+get:
+  summary: Search Artist Versions
+  operationId: searchArtistVersions
+  tags:
+    - Artist Versions
+  description: When no results are found, an object with an `artist_versions` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - name
+    - name: search[name]
+      in: query
+      description: The name of the artist.
+      schema:
+        type: string
+    - name: search[artist_id]
+      in: query
+      description: The id of the artist.
+      schema:
+        type: string
+    - name: search[updater_name]
+      in: query
+      description: The name of the user that updated the artist.
+      schema:
+        type: string
+    - name: search[updater_id]
+      in: query
+      description: The id of the user that updated the artist.
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/artistVersion.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - artist_versions
+                properties:
+                  artist_versions:
+                    type: array
+                    maxItems: 0

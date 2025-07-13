@@ -1,0 +1,68 @@
+get:
+  summary: Get Ticket
+  operationId: getTicket
+  tags:
+    - Tickets
+  security:
+    - basicAuth: []
+  description: You must be Janitor+ to see tickets you did not create.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/ticket.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Ticket
+  operationId: editTicket
+  tags:
+    - Tickets
+  description: You must be Moderator+.
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - ticket[response]
+          properties:
+            ticket[status]:
+              type: string
+              enum:
+                - partial
+                - approved
+            ticket[response]:
+              type: string
+            ticket[record_type]:
+              $ref: "../../components/schemas/warningTypes.yaml"
+            ticket[send_update_dmail]:
+              type: boolean
+              description: An update dmail will always be sent when the status is changed.
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

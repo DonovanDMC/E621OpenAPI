@@ -1,0 +1,27 @@
+post:
+  summary: Add Post To Pool
+  operationId: addPostToPool
+  tags:
+    - Pools
+  security:
+    - basicAuth: []
+  description: Note that the extension is JS, this route will not return JSON.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_id
+          properties:
+            pool_id:
+              type: integer
+              description:  Mutually exclusive with pool_name.
+            pool_name:
+              type: string
+              description:  Mutually exclusive with pool_id.
+            post_id:
+              type: integer
+  responses:
+    200:
+      description: Success

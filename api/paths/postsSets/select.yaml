@@ -1,0 +1,32 @@
+get:
+  summary: List Post Sets For Select
+  operationId: listPostSetsForSelect
+  tags:
+    - Post Sets
+  security:
+    - basicAuth: []
+  description: You must be the owner of the set, a maintainer (if public), or Admin+.
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Owned:
+                type: array
+                items:
+                  anyOf:
+                    - type: string
+                    - type: number
+              Maintained:
+                type: array
+                items:
+                  anyOf:
+                    - type: string
+                    - type: number
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

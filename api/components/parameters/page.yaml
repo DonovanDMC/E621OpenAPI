@@ -1,0 +1,7 @@
+name: page
+in: query
+description: The page number of results to get. Between 1 and 750.
+schema:
+  type: integer
+  minimum: 1
+  maximum: 750

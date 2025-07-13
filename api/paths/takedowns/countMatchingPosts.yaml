@@ -1,0 +1,41 @@
+post:
+  summary: Count Matching Posts
+  operationId: countMatchingPosts
+  tags:
+    - Takedowns
+  security:
+    - basicAuth: []
+  description: You must have the bd staff user flag.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_tags
+          properties:
+            post_tags:
+              type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - matched_post_count
+            properties:
+              matched_post_count:
+                type: integer
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

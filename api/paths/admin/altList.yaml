@@ -1,0 +1,31 @@
+get:
+  summary: Get Alt List
+  operationId: getAltList
+  tags:
+    - Admin Users
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: page
+      in: query
+      description: The page number of results to get. Between 1 and 9999.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 9999
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              anyOf:
+                - type: integer
+                  description: ID of concerned user.
+                - type: array
+                  items:
+                    type: integer
+                    description: ID of suspected alt.

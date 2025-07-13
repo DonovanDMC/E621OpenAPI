@@ -1,0 +1,67 @@
+get:
+  summary: Search Tags
+  operationId: searchTags
+  tags:
+    - Tags
+  description: When no results are found, an object with an `tags` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - name
+          - date
+          - count
+          - similarity
+    - in: query
+      name: search[fuzzy_name_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[name_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[name]
+      schema:
+        type: string
+    - in: query
+      name: search[category]
+      schema:
+        $ref: "../../components/schemas/tagCategories.yaml"
+    - in: query
+      name: search[hide_empty]
+      schema:
+        type: boolean
+    - in: query
+      name: search[has_wiki]
+      schema:
+        type: boolean
+    - in: query
+      name: search[has_artist]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/tag.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - tags
+                properties:
+                  tags:
+                    type: array
+                    maxItems: 0

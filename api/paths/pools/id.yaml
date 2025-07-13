@@ -1,0 +1,88 @@
+get:
+  summary: Get Pool
+  operationId: getPool
+  tags:
+    - Pools
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the pool.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/pool.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Pool
+  operationId: editPool
+  tags:
+    - Pools
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the pool.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            pool[name]:
+              type: string
+            pool[description]:
+              type: string
+            pool[is_active]:
+              type: boolean
+            pool[category]:
+              $ref: "../../components/schemas/poolCategories.yaml"
+            pool[post_ids_string]:
+              type: string
+              description: Space separated list of post IDs. Mutually exclusive with post_ids.
+            pool[post_ids]:
+              type: array
+              description: Array of post IDs. Mutually exclusive with post_ids_string.
+              items:
+                type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Pool
+  operationId: deletePool
+  tags:
+    - Pools
+  description: You must be Janitor+.
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the pool.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

@@ -1,0 +1,56 @@
+get:
+  summary: List News Updates
+  operationId: listNewsUpdates
+  tags:
+    - News Updates
+  description: When no results are found, an object with an `news_updates` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/newsUpdate.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - news_updates
+                properties:
+                  news_updates:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create News Update
+  operationId: createNewsUpdate
+  tags:
+    - News Updates
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - news_update[message]
+          properties:
+            news_update[message]:
+              type: string
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/newsUpdate.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

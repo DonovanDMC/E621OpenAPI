@@ -1,0 +1,44 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - creator_id
+  - x
+  - y
+  - width
+  - height
+  - version
+  - is_active
+  - post_id
+  - body
+  - creator_name
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  creator_id:
+    type: integer
+  x:
+    type: integer
+  y:
+    type: integer
+  width:
+    type: integer
+  height:
+    type: integer
+  version:
+    type: number
+  is_active:
+    type: boolean
+  post_id:
+    type: integer
+  body:
+    type: string
+  creator_name:
+    type: string

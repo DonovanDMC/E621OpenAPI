@@ -1,0 +1,5 @@
+name: search[ip_addr]
+in: query
+description: Must be Admin+ to use. See [postgres' documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).
+schema:
+  type: string

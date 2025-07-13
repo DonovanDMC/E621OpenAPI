@@ -1,0 +1,112 @@
+get:
+  summary: Search Wiki Pages
+  operationId: searchWikiPages
+  tags:
+    - Wiki Pages
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - title
+          - post_count
+    - in: query
+      name: search[title]
+      schema:
+        type: string
+    - in: query
+      name: search[title_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[body_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[other_names_match]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[parent]
+      schema:
+        type: string
+    - in: query
+      name: search[other_names_present]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_locked]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_deleted]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/wikiPage.yaml"
+post:
+  summary: Create Wiki Page
+  operationId: createWikiPage
+  tags:
+    - Wiki Pages
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - wiki_page[title]
+            - wiki_page[body]
+          properties:
+            wiki_page[title]:
+              type: string
+            wiki_page[body]:
+              type: string
+            wiki_page[edit_reason]:
+              type: string
+            wiki_page[parent]:
+              type: string
+              description: Must be Privileged+ to use.
+            wiki_page[is_locked]:
+              type: boolean
+              description: Must be Janitor+ to use.
+            wiki_page[is_deleted]:
+              type: boolean
+              description: Must be Janitor+ to use.
+            wiki_page[skip_secondary_validations]:
+              type: boolean
+              description: Must be Janitor+ to use.
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/wikiPage.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

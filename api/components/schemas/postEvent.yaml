@@ -1,0 +1,20 @@
+type: object
+required:
+  - id
+  - creator_id
+  - post_id
+  - action
+  - created_at
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+    nullable: true
+  post_id:
+    type: integer
+  action:
+    $ref: "./postEventActions.yaml"
+  created_at:
+    type: string
+    format: date-time

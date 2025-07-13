@@ -1,0 +1,59 @@
+type: object
+required:
+  - id
+  - pool_id
+  - post_ids
+  - updater_id
+  - created_at
+  - updated_at
+  - name
+  - name_changed
+  - description
+  - description_changed
+  - is_active
+  - is_locked
+  - category
+  - version
+  - added_post_ids
+  - removed_post_ids
+properties:
+  id:
+    type: integer
+  pool_id:
+    type: integer
+  post_ids:
+    type: array
+    items:
+      type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  updater_id:
+    type: integer
+  name:
+    type: string
+  name_changed:
+    type: boolean
+  description:
+    type: string
+  description_changed:
+    type: boolean
+  is_active:
+    type: boolean
+  is_locked:
+    type: boolean
+  category:
+    $ref: "./poolCategories.yaml"
+  version:
+    type: number
+  added_post_ids:
+    type: array
+    items:
+      type: integer
+  removed_post_ids:
+    type: array
+    items:
+      type: integer

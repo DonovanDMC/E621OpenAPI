@@ -1,0 +1,51 @@
+get:
+  summary: Search Post Approvals
+  operationId: searchPostApprovals
+  tags:
+    - Post Approvals
+  description: When no results are found, an object with an `post_approvals` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - name: search[post_tags_match]
+      in: query
+      schema:
+        type: string
+    - name: search[user_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[user_name]
+      in: query
+      schema:
+        type: string
+    - name: search[post_id]
+      in: query
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/postApproval.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - post_aprovals
+                properties:
+                  post_approvals:
+                    type: array
+                    maxItems: 0

@@ -1,0 +1,127 @@
+get:
+  summary: Search Comments
+  operationId: searchComments
+  tags:
+    - Comments
+  description: For searching comments, group_by=comment must be set. When no results are found, an object with an `comments` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - status
+          - status_desc
+          - updated_at_desc
+    - in: query
+      name: group_by
+      schema:
+        type: string
+        enum:
+          - comment
+          - post
+    - in: query
+      name: search[body_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[post_id]
+      description: Accepts a comma separated list.
+      schema:
+        type: string
+    - in: query
+      name: search[post_tags_match]
+      schema:
+        type: string
+    - in: query
+      name: search[post_note_updater_name]
+      schema:
+        type: string
+    - in: query
+      name: search[post_note_updater_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[is_sticky]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_hidden]
+      description: Only usable by Moderator+
+      schema:
+        type: boolean
+    - in: query
+      name: search[do_not_bump_post]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/comment.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - comments
+                properties:
+                  comments:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Comment
+  operationId: createComment
+  tags:
+    - Comments
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - comment[body]
+            - comment[post_id]
+          properties:
+            comment[body]:
+              type: string
+            comment[post_id]:
+              type: integer
+            comment[do_not_bump_post]:
+              type: boolean
+            comment[is_sticky]:
+              type: boolean
+              description: Only usable for Janitor+
+            comment[is_hidden]:
+              type: boolean
+              description: Only usable for Moderator+
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/comment.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

@@ -1,0 +1,44 @@
+post:
+  summary: Mark Post As Translated
+  operationId: markPostAsTranslated
+  tags:
+    - Posts
+  security:
+    - basicAuth: []
+  description: Will error if no body is provided.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            translation_check:
+              type: boolean
+            partially_translated:
+              type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

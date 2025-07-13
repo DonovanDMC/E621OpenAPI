@@ -1,0 +1,76 @@
+get:
+  summary: Search Avoid Posting Versions
+  operationId: searchAvoidPostingVersions
+  tags:
+    - Avoid Posting Versions
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - name: search[updater_name]
+      in: query
+      description: The name of the updater of the avoid posting entry.
+      schema:
+        type: string
+    - name: search[updater_id]
+      in: query
+      description: The ID of the updater of the avoid posting entry.
+      schema:
+        type: string
+    - name: search[any_name_matches]
+      in: query
+      description: Any name matching.
+      schema:
+        type: string
+    - name: search[artist_name]
+      in: query
+      description: The artist name of the avoid posting entry.
+      schema:
+        type: string
+    - name: search[artist_id]
+      in: query
+      description: The artist id for the avoid posting entry.
+      schema:
+        type: string
+    - name: search[any_other_name_matches]
+      in: query
+      description: Any other name matching.
+      schema:
+        type: string
+    - name: search[group_name]
+      in: query
+      description: Any other name matching.
+      schema:
+        type: string
+    - name: search[is_active]
+      in: query
+      description: If the avoid posting entry is active.
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/avoidPostingVersion.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - avoid_posting_versions
+                properties:
+                  avoid_posting_versions:
+                    type: array
+                    maxItems: 0

@@ -1,0 +1,105 @@
+get:
+  summary: Get User
+  operationId: getUser
+  tags:
+    - Users
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID or Username of the user.
+      schema:
+        type: 'string'
+  responses:
+    200:
+      $ref: "../../components/responses/user.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Current User
+  operationId: editCurrentUser
+  tags:
+    - Users
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the user. The actual value is ignored, but something must be supplied.
+      schema:
+        type: integer
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            user[comment_threshold]:
+              type: number
+            user[default_image_size]:
+              type: string
+              enum:
+                - large
+                - fit
+                - fitv
+                - original
+            user[favorite_tags]:
+              type: string
+            user[blacklisted_tags]:
+              type: string
+            user[time_zone]:
+              type: string
+              description: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+            user[per_page]:
+              type: integer
+            user[custom_style]:
+              type: string
+            user[description_collapsed_initially]:
+              type: boolean
+            user[hide_comments]:
+              type: boolean
+            user[receive_email_notifications]:
+              type: boolean
+            user[enable_keyboard_navigation]:
+              type: boolean
+            user[enable_privacy_mode]:
+              type: boolean
+            user[disable_user_dmails]:
+              type: boolean
+            user[blacklist_users]:
+              type: boolean
+            user[show_post_statistics]:
+              type: boolean
+            user[style_usernames]:
+              type: boolean
+            user[show_hidden_comments]:
+              type: boolean
+            user[enable_autocomplete]:
+              type: boolean
+            user[disable_cropped_thumbnails]:
+              type: boolean
+            user[enable_safe_mode]:
+              type: boolean
+            user[disable_responsive_mode]:
+              type: boolean
+            user[dmail_filter_attributes][id]:
+              type: integer
+            user[dmail_filter_attributes][words]:
+              type: string
+            user[profile_about]:
+              type: string
+            user[profile_artinfo]:
+              type: string
+            user[avatar_id]:
+              type: integer
+            user[enable_compact_uploader]:
+              type: boolean
+              description: You must have uploaded at least 10 posts.
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

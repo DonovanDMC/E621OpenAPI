@@ -1,0 +1,118 @@
+get:
+  summary: Search Bulk Update Requests
+  operationId: searchBulkUpdateRequests
+  tags:
+    - Bulk Update Requests
+  description: When no results are found, an object with an `bulk_update_requests` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - status_desc
+          - updated_at_desc
+          - updated_at_asc
+    - name: search[user_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[user_name]
+      in: query
+      schema:
+        type: string
+    - name: search[approver_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[approver_name]
+      in: query
+      schema:
+        type: string
+    - name: search[forum_topic_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[forum_post_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[status]
+      in: query
+      schema:
+        type: string
+        description: Multiple can be specified via comma separating.
+        enum:
+          - approved
+          - rejected
+          - pending
+    - name: search[title_matches]
+      in: query
+      schema:
+        type: string
+    - name: search[script_matches]
+      in: query
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/bulkUpdateRequest.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - bulk_update_requests
+                properties:
+                  bulk_update_requests:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Bulk Update Request
+  operationId: createBulkUpdateRequest
+  tags:
+    - Bulk Update Requests
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - bulk_update_request[script]
+            - bulk_update_request[title]
+            - bulk_update_request[reason]
+          properties:
+            bulk_update_request[script]:
+              type: string
+            bulk_update_request[title]:
+              type: string
+            bulk_update_request[reason]:
+              type: string
+            bulk_update_request[forum_topic_id]:
+              type: integer
+            bulk_update_request[skip_forum]:
+              type: boolean
+              description: Only usable for Admin+
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/bulkUpdateRequest.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

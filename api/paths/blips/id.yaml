@@ -1,0 +1,84 @@
+get:
+  summary: Get Blip
+  operationId: getBlip
+  tags:
+    - Blips
+  parameters:
+    - name: id
+      in: path
+      description: The ID of the blip to get.
+      required: true
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/blip.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Blip
+  operationId: editBlip
+  tags:
+    - Blips
+  security:
+    - basicAuth: []
+  description: Unless Admin+, blips cannot be edited after 5 minutes. Marked blips cannot be edited.
+  parameters:
+    - name: id
+      in: path
+      description: The ID of the blip.
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            blip[body]:
+              type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/blip.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Blip
+  operationId: deleteBlip
+  tags:
+    - Blips
+  security:
+    - basicAuth: []
+  description: |
+    You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the blip.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

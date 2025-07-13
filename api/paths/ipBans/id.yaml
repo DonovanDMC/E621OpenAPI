@@ -1,0 +1,22 @@
+delete:
+  summary: Delete IP Ban
+  operationId: deleteIPBan
+  tags:
+    - IP Bans
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the ip ban.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

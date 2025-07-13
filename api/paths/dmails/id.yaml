@@ -1,0 +1,46 @@
+get:
+  summary: Get DMail
+  operationId: getDMail
+  tags:
+    - DMails
+  description: Fetching a dmail will not mark it as read.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the dmail.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/dMail.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+delete:
+  summary: Delete DMail
+  operationId: deleteDMail
+  tags:
+    - DMails
+  security:
+    - basicAuth: []
+  description: Deleting simply hides your copy of the dmail.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the dmail.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

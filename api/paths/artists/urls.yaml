@@ -1,0 +1,92 @@
+get:
+  summary: Search Artist URLs
+  operationId: searchArtistUrls
+  tags:
+    - Artist URLs
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id
+          - id_asc
+          - id_desc
+          - artist_id
+          - artist_id_asc
+          - artist_id_desc
+          - url
+          - url_asc
+          - url_desc
+          - normalized_url
+          - normalized_url_asc
+          - normalized_url_desc
+          - created_at
+          - created_at_asc
+          - created_at_desc
+          - updated_at
+          - updated_at_asc
+          - updated_at_desc
+    - name: search[artist_name]
+      in: query
+      description: The name of the artist.
+      schema:
+        type: string
+    - name: search[artist_id]
+      in: query
+      description: The id of the artist.
+      schema:
+        type: string
+    - name: search[is_active]
+      in: query
+      description: If the artist url is active.
+      schema:
+        type: boolean
+    - name: search[url]
+      in: query
+      description: The url.
+      schema:
+        type: string
+    - name: search[normalized_url]
+      in: query
+      description: The normalized url. (http:, trailing `/`)
+      schema:
+        type: string
+    - name: search[artist]
+      in: query
+      description: Legacy nested search for artist. Supports the same parameters as /artists.json.
+      deprecated: true
+      schema:
+        type: object
+    - name: search[url_matches]
+      in: query
+      description: Legacy name for `search[url]`.
+      deprecated: true
+      schema:
+        type: string
+    - name: search[normalized_url_matches]
+      in: query
+      description: Legacy name for `search[normalized_url]`.
+      deprecated: true
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: "../../components/schemas/artistUrl.yaml"
+                - type: object
+                  required:
+                    - artist
+                  properties:
+                    artist:
+                      $ref: "../../components/schemas/artist.yaml"

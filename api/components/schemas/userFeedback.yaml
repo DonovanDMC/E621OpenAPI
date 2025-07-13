@@ -1,0 +1,32 @@
+type: object
+required:
+  - id
+  - user_id
+  - creator_id
+  - category
+  - body
+  - created_at
+  - updated_at
+  - updater_id
+  - is_deleted
+properties:
+  id:
+    type: integer
+  user_id:
+    type: integer
+  creator_id:
+    type: integer
+  category:
+    $ref: "./feedbackCategories.yaml"
+  body:
+    type: string
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  updater_id:
+    type: integer
+  is_deleted:
+    type: boolean

@@ -1,0 +1,84 @@
+get:
+  summary: Get Takedown
+  operationId: getTakedown
+  tags:
+    - Takedowns
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/takedown.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Takedown
+  operationId: editTakedown
+  tags:
+    - Takedowns
+  security:
+    - basicAuth: []
+  description: You must have the bd staff user flag.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            takedown[notes]:
+              type: string
+            takedown[reason_hidden]:
+              type: boolean
+            takedown_posts:
+              type: string
+            process_takedown:
+              type: boolean
+              description: If not truthy, the takedown will be denied.
+            delete_reason:
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Takedown
+  operationId: deleteTakedown
+  tags:
+    - Takedowns
+  security:
+    - basicAuth: []
+  description: You must have the bd staff user flag.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

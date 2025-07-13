@@ -1,2 +1,4 @@
 node_modules
 dist
+compile-doc.sh
+_build

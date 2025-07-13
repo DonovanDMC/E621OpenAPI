@@ -1,0 +1,24 @@
+type: string
+enum:
+  - deleted
+  - undeleted
+  - approved
+  - unapproved
+  - flag_created
+  - flag_removed
+  - favorites_moved
+  - favorites_received
+  - rating_locked
+  - rating_unlocked
+  - status_locked
+  - status_unlocked
+  - note_locked
+  - note_unlocked
+  - comment_locked
+  - comment_unlocked
+  - replacement_accepted
+  - replacement_rejected
+  - replacement_promoted
+  - replacement_deleted
+  - expunged
+  - changed_bg_color

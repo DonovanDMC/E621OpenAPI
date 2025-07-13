@@ -1,0 +1,12 @@
+post:
+  summary: Fix User Counts
+  operationId: fixUserCounts
+  tags:
+    - Users
+  security:
+    - basicAuth: []
+  responses:
+    302:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

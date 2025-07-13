@@ -1,0 +1,14 @@
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - record_type
+      properties:
+        record_type:
+          type: string
+          enum:
+            - unmark
+            - ban
+            - record
+            - warning

@@ -1,0 +1,84 @@
+get:
+  summary: Search Upload Whitelists
+  operationId: searchUploadWhitelists
+  tags:
+    - Upload Whitelists
+  description: When no results are found, an object with an `upload_whitelists` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - pattern
+          - updated_at
+          - created_at
+    - in: query
+      name: search[pattern]
+      schema:
+        type: string
+    - in: query
+      name: search[note]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/uploadWhitelist.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - upload_whitelists
+                properties:
+                  upload_whitelists:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Upload Whitelist
+  operationId: createUploadWhitelist
+  tags:
+    - Upload Whitelists
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - upload_whitelist[allowed]
+            - upload_whitelist[pattern]
+          properties:
+            upload_whitelist[allowed]:
+              type: string
+            upload_whitelist[pattern]:
+              type: string
+            upload_whitelist[reason]:
+              type: string
+            upload_whitelist[note]:
+              type: string
+            upload_whitelist[hidden]:
+              type: boolean
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/uploadWhitelist.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

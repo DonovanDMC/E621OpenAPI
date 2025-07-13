@@ -1,0 +1,239 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - file
+  - preview
+  - sample
+  - score
+  - tags
+  - locked_tags
+  - change_seq
+  - flags
+  - rating
+  - fav_count
+  - sources
+  - pools
+  - relationships
+  - approver_id
+  - uploader_id
+  - description
+  - comment_count
+  - is_favorited
+  - has_notes
+  - duration
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  file:
+    type: object
+    required:
+      - width
+      - height
+      - ext
+      - size
+      - md5
+      - url
+    properties:
+      width:
+        type: integer
+      height:
+        type: integer
+      ext:
+        type: string
+      size:
+        type: integer
+        format: int64
+      md5:
+        type: string
+      url:
+        type: string
+        nullable: true
+  preview:
+    type: object
+    required:
+      - width
+      - height
+      - url
+    properties:
+      width:
+        type: integer
+      height:
+        type: integer
+      url:
+        type: string
+        nullable: true
+  sample:
+    type: object
+    required:
+      - has
+      - height
+      - width
+      - url
+      - alternates
+    properties:
+      has:
+        type: boolean
+      height:
+        type: integer
+        nullable: true
+      width:
+        type: integer
+        nullable: true
+      url:
+        type: string
+        nullable: true
+      alternates:
+        type: object
+        properties:
+          480p:
+            $ref: "./postSampleAlternate.yaml"
+          720p:
+            $ref: "./postSampleAlternate.yaml"
+          original:
+            $ref: "./postSampleAlternate.yaml"
+  score:
+    type: object
+    required:
+      - up
+      - down
+      - total
+    properties:
+      up:
+        type: integer
+      down:
+        type: integer
+      total:
+        type: integer
+  tags:
+    type: object
+    required:
+      - general
+      - artist
+      - copyright
+      - character
+      - species
+      - invalid
+      - meta
+      - lore
+      - contributor
+    properties:
+      general:
+        type: array
+        items:
+          type: string
+      artist:
+        type: array
+        items:
+          type: string
+      copyright:
+        type: array
+        items:
+          type: string
+      character:
+        type: array
+        items:
+          type: string
+      species:
+        type: array
+        items:
+          type: string
+      invalid:
+        type: array
+        items:
+          type: string
+      meta:
+        type: array
+        items:
+          type: string
+      lore:
+        type: array
+        items:
+          type: string
+      contributor:
+        type: array
+        items:
+          type: string
+  locked_tags:
+    type: array
+    nullable: true
+    items:
+      type: string
+  change_seq:
+    type: number
+  flags:
+    type: object
+    required:
+      - pending
+      - flagged
+      - note_locked
+      - status_locked
+      - rating_locked
+      - deleted
+    properties:
+      pending:
+        type: boolean
+      flagged:
+        type: boolean
+      note_locked:
+        type: boolean
+      status_locked:
+        type: boolean
+      rating_locked:
+        type: boolean
+      deleted:
+        type: boolean
+  rating:
+    $ref: "./ratings.yaml"
+  fav_count:
+    type: integer
+  sources:
+    type: array
+    items:
+      type: string
+  pools:
+    type: array
+    items:
+      type: integer
+  relationships:
+    type: object
+    required:
+      - parent_id
+      - has_children
+      - has_active_children
+      - children
+    properties:
+      parent_id:
+        type: integer
+        nullable: true
+      has_children:
+        type: boolean
+      has_active_children:
+        type: boolean
+      children:
+        type: array
+        items:
+          type: integer
+  approver_id:
+    type: integer
+    nullable: true
+  uploader_id:
+    type: integer
+  description:
+    type: string
+  comment_count:
+    type: integer
+  is_favorited:
+    type: boolean
+  has_notes:
+    type: boolean
+  duration:
+    type: integer
+    nullable: true

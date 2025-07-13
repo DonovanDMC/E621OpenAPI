@@ -1,0 +1,80 @@
+type: object
+required:
+  - id
+  - source
+  - rating
+  - uploader_id
+  - tag_string
+  - status
+  - backtrace
+  - post_id
+  - md5_confirmation
+  - created_at
+  - updated_at
+  - parent_id
+  - md5
+  - file_ext
+  - file_size
+  - image_width
+  - image_height
+  - description
+  - uploader_name
+properties:
+  id:
+    type: integer
+  source:
+    type: string
+  rating:
+    $ref: "./ratings.yaml"
+  uploader_id:
+    type: integer
+  tag_string:
+    type: string
+  status:
+    type: string
+    description: |
+      Note: The "error" status will be proceeded by an error, ex: "error: RuntimeError - No file or source URL provided"
+    enum:
+      - completed
+      - duplicate
+      - error
+      - processing
+      - pending
+  backtrace:
+    type: string
+    nullable: true
+  post_id:
+    type: integer
+    nullable: true
+  md5_confirmation:
+    type: string
+    nullable: true
+    deprecated: true
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  parent_id:
+    type: integer
+    nullable: true
+  md5:
+    type: string
+    nullable: true
+  file_ext:
+    type: string
+    nullable: true
+  file_size:
+    type: integer
+    nullable: true
+  image_width:
+    type: integer
+    nullable: true
+  image_height:
+    type: integer
+    nullable: true
+  description:
+    type: string
+  uploader_name:
+    type: string

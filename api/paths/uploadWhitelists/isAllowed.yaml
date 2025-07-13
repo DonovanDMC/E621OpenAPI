@@ -1,0 +1,45 @@
+get:
+  summary: Check If URL Is Allowed
+  operationId: checkIfUrlIsAllowed
+  tags:
+    - Upload Whitelists
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the upload whitelist.
+      schema:
+        type: integer
+    - name: url
+      in: query
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - url
+              - domain
+              - is_allowed
+              - reason
+            properties:
+              url:
+                type: string
+              domain:
+                type: string
+              is_allowed:
+                type: boolean
+              reason:
+                type: string
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

@@ -1,0 +1,59 @@
+patch:
+  summary: Admin Edit User
+  operationId: adminEditUser
+  tags:
+    - Admin Users
+  security:
+    - basicAuth: []
+  description: You must be Admin+. If editing an Admin+, you must be Owner+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the user.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            user[verified]:
+              type: boolean
+              description: Must have the bd staff user flag to use.
+            user[level]:
+              type: integer
+              description: Must have the bd staff user flag to promote to Admin+.
+            user[name]:
+              type: string
+            user[profile_about]:
+              type: string
+            user[profile_artinfo]:
+              type: string
+            user[base_upload_limit]:
+              type: number
+            user[enable_privacy_mode]:
+              type: boolean
+            user[email]:
+              type: string
+              description: Must have the bd staff user flag to use.
+            user[can_approve_posts]:
+              type: boolean
+            user[can_upload_free]:
+              type: boolean
+            user[no_flagging]:
+              type: boolean
+            user[replacements_beta]:
+              type: boolean
+  responses:
+    204:
+      description: Success
+    400:
+      $ref: "../../components/responses/messageError.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

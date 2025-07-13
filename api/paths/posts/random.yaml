@@ -1,0 +1,24 @@
+get:
+  summary: Get Random Post
+  operationId: getRandomPost
+  tags:
+    - Posts
+  parameters:
+    - name: tags
+      in: query
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

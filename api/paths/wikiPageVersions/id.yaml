@@ -1,0 +1,21 @@
+get:
+  summary: Get Wiki Page Version
+  operationId: getWikiPageVersion
+  tags:
+    - Wiki Page Versions
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the wiki page version.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/wikiPageVersion.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

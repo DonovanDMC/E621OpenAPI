@@ -1,0 +1,124 @@
+allOf:
+  - $ref: "./user.yaml"
+  - type: object
+    required:
+      - blacklist_users
+      - description_collapsed_initially
+      - hide_comments
+      - show_hidden_comments
+      - show_post_statistics
+      - receive_email_notifications
+      - enable_keyboard_navigation
+      - enable_privacy_mode
+      - style_usernames
+      - enable_auto_complete
+      - disable_cropped_thumbnails
+      - enable_safe_mode
+      - disable_responsive_mode
+      - no_flagging
+      - disable_user_dmails
+      - enable_compact_uploader
+      - replacements_beta
+      - updated_at
+      - email
+      - last_logged_in_at
+      - last_forum_read_at
+      - recent_tags
+      - comment_threshold
+      - default_image_size
+      - favorite_tags
+      - blacklisted_tags
+      - time_zone
+      - per_page
+      - custom_style
+      - favorite_count
+      - api_regen_multiplier
+      - api_burst_limit
+      - remaining_api_limit
+      - statement_timeout
+      - favorite_limit
+      - tag_query_limit
+      - has_mail
+    properties:
+      blacklist_users:
+        type: boolean
+      description_collapsed_initially:
+        type: boolean
+      hide_comments:
+        type: boolean
+      show_hidden_comments:
+        type: boolean
+      show_post_statistics:
+        type: boolean
+      receive_email_notifications:
+        type: boolean
+      enable_keyboard_navigation:
+        type: boolean
+      enable_privacy_mode:
+        type: boolean
+      style_usernames:
+        type: boolean
+      enable_auto_complete:
+        type: boolean
+      can_approve_posts:
+        type: boolean
+      disable_cropped_thumbnails:
+        type: boolean
+      enable_safe_mode:
+        type: boolean
+      disable_responsive_mode:
+        type: boolean
+      no_flagging:
+        type: boolean
+      disable_user_dmails:
+        type: boolean
+      enable_compact_uploader:
+        type: boolean
+      replacements_beta:
+        type: boolean
+      updated_at:
+        type: string
+        format: date-time
+      email:
+        type: string
+      last_logged_in_at:
+        type: string
+      last_forum_read_at:
+        type: string
+      recent_tags:
+        type: string
+      comment_threshold:
+        type: integer
+      default_image_size:
+        type: string
+        enum:
+          - large
+          - fit
+          - fitv
+          - original
+      favorite_tags:
+        type: string
+      blacklisted_tags:
+        type: string
+      time_zone:
+        type: string
+      per_page:
+        type: integer
+      custom_style:
+        type: string
+      favorite_count:
+        type: integer
+      api_regen_multiplier:
+        type: integer
+      api_burst_limit:
+        type: integer
+      remaining_api_limit:
+        type: integer
+      statement_timeout:
+        type: integer
+      favorite_limit:
+        type: integer
+      tag_query_limit:
+        type: integer
+      has_mail:
+        type: boolean

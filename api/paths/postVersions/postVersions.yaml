@@ -1,0 +1,110 @@
+get:
+  summary: Search Post Versions
+  operationId: searchPostVersions
+  tags:
+    - Post Versions
+  description: Errors if no results are found.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - name: page
+      in: query
+      description: The page number of results to get. Between 1 and 750. Note that for post versions specifically, you can only go through the 10,000 most recent results with page numbers.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 750
+    - $ref: "../../components/parameters/id.yaml"
+    - in: query
+      name: search[updater_name]
+      schema:
+        type: string
+    - in: query
+      name: search[updater_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[start_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[rating]
+      schema:
+        $ref: "../../components/schemas/ratings.yaml"
+    - in: query
+      name: search[rating_changed]
+      schema:
+        type: string
+        enum:
+          - e
+          - q
+          - s
+          - any
+    - in: query
+      name: search[parent_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[parent_id_changed]
+      schema:
+        type: boolean
+    - in: query
+      name: search[tags]
+      schema:
+        type: string
+    - in: query
+      name: search[tags_removed]
+      schema:
+        type: string
+    - in: query
+      name: search[tags_added]
+      schema:
+        type: string
+    - in: query
+      name: search[locked_tags]
+      schema:
+        type: string
+    - in: query
+      name: search[locked_tags_removed]
+      schema:
+        type: string
+    - in: query
+      name: search[locked_tags_added]
+      schema:
+        type: string
+    - in: query
+      name: search[reason]
+      schema:
+        type: string
+    - in: query
+      name: search[description]
+      schema:
+        type: string
+    - in: query
+      name: search[description_changed]
+      schema:
+        type: boolean
+    - in: query
+      name: search[source_changed]
+      schema:
+        type: boolean
+    - in: query
+      name: search[uploads]
+      schema:
+        type: string
+        enum:
+          - included
+          - excluded
+          - only
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/postVersion.yaml"

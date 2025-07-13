@@ -1,0 +1,108 @@
+get:
+  summary: Search Post Sets
+  operationId: searchPostSets
+  tags:
+    - Post Sets
+  description: When no results are found, an object with a `post_sets` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - name
+          - shortname
+          - post_count
+          - postcount
+          - created_at
+          - updated_at
+          - update
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[name]
+      schema:
+        type: string
+    - in: query
+      name: search[shortname]
+      schema:
+        type: string
+    - in: query
+      name: search[is_public]
+      description: You must be Moderator+.
+      schema:
+        type: boolean
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[maintainer_id]
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/postSet.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - post_sets
+                properties:
+                  post_sets:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Post Set
+  operationId: createPostSet
+  tags:
+    - Post Sets
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_set[name]
+            - post_set[shortname]
+          properties:
+            post_set[name]:
+              type: string
+            post_set[shortname]:
+              type: string
+            post_set[description]:
+              type: string
+            post_set[is_public]:
+              type: boolean
+            post_set[ransfer_on_delete]:
+              type: boolean
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/postSet.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

@@ -1,0 +1,191 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - up_score
+  - down_score
+  - score
+  - source
+  - md5
+  - rating
+  - is_note_locked
+  - is_rating_locked
+  - is_status_locked
+  - is_pending
+  - is_flagged
+  - is_deleted
+  - uploader_id
+  - approver_id
+  - last_noted_at
+  - last_comment_bumped_at
+  - fav_count
+  - tag_string
+  - tag_count
+  - tag_count_general
+  - tag_count_artist
+  - tag_count_character
+  - tag_count_copyright
+  - file_ext
+  - file_size
+  - image_width
+  - image_height
+  - parent_id
+  - has_children
+  - last_commented_at
+  - has_active_children
+  - bit_flags
+  - tag_count_meta
+  - locked_tags
+  - tag_count_species
+  - tag_count_invalid
+  - description
+  - comment_count
+  - change_seq
+  - tag_count_lore
+  - bg_color
+  - generated_samples
+  - duration
+  - is_comment_disabled
+  - is_comment_locked
+  - has_large
+  - has_visible_children
+  - children_ids
+  - pool_ids
+  - is_favorited
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  up_score:
+    type: integer
+  down_score:
+    type: integer
+  score:
+    type: integer
+  source:
+    type: string
+  md5:
+    type: string
+  rating:
+    $ref: "./ratings.yaml"
+  is_note_locked:
+    type: boolean
+  is_rating_locked:
+    type: boolean
+  is_status_locked:
+    type: boolean
+  is_pending:
+    type: boolean
+  is_flagged:
+    type: boolean
+  is_deleted:
+    type: boolean
+  uploader_id:
+    type: integer
+  approver_id:
+    type: integer
+  last_noted_at:
+    type: string
+    format: date-time
+    nullable: true
+  last_comment_bumped_at:
+    type: string
+    format: date-time
+    nullable: true
+  fav_count:
+    type: integer
+  tag_string:
+    type: string
+  tag_count:
+    type: integer
+  tag_count_general:
+    type: integer
+  tag_count_artist:
+    type: integer
+  tag_count_character:
+    type: integer
+  tag_count_copyright:
+    type: integer
+  file_ext:
+    type: string
+  file_size:
+    type: integer
+    format: int64
+  image_width:
+    type: integer
+  image_height:
+    type: integer
+  parent_id:
+    type: integer
+    nullable: true
+  has_children:
+    type: boolean
+  last_commented_at:
+    type: string
+    format: date-time
+    nullable: true
+  has_active_children:
+    type: boolean
+  bit_flags:
+    type: number
+  tag_count_meta:
+    type: integer
+  locked_tags:
+    type: string
+    nullable: true
+  tag_count_species:
+    type: integer
+  tag_count_invalid:
+    type: integer
+  description:
+    type: string
+  comment_count:
+    type: integer
+  change_seq:
+    type: integer
+  tag_count_lore:
+    type: integer
+  bg_color:
+    type: string
+    nullable: true
+  generated_samples:
+    type: array
+    nullable: true
+    items:
+      type: string
+      enum:
+        - 720p
+        - 480p
+        - original
+  duration:
+    type: string
+    nullable: true
+  is_comment_disabled:
+    type: boolean
+  is_comment_locked:
+    type: boolean
+  has_large:
+    type: boolean
+  has_visible_children:
+    type: boolean
+  children_ids:
+    type: string
+    nullable: true
+  pool_ids:
+    type: array
+    items:
+      type: integer
+  is_favorited:
+    type: boolean
+  file_url:
+    type: string
+  large_file_url:
+    type: string
+  preview_file_url:
+    type: string

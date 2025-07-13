@@ -1,0 +1,46 @@
+type: object
+required:
+  - id
+  - reason
+  - creator_id
+  - created_at
+  - forum_post_id
+  - antecedent_name
+  - consequent_name
+  - status
+  - forum_topic_id
+  - updated_at
+  - descendant_names
+  - approver_id
+properties:
+  id:
+    type: integer
+  reason:
+    type: string
+  creator_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  forum_post_id:
+    type: integer
+    nullable: true
+  antecedent_name:
+    type: string
+  consequent_name:
+    type: string
+  status:
+    $ref: "./tagRequestStatuses.yaml"
+  forum_topic_id:
+    type: integer
+    nullable: true
+  updated_at:
+    type: string
+    format: date-time
+  descendant_names:
+    type: array
+    items:
+      type: string
+  approver_id:
+    type: integer
+    nullable: true

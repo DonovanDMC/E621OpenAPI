@@ -1,0 +1,32 @@
+delete:
+  summary: Unflag Post
+  operationId: unflagPost
+  tags:
+    - Posts
+  description: You must have the "Approve Posts" permission.
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            approval:
+              type: string
+              description: Approves the post if set to "approve".
+
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

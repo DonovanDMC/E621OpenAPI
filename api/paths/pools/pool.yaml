@@ -1,0 +1,94 @@
+get:
+  summary: Search Pools
+  operationId: searchPools
+  tags:
+    - Pools
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - name
+          - created_at
+          - post_count
+    - in: query
+      name: search[name_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[description_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[category]
+      schema:
+        $ref: "../../components/schemas/poolCategories.yaml"
+    - in: query
+      name: search[is_active]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/pool.yaml"
+post:
+  summary: Create Pool
+  operationId: createPool
+  tags:
+    - Pools
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - pool[name]
+          properties:
+            pool[name]:
+              type: string
+            pool[description]:
+              type: string
+            pool[category]:
+              $ref: "../../components/schemas/poolCategories.yaml"
+            ipool[s_active]:
+              type: boolean
+            pool[post_ids_string]:
+              type: string
+              description: Space separated list of post IDs. Mutually exclusive with post_ids.
+            pool[post_ids]:
+              type: array
+              description: Array of post IDs. Mutually exclusive with post_ids_string.
+              items:
+                type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/pool.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

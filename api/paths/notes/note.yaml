@@ -1,0 +1,121 @@
+get:
+  summary: Search Notes
+  operationId: searchNotes
+  tags:
+    - Notes
+  description: When no results are found, an object with an `notes` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[body_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[is_active]
+      schema:
+        type: boolean
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[post_tags_match]
+      schema:
+        type: string
+    - in: query
+      name: search[post_note_updater_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[post_note_updater_name]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/note.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - notes
+                properties:
+                  notes:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Note
+  operationId: createNote
+  tags:
+    - Notes
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - note[post_id]
+            - note[x]
+            - note[y]
+            - note[width]
+            - note[height]
+            - note[body]
+          properties:
+            note[post_id]:
+              type: integer
+            note[x]:
+              type: integer
+            note[y]:
+              type: integer
+            note[width]:
+              type: integer
+            note[height]:
+              type: integer
+            note[body]:
+              type: string
+            note[html_id]:
+              type: string
+              description: Passthrough, used in frontend.
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../../components/schemas/note.yaml"
+              - type: object
+                required:
+                  - html_id
+                properties:
+                  html_id:
+                    type: string
+                    description: Passthrough, used in frontend.
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

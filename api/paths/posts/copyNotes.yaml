@@ -1,0 +1,33 @@
+put:
+  summary: Copy Notes To Post
+  operationId: copyNotesToPost
+  tags:
+    - Posts
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - other_post_id
+          properties:
+            other_post_id:
+              type: integer
+  responses:
+    204:
+      description: Success
+    400:
+      $ref: "../../components/responses/messageError.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

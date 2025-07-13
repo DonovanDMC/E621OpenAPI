@@ -1,0 +1,24 @@
+post:
+  summary: Lock Post Vote
+  operationId: lockPostVote
+  tags:
+    - Post Votes
+  security:
+    - basicAuth: []
+  description: You must be Moderator+. Errors if ids is not provided.
+  parameters:
+    - name: ids
+      in: query
+      required: true
+      description: The IDs of the post votes, comma separated.
+      schema:
+        type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

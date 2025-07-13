@@ -1,0 +1,64 @@
+get:
+  summary: Search DMails
+  operationId: searchDMails
+  tags:
+    - DMails
+  description: When no results are found, an object with a `dmails` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - in: query
+      name: search[title_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[message_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[to_name]
+      schema:
+        type: string
+    - in: query
+      name: search[to_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[from_name]
+      schema:
+        type: string
+    - in: query
+      name: search[from_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[is_read]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_deleted]
+      schema:
+        type: boolean
+    - in: query
+      name: search[read]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/dMail.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - dmails
+                properties:
+                  dmails:
+                    type: array
+                    maxItems: 0

@@ -1,0 +1,87 @@
+type: object
+required:
+  - id
+  - post_id
+  - tags
+  - updater_id
+  - updated_at
+  - rating
+  - parent_id
+  - source
+  - description
+  - reason
+  - locked_tags
+  - added_tags
+  - removed_tags
+  - added_locked_tags
+  - removed_locked_tags
+  - rating_changed
+  - parent_changed
+  - source_changed
+  - description_changed
+  - version
+  - obsolete_added_tags
+  - obsolete_removed_tags
+  - unchanged_tags
+  - updater_name
+properties:
+  id:
+    type: integer
+  post_id:
+    type: integer
+  tags:
+    type: string
+  updater_id:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time
+  rating:
+    $ref: "./ratings.yaml"
+  parent_id:
+    type: integer
+    nullable: true
+  source:
+    type: string
+  description:
+    type: string
+  reason:
+    type: string
+    nullable: true
+  locked_tags:
+    type: string
+    nullable: true
+  added_tags:
+    type: array
+    items:
+      type: string
+  removed_tags:
+    type: array
+    items:
+      type: string
+  added_locked_tags:
+    type: array
+    items:
+      type: string
+  removed_locked_tags:
+    type: array
+    items:
+      type: string
+  rating_changed:
+    type: boolean
+  parent_changed:
+    type: boolean
+  source_changed:
+    type: boolean
+  description_changed:
+    type: boolean
+  version:
+    type: number
+  obsolete_added_tags:
+    type: string
+  obsolete_removed_tags:
+    type: string
+  unchanged_tags:
+    type: string
+  updater_name:
+    type: string

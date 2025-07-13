@@ -1,0 +1,20 @@
+type: object
+required:
+  - id
+  - user_id
+  - post_id
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  user_id:
+    type: integer
+  post_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

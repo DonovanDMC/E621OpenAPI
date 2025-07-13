@@ -1,0 +1,48 @@
+type: object
+required:
+  - id
+  - creator_id
+  - reason
+  - disp_id
+  - qtype
+  - status
+  - created_at
+  - updated_at
+  - response
+  - handler_id
+  - report_reason
+  - accused_id
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  reason:
+    type: string
+  disp_id:
+    type: number
+  qtype:
+    $ref: "./ticketTypes.yaml"
+  status:
+    $ref: "./ticketStatuses.yaml"
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  response:
+    type: string
+  handler_id:
+    type: integer
+    nullable: true
+  claimant_id:
+    type: integer
+    nullable: true
+    description: Only visible to Moderator+.
+  report_reason:
+    type: string
+    nullable: true
+  accused_id:
+    type: integer
+    nullable: true

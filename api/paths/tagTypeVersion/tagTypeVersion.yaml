@@ -1,0 +1,40 @@
+get:
+  summary: Search Tag Versions
+  operationId: searchTagVersions
+  tags:
+    - Tag Versions
+  description: When no results are found, an object with an `tag_type_versions` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[tag]
+      in: query
+      schema:
+        type: string
+    - name: search[user_id]
+      in: query
+      schema:
+        type: string
+    - name: search[user_name]
+      in: query
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/tagTypeVersion.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - tag_type_versions
+                properties:
+                  tag_type_versions:
+                    type: array
+                    maxItems: 0

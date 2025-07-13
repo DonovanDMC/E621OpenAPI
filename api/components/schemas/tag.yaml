@@ -1,0 +1,36 @@
+type: object
+required:
+  - id
+  - name
+  - post_count
+  - related_tags
+  - related_tags_updated_at
+  - category
+  - is_locked
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  post_count:
+    type: integer
+  related_tags:
+    type: array
+    items:
+      type: string
+  related_tags_updated_at:
+    type: string
+    nullable: true
+    format: date-time
+  category:
+    $ref: "./tagCategories.yaml"
+  is_locked:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

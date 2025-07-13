@@ -1,0 +1,29 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - pattern
+  - note
+  - hidden
+  - allowed
+  - reason
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  pattern:
+    type: string
+  note:
+    type: string
+  hidden:
+    type: boolean
+  allowed:
+    type: boolean
+  reason:
+    type: string

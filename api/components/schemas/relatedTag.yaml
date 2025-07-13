@@ -1,0 +1,9 @@
+type: object
+required:
+  - name
+  - category_id
+properties:
+  name:
+    type: string
+  category_id:
+    $ref: "./tagCategories.yaml"

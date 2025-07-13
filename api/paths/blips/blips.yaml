@@ -1,0 +1,86 @@
+get:
+  summary: Search Blips
+  operationId: searchBlips
+  tags:
+    - Blips
+  description: When no results are found, an object with an `blips` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - updated_at
+          - updated_at_desc
+    - name: search[creator_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[creator_name]
+      in: query
+      schema:
+        type: string
+    - name: search[body_matches]
+      in: query
+      schema:
+        type: string
+    - name: search[response_to]
+      in: query
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/blip.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - blips
+                properties:
+                  blips:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Blip
+  operationId: createBlip
+  tags:
+    - Blips
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - blip[body]
+          properties:
+            blip[body]:
+              type: string
+            blip[response_to]:
+              type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/blip.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

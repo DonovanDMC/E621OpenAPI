@@ -1,0 +1,548 @@
+openapi: "3.0.0"
+info:
+  title: "E621"
+  description: |
+    OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)<br>
+    This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).<br>
+    Note if E621's api is under attack and/or cloudflare protections are enabled, the "Try it out" buttons here will not work.<br>
+    If they are not working, you can check this [Unofficial Status Page](https://status.e621.ws).
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+
+  termsOfService: https://e621.net/static/terms_of_service
+
+  contact:
+    name: Donovan_DMC
+    url: https://e621.net/forum_topics/46279
+  version: "d69c34e"
+
+servers:
+  - url: https://e621.net
+    description: E621 (production)
+  - url: http://localhost:3000
+    description: E621 (Development)
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  parameters:
+    id:
+      $ref: "./components/parameters/id.yaml"
+    idOrName:
+      $ref: "./components/parameters/idOrName.yaml"
+    limit:
+      $ref: "./components/parameters/limit.yaml"
+    page:
+      $ref: "./components/parameters/page.yaml"
+    ip_addr:
+      $ref: "./components/parameters/ipAddr.yaml"
+  schemas:
+    ModactionActions:
+      $ref: "./components/schemas/modactionActions.yaml"
+    PostEventActions:
+      $ref: "./components/schemas/postEventActions.yaml"
+    Ratings:
+      $ref: "./components/schemas/ratings.yaml"
+    TagCategories:
+      $ref: "./components/schemas/tagCategories.yaml"
+    FeedbackCategories:
+      $ref: "./components/schemas/feedbackCategories.yaml"
+    TagRequestStatuses:
+      $ref: "./components/schemas/tagRequestStatuses.yaml"
+    WarningTypes:
+      $ref: "./components/schemas/warningTypes.yaml"
+    PoolCategories:
+      $ref: "./components/schemas/poolCategories.yaml"
+    TicketTypes:
+      $ref: "./components/schemas/ticketTypes.yaml"
+    TicketStatuses:
+      $ref: "./components/schemas/ticketStatuses.yaml"
+    Artist:
+      $ref: "./components/schemas/artist.yaml"
+    ArtistURL:
+      $ref: "./components/schemas/artistUrl.yaml"
+    ArtistVersion:
+      $ref: "./components/schemas/artistVersion.yaml"
+    AvoidPosting:
+      $ref: "./components/schemas/avoidPosting.yaml"
+    AvoidPostingVersion:
+      $ref: "./components/schemas/avoidPostingVersion.yaml"
+    Ban:
+      $ref: "./components/schemas/ban.yaml"
+    Blip:
+      $ref: "./components/schemas/blip.yaml"
+    BulkRelatedTag:
+      $ref: "./components/schemas/bulkRelatedTag.yaml"
+    BulkUpdateRequest:
+      $ref: "./components/schemas/bulkUpdateRequest.yaml"
+    Comment:
+      $ref: "./components/schemas/comment.yaml"
+    CurrentUser:
+      $ref: "./components/schemas/currentUser.yaml"
+    DMail:
+      $ref: "./components/schemas/dMail.yaml"
+    DeferredPost:
+      $ref: "./components/schemas/deferredPost.yaml"
+    DTextResponse:
+      $ref: "./components/schemas/dTextResponse.yaml"
+    EmailBlacklist:
+      $ref: "./components/schemas/emailBlacklist.yaml"
+    ForumPost:
+      $ref: "./components/schemas/forumPost.yaml"
+    ForumPostVote:
+      $ref: "./components/schemas/forumPostVote.yaml"
+    ForumTopic:
+      $ref: "./components/schemas/forumTopic.yaml"
+    FullCurrentUser:
+      $ref: "./components/schemas/fullCurrentUser.yaml"
+    FullUser:
+      $ref: "./components/schemas/fullUser.yaml"
+    Help:
+      $ref: "./components/schemas/help.yaml"
+    IPBan:
+      $ref: "./components/schemas/ipBan.yaml"
+    IQDBPost:
+      $ref: "./components/schemas/iqdbPost.yaml"
+    IQDBResponse:
+      $ref: "./components/schemas/iqdbResponse.yaml"
+    Mascot:
+      $ref: "./components/schemas/mascot.yaml"
+    ModAction:
+      $ref: "./components/schemas/modAction.yaml"
+    NewsUpdate:
+      $ref: "./components/schemas/newsUpdate.yaml"
+    Note:
+      $ref: "./components/schemas/note.yaml"
+    NoteVersion:
+      $ref: "./components/schemas/noteVersion.yaml"
+    Pool:
+      $ref: "./components/schemas/pool.yaml"
+    PoolVersion:
+      $ref: "./components/schemas/poolVersion.yaml"
+    Post:
+      $ref: "./components/schemas/post.yaml"
+    PostApproval:
+      $ref: "./components/schemas/postApproval.yaml"
+    PostDisapproval:
+      $ref: "./components/schemas/postDisapproval.yaml"
+    PostEvent:
+      $ref: "./components/schemas/postEvent.yaml"
+    PostFlag:
+      $ref: "./components/schemas/postFlag.yaml"
+    PostReplacement:
+      $ref: "./components/schemas/postReplacement.yaml"
+    PostSampleAlternate:
+      $ref: "./components/schemas/postSampleAlternate.yaml"
+    PostSet:
+      $ref: "./components/schemas/postSet.yaml"
+    PostVersion:
+      $ref: "./components/schemas/postVersion.yaml"
+    RelatedTag:
+      $ref: "./components/schemas/relatedTag.yaml"
+    Tag:
+      $ref: "./components/schemas/tag.yaml"
+    TagAlias:
+      $ref: "./components/schemas/tagAlias.yaml"
+    TagImplication:
+      $ref: "./components/schemas/tagImplication.yaml"
+    TagPreview:
+      $ref: "./components/schemas/tagPreview.yaml"
+    TagTypeVersion:
+      $ref: "./components/schemas/tagTypeVersion.yaml"
+    Takedown:
+      $ref: "./components/schemas/takedown.yaml"
+    Ticket:
+      $ref: "./components/schemas/ticket.yaml"
+    UploadWhitelist:
+      $ref: "./components/schemas/uploadWhitelist.yaml"
+    Upload:
+      $ref: "./components/schemas/upload.yaml"
+    User:
+      $ref: "./components/schemas/user.yaml"
+    UserFeedback:
+      $ref: "./components/schemas/userFeedback.yaml"
+    UserNameChangeRequest:
+      $ref: "./components/schemas/userNameChangeRequest.yaml"
+    WikiPage:
+      $ref: "./components/schemas/wikiPage.yaml"
+    WikiPageVersion:
+      $ref: "./components/schemas/wikiPageVersion.yaml"
+  responses:
+    NotFound:
+      $ref: "./components/responses/notFound.yaml"
+    AccessDenied:
+      $ref: "./components/responses/accessDenied.yaml"
+    ExpectedError:
+      $ref: "./components/responses/expectedError.yaml"
+    MessageError:
+      $ref: "./components/responses/messageError.yaml"
+    UserResponse:
+      $ref: "./components/responses/user.yaml"
+  requestBodies:
+    warning:
+      $ref: "./components/requestBodies/warning.yaml"
+
+paths:
+  /artists.json:
+    $ref: "./paths/artists/artists.yaml"
+  /artists/{idOrName}.json:
+    $ref: "./paths/artists/idOrName.yaml"
+  /artists/{idOrName}/revert.json:
+    $ref: "./paths/artists/idOrNameRevert.yaml"
+
+  /artist_versions.json:
+    $ref: "./paths/artists/version.yaml"
+  /artist_urls.json:
+    $ref: "./paths/artists/urls.yaml"
+
+  /avoid_postings.json:
+    $ref: "./paths/avoidPosting/avoid_postings.yaml"
+  /avoid_postings/{idOrName}.json:
+    $ref: "./paths/avoidPosting/idOrArtistName.yaml"
+  /avoid_postings/{idOrName}/delete.json:
+    $ref: "./paths/avoidPosting/idOrArtistNameDelete.yaml"
+  /avoid_postings/{idOrName}/undelete.json:
+    $ref: "./paths/avoidPosting/idOrArtistNameUnDelete.yaml"
+  /avoid_posting_versions.json:
+    $ref: "./paths/avoidPosting/versions.yaml"
+
+  /bans.json:
+    $ref: "./paths/bans/bans.yaml"
+  /bans/{id}.json:
+    $ref: "./paths/bans/id.yaml"
+
+  /blips.json:
+    $ref: "./paths/blips/blips.yaml"
+  /blips/{id}.json:
+    $ref: "./paths/blips/id.yaml"
+  /blips/{id}/hide.json:
+    $ref: "./paths/blips/hide.yaml"
+  /blips/{id}/unhide.json:
+    $ref: "./paths/blips/unhide.yaml"
+  /blips/{id}/warning.json:
+    $ref: "./paths/blips/warning.yaml"
+
+  /bulk_update_requests.json:
+    $ref: "./paths/bulkUpdateRequests/bulkUpdateRequests.yaml"
+  /bulk_update_request/{id}.json:
+    $ref: "./paths/bulkUpdateRequests/id.yaml"
+  /bulk_update_request/{id}/approve.json:
+    $ref: "./paths/bulkUpdateRequests/approve.yaml"
+
+  /comments.json:
+    $ref: "./paths/comments/comments.yaml"
+  /comments/{id}.json:
+    $ref: "./paths/comments/id.yaml"
+  /comments/{id}/hide.json:
+    $ref: "./paths/comments/hide.yaml"
+  /comments/{id}/unhide.json:
+    $ref: "./paths/comments/unhide.yaml"
+  /comments/{id}/warning.json:
+    $ref: "./paths/comments/warning.yaml"
+
+  /comments/{id}/votes.json:
+    $ref: "./paths/comments/votes.yaml"
+  /comment_votes/lock.json:
+    $ref: "./paths/comments/votesLock.yaml"
+  /comment_votes/delete.json:
+    $ref: "./paths/comments/votesDelete.yaml"
+
+  /dmails.json:
+    $ref: "./paths/dmails/dmails.yaml"
+  /dmails/{id}.json:
+    $ref: "./paths/dmails/id.yaml"
+  /dmails/{id}/mark_as_read.json:
+    $ref: "./paths/dmails/markAsRead.yaml"
+  /dmails/{id}/mark_as_unread.json:
+    $ref: "./paths/dmails/markAsUnread.yaml"
+  /dmails/mark_all_as_unread.json:
+    $ref: "./paths/dmails/markAllAsUnread.yaml"
+  
+  /dtext_preview.json:
+    $ref: "./paths/dtext/preview.yaml"
+
+  /email_blacklists.json:
+    $ref: "./paths/emailBlacklists/emailBlacklists.yaml"
+  /email_blacklists/{id}.json:
+    $ref: "./paths/emailBlacklists/id.yaml"
+
+  /favorites.json:
+    $ref: "./paths/favorites/favorites.yaml"
+  /favorites/{id}.json:
+    $ref: "./paths/favorites/id.yaml"
+
+  /forum_posts.json:
+    $ref: "./paths/forum/post.yaml"
+  /forum_posts/{id}.json:
+    $ref: "./paths/forum/id.yaml"
+  /forum_posts/{id}/hide.json:
+    $ref: "./paths/forum/hide.yaml"
+  /forum_posts/{id}/unhide.json:
+    $ref: "./paths/forum/unhide.yaml"
+  /forum_posts/{id}/warning.json:
+    $ref: "./paths/forum/warning.yaml"
+
+  /forum_posts/{id}/votes.json:
+    $ref: "./paths/forum/votes.yaml"
+
+  /forum_topics.json:
+    $ref: "./paths/forumTopics/forumTopics.yaml"
+  /forum_topics/{id}.json:
+    $ref: "./paths/forumTopics/id.yaml"
+  /forum_topics/{id}/hide.json:
+    $ref: "./paths/forumTopics/hide.yaml"
+  /forum_topics/{id}/unhide.json:
+    $ref: "./paths/forumTopics/unhide.yaml"
+  /forum_topics/{id}/subscribe.json:
+    $ref: "./paths/forumTopics/subscribe.yaml"
+  /forum_topics/{id}/unsubscribe.json:
+    $ref: "./paths/forumTopics/unsubscribe.yaml"
+  /forum_topics/mark_all_as_read.json:
+    $ref: "./paths/forumTopics/markAllAsRead.yaml"
+
+  /help.json:
+    $ref: "./paths/help/help.yaml"
+  /help/{id}.json:
+    $ref: "./paths/help/id.yaml"
+
+  /ip_bans.json:
+    $ref: "./paths/ipBans/ipBan.yaml"
+  /ip_bans/{id}.json:
+    $ref: "./paths/ipBans/id.yaml"
+
+  /iqdb_queries.json:
+    $ref: "./paths/iqdb/queries.yaml"
+
+  /mascots.json:
+    $ref: "./paths/mascots/mascots.yaml"
+  /mascots/{id}.json:
+    $ref: "./paths/mascots/id.yaml"
+
+  /mod_actions.json:
+    $ref: "./paths/modActions/id.yaml"
+
+  /news_updates.json:
+    $ref: "./paths/newsUpdates/newsUpdate.yaml"
+  /news_updates/{id}.json:
+    $ref: "./paths/newsUpdates/id.yaml"
+
+  /notes.json:
+    $ref: "./paths/notes/note.yaml"
+  /notes/{id}.json:
+    $ref: "./paths/notes/id.yaml"
+  /notes/{id}/revert.json:
+    $ref: "./paths/notes/revert.yaml"
+  /note_versions.json:
+    $ref: "./paths/notes/versions.yaml"
+
+  /pools.json:
+    $ref: "./paths/pools/pool.yaml"
+  /pools/{id}.json:
+    $ref: "./paths/pools/id.yaml"
+  /pools/{id}/revert.json:
+    $ref: "./paths/pools/revert.yaml"
+  /pool_element.js:
+    $ref: "./paths/pools/elementJs.yaml"
+  /pool_element.json:
+    $ref: "./paths/pools/element.yaml"
+  /pool_versions.json:
+    $ref: "./paths/pools/version.yaml"
+
+  /popular.json:
+    $ref: "./paths/popular/popular.yaml"
+
+
+  /posts.json:
+    $ref: "./paths/posts/posts.yaml"
+  /posts/{id}.json:
+    $ref: "./paths/posts/id.yaml"
+  /posts/{id}/update_iqdb.json:
+    $ref: "./paths/posts/updateIqdb.yaml"
+  /posts/{id}/mark_as_translated.json:
+    $ref: "./paths/posts/markAsTranslated.yaml"
+  /posts/{id}/copy_notes.json:
+    $ref: "./paths/posts/copyNotes.yaml"
+  /posts/{id}/revert.json:
+    $ref: "./paths/posts/revert.yaml"
+  /posts/{id}/show_seq.json:
+    $ref: "./paths/posts/showSeq.yaml"
+  /posts/{id}/flag.json:
+    $ref: "./paths/posts/flag.yaml"
+  /posts/random.json:
+    $ref: "./paths/posts/random.yaml"
+  
+  /post_sets.json:
+    $ref: "./paths/postsSets/postSets.yaml"
+  /post_sets/{id}.json:
+    $ref: "./paths/postsSets/id.yaml"
+  /post_sets/{id}/update_posts.json:
+    $ref: "./paths/postsSets/update.yaml"
+  /post_sets/{id}/add_posts.json:
+    $ref: "./paths/postsSets/add.yaml"
+  /post_sets/{id}/remove_posts.json:
+    $ref: "./paths/postsSets/remove.yaml"
+  /post_sets/for_select.json:
+    $ref: "./paths/postsSets/select.yaml"
+  
+  /post_approvals.json:
+    $ref: "./paths/postApprovals/postApprovals.yaml"
+  /post_events.json:
+    $ref: "./paths/postEvents/postEvents.yaml"
+
+  /post_flags.json:
+    $ref: "./paths/postFlags/postFlags.yaml"
+  /post_flags/{id}.json:
+    $ref: "./paths/postFlags/id.yaml"
+
+  /post_replacements.json:
+    $ref: "./paths/postReplacements/postReplacements.yaml"
+  /post_replacements/{id}.json:
+    $ref: "./paths/postReplacements/id.yaml"
+  /post_replacements/{id}/approve.json:
+    $ref: "./paths/postReplacements/approve.yaml"
+  /post_replacements/{id}/reject.json:
+    $ref: "./paths/postReplacements/reject.yaml"
+  /post_replacements/{id}/promote.json:
+    $ref: "./paths/postReplacements/promote.yaml"
+  /post_replacements/{id}/toggle_penalize.json:
+    $ref: "./paths/postReplacements/togglePenalize.yaml"
+
+  /post_versions.json:
+    $ref: "./paths/postVersions/postVersions.yaml"
+
+  /posts/{id}/votes.json:
+    $ref: "./paths/postVotes/votes.yaml"
+  /post_votes/lock.json:
+    $ref: "./paths/postVotes/lock.yaml"
+  /post_votes/delete.json:
+    $ref: "./paths/postVotes/delete.yaml"
+  
+  /tags.json:
+    $ref: "./paths/tags/tags.yaml"
+  /tags/{id}.json:
+    $ref: "./paths/tags/id.yaml"
+  /tags/{id}/correction.json:
+    $ref: "./paths/tags/correction.yaml"
+  /tags/preview.json:
+    $ref: "./paths/tags/preview.yaml"
+
+  /tag_type_versions.json:
+    $ref: "./paths/tagTypeVersion/tagTypeVersion.yaml"
+
+  /tag_aliases.json:
+    $ref: "./paths/tagAliases/tagAliases.yaml"
+  /tag_aliases/{id}.json:
+    $ref: "./paths/tagAliases/id.yaml"
+  /tag_aliases/{id}/approve.json:
+    $ref: "./paths/tagAliases/approve.yaml"
+  /tag_alias_requests.json:
+    $ref: "./paths/tagAliases/tagAliasRequests.yaml"
+
+  /tag_implications.json:
+    $ref: "./paths/tagImplications/tagImplications.yaml"
+  /tag_implications/{id}.json:
+    $ref: "./paths/tagImplications/id.yaml"
+  /tag_implications/{id}/approve.json:
+    $ref: "./paths/tagImplications/approve.yaml"
+  /tag_implication_requests.json:
+    $ref: "./paths/tagImplications/tagImplicationRequests.yaml"
+
+  /related_tag/bulk.json:
+    $ref: "./paths/relatedTag/bulk.yaml"
+  
+  /takedowns.json:
+    $ref: "./paths/takedowns/takedowns.yaml"
+  /takedowns/{id}.json:
+    $ref: "./paths/takedowns/id.yaml"
+  /takedowns/{id}/add_by_ids.json:
+    $ref: "./paths/takedowns/addByIds.yaml"
+  /takedowns/{id}/add_by_tags.json:
+    $ref: "./paths/takedowns/addByTags.yaml"
+  /takedowns/{id}/count_matching_posts.json:
+    $ref: "./paths/takedowns/countMatchingPosts.yaml"
+  /takedowns/{id}/remove_by_ids.json:
+    $ref: "./paths/takedowns/removeByIds.yaml"
+
+  /tickets.json:
+    $ref: "./paths/tickets/tickets.yaml"
+  /tickets/{id}.json:
+    $ref: "./paths/tickets/id.yaml"
+  /tickets/{id}/claim.json:
+    $ref: "./paths/tickets/claim.yaml"
+  /tickets/{id}/unclaim.json:
+    $ref: "./paths/tickets/unclaim.yaml"
+
+  /uploads.json:
+    $ref: "./paths/uploads/uploads.yaml"
+  
+  /upload_whitelists.json:
+    $ref: "./paths/uploadWhitelists/uploadWhitelists.yaml"
+  /upload_whitelists/{id}.json:
+    $ref: "./paths/uploadWhitelists/id.yaml"
+  /upload_whitelists/{id}/is_allowed.json:
+    $ref: "./paths/uploadWhitelists/isAllowed.yaml"
+  
+  /users.json:
+    $ref: "./paths/users/users.yaml"
+  /users/{id}.json:
+    $ref: "./paths/users/id.yaml"
+  /users/upload_limit.json:
+    $ref: "./paths/users/uploadLimit.yaml"
+  /maintenance/user/count_fixes.json:
+    $ref: "./paths/users/countFixes.yaml"
+  /maintenance/user/dmail_filter.json:
+    $ref: "./paths/users/dmailFilter.yaml"
+
+  /user_feedbacks.json:
+    $ref: "./paths/userFeedbacks/userFeedbacks.yaml"
+  /user_feedbacks/{id}.json:
+    $ref: "./paths/userFeedbacks/id.yaml"
+  /user_feedbacks/{id}/delete.json:
+    $ref: "./paths/userFeedbacks/delete.yaml"
+  /user_feedbacks/{id}/undelete.json:
+    $ref: "./paths/userFeedbacks/undelete.yaml"
+  
+  /user_name_change_requests.json:
+    $ref: "./paths/userNameChangeRequests/userNameChangeRequests.yaml"
+  /user_name_change_requests/{id}.json:
+    $ref: "./paths/userNameChangeRequests/id.yaml"
+  
+  /wiki_pages.json:
+    $ref: "./paths/wikiPages/wikiPages.yaml"
+  /wiki_pages/{id}.json:
+    $ref: "./paths/wikiPages/id.yaml"
+  /wiki_page/{id}/revert.json:
+    $ref: "./paths/wikiPages/revert.yaml"
+    
+  /wiki_page_versions.json:
+    $ref: "./paths/wikiPageVersions/wikiPageVersions.yaml"
+  /wiki_page_versions/{id}.json:
+    $ref: "./paths/wikiPageVersions/id.yaml"
+  
+  /admin/users/alt_list.json:
+    $ref: "./paths/admin/altList.yaml"
+  /admins/users/{id}.json:
+    $ref: "./paths/admin/id.yaml"
+  
+  /moderator/post/posts/{id}/delete.json:
+    $ref: "./paths/moderator/postDelete.yaml"
+  /moderator/post/posts/{id}/undelete.json:
+    $ref: "./paths/moderator/postundelete.yaml"
+  /moderator/post/posts/{id}/regenerate_thumbnails.json:
+    $ref: "./paths/moderator/postRegenerateThumbnails.yaml"
+  /moderator/post/posts/{id}/regenerate_videos.json:
+    $ref: "./paths/moderator/postRegenerateVideos.yaml"
+  /moderator/post/posts/{id}/expunge.json:
+    $ref: "./paths/moderator/postExpunge.yaml"
+  /moderator/post/posts/{id}/move_favorites.json:
+    $ref: "./paths/moderator/postMoveFavorites.yaml"
+  /moderator/post/approval.json:
+    $ref: "./paths/moderator/postApprovals.yaml"
+
+  # Post Disapprovals
+  /moderator/post/disapprovals.json:
+    $ref: "./paths/moderator/postDisapprovals.yaml"
+

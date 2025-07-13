@@ -1,0 +1,52 @@
+get:
+  summary: List Help Pages
+  operationId: listHelpPages
+  description: Will error if no help pages exist.
+  tags:
+    - Help Pages
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/help.yaml"
+post:
+  summary: Create Help Page
+  operationId: createHelpPage
+  tags:
+    - Help Pages
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - help_page[name]
+            - help_page[wiki_page]
+          properties:
+            help_page[name]:
+              type: string
+            help_page[wiki_page]:
+              type: string
+            help_page[related]:
+              type: string
+              description: Separate with a comma followed by a space.
+            help_page[title]:
+              type: string
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/help.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

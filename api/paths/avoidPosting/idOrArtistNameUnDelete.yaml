@@ -1,0 +1,17 @@
+put:
+  summary: Undelete Avoid Posting Entry
+  operationId: undeleteAvoidPosting
+  tags:
+    - Avoid Posting Entries
+  security:
+    - basicAuth: []
+  description: Must have the bd staff user flag.
+  parameters:
+    - $ref: "../../components/parameters/idOrName.yaml"
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components//responses/accessDenied.yaml"
+    404:
+      $ref: "../../components//responses/notFound.yaml"

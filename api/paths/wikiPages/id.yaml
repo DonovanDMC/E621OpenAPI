@@ -1,0 +1,92 @@
+get:
+  summary: Get Wiki Page
+  operationId: getWikiPage
+  tags:
+    - Wiki Pages
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID or name of the wiki page.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/wikiPage.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Wiki Page
+  operationId: editWikiPage
+  tags:
+    - Wiki Pages
+  security:
+    - basicAuth: []
+  description: You must be Janitor+ if the wiki page is locked.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the wiki page.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            wiki_page[body]:
+              type: string
+            wiki_page[edit_reason]:
+              type: string
+            wiki_page[parent]:
+              type: string
+              description: Must be Privileged+ to use.
+            wiki_page[title]:
+              type: string
+              description: Must be Janitor+ to use.
+            wiki_page[is_locked]:
+              type: boolean
+              description: Must be Janitor+ to use.
+            wiki_page[is_deleted]:
+              type: boolean
+              description: Must be Janitor+ to use.
+            wiki_page[skip_secondary_validations]:
+              type: boolean
+              description: Must be Janitor+ to use.
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Wiki Page
+  operationId: deleteWikiPage
+  tags:
+    - Wiki Pages
+  security:
+    - basicAuth: []
+  description: You must be Admin+
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the wiki page.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

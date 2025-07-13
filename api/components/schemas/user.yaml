@@ -1,0 +1,44 @@
+type: object
+required:
+  - id
+  - created_at
+  - name
+  - level
+  - base_upload_limit
+  - post_upload_count
+  - post_update_count
+  - note_update_count
+  - is_banned
+  - can_approve_posts
+  - can_upload_free
+  - level_string
+  - avatar_id
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  name:
+    type: string
+  level:
+    type: integer
+  base_upload_limit:
+    type: integer
+  post_upload_count:
+    type: integer
+  post_update_count:
+    type: integer
+  note_update_count:
+    type: integer
+  is_banned:
+    type: boolean
+  can_approve_posts:
+    type: boolean
+  can_upload_free:
+    type: boolean
+  level_string:
+    type: string
+  avatar_id:
+    type: integer
+    nullable: true

@@ -1,0 +1,21 @@
+type: object
+description: Due to a global filter, the ip_addr is not present no matter your user level.
+required:
+  - id
+  - creator_id
+  - reason
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  reason:
+    type: string
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

@@ -1,0 +1,48 @@
+post:
+  summary: Delete Post
+  operationId: deletePost
+  tags:
+    - Posts
+  security:
+    - basicAuth: []
+  description: You must have the "Approve Posts" permission. `commit=Delete` must be set.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            reason:
+              type: string
+              description: If the post does not have an active flag, this is required.
+            move_favorites:
+              type: boolean
+              description: Move favorites to parent.
+            copy_sources:
+              type: boolean
+              description: Copy sources to parent.
+            copy_tags:
+              type: boolean
+              description: Copy tags to parent.
+            commit:
+              type: string
+              description: If not set, nothing will happen.
+              enum:
+                - Delete
+
+  responses:
+    302:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

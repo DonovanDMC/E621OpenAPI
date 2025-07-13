@@ -1,0 +1,157 @@
+get:
+  summary: Search Uploads
+  operationId: searchUploads
+  tags:
+    - Uploads
+  description: You must be Janitor+. When no results are found, an object with an `uploads` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[uploader_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[uploader_name]
+      schema:
+        type: string
+    - in: query
+      name: search[source]
+      schema:
+        type: string
+    - in: query
+      name: search[source_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[rating]
+      schema:
+        $ref: "../../components/schemas/ratings.yaml"
+    - in: query
+      name: search[parent_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[has_post]
+      schema:
+        type: boolean
+    - in: query
+      name: search[post_tags_match]
+      schema:
+        type: string
+    - in: query
+      name: search[status]
+      schema:
+        type: string
+        description: |
+          Note: The "error" status will be proceeded by an error, ex: "error: RuntimeError - No file or source URL provided"
+        enum:
+          - completed
+          - processing
+          - pending
+          - error
+    - in: query
+      name: search[backtrace]
+      schema:
+        type: string
+    - in: query
+      name: search[tag_string]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/upload.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - uploads
+                properties:
+                  uploads:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Upload Post
+  operationId: uploadPost
+  tags:
+    - Uploads
+    - Posts
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          required:
+            - upload[tag_string]
+            - upload[rating]
+          properties:
+            upload[file]:
+              type: string
+              format: binary
+              description: Mutually exclusive with direct_url.
+            upload[direct_url]:
+              type: string
+              description: Mutually exclusive with file.
+            upload[source]:
+              type: string
+            upload[tag_string]:
+              type: string
+            upload[rating]:
+              $ref: "../../components/schemas/ratings.yaml"
+            upload[parent_id]:
+              type: integer
+            upload[description]:
+              type: string
+            upload[as_pending]:
+              type: boolean
+              description: Must have the "Unrestricted Uploads" permission.
+            upload[locked_rating]:
+              type: boolean
+              description: Must be Privileged+ to use.
+            upload[locked_tags]:
+              type: string
+              description: Must be Admin+ to use.
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - success
+              - location
+              - post_id
+            properties:
+              success:
+                type: boolean
+                enum:
+                  - true
+              location:
+                type: string
+              post_id:
+                type: integer
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    412:
+      $ref: "../../components/responses/messageError.yaml"

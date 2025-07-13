@@ -1,0 +1,38 @@
+get:
+  summary: Get Post In Sequence
+  operationId: getPostInSequence
+  tags:
+    - Posts
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post.
+      schema:
+        type: integer
+    - name: seq
+      in: query
+      description: The direction to move in the sequence.
+      schema:
+        type: string
+        enum:
+          - next
+          - prev
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

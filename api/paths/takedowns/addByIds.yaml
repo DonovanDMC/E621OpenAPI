@@ -1,0 +1,46 @@
+post:
+  summary: Add Posts To Takedown By IDs
+  operationId: addPostsToTakedownByIds
+  tags:
+    - Takedowns
+  security:
+    - basicAuth: []
+  description: You must have the bd staff user flag.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_ids
+          properties:
+            post_ids:
+              type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - added_count
+              - added_post_ids
+            properties:
+              added_count:
+                type: integer
+              added_post_ids:
+                type: array
+                items:
+                  type: integer
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

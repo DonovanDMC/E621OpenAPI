@@ -1,0 +1,25 @@
+type: object
+required:
+  - id
+  - updater_id
+  - avoid_posting_id
+  - details
+  - is_active
+  - updated_at
+properties:
+  id:
+    type: integer
+  updater_id:
+    type: integer
+  avoid_posting_id:
+    type: integer
+  details:
+    type: string
+  staff_notes:
+    type: string
+    description: Only visible to Janitor+
+  is_active:
+    type: boolean
+  updated_at:
+    type: string
+    format: date-time

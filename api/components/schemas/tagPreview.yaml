@@ -1,0 +1,22 @@
+type: object
+required:
+  - a
+  - type
+  - tagTypeA
+properties:
+  a:
+    type: string
+    description: The name if type=tag, else the antecedent.
+  b:
+    type: string
+    description: The consequent, only present if type=alias or type=implication.
+  type:
+    type: string
+    enum:
+      - tag
+      - implication
+      - alias
+  tagTypeA:
+    $ref: "./tagCategories.yaml"
+  tagTypeB:
+    $ref: "./tagCategories.yaml"

@@ -1,0 +1,81 @@
+get:
+  summary: Get Bulk Update Request
+  operationId: getBulkUpdateRequest
+  tags:
+    - Bulk Update Requests
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the bulk update request.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/bulkUpdateRequest.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Bulk Update Request
+  operationId: editBulkUpdateRequest
+  tags:
+    - Bulk Update Requests
+  security:
+    - basicAuth: []
+  description: You must be the creator of the BUR, or Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the bulk update request.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            bulk_update_request[script]:
+              type: string
+            bulk_update_request[forum_topic_id]:
+              description: You must be Admin+.
+              type: string
+            bulk_update_request[forum_post_id]:
+              description: You must be Admin+.
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Reject Bulk Update Request
+  operationId: rejectBulkUpdateRequest
+  tags:
+    - Bulk Update Requests
+  security:
+    - basicAuth: []
+  description: You must be the creator of the BUR, or Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the bulk update request.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

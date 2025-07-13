@@ -1,0 +1,24 @@
+put:
+  summary: Approve Post Replacement
+  operationId: approvePostReplacement
+  tags:
+    - Post Replacements
+  security:
+    - basicAuth: []
+  description: You must have the "Approve Posts" permission.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post replacement.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

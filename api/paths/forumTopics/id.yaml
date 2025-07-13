@@ -1,0 +1,91 @@
+get:
+  summary: Get Forum Forum Topic
+  operationId: getForumTopic
+  tags:
+    - Forum Topics
+  description: If the forum topic is hidden, you must be the creator or Moderator+ to see it.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum topic.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/forumTopic.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Forum Topic
+  operationId: editForumTopic
+  tags:
+    - Forum Topics
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum topic.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            forum_topic[title]:
+              type: string
+            forum_topic[category_id]:
+              type: integer
+            forum_topic[original_post_attributes][id]:
+              type: integer
+              description: Forum post ID. Silently ignored
+            forum_topic[original_post_attributes][body]:
+              type: string
+              description: First forum post body.
+            forum_topic[is_sticky]:
+              type: boolean
+              description: You must be Moderator+.
+            forum_topic[is_locked]:
+              type: boolean
+              description: You must be Moderator+.
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Forum Topic
+  operationId: deleteForumTopic
+  tags:
+    - Forum Topics
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the forum topic.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

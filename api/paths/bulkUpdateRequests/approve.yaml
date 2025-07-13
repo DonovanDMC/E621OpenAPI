@@ -1,0 +1,20 @@
+post:
+  summary: Approve Bulk Update Request
+  operationId: approveBulkUpdateRequest
+  tags:
+    - Bulk Update Requests
+  description: Must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the bulk update request.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

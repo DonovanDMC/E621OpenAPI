@@ -1,0 +1,57 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - post_id
+  - creator_id
+  - approver_id
+  - file_ext
+  - file_size
+  - image_height
+  - image_width
+  - md5
+  - source
+  - file_name
+  - status
+  - reason
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  post_id:
+    type: integer
+  creator_id:
+    type: integer
+  approver_id:
+    type: integer
+    nullable: true
+  file_ext:
+    type: string
+  file_size:
+    type: integer
+    format: int64
+  image_height:
+    type: integer
+  image_width:
+    type: integer
+  md5:
+    type: string
+  source:
+    type: string
+  file_name:
+    type: string
+  status:
+    type: string
+    enum:
+      - prompted
+      - approved
+      - rejected
+      - pending
+  reason:
+    type: string

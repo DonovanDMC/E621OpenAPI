@@ -1,0 +1,32 @@
+post:
+  summary: Remove Posts From Takedown By IDs
+  operationId: removePostsFromTakedownByIds
+  tags:
+    - Takedowns
+  security:
+    - basicAuth: []
+  description: You must have the bd staff user flag.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the takedown.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_ids
+          properties:
+            post_ids:
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

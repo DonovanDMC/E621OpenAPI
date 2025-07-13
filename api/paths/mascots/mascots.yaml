@@ -1,0 +1,77 @@
+get:
+  summary: Search Mascots
+  operationId: searchMascots
+  tags:
+    - Mascots
+  description: When no results are found, an object with an `mascots` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/mascot.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - mascots
+                properties:
+                  mascots:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Mascot
+  operationId: createMascot
+  tags:
+    - Mascots
+  security:
+    - basicAuth: [ ]
+  description: You must be Admin+.
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          required:
+            - mascot[mascot_file]
+            - mascot[display_name]
+            - mascot[background_color]
+            - mascot[artist_url]
+            - mascot[artist_name]
+          properties:
+            mascot[mascot_file]:
+              type: string
+              format: binary
+            mascot[display_name]:
+              type: string
+            mascot[background_color]:
+              type: string
+            mascot[artist_url]:
+              type: string
+            mascot[artist_name]:
+              type: string
+            mascot[available_on_string]:
+              type: string
+              description: Comma separated site names.
+            mascot[active]:
+              type: boolean
+            mascot[hide_anonymous]:
+              type: boolean
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/mascot.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

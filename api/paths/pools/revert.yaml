@@ -1,0 +1,29 @@
+put:
+  summary: Revert Pool
+  operationId: revertPool
+  tags:
+    - Pools
+  security:
+    - basicAuth: []
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the pool.
+      schema:
+        type: integer
+    - name: version_id
+      in: query
+      required: true
+      description: The version ID to revert to.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

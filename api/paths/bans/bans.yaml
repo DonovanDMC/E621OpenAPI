@@ -1,0 +1,67 @@
+get:
+  summary: Search Bans
+  operationId: searchBans
+  tags:
+    - Bans
+  description: When no results are found, an object with an `bans` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - expires_at_desc
+    - name: search[banner_id]
+      in: query
+      description: The ID of the banner.
+      schema:
+        type: string
+    - name: search[banner_name]
+      in: query
+      description: The name of banner.
+      schema:
+        type: string
+    - name: search[user_id]
+      in: query
+      description: The ID of the banned user.
+      schema:
+        type: string
+    - name: search[user_name]
+      in: query
+      description: The name of the banned user.
+      schema:
+        type: string
+    - name: search[reason_matches]
+      in: query
+      description: The reason of the ban.
+      schema:
+        type: string
+    - name: search[expired]
+      in: query
+      description: If the ban is expired.
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/ban.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - bans
+                properties:
+                  bans:
+                    type: array
+                    maxItems: 0

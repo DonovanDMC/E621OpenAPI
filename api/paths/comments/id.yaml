@@ -1,0 +1,86 @@
+get:
+  summary: Get Comment
+  operationId: getComment
+  tags:
+    - Comments
+  description: If the comment is hidden, you must be the creator or Moderator+ to see it.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the comment.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/comment.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Comment
+  operationId: editComment
+  tags:
+    - Comments
+  security:
+    - basicAuth: []
+  description: |
+    You must be the creator of the comment, or Admin+ to edit. Marked comments cannot be edited.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the comment.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            comment[body]:
+              type: string
+            comment[is_sticky]:
+              type: boolean
+              description: Only usable for Janitor+
+            comment[is_hidden]:
+              type: boolean
+              description: Only usable for Moderator+
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Comment
+  operationId: deleteComment
+  tags:
+    - Comments
+  security:
+    - basicAuth: []
+  description: |
+    You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the comment.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

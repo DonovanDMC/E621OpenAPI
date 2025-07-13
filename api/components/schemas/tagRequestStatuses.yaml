@@ -1,0 +1,9 @@
+type: string
+enum:
+  - active
+  - deleted
+  - processing
+  - queued
+  - retired
+  - error
+  - pending

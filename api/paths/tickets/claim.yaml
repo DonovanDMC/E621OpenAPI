@@ -1,0 +1,26 @@
+post:
+  summary: Claim Ticket
+  operationId: claimTicket
+  tags:
+    - Tickets
+  description: You must be Moderator+. Errors are quietly swallowed and shown as notices in html.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+  security:
+    - basicAuth: []
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/ticket.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

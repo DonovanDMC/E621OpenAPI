@@ -1,0 +1,75 @@
+get:
+  summary: Search Email Blacklists
+  operationId: searchEmailBlacklists
+  tags:
+    - Email Blacklists
+  description: You must be Admin+. When no results are found, an object with an `email_blacklists` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - reason
+          - domain
+    - in: query
+      name: search[domain]
+      schema:
+        type: string
+    - in: query
+      name: search[reason]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/emailBlacklist.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - email_blacklists
+                properties:
+                  email_blacklists:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Email Blacklist
+  operationId: createEmailBlacklist
+  tags:
+    - Email Blacklists
+  description: You must be Admin+.
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - email_blacklist[domain]
+            - email_blacklist[reason]
+          properties:
+            email_blacklist[domain]:
+              type: string
+            email_blacklist[reason]:
+              type: string
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/emailBlacklist.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

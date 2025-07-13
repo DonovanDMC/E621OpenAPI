@@ -1,0 +1,69 @@
+get:
+  summary: Search Users
+  operationId: searchUsers
+  tags:
+    - Users
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - name
+          - post_upload_count
+          - note_count
+          - post_update_count
+    - in: query
+      name: search[name_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[about_me]
+      schema:
+        type: string
+    - in: query
+      name: search[avatar_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[level]
+      schema:
+        type: integer
+    - in: query
+      name: search[min_level]
+      schema:
+        type: integer
+    - in: query
+      name: search[max_level]
+      schema:
+        type: integer
+    - in: query
+      name: search[can_upload_free]
+      schema:
+        type: boolean
+    - in: query
+      name: search[can_approve_posts]
+      schema:
+        type: boolean
+    - in: query
+      name: search[email_matches]
+      description: You must be Admin+.
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              anyOf:
+                - $ref: "../../components/schemas/user.yaml"
+                - $ref: "../../components/schemas/fullUser.yaml"

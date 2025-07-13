@@ -1,0 +1,41 @@
+post:
+  summary: Remove Posts From Post Set
+  operationId: removePostsFromPostSet
+  tags:
+    - Post Sets
+  security:
+    - basicAuth: []
+  description: You must be the owner of the set, a maintainer (if public), or Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post set.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_ids
+          properties:
+            post_ids:
+              type: array
+              description: post_ids[]=1&post_ids[]=2
+              items:
+                type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/postSet.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

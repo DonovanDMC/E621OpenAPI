@@ -1,0 +1,61 @@
+get:
+  summary: Search Note Versions
+  operationId: searchNoteVersions
+  tags:
+    - Note Versions
+  description: When no results are found, an object with an `note_versions` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[updater_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[updater_name]
+      schema:
+        type: string
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[note_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[is_active]
+      schema:
+        type: boolean
+    - in: query
+      name: search[body_matches]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/noteVersion.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - note_versions
+                properties:
+                  note_versions:
+                    type: array
+                    maxItems: 0

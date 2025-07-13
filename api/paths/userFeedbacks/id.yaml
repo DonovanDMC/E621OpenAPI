@@ -1,0 +1,80 @@
+get:
+  summary: Get User Feedback
+  operationId: getUserFeedback
+  tags:
+    - User Feedbacks
+  description: You must be Moderator+ if the feedback is deleted.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the feedback.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/userFeedback.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit User Feedback
+  operationId: editUserFeedback
+  tags:
+    - User Feedbacks
+  security:
+    - basicAuth: []
+  description: You must be Moderator+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the feedback.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            user_feedback[body]:
+              type: string
+            user_feedback[category]:
+              $ref: "../../components/schemas/feedbackCategories.yaml"
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Destroy User Feedback
+  operationId: destroyUserFeedback
+  tags:
+    - User Feedbacks
+  security:
+    - basicAuth: []
+  description: You must be Admin+, or the creator and Moderator+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the feedback.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

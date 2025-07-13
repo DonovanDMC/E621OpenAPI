@@ -1,0 +1,35 @@
+type: object
+required:
+  - id
+  - owner_id
+  - from_id
+  - to_id
+  - title
+  - body
+  - is_read
+  - is_deleted
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  owner_id:
+    type: integer
+  from_id:
+    type: integer
+  to_id:
+    type: integer
+  title:
+    type: string
+  body:
+    type: string
+  is_read:
+    type: boolean
+  is_deleted:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

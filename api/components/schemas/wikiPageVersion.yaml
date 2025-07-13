@@ -1,0 +1,45 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - title
+  - body
+  - updater_id
+  - wiki_page_id
+  - is_locked
+  - other_names
+  - is_deleted
+  - reason
+  - parent
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  title:
+    type: string
+  body:
+    type: string
+  updater_id:
+    type: integer
+  wiki_page_id:
+    type: integer
+  is_locked:
+    type: boolean
+  other_names:
+    type: array
+    items:
+      type: string
+  is_deleted:
+    type: boolean
+  reason:
+    type: string
+    nullable: true
+  parent:
+    type: string
+    nullable: true

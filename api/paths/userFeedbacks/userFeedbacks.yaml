@@ -1,0 +1,104 @@
+get:
+  summary: Search User Feedbacks
+  operationId: searchUserFeedbacks
+  tags:
+    - User Feedbacks
+  description: When no results are found, an object with an `user_feedbacks` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[deleted]
+      description: You must be Moderator+.
+      schema:
+        type: string
+        enum:
+          - included
+          - excluded
+          - only
+    - in: query
+      name: search[body_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[user_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[user_name]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[category]
+      schema:
+        $ref: "../../components/schemas/feedbackCategories.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/userFeedback.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - user_feedbacks
+                properties:
+                  user_feedbacks:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create User Feedback
+  operationId: createUserFeedback
+  tags:
+    - User Feedbacks
+  security:
+    - basicAuth: []
+  description: You must be Moderator+.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - user_feedback[body]
+            - user_feedback[category]
+          properties:
+            user_feedback[user_id]:
+              type: integer
+            user_feedback[user_name]:
+              type: string
+            user_feedback[body]:
+              type: string
+            user_feedback[category]:
+              $ref: "../../components/schemas/feedbackCategories.yaml"
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/userFeedback.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

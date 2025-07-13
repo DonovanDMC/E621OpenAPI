@@ -1,0 +1,34 @@
+get:
+  summary: Search Posts
+  operationId: searchPosts
+  tags:
+    - Posts
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - in: query
+      name: tags
+      schema:
+        type: string
+    - in: query
+      name: md5
+      schema:
+        type: string
+    - in: query
+      name: random
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - posts
+            properties:
+              posts:
+                type: array
+                items:
+                  $ref: "../../components/schemas/post.yaml"

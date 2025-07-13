@@ -1,0 +1,56 @@
+patch:
+  summary: Edit News Update
+  operationId: editNewsUpdate
+  tags:
+    - News Updates
+  security:
+    - basicAuth: []
+  description: You must be Admin+
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the news update.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - news_update[message]
+          properties:
+            news_update[message]:
+              type: string
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete News Update
+  operationId: deleteNewsUpdate
+  tags:
+    - News Updates
+  security:
+    - basicAuth: []
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the news update.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

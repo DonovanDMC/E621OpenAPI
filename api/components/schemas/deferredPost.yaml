@@ -1,0 +1,73 @@
+type: object
+required:
+  - id
+  - flags
+  - tags
+  - rating
+  - file_ext
+  - width
+  - height
+  - size
+  - created_at
+  - uploader
+  - uploader_id
+  - score
+  - fav_count
+  - is_favorited
+  - pools
+  - md5
+  - preview_url
+  - large_url
+  - file_url
+  - preview_width
+  - preview_height
+properties:
+  id:
+    type: integer
+  flags:
+    type: string
+  tags:
+    type: string
+  rating:
+    $ref: "./ratings.yaml"
+  file_ext:
+    type: string
+  width:
+    type: integer
+  height:
+    type: integer
+  size:
+    type: integer
+    format: int64
+  created_at:
+    type: string
+    format: date-time
+  uploader:
+    type: string
+  uploader_id:
+    type: integer
+  score:
+    type: integer
+  fav_count:
+    type: integer
+  is_favorited:
+    type: boolean
+  pools:
+    type: array
+    items:
+      type: integer
+  md5:
+    type: string
+  preview_url:
+    type: string
+    nullable: true
+  large_url:
+    type: string
+    nullable: true
+  file_url:
+    type: string
+    nullable: true
+  preview_width:
+    type: integer
+  preview_height:
+    type: integer

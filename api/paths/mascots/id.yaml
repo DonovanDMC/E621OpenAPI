@@ -1,0 +1,70 @@
+patch:
+  summary: Edit Mascot
+  operationId: editMascot
+  tags:
+    - Mascots
+  security:
+    - basicAuth: [ ]
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the mascot.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            mascot[mascot_file]:
+              type: string
+              format: binary
+            mascot[display_name]:
+              type: string
+            mascot[background_color]:
+              type: string
+            mascot[artist_url]:
+              type: string
+            mascot[artist_name]:
+              type: string
+            mascot[available_on_string]:
+              type: string
+              description: Comma separated site names.
+            mascot[active]:
+              type: boolean
+            mascot[hide_anonymous]:
+              type: boolean
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Mascot
+  operationId: deleteMascot
+  tags:
+    - Mascots
+  security:
+    - basicAuth: [ ]
+  description: You must be Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the mascot.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

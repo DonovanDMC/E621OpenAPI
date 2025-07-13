@@ -1,0 +1,88 @@
+get:
+  summary: Query IQDB
+  operationId: queryIQDBGet
+  tags:
+    - IQDB
+  parameters:
+    - name: search[score_cutoff]
+      in: query
+      schema:
+        type: number
+    - name: search[url]
+      in: query
+      schema:
+        type: string
+    - name: search[post_id]
+      in: query
+      schema:
+        type: integer
+    - name: search[hash]
+      in: query
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - posts
+            properties:
+              posts:
+                type: array
+                items:
+                  $ref: "../../components/schemas/iqdbResponse.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+post:
+  summary: Query IQDB
+  operationId: queryIQDPost
+  tags:
+    - IQDB
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            search[file]:
+              type: string
+              format: binary
+            search[score_cutoff]:
+              type: number
+            search[url]:
+              type: string
+            search[post_id]:
+              type: string
+            search[hash]:
+              type: string
+      application/json:
+        schema:
+          type: object
+          properties:
+            score_cutoff:
+              type: number
+            url:
+              type: string
+            post_id:
+              type: string
+            hash:
+              type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - posts
+            properties:
+              posts:
+                type: array
+                items:
+                  $ref: "../../components/schemas/iqdbResponse.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"

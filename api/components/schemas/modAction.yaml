@@ -1,0 +1,20 @@
+type: object
+required:
+  - id
+  - creator_id
+  - created_at
+  - updated_at
+  - action
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  action:
+    $ref: "./modAction.yaml"

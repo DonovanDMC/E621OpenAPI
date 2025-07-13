@@ -1,0 +1,108 @@
+get:
+  summary: Search Post Flags
+  operationId: searchPostFlags
+  tags:
+    - Post Flags
+  description: When no results are found, an object with an `post_flags` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[reason_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[post_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[post_tags_match]
+      schema:
+        type: string
+    - in: query
+      name: search[type]
+      schema:
+        type: string
+    - in: query
+      name: search[is_resolved]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/postFlag.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - post_flags
+                properties:
+                  post_flags:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Post Flag
+  operationId: createPostFlag
+  tags:
+    - Post Flags
+  security:
+    - basicAuth: []
+  description: Will error if post_id is not provided.
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - post_flag[post_id]
+            - post_flag[reason_name]
+          properties:
+            post_flag[post_id]:
+              type: integer
+            post_flag[reason_name]:
+              type: string
+              enum:
+                - uploading_guidelines
+                - young_human
+                - dnp_artist
+                - pay_content
+                - trace
+                - previously_deleted
+                - real_porn
+                - corrupt
+                - inferior
+            post_flag[parent_id]:
+              type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/postFlag.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

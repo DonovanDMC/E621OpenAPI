@@ -1,0 +1,7 @@
+name: limit
+in: query
+description: The maximum number of results to return. Between 0 and 320.
+schema:
+  type: integer
+  minimum: 0
+  maximum: 500

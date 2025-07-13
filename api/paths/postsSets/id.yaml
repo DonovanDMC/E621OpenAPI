@@ -1,0 +1,86 @@
+get:
+  summary: Get Post Set
+  operationId: getPostSet
+  tags:
+    - Post Sets
+  description: You must be Moderator+ if the set is not public.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post set.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/postSet.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+patch:
+  summary: Edit Post Set
+  operationId: editPostSet
+  tags:
+    - Post Sets
+  security:
+    - basicAuth: []
+  description: You must be the owner of the set, or Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post sets.
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            post_set[name]:
+              type: string
+            post_set[shortname]:
+              type: string
+            post_set[description]:
+              type: string
+            post_set[is_public]:
+              type: boolean
+            post_set[transfer_on_delete]:
+              type: boolean
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"
+delete:
+  summary: Delete Post Set
+  operationId: deletePostSet
+  tags:
+    - Post Sets
+  security:
+    - basicAuth: []
+  description: You must be the owner of the set, or Admin+.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: The ID of the post set.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"

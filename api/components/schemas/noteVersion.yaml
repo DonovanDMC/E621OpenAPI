@@ -1,0 +1,44 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - x
+  - y
+  - width
+  - height
+  - body
+  - version
+  - is_active
+  - note_id
+  - post_id
+  - updater_id
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  x:
+    type: integer
+  y:
+    type: integer
+  width:
+    type: integer
+  height:
+    type: integer
+  body:
+    type: string
+  version:
+    type: number
+  is_active:
+    type: boolean
+  note_id:
+    type: integer
+  post_id:
+    type: integer
+  updater_id:
+    type: integer

@@ -1,0 +1,26 @@
+type: object
+required:
+  - type
+  - height
+  - width
+  - urls
+properties:
+  type:
+    type: string
+    enum:
+      - video
+  height:
+    type: integer
+  width:
+    type: integer
+  urls:
+    type: array
+    # TODO: i think we can refactor this
+    items:
+      anyOf:
+        - type: string
+          nullable: true
+          format: "uri"
+        - type: string
+          nullable: true
+          format: "uri"

@@ -1,0 +1,29 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - old_type
+  - new_type
+  - is_locked
+  - tag_id
+  - creator_id
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  old_type:
+    $ref: "./tagCategories.yaml"
+  new_type:
+    $ref: "./tagCategories.yaml"
+  is_locked:
+    type: boolean
+  tag_id:
+    type: integer
+  creator_id:
+    type: integer

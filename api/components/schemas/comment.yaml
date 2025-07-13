@@ -1,0 +1,53 @@
+type: object
+required:
+  - id
+  - created_at
+  - post_id
+  - creator_id
+  - body
+  - score
+  - updated_at
+  - updater_id
+  - do_not_bump_post
+  - is_hidden
+  - is_sticky
+  - warning_type
+  - warning_user_id
+  - creator_name
+  - updater_name
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  post_id:
+    type: integer
+  creator_id:
+    type: integer
+  body:
+    type: string
+  score:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time
+  updater_id:
+    type: integer
+  do_not_bump_post:
+    type: boolean
+    deprecated: true
+  is_hidden:
+    type: boolean
+  is_sticky:
+    type: boolean
+  warning_type:
+      $ref: "./warningTypes.yaml"
+
+  warning_user_id:
+    type: integer
+    nullable: true
+  creator_name:
+    type: string
+  updater_name:
+    type: string

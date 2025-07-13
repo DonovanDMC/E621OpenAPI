@@ -1,0 +1,20 @@
+type: object
+required:
+  - hash
+  - post_id
+  - score
+  - post
+properties:
+  hash:
+    type: string
+  post_id:
+    type: integer
+  score:
+    type: integer
+  post:
+    type: object
+    required:
+      - posts
+    properties:
+      posts:
+        $ref: "./iqdbPost.yaml"

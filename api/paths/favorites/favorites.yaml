@@ -1,0 +1,66 @@
+get:
+  summary: List Favorites
+  operationId: listFavorites
+  tags:
+    - Favorites
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - in: query
+      name: user_id
+      description: You must be the user or Moderator+ if the user has their favorites hidden.
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - posts
+            properties:
+              posts:
+                type: array
+                items:
+                  $ref: "../../components/schemas/post.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+post:
+  summary: Add Favorite
+  operationId: addFavorite
+  tags:
+    - Favorites
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - post_id
+          properties:
+            post_id:
+              type: integer
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - post
+            properties:
+              post:
+                $ref: "../../components/schemas/post.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

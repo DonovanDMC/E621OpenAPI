@@ -1,0 +1,49 @@
+get:
+  summary: Search Pool Versions
+  operationId: searchPoolVersions
+  tags:
+    - Pool Versions
+  description: When no results are found, an object with an `pool_versions` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - $ref: "../../components/parameters/ipAddr.yaml"
+    - name: search[order]
+      in: query
+      description: The order of the results.
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[updater_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[updater_name]
+      schema:
+        type: string
+    - in: query
+      name: search[pool_id]
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/poolVersion.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - pool_versions
+                properties:
+                  pool_versions:
+                    type: array
+                    maxItems: 0

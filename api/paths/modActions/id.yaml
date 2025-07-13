@@ -1,0 +1,44 @@
+get:
+  summary: Search Mod Actions
+  operationId: searchModActions
+  tags:
+    - Mod Actions
+  description: |
+    Note that some mod actions are not in use anymore. Their entries exist for historical purposes only.<br>
+    The current legacy actions are as follows:<br>
+    * `created_positive_record`, `created_neutral_record`, `created_negative_record`
+    * `created_flag_reason`, `edited_flag_reason`, `deleted_flag_reason`
+    * `post_move_favorites`, `post_delete`, `post_undelete`, `post_destroy`, `post_rating_lock`, `post_unapprove`
+    * `post_replacement_accept`, `post_replacement_reject`, `post_replacement_delete`
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[action]
+      schema:
+        $ref: "../../components/schemas/modactionActions.yaml"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/modactionActions.yaml"

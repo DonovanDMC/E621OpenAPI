@@ -1,0 +1,79 @@
+get:
+  summary: Search Tag Implications
+  operationId: searchTagImplications
+  tags:
+    - Tag Implications
+  description: When no results are found, an object with an `tag_implications` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - created_at
+          - updated_at
+          - name
+          - tag_count
+    - in: query
+      name: search[name_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[antecedent_name]
+      schema:
+        type: string
+    - in: query
+      name: search[consequent_name]
+      schema:
+        type: string
+    - in: query
+      name: search[status]
+      schema:
+        $ref: "../../components/schemas/tagRequestStatuses.yaml"
+    - in: query
+      name: search[antecedent_tag_category]
+      schema:
+        $ref: "../../components/schemas/tagCategories.yaml"
+    - in: query
+      name: search[consequent_tag_category]
+      schema:
+        $ref: "../../components/schemas/tagCategories.yaml"
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[approver_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[approver_name]
+      schema:
+        type: string
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/tagImplication.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - tag_implications
+                properties:
+                  tag_implications:
+                    type: array
+                    maxItems: 0

@@ -1,0 +1,33 @@
+type: object
+required:
+  - id
+  - approver_id
+  - user_id
+  - original_name
+  - desired_name
+  - created_at
+  - updated_at
+  - status
+properties:
+  id:
+    type: integer
+  approver_id:
+    type: integer
+  user_id:
+    type: integer
+  original_name:
+    type: string
+  desired_name:
+    type: string
+  change_reason:
+    type: string
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  status:
+    type: string
+    enum:
+      - approved

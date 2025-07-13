@@ -1,0 +1,125 @@
+get:
+  summary: Search Post Replacements
+  operationId: searchPostReplacements
+  tags:
+    - Post Replacements
+  description: When no results are found, an object with an `post_replacements` key is returned.
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - in: query
+      name: search[file_ext]
+      schema:
+        type: string
+    - in: query
+      name: search[md5]
+      schema:
+        type: string
+    - in: query
+      name: search[status]
+      schema:
+        type: string
+    - in: query
+      name: search[creator_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[creator_name]
+      schema:
+        type: string
+    - in: query
+      name: search[approver_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[approver_name]
+      schema:
+        type: string
+    - in: query
+      name: search[rejector_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[rejector_name]
+      schema:
+        type: string
+    - in: query
+      name: search[uploader_name_on_approve]
+      schema:
+        type: string
+    - in: query
+      name: search[uploader_id_on_approve]
+      schema:
+        type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            anyOf:
+              - type: array
+                items:
+                  $ref: "../../components/schemas/postReplacement.yaml"
+              - type: object
+                description: No Results
+                required:
+                  - post_replacements
+                properties:
+                  post_replacements:
+                    type: array
+                    maxItems: 0
+post:
+  summary: Create Post Replacement
+  operationId: createPostReplacement
+  tags:
+    - Post Replacements
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          required:
+            - post_replacement[reason]
+          properties:
+            post_replacement[replacement_file]:
+              type: string
+              format: binary
+              description: Mutually exclusive with replacement_url.
+            post_replacement[replacement_url]:
+              type: string
+              description: Mutually exclusive with replacement_file.
+            post_replacement[reason]:
+              type: string
+            post_replacement[source]:
+              type: string
+            post_replacement[as_pending]:
+              type: boolean
+              description: You must be Janitor+.
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - success
+              - location
+            properties:
+              success:
+                type: boolean
+                enum:
+                  - true
+              location:
+                type: string
+                example: "/posts/1"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    412:
+      $ref: "../../components/responses/messageError.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

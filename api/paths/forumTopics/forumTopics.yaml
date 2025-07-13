@@ -1,0 +1,93 @@
+get:
+  summary: Search Forum Topics
+  operationId: searchForumTopics
+  tags:
+    - Forum Topics
+  parameters:
+    - $ref: "../../components/parameters/limit.yaml"
+    - $ref: "../../components/parameters/page.yaml"
+    - $ref: "../../components/parameters/id.yaml"
+    - name: search[order]
+      in: query
+      schema:
+        type: string
+        enum:
+          - id_asc
+          - id_desc
+          - sticky
+    - in: query
+      name: search[title]
+      schema:
+        type: string
+    - in: query
+      name: search[title_matches]
+      schema:
+        type: string
+    - in: query
+      name: search[category_id]
+      schema:
+        type: integer
+    - in: query
+      name: search[is_sticky]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_locked]
+      schema:
+        type: boolean
+    - in: query
+      name: search[is_hidden]
+      schema:
+        type: boolean
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/forumTopic.yaml"
+post:
+  summary: Create Forum Topic
+  operationId: createForumTopic
+  tags:
+    - Forum Topics
+  security:
+    - basicAuth: []
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - forum_topic[title]
+            - forum_topic[category_id]
+          properties:
+            forum_topic[title]:
+              type: string
+            forum_topic[category_id]:
+              type: integer
+            forum_topic[original_post_attributes][id]:
+              type: integer
+              description: Forum post ID. Mutually exclusive with body, one must be provided.
+            forum_topic[original_post_attributes][body]:
+              type: string
+              description: First forum post body. Mutually exclusive with id, one must be provided.
+            forum_topic[is_sticky]:
+              type: boolean
+              description: You must be Moderator+.
+            forum_topic[is_locked]:
+              type: boolean
+              description: You must be Moderator+.
+  responses:
+    201:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/forumTopic.yaml"
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    422:
+      $ref: "../../components/responses/expectedError.yaml"

@@ -1,0 +1,26 @@
+put:
+  summary: Revert Artist
+  operationId: revertArtist
+  tags:
+    - Artists
+  security:
+    - basicAuth: []
+  description: |
+    If an artist is locked, you must be Janitor+ to revert them.
+  parameters:    
+    - $ref: "../../components/parameters/idOrName.yaml"
+    - name: version_id
+      in: query
+      required: true
+      description: The version ID to revert to.
+      schema:
+        type: integer
+  responses:
+    204:
+      description: Success
+    403:
+      $ref: "../../components/responses/accessDenied.yaml"
+    404:
+      $ref: "../../components/responses/notFound.yaml"
+    422:
+      $ref: "../../components/responses/accessDenied.yaml"
