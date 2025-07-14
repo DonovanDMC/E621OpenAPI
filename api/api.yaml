@@ -40,6 +40,12 @@ components:
     ip_addr:
       $ref: "./components/parameters/ipAddr.yaml"
   schemas:
+    AccessDeniedResponse:
+      $ref: "./components/schemas/accessDenied.yaml"
+    NotFoundResponse:
+      $ref: "./components/schemas/notFound.yaml"
+    WarningRecordType:
+      $ref: "./components/schemas/warningRecord.yaml"
     ModActionActions:
       $ref: "./components/schemas/modActionActions.yaml"
     PostEventActions:

@@ -2,14 +2,4 @@ description: Access Denied
 content:
   application/json:
     schema:
-      type: object
-      required:
-        - success
-        - reason
-      properties:
-        success:
-          type: boolean
-        reason:
-          type: string
-          enum:
-            - "Access Denied"
+      $ref: "../schemas/accessDenied.yaml"

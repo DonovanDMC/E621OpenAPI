@@ -1,0 +1,11 @@
+type: object
+required:
+  - success
+  - reason
+properties:
+  success:
+    type: boolean
+  reason:
+    type: string
+    enum:
+      - "not found"
