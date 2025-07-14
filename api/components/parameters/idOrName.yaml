@@ -2,7 +2,5 @@ name: idOrName
 in: path
 required: true
 schema:
-  oneOf:
-    - type: integer
-    - type: string
+  type: string
 description: An ID that can be either an integer or a name.
