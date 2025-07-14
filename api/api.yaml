@@ -142,6 +142,8 @@ components:
       $ref: "./components/schemas/postVersion.yaml"
     RelatedTag:
       $ref: "./components/schemas/relatedTag.yaml"
+    StaffNote:
+      $ref: ./components/schemas/staffNote.yaml
     Tag:
       $ref: "./components/schemas/tag.yaml"
     TagAlias:

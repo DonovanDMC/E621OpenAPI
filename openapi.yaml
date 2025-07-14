@@ -2167,6 +2167,36 @@ components:
           type: string
         category_id:
           $ref: '#/components/schemas/TagCategories'
+    StaffNote:
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - user_id
+        - creator_id
+        - body
+        - is_deleted
+        - updater_id
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: integer
+        creator_id:
+          type: integer
+        body:
+          type: string
+        is_deleted:
+          type: boolean
+        updater_id:
+          type: integer
     Tag:
       type: object
       required:
@@ -9278,7 +9308,7 @@ paths:
                 anyOf:
                   - type: array
                     items:
-                      $ref: '#/paths/~1staff_notes.json/post/responses/201/content/application~1json/schema'
+                      $ref: '#/components/schemas/StaffNote'
                   - type: object
                     description: No Results
                     required:
@@ -9310,35 +9340,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - id
-                  - created_at
-                  - updated_at
-                  - user_id
-                  - creator_id
-                  - body
-                  - is_deleted
-                  - updater_id
-                properties:
-                  id:
-                    type: integer
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  user_id:
-                    type: integer
-                  creator_id:
-                    type: integer
-                  body:
-                    type: string
-                  is_deleted:
-                    type: boolean
-                  updater_id:
-                    type: integer
+                $ref: '#/components/schemas/StaffNote'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -9366,7 +9368,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/paths/~1staff_notes.json/post/responses/201/content/application~1json/schema'
+                  $ref: '#/components/schemas/StaffNote'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -9400,7 +9402,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1staff_notes.json/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/StaffNote'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -9430,7 +9432,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1staff_notes.json/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/StaffNote'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -9458,7 +9460,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/paths/~1staff_notes.json/post/responses/201/content/application~1json/schema'
+                $ref: '#/components/schemas/StaffNote'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
