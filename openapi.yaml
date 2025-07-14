@@ -35,9 +35,7 @@ components:
       in: path
       required: true
       schema:
-        oneOf:
-          - type: integer
-          - type: string
+        type: string
       description: An ID that can be either an integer or a name.
     limit:
       name: limit
@@ -62,6 +60,42 @@ components:
       schema:
         type: string
   schemas:
+    AccessDeniedResponse:
+      type: object
+      required:
+        - success
+        - reason
+      properties:
+        success:
+          type: boolean
+        reason:
+          type: string
+          enum:
+            - Access Denied
+    NotFoundResponse:
+      type: object
+      required:
+        - success
+        - reason
+      properties:
+        success:
+          type: boolean
+        reason:
+          type: string
+          enum:
+            - not found
+    WarningRecordType:
+      type: object
+      required:
+        - record_type
+      properties:
+        record_type:
+          type: string
+          enum:
+            - unmark
+            - ban
+            - record
+            - warning
     ModActionActions:
       type: string
       enum:
@@ -2786,33 +2820,13 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - success
-              - reason
-            properties:
-              success:
-                type: boolean
-              reason:
-                type: string
-                enum:
-                  - not found
+            $ref: '#/components/schemas/NotFoundResponse'
     AccessDenied:
       description: Access Denied
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - success
-              - reason
-            properties:
-              success:
-                type: boolean
-              reason:
-                type: string
-                enum:
-                  - Access Denied
+            $ref: '#/components/schemas/AccessDeniedResponse'
     ExpectedError:
       description: Invalid Input Data
       content:
@@ -2860,17 +2874,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - record_type
-            properties:
-              record_type:
-                type: string
-                enum:
-                  - unmark
-                  - ban
-                  - record
-                  - warning
+            $ref: '#/components/schemas/WarningRecordType'
 paths:
   /artists.json:
     get:
