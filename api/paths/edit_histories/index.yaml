@@ -49,4 +49,4 @@ responses:
           items:
             $ref: "../../components/schemas/editHistory.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"

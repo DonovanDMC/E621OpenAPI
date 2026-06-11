@@ -13,4 +13,4 @@ responses:
       Redirect
       Success should be determined based on the html, any errors will be present in an alert.
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    $ref: "../../../components/responseBodies/notFound.yaml"

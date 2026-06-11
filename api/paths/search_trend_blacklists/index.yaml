@@ -27,4 +27,4 @@ responses:
           items:
             $ref: "../../components/schemas/searchTrendBlacklist.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"

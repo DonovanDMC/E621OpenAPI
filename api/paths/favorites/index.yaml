@@ -9,8 +9,8 @@ parameters:
   - $ref: "../../components/parameters/query/mode.yaml"
 responses:
   200:
-    $ref: "../../components/responses/posts.yaml"
+    $ref: "../../components/responseBodies/posts.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

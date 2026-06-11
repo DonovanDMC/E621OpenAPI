@@ -29,4 +29,4 @@ responses:
       Redirect
       Success should be determined based on the html, any errors will be present in an alert.
   403:
-    $ref: "../../../../components/responses/accessDenied.yaml"
+    $ref: "../../../../components/responseBodies/accessDenied.yaml"

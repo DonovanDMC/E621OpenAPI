@@ -31,4 +31,4 @@ responses:
                   items:
                     $ref: "../../components/schemas/artistUrl.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

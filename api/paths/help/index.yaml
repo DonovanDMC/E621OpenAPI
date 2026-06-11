@@ -14,4 +14,4 @@ responses:
         schema:
           $ref: "../../components/schemas/helpPage.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

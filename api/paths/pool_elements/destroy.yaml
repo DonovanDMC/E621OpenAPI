@@ -24,4 +24,4 @@ responses:
   204:
     description: Success
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

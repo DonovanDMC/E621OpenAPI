@@ -23,6 +23,6 @@ responses:
           items:
             $ref: "../../components/schemas/minimalUser.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

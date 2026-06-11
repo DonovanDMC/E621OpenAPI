@@ -7,6 +7,6 @@ security:
 description: You must be Admin+.
 responses:
   200:
-    $ref: "../../components/responses/messageSuccess.yaml"
+    $ref: "../../components/responseBodies/messageSuccess.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"

@@ -22,8 +22,8 @@ responses:
             favorite_count:
               type: integer
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    $ref: "../../components/responseBodies/expectedError.yaml"

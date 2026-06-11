@@ -30,6 +30,6 @@ responses:
                 example:
                   - ["my_set", 1]
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    $ref: "../../components/responseBodies/expectedError.yaml"

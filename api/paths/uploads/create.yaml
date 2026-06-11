@@ -61,6 +61,6 @@ responses:
             post_id:
               type: integer
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   412:
-    $ref: "../../components/responses/messageError.yaml"
+    $ref: "../../components/responseBodies/messageError.yaml"

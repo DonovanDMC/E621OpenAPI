@@ -6,6 +6,6 @@ parameters:
   - $ref: "../../components/parameters/path/idOrName.yaml"
 responses:
   200:
-    $ref: "../../components/responses/user.yaml"
+    $ref: "../../components/responseBodies/user.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

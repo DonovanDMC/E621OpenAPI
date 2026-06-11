@@ -71,4 +71,4 @@ responses:
           items:
             $ref: "../../components/schemas/ticket.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"

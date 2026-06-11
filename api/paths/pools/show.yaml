@@ -12,4 +12,4 @@ responses:
         schema:
           $ref: "../../components/schemas/pool.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    $ref: "../../components/responseBodies/notFound.yaml"

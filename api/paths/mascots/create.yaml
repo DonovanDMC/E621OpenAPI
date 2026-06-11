@@ -3,7 +3,7 @@ operationId: createMascot
 tags:
   - Mascots
 security:
-  - basicAuth: [ ]
+  - basicAuth: []
 description: You must be Admin+.
 requestBody:
   content:
@@ -43,6 +43,6 @@ responses:
         schema:
           $ref: "../../components/schemas/mascot.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responseBodies/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    $ref: "../../components/responseBodies/expectedError.yaml"
