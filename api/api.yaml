@@ -288,6 +288,8 @@ paths:
   /appeals.json:
     get:
       $ref: "./paths/appeals/index.yaml"
+    patch:
+      $ref: "./paths/appeals/update.yaml"
   /appeals/{id}.json:
     patch:
       $ref: "./paths/appeals/update.yaml"
@@ -297,9 +299,6 @@ paths:
   /appeals/{id}/unclaim.json:
     post:
       $ref: "./paths/appeals/unclaim.yaml"
-  /appeals/{id}/update.json:
-    post:
-      $ref: "./paths/appeals/update.yaml"
 
   /artists.json:
     get:
