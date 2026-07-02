@@ -33,15 +33,15 @@ parameters:
   - in: query
     name: search[level]
     schema:
-      type: integer
+      $ref: "../../components/schemas/users/levels.yaml"
   - in: query
     name: search[min_level]
     schema:
-      type: integer
+      $ref: "../../components/schemas/users/levels.yaml"
   - in: query
     name: search[max_level]
     schema:
-      type: integer
+      $ref: "../../components/schemas/users/levels.yaml"
   - in: query
     name: search[can_upload_free]
     schema:

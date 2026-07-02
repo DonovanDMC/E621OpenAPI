@@ -13,9 +13,9 @@ info:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
   version: '4614e41'
-  x-e621ng-commit: 84fa982e9734aadc507b16c47fb6db872b03c1ec
-  x-e621ng-master-behind-by: 1
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/84fa982e9734aadc507b16c47fb6db872b03c1ec...master
+  x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
+  x-e621ng-master-behind-by: 77
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -666,6 +666,7 @@ components:
         - warning_user_id
         - creator_name
         - updater_name
+        - vote
       properties:
         id:
           type: integer
@@ -701,6 +702,12 @@ components:
           type: string
         updater_name:
           type: string
+        vote:
+          type: integer
+          enum:
+            - -1
+            - 0
+            - 1
     CurrentUser:
       allOf:
         - $ref: '#/components/schemas/User'
@@ -1129,7 +1136,7 @@ components:
               type: string
             profile_artinfo:
               type: string
-    Help:
+    HelpPage:
       type: object
       required:
         - id
@@ -1809,6 +1816,7 @@ components:
             - score
             - fav_count
             - is_favorited
+            - vote
             - comment_count
           properties:
             score:
@@ -1828,6 +1836,8 @@ components:
               type: integer
             is_favorited:
               type: boolean
+            vote:
+              $ref: '#/components/schemas/Comment/properties/vote'
             comment_count:
               type: integer
         flags:
@@ -2666,6 +2676,7 @@ components:
         - can_upload_free
         - level_string
         - avatar_id
+        - has_cropped_avatar
       properties:
         id:
           type: integer
@@ -2675,7 +2686,7 @@ components:
         name:
           type: string
         level:
-          type: integer
+          $ref: '#/components/schemas/UserLevels'
         base_upload_limit:
           type: integer
         post_upload_count:
@@ -2691,11 +2702,13 @@ components:
         can_upload_free:
           type: boolean
         level_string:
-          type: string
+          $ref: '#/components/schemas/UserLevelsNames'
         avatar_id:
           type: integer
           nullable: true
         is_verified:
+          type: boolean
+        has_cropped_avatar:
           type: boolean
     UserFeedback:
       type: object
@@ -3144,7 +3157,7 @@ components:
         name:
           type: string
         level_string:
-          type: string
+          $ref: '#/components/schemas/UserLevelsNames'
         favorite_count:
           type: integer
     ThumbnailPost:
@@ -3168,6 +3181,7 @@ components:
         - score
         - fav_count
         - is_favorited
+        - vote
         - comment_count
         - flags
         - pools
@@ -3220,6 +3234,8 @@ components:
           type: integer
         is_favorited:
           type: boolean
+        vote:
+          $ref: '#/components/schemas/Comment/properties/vote'
         comment_count:
           type: integer
         flags:
@@ -3296,6 +3312,7 @@ components:
         - has_notes
         - duration
         - uploader_name
+        - vote
       properties:
         id:
           type: integer
@@ -3525,6 +3542,8 @@ components:
           nullable: true
         uploader_name:
           type: string
+        vote:
+          $ref: '#/components/schemas/Comment/properties/vote'
     BasicPost:
       allOf:
         - $ref: '#/components/schemas/Post'
@@ -3675,6 +3694,64 @@ components:
         updated_at:
           type: string
           format: date-time
+    DBExport:
+      type: object
+      required:
+        - name
+        - file_name
+        - file_size
+        - updated_at
+        - url
+      properties:
+        name:
+          $ref: '#/components/schemas/DBExportNames'
+        file_name:
+          type: string
+        file_size:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+          format: uri
+    DBExportNames:
+      type: string
+      enum:
+        - artists
+        - bulk_update_requests
+        - pools
+        - post_replacements
+        - posts
+        - post_versions
+        - tag_aliases
+        - tag_implications
+        - tags
+        - wiki_pages
+    UserLevels:
+      type: integer
+      enum:
+        - 0
+        - 10
+        - 20
+        - 30
+        - 40
+        - 50
+        - 60
+        - 70
+        - 80
+    UserLevelsNames:
+      type: string
+      enum:
+        - Anonymous
+        - Blocked
+        - Member
+        - Privileged
+        - Former Staff
+        - Staff
+        - Janitor
+        - Moderator
+        - Admin
   responses:
     NotFound:
       description: Not Found
@@ -4009,7 +4086,6 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/appeals/{id}.json':
     patch:
       summary: Update Appeal
       operationId: updateAppeal
@@ -4043,6 +4119,9 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  '/appeals/{id}.json':
+    patch:
+      $ref: '#/paths/~1appeals.json/patch'
   '/appeals/{id}/claim.json':
     post:
       summary: Claim Appeal
@@ -4087,9 +4166,6 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/appeals/{id}/update.json':
-    post:
-      $ref: '#/paths/~1appeals~1%7Bid%7D.json/patch'
   /artists.json:
     get:
       summary: Search Artists
@@ -4189,31 +4265,31 @@ paths:
         Individual `other_names` are silently truncated to 100 characters.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'artist[name]'
+                - name
               properties:
-                'artist[name]':
+                name:
                   type: string
-                'artist[other_names]':
+                other_names:
                   type: array
                   items:
                     type: string
-                'artist[other_names_string]':
+                other_names_string:
                   type: string
-                'artist[url_string]':
+                url_string:
                   type: string
-                'artist[notes]':
+                notes:
                   type: string
-                'artist[group_name]':
+                group_name:
                   type: string
-                'artist[linked_user_id]':
+                linked_user_id:
                   type: integer
                   nullable: true
                   description: Only usable for Janitor+
-                'artist[is_locked]':
+                is_locked:
                   type: boolean
                   description: Only usable for Janitor+
       responses:
@@ -4282,30 +4358,30 @@ paths:
         - $ref: '#/components/parameters/idOrNamePath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'artist[name]':
+                name:
                   type: string
                   description: Only usable for Janitor+
-                'artist[other_names]':
+                other_names:
                   type: array
                   items:
                     type: string
-                'artist[other_names_string]':
+                other_names_string:
                   type: string
-                'artist[url_string]':
+                url_string:
                   type: string
-                'artist[notes]':
+                notes:
                   type: string
-                'artist[group_name]':
+                group_name:
                   type: string
-                'artist[linked_user_id]':
+                linked_user_id:
                   type: integer
                   nullable: true
                   description: Only usable for Janitor+
-                'artist[is_locked]':
+                is_locked:
                   type: boolean
                   description: Only usable for Janitor+
       responses:
@@ -4578,29 +4654,36 @@ paths:
       description: Must have the bd staff user flag.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
+              required:
+                - artist_attributes
               properties:
-                'avoid_posting[details]':
+                details:
                   type: string
-                'avoid_posting[staff_notes]':
+                staff_notes:
                   type: string
-                'avoid_posting[is_active]':
+                is_active:
                   type: boolean
-                'avoid_posting[artist_attributes][name]':
-                  type: string
-                  description: 'If provided and the artist does not exist, an artist will be created.'
-                'avoid_posting[artist_attributes][other_names_string]':
-                  type: string
-                'avoid_posting[artist_attributes][other_names]':
-                  type: array
-                  items:
-                    type: string
-                'avoid_posting[artist_attributes][group_name]':
-                  type: string
-                'avoid_posting[artist_attributes][linked_user_id]':
-                  type: integer
+                artist_attributes:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    name:
+                      type: string
+                      description: 'If provided and the artist does not exist, an artist will be created.'
+                    other_names_string:
+                      type: string
+                    other_names:
+                      type: array
+                      items:
+                        type: string
+                    group_name:
+                      type: string
+                    linked_user_id:
+                      type: integer
       responses:
         '201':
           description: Success
@@ -4641,28 +4724,32 @@ paths:
         - $ref: '#/components/parameters/idOrNamePath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'avoid_posting[details]':
+                details:
                   type: string
-                'avoid_posting[staff_notes]':
+                staff_notes:
                   type: string
-                'avoid_posting[is_active]':
+                is_active:
                   type: boolean
-                'avoid_posting[artist_attributes][name]':
-                  type: string
-                'avoid_posting[artist_attributes][other_names_string]':
-                  type: string
-                'avoid_posting[artist_attributes][other_names]':
-                  type: array
-                  items:
-                    type: string
-                'avoid_posting[artist_attributes][group_name]':
-                  type: string
-                'avoid_posting[artist_attributes][linked_user_id]':
-                  type: integer
+                artist_attributes:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: 'If provided and the artist does not exist, an artist will be created.'
+                    other_names_string:
+                      type: string
+                    other_names:
+                      type: array
+                      items:
+                        type: string
+                    group_name:
+                      type: string
+                    linked_user_id:
+                      type: integer
       responses:
         '204':
           description: Success
@@ -4915,15 +5002,15 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'blip[body]'
+                - body
               properties:
-                'blip[body]':
+                body:
                   type: string
-                'blip[response_to]':
+                response_to:
                   type: integer
       responses:
         '201':
@@ -4969,11 +5056,11 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'blip[body]':
+                body:
                   type: string
       responses:
         '204':
@@ -5143,23 +5230,24 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'bulk_update_request[script]'
-                - 'bulk_update_request[title]'
-                - 'bulk_update_request[reason]'
+                - script
+                - title
+                - reason
               properties:
-                'bulk_update_request[script]':
+                script:
                   type: string
-                'bulk_update_request[title]':
+                title:
                   type: string
-                'bulk_update_request[reason]':
+                reason:
                   type: string
-                'bulk_update_request[forum_topic_id]':
+                forum_topic_id:
                   type: integer
-                'bulk_update_request[skip_forum]':
+                  description: You must be able to reply to the topic.
+                skip_forum:
                   type: boolean
                   description: Only usable for Admin+
       responses:
@@ -5202,16 +5290,16 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'bulk_update_request[script]':
+                script:
                   type: string
-                'bulk_update_request[forum_topic_id]':
+                forum_topic_id:
                   description: You must be Admin+.
                   type: string
-                'bulk_update_request[forum_post_id]':
+                forum_post_id:
                   description: You must be Admin+.
                   type: string
       responses:
@@ -5345,23 +5433,23 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'comment[body]'
-                - 'comment[post_id]'
+                - body
+                - post_id
               properties:
-                'comment[body]':
+                body:
                   type: string
-                'comment[post_id]':
+                post_id:
                   type: integer
-                'comment[do_not_bump_post]':
+                do_not_bump_post:
                   type: boolean
-                'comment[is_sticky]':
+                is_sticky:
                   type: boolean
                   description: Only usable for Janitor+
-                'comment[is_hidden]':
+                is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
       responses:
@@ -5408,16 +5496,16 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'comment[body]':
+                body:
                   type: string
-                'comment[is_sticky]':
+                is_sticky:
                   type: boolean
                   description: Only usable for Janitor+
-                'comment[is_hidden]':
+                is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
       responses:
@@ -5691,6 +5779,35 @@ paths:
           description: Success
         '403':
           $ref: '#/components/responses/AccessDenied'
+  /db_exports.json:
+    get:
+      summary: Get DB Exports
+      operationId: getDBExports
+      tags:
+        - System
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DBExport'
+  /health:
+    get:
+      summary: Get health
+      operationId: getHealth
+      tags:
+        - System
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK | app3 | 26.06.10-fix.3
   /dmails.json:
     get:
       summary: Search DMails
@@ -5756,9 +5873,19 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: Fetching a dmail will not mark it as read.
+      description: |
+        Fetching a dmail will not mark it as read. 
+        Unless the dmail is owned:
+        - The current user must be staff and the dmail must be to or from the automod
+        - The current user must be Moderator+ and a ticket must exist for the dmail
+        - The current user must be Admin+ and the dmail must be to or from Admin+
+        - The current user must be Staff and have a share key for the dmail
       parameters:
         - $ref: '#/components/parameters/idPath'
+        - in: query
+          name: key
+          schema:
+            type: string
       responses:
         '200':
           description: Success
@@ -5995,16 +6122,16 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'email_blacklist[domain]'
-                - 'email_blacklist[reason]'
+                - domain
+                - reason
               properties:
-                'email_blacklist[domain]':
+                domain:
                   type: string
-                'email_blacklist[reason]':
+                reason:
                   type: string
       responses:
         '201':
@@ -6177,16 +6304,16 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'forum_post[body]'
-                - 'forum_post[topic_id]'
+                - body
+                - topic_id
               properties:
-                'forum_post[body]':
+                body:
                   type: string
-                'forum_post[topic_id]':
+                topic_id:
                   type: integer
       responses:
         '201':
@@ -6231,11 +6358,11 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'forum_post[body]':
+                body:
                   type: string
       responses:
         '204':
@@ -6344,13 +6471,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'forum_post_vote[score]'
+                - score
               properties:
-                'forum_post_vote[score]':
+                score:
                   $ref: '#/components/schemas/UpDownMehVote'
       responses:
         '200':
@@ -6443,27 +6570,27 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'forum_topic[title]'
-                - 'forum_topic[category_id]'
+                - title
+                - category_id
               properties:
-                'forum_topic[title]':
+                title:
                   type: string
-                'forum_topic[category_id]':
+                category_id:
                   type: integer
-                'forum_topic[original_post_attributes][id]':
+                'original_post_attributes][id':
                   type: integer
                   description: 'Forum post ID. Mutually exclusive with body, one must be provided.'
-                'forum_topic[original_post_attributes][body]':
+                'original_post_attributes][body':
                   type: string
                   description: 'First forum post body. Mutually exclusive with id, one must be provided.'
-                'forum_topic[is_sticky]':
+                is_sticky:
                   type: boolean
                   description: You must be Moderator+.
-                'forum_topic[is_locked]':
+                is_locked:
                   type: boolean
                   description: You must be Moderator+.
       responses:
@@ -6508,24 +6635,24 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'forum_topic[title]':
+                title:
                   type: string
-                'forum_topic[category_id]':
+                category_id:
                   type: integer
-                'forum_topic[original_post_attributes][id]':
+                'original_post_attributes][id':
                   type: integer
                   description: Forum post ID. Silently ignored
-                'forum_topic[original_post_attributes][body]':
+                'original_post_attributes][body':
                   type: string
                   description: First forum post body.
-                'forum_topic[is_sticky]':
+                is_sticky:
                   type: boolean
                   description: You must be Moderator+.
-                'forum_topic[is_locked]':
+                is_locked:
                   type: boolean
                   description: You must be Moderator+.
       responses:
@@ -6665,9 +6792,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /help.json:
     get:
-      summary: List Help Pages
-      operationId: listHelpPages
-      description: Will error if no help pages exist.
+      summary: Get Landing Help Page
+      operationId: getLandingHelpPage
       tags:
         - Help Pages
       responses:
@@ -6676,9 +6802,9 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Help'
+                $ref: '#/components/schemas/HelpPage'
+        '404':
+          $ref: '#/components/responses/NotFound'
     post:
       summary: Create Help Page
       operationId: createHelpPage
@@ -6689,21 +6815,21 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'help_page[name]'
-                - 'help_page[wiki_page]'
+                - name
+                - wiki_page
               properties:
-                'help_page[name]':
+                name:
                   type: string
-                'help_page[wiki_page]':
+                wiki_page:
                   type: string
-                'help_page[related]':
+                related:
                   type: string
                   description: Separate with a comma followed by a space.
-                'help_page[title]':
+                title:
                   type: string
       responses:
         '201':
@@ -6711,11 +6837,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Help'
+                $ref: '#/components/schemas/HelpPage'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  /help/list.json:
+    get:
+      summary: List Help Pages
+      operationId: listHelpPages
+      tags:
+        - Help Pages
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HelpPage'
   '/help/{id}.json':
     get:
       summary: Get Help Page
@@ -6737,7 +6881,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Help'
+                $ref: '#/components/schemas/HelpPage'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -6754,18 +6898,18 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'help_page[name]':
+                name:
                   type: string
-                'help_page[wiki_page]':
+                wiki_page:
                   type: string
-                'help_page[related]':
+                related:
                   type: string
                   description: Separate with a comma followed by a space.
-                'help_page[title]':
+                title:
                   type: string
       responses:
         '204':
@@ -6838,16 +6982,16 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'ip_ban[ip_addr]'
-                - 'ip_ban[reason]'
+                - ip_addr
+                - reason
               properties:
-                'ip_ban[ip_addr]':
+                ip_addr:
                   type: string
-                'ip_ban[reason]':
+                reason:
                   type: string
       responses:
         '201':
@@ -7210,13 +7354,13 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'news_update[message]'
+                - message
               properties:
-                'news_update[message]':
+                message:
                   type: string
       responses:
         '201':
@@ -7242,13 +7386,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'news_update[message]'
+                - message
               properties:
-                'news_update[message]':
+                message:
                   type: string
       responses:
         '204':
@@ -7337,30 +7481,30 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'note[post_id]'
-                - 'note[x]'
-                - 'note[y]'
-                - 'note[width]'
-                - 'note[height]'
-                - 'note[body]'
+                - post_id
+                - x
+                - 'y'
+                - width
+                - height
+                - body
               properties:
-                'note[post_id]':
+                post_id:
                   type: integer
-                'note[x]':
+                x:
                   type: integer
-                'note[y]':
+                'y':
                   type: integer
-                'note[width]':
+                width:
                   type: integer
-                'note[height]':
+                height:
                   type: integer
-                'note[body]':
+                body:
                   type: string
-                'note[html_id]':
+                html_id:
                   type: string
                   description: 'Passthrough, used in frontend.'
       responses:
@@ -7410,19 +7554,19 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'note[x]':
+                x:
                   type: integer
-                'note[y]':
+                'y':
                   type: integer
-                'note[width]':
+                width:
                   type: integer
-                'note[height]':
+                height:
                   type: integer
-                'note[body]':
+                body:
                   type: string
       responses:
         '204':
@@ -7581,24 +7725,24 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'pool[name]'
+                - name
               properties:
-                'pool[name]':
+                name:
                   type: string
-                'pool[description]':
+                description:
                   type: string
-                'pool[category]':
+                category:
                   $ref: '#/components/schemas/PoolCategories'
-                'pool[is_active]':
+                is_active:
                   type: boolean
-                'pool[post_ids_string]':
+                post_ids_string:
                   type: string
                   description: Space separated list of post IDs. Mutually exclusive with post_ids.
-                'pool[post_ids]':
+                post_ids:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
@@ -7642,22 +7786,22 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'pool[name]':
+                name:
                   type: string
-                'pool[description]':
+                description:
                   type: string
-                'pool[is_active]':
+                is_active:
                   type: boolean
-                'pool[category]':
+                category:
                   $ref: '#/components/schemas/PoolCategories'
-                'pool[post_ids_string]':
+                post_ids_string:
                   type: string
                   description: Space separated list of post IDs. Mutually exclusive with post_ids.
-                'pool[post_ids]':
+                post_ids:
                   type: array
                   description: Array of post IDs. Mutually exclusive with post_ids_string.
                   items:
@@ -7723,7 +7867,7 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -7755,7 +7899,7 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -7784,7 +7928,7 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -7876,6 +8020,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/PostsResponse'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
   /posts.json:
     get:
       summary: Search Posts
@@ -8000,67 +8146,67 @@ paths:
         - $ref: '#/components/parameters/modeQuery'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'post[tag_string]':
+                tag_string:
                   type: string
                   description: Replaces all tags on the post.
-                'post[old_tag_string]':
+                old_tag_string:
                   type: string
                   description: 'The tag string before your edits, used to reconcile conflicts.'
-                'post[tag_string_diff]':
+                tag_string_diff:
                   type: string
                   description: 'Tags with a minus are removed, else they are added. Mutually exclusive with tag_string.'
-                'post[source_diff]':
+                source_diff:
                   type: string
                   description: 'Sources with a minus are removed, else they are added. It is not possible to add inactive sources through this. Mutually exclusive with source.'
-                'post[source]':
+                source:
                   type: string
                   description: Replaces all sources on the post.
-                'post[old_source]':
+                old_source:
                   type: string
                   description: 'The sources before your edits, used to reconcile conflicts.'
-                'post[parent_id]':
+                parent_id:
                   type: integer
-                'post[old_parent_id]':
+                old_parent_id:
                   type: integer
-                'post[description]':
+                description:
                   type: string
-                'post[old_description]':
+                old_description:
                   type: string
-                'post[rating]':
+                rating:
                   $ref: '#/components/schemas/Ratings'
-                'post[old_rating]':
+                old_rating:
                   $ref: '#/components/schemas/Ratings'
-                'post[edit_reason]':
+                edit_reason:
                   type: string
-                'post[is_rating_locked]':
+                is_rating_locked:
                   type: boolean
                   description: You must be Privileged+.
-                'post[is_note_locked]':
+                is_note_locked:
                   type: boolean
                   description: You must be Janitor+.
-                'post[bg_colo]r':
+                bg_color:
                   type: string
                   description: You must be Janitor+.
-                'post[is_comment_locked]':
+                is_comment_locked:
                   type: boolean
                   description: You must be Moderator+.
-                'post[is_comment_disabled]':
+                is_comment_disabled:
                   type: boolean
                   description: You must be Admin+.
-                'post[is_status_locked]':
+                is_status_locked:
                   type: boolean
                   description: You must be Admin+.
-                'post[locked_tags]':
+                locked_tags:
                   type: string
                   description: You must be Admin+.
-                'post[hide_from_anonymous]':
+                hide_from_anonymous:
                   type: boolean
                   description: You must be Admin+.
-                'post[hide_from_search_engines]':
+                hide_from_search_engines:
                   type: boolean
                   description: You must be Admin+.
       responses:
@@ -8220,7 +8366,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
@@ -8370,25 +8516,6 @@ paths:
                   - $ref: '#/components/schemas/PostData'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/posts/{id}/similar/remote.json':
-    get:
-      summary: Get Recommended Posts
-      operationId: getRecommendedPosts
-      tags:
-        - Posts
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/limitQuery'
-        - $ref: '#/components/parameters/pageQuery'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RecommendedPosts'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /post_sets.json:
     get:
       summary: Search Post Sets
@@ -8460,22 +8587,22 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'post_set[name]'
-                - 'post_set[shortname]'
+                - name
+                - shortname
               properties:
-                'post_set[name]':
+                name:
                   type: string
-                'post_set[shortname]':
+                shortname:
                   type: string
-                'post_set[description]':
+                description:
                   type: string
-                'post_set[is_public]':
+                is_public:
                   type: boolean
-                'post_set[ransfer_on_delete]':
+                ransfer_on_delete:
                   type: boolean
       responses:
         '201':
@@ -8520,19 +8647,19 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'post_set[name]':
+                name:
                   type: string
-                'post_set[shortname]':
+                shortname:
                   type: string
-                'post_set[description]':
+                description:
                   type: string
-                'post_set[is_public]':
+                is_public:
                   type: boolean
-                'post_set[transfer_on_delete]':
+                transfer_on_delete:
                   type: boolean
       responses:
         '204':
@@ -8573,13 +8700,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'post_set[post_ids_string]'
+                - post_ids_string
               properties:
-                'post_set[post_ids_string]':
+                post_ids_string:
                   type: string
       responses:
         '200':
@@ -8607,7 +8734,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -8644,7 +8771,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -8852,16 +8979,16 @@ paths:
       description: Will error if post_id is not provided.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'post_flag[post_id]'
-                - 'post_flag[reason_name]'
+                - post_id
+                - reason_name
               properties:
-                'post_flag[post_id]':
+                post_id:
                   type: integer
-                'post_flag[reason_name]':
+                reason_name:
                   type: string
                   enum:
                     - uploading_guidelines
@@ -8873,9 +9000,9 @@ paths:
                     - real_porn
                     - corrupt
                     - inferior
-                'post_flag[parent_id]':
+                parent_id:
                   type: integer
-                'post_flag[note]':
+                note:
                   type: string
       responses:
         '201':
@@ -9533,13 +9660,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'tag[category]':
+                category:
                   $ref: '#/components/schemas/TagCategories'
-                'tag[is_locked]':
+                is_locked:
                   description: Must be Admin+.
                   type: boolean
       responses:
@@ -9599,7 +9726,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -9627,7 +9754,7 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -9777,15 +9904,15 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'tag_alias[antecedent_name]':
+                antecedent_name:
                   type: string
-                'tag_alias[consequent_name]':
+                consequent_name:
                   type: string
-                'tag_alias[forum_topic_id]':
+                forum_topic_id:
                   type: string
       responses:
         '204':
@@ -9844,21 +9971,21 @@ paths:
       description: Errors will result in a 406 with no information.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'tag_alias[antecedent_name]'
-                - 'tag_alias[consequent_name]'
-                - 'tag_alias[reason]'
+                - antecedent_name
+                - consequent_name
+                - reason
               properties:
-                'tag_alias[antecedent_name]':
+                antecedent_name:
                   type: string
-                'tag_alias[consequent_name]':
+                consequent_name:
                   type: string
-                'tag_alias[reason]':
+                reason:
                   type: string
-                'tag_alias[skip_forum]':
+                skip_forum:
                   type: boolean
                   description: Must be Admin+.
       responses:
@@ -9967,15 +10094,15 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'tag_implication[antecedent_name]':
+                antecedent_name:
                   type: string
-                'tag_implication[consequent_name]':
+                consequent_name:
                   type: string
-                'tag_implication[forum_topic_id]':
+                forum_topic_id:
                   type: string
       responses:
         '204':
@@ -10034,21 +10161,21 @@ paths:
       description: Errors will result in a 406 with no information.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'tag_implication[antecedent_name]'
-                - 'tag_implication[consequent_name]'
-                - 'tag_implication[reason]'
+                - antecedent_name
+                - consequent_name
+                - reason
               properties:
-                'tag_implication[antecedent_name]':
+                antecedent_name:
                   type: string
-                'tag_implication[consequent_name]':
+                consequent_name:
                   type: string
-                'tag_implication[reason]':
+                reason:
                   type: string
-                'tag_implication[skip_forum]':
+                skip_forum:
                   type: boolean
                   description: Must be Admin+.
       responses:
@@ -10396,13 +10523,13 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'staff_note[body]'
+                - body
               properties:
-                'staff_note[body]':
+                body:
                   type: string
       responses:
         '201':
@@ -10448,11 +10575,11 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'staff_note[body]':
+                body:
                   type: string
       responses:
         '200':
@@ -10611,39 +10738,39 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'takedown[email]'
-                - 'takedown[reason]'
+                - email
+                - reason
               properties:
-                'takedown[email]':
+                email:
                   type: string
-                'takedown[source]':
+                source:
                   type: string
-                'takedown[instructions]':
+                instructions:
                   type: string
-                'takedown[reason]':
+                reason:
                   type: string
-                'takedown[post_ids]':
+                post_ids:
                   type: array
-                  description: 'takedown[post_ids][]=1&takedown[post_ids][]=2'
+                  description: 'post_ids][]=1&takedown[post_ids][=2'
                   items:
                     type: integer
-                'takedown[reason_hidden]':
+                reason_hidden:
                   type: boolean
-                'takedown[notes]':
+                notes:
                   type: string
                   description: Must have the bd staff user flag to use.
-                'takedown[del_post_ids]':
+                del_post_ids:
                   type: array
                   description: |
                     Must have the bd staff user flag to use.
-                    takedown[del_post_ids][]=1&takedown[del_post_ids][]=2
+                    del_post_ids][]=1&takedown[del_post_ids][=2
                   items:
                     type: integer
-                'takedown[status]':
+                status:
                   type: string
                   description: Must have the bd staff user flag to use.
       responses:
@@ -10686,13 +10813,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'takedown[notes]':
+                notes:
                   type: string
-                'takedown[reason_hidden]':
+                reason_hidden:
                   type: boolean
                 takedown_posts:
                   type: string
@@ -10740,7 +10867,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -10782,7 +10909,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -10824,7 +10951,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -10861,7 +10988,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -10986,22 +11113,22 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'ticket[response]'
+                - response
               properties:
-                'ticket[status]':
+                status:
                   type: string
                   enum:
                     - partial
                     - approved
-                'ticket[response]':
+                response:
                   type: string
-                'ticket[record_type]':
+                record_type:
                   $ref: '#/components/schemas/WarningTypes'
-                'ticket[send_update_dmail]':
+                send_update_dmail:
                   type: boolean
                   description: An update dmail will always be sent when the status is changed.
       responses:
@@ -11273,25 +11400,25 @@ paths:
       description: You must be Admin+.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'upload_whitelist[allowed]'
-                - 'upload_whitelist[domain]'
-                - 'upload_whitelist[path]'
+                - allowed
+                - domain
+                - path
               properties:
-                'upload_whitelist[allowed]':
+                allowed:
                   type: string
-                'upload_whitelist[domain]':
+                domain:
                   type: string
-                'upload_whitelist[path]':
+                path:
                   type: string
-                'upload_whitelist[reason]':
+                reason:
                   type: string
-                'upload_whitelist[note]':
+                note:
                   type: string
-                'upload_whitelist[hidden]':
+                hidden:
                   type: boolean
       responses:
         '201':
@@ -11316,19 +11443,19 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'upload_whitelist[allowed]':
+                allowed:
                   type: string
-                'upload_whitelist[pattern]':
+                pattern:
                   type: string
-                'upload_whitelist[reason]':
+                reason:
                   type: string
-                'upload_whitelist[note]':
+                note:
                   type: string
-                'upload_whitelist[hidden]':
+                hidden:
                   type: boolean
       responses:
         '204':
@@ -11433,15 +11560,15 @@ paths:
         - in: query
           name: 'search[level]'
           schema:
-            type: integer
+            $ref: '#/components/schemas/UserLevels'
         - in: query
           name: 'search[min_level]'
           schema:
-            type: integer
+            $ref: '#/components/schemas/UserLevels'
         - in: query
           name: 'search[max_level]'
           schema:
-            type: integer
+            $ref: '#/components/schemas/UserLevels'
         - in: query
           name: 'search[can_upload_free]'
           schema:
@@ -11523,72 +11650,72 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'user[comment_threshold]':
+                comment_threshold:
                   type: integer
-                'user[default_image_size]':
+                default_image_size:
                   type: string
                   enum:
                     - large
                     - fit
                     - fitv
                     - original
-                'user[favorite_tags]':
+                favorite_tags:
                   type: string
-                'user[blacklisted_tags]':
+                blacklisted_tags:
                   type: string
-                'user[time_zone]':
+                time_zone:
                   type: string
                   description: 'https://en.wikipedia.org/wiki/List_of_tz_database_time_zones'
-                'user[per_page]':
+                per_page:
                   type: integer
-                'user[custom_style]':
+                custom_style:
                   type: string
-                'user[description_collapsed_initially]':
+                description_collapsed_initially:
                   type: boolean
-                'user[hide_comments]':
+                hide_comments:
                   type: boolean
-                'user[receive_email_notifications]':
+                receive_email_notifications:
                   type: boolean
-                'user[enable_keyboard_navigation]':
+                enable_keyboard_navigation:
                   type: boolean
-                'user[enable_privacy_mode]':
+                enable_privacy_mode:
                   type: boolean
-                'user[disable_user_dmails]':
+                disable_user_dmails:
                   type: boolean
-                'user[blacklist_users]':
+                blacklist_users:
                   type: boolean
-                'user[show_post_statistics]':
+                show_post_statistics:
                   type: boolean
-                'user[style_usernames]':
+                style_usernames:
                   type: boolean
-                'user[show_hidden_comments]':
+                show_hidden_comments:
                   type: boolean
-                'user[enable_autocomplete]':
+                enable_autocomplete:
                   type: boolean
-                'user[disable_cropped_thumbnails]':
+                disable_cropped_thumbnails:
                   type: boolean
-                'user[enable_safe_mode]':
+                enable_safe_mode:
                   type: boolean
-                'user[disable_responsive_mode]':
+                disable_responsive_mode:
                   type: boolean
-                'user[dmail_filter_attributes][id]':
+                'dmail_filter_attributes][id':
                   type: integer
-                'user[dmail_filter_attributes][words]':
+                'dmail_filter_attributes][words':
                   type: string
-                'user[profile_about]':
+                profile_about:
                   type: string
-                'user[profile_artinfo]':
+                profile_artinfo:
                   type: string
-                'user[avatar_id]':
+                avatar_id:
                   type: integer
-                'user[enable_compact_uploader]':
+                enable_compact_uploader:
                   type: boolean
                   description: You must have uploaded at least 10 posts.
-                'user[forum_notification_dot]':
+                forum_notification_dot:
                   type: boolean
       responses:
         '204':
@@ -11681,13 +11808,13 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'staff_note[body]'
+                - body
               properties:
-                'staff_note[body]':
+                body:
                   type: string
       responses:
         '302':
@@ -11787,13 +11914,13 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'dmail_filter[words]'
+                - words
               properties:
-                'dmail_filter[words]':
+                words:
                   type: string
       responses:
         '204':
@@ -11897,20 +12024,20 @@ paths:
       description: You must be Moderator+.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'user_feedback[body]'
-                - 'user_feedback[category]'
+                - body
+                - category
               properties:
-                'user_feedback[user_id]':
+                user_id:
                   type: integer
-                'user_feedback[user_name]':
+                user_name:
                   type: string
-                'user_feedback[body]':
+                body:
                   type: string
-                'user_feedback[category]':
+                category:
                   $ref: '#/components/schemas/FeedbackCategories'
       responses:
         '201':
@@ -11955,13 +12082,13 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'user_feedback[body]':
+                body:
                   type: string
-                'user_feedback[category]':
+                category:
                   $ref: '#/components/schemas/FeedbackCategories'
       responses:
         '204':
@@ -12073,15 +12200,15 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'user_name_change_request[desired_name]'
+                - desired_name
               properties:
-                'user_name_change_request[desired_name]':
+                desired_name:
                   type: string
-                'user_name_change_request[change_reason]':
+                change_reason:
                   type: string
       responses:
         '302':
@@ -12204,29 +12331,29 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'wiki_page[title]'
-                - 'wiki_page[body]'
+                - title
+                - body
               properties:
-                'wiki_page[title]':
+                title:
                   type: string
-                'wiki_page[body]':
+                body:
                   type: string
-                'wiki_page[edit_reason]':
+                edit_reason:
                   type: string
-                'wiki_page[parent]':
+                parent:
                   type: string
                   description: Must be Privileged+ to use.
-                'wiki_page[is_locked]':
+                is_locked:
                   type: boolean
                   description: Must be Janitor+ to use.
-                'wiki_page[is_deleted]':
+                is_deleted:
                   type: boolean
                   description: Must be Janitor+ to use.
-                'wiki_page[skip_secondary_validations]':
+                skip_secondary_validations:
                   type: boolean
                   description: Must be Janitor+ to use.
       responses:
@@ -12280,32 +12407,32 @@ paths:
             type: integer
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'wiki_page[body]':
+                body:
                   type: string
-                'wiki_page[edit_reason]':
+                edit_reason:
                   type: string
-                'wiki_page[parent]':
+                parent:
                   type: string
                   description: Must be Privileged+ to use.
-                'wiki_page[title]':
+                title:
                   type: string
                   description: Must be Janitor+ to use.
-                'wiki_page[is_locked]':
+                is_locked:
                   type: boolean
                   description: Must be Janitor+ to use.
-                'wiki_page[is_deleted]':
+                is_deleted:
                   type: boolean
                   description: Must be Janitor+ to use.
-                'wiki_page[skip_secondary_validations]':
+                skip_secondary_validations:
                   type: boolean
                   description: Must be Janitor+ to use.
-                'wiki_page[category_id]':
+                category_id:
                   $ref: '#/components/schemas/TagCategories'
-                'wiki_page[category_is_locked]':
+                category_is_locked:
                   type: boolean
                   description: Must be Admin+ to use.
       responses:
@@ -12470,41 +12597,41 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
-                'user[verified]':
+                verified:
                   type: boolean
                   description: Must have the bd staff user flag to use.
-                'user[level]':
-                  type: integer
+                level:
+                  $ref: '#/components/schemas/UserLevels'
                   description: Must have the bd staff user flag to promote to Admin+.
-                'user[name]':
+                name:
                   type: string
-                'user[profile_about]':
+                profile_about:
                   type: string
-                'user[profile_artinfo]':
+                profile_artinfo:
                   type: string
-                'user[base_upload_limit]':
+                base_upload_limit:
                   type: integer
-                'user[enable_privacy_mode]':
+                enable_privacy_mode:
                   type: boolean
-                'user[email]':
+                email:
                   type: string
                   description: Must have the bd staff user flag to use.
-                'user[can_approve_posts]':
+                can_approve_posts:
                   type: boolean
-                'user[can_upload_free]':
+                can_upload_free:
                   type: boolean
-                'user[no_flagging]':
+                no_flagging:
                   type: boolean
-                'user[replacements_beta]':
+                replacements_beta:
                   type: boolean
-                'user[custom_title]':
+                custom_title:
                   type: string
       responses:
-        '204':
+        '200':
           description: Success
         '400':
           $ref: '#/components/responses/MessageError'
@@ -12740,7 +12867,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
@@ -12883,7 +13010,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
@@ -12920,7 +13047,7 @@ paths:
         - $ref: '#/components/parameters/idPath'
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -12970,7 +13097,7 @@ paths:
       description: You must have the "Approve Posts" permission.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -13005,7 +13132,7 @@ paths:
       description: You must have the "Approve Posts" permission. The response does not differ for success or failure.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
@@ -13089,22 +13216,22 @@ paths:
       description: You must have the "Approve Posts" permission.
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               required:
-                - 'post_disapproval[post_id]'
-                - 'post_disapproval[reason]'
+                - post_id
+                - reason
               properties:
-                'post_disapproval[post_id]':
+                post_id:
                   type: integer
-                'post_disapproval[reason]':
+                reason:
                   type: string
                   enum:
                     - borderline_quality
                     - borderline_relevancy
                     - other
-                'post_disapproval[message]':
+                message:
                   type: string
       responses:
         '201':

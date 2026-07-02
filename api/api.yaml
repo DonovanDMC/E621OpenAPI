@@ -250,6 +250,10 @@ components:
       $ref: "./components/schemas/dbExport.yaml"
     DBExportNames:
       $ref: "./components/schemas/dbExportNames.yaml"
+    UserLevels:
+      $ref: "./components/schemas/users/levels.yaml"
+    UserLevelsNames:
+      $ref: "./components/schemas/users/levelNames.yaml"
 
   responses:
     NotFound:
@@ -288,8 +292,6 @@ paths:
   /appeals.json:
     get:
       $ref: "./paths/appeals/index.yaml"
-    patch:
-      $ref: "./paths/appeals/update.yaml"
   /appeals/{id}.json:
     patch:
       $ref: "./paths/appeals/update.yaml"

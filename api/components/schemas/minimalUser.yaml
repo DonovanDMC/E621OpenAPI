@@ -10,6 +10,6 @@ properties:
   name:
     type: string
   level_string:
-    type: string
+    $ref: "./users/levelNames.yaml"
   favorite_count:
     type: integer

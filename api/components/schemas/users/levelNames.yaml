@@ -1,0 +1,11 @@
+type: string
+enum:
+  - Anonymous # 0
+  - Blocked # 10
+  - Member # 20
+  - Privileged # 30
+  - Former Staff # 40
+  - Staff # 50
+  - Janitor # 60
+  - Moderator # 70
+  - Admin # 80

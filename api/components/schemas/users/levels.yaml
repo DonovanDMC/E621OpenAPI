@@ -1,0 +1,11 @@
+type: integer
+enum:
+  - 0 # Anonymous
+  - 10 # Blocked
+  - 20 # Member
+  - 30 # Privileged
+  - 40 # Former Staff
+  - 50 # Staff
+  - 60 # Janitor
+  - 70 # Moderator
+  - 80 # Admin

@@ -23,7 +23,7 @@ properties:
   name:
     type: string
   level:
-    type: integer
+    $ref: "./users/levels.yaml"
   base_upload_limit:
     type: integer
   post_upload_count:
@@ -39,7 +39,7 @@ properties:
   can_upload_free:
     type: boolean
   level_string:
-    type: string
+    $ref: "./users/levelNames.yaml"
   avatar_id:
     type: integer
     nullable: true

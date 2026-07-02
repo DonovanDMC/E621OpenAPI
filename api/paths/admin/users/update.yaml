@@ -17,7 +17,7 @@ requestBody:
             type: boolean
             description: Must have the bd staff user flag to use.
           level:
-            type: integer
+            $ref: "../../../components/schemas/users/levels.yaml"
             description: Must have the bd staff user flag to promote to Admin+.
           name:
             type: string
