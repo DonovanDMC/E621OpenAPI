@@ -1,10 +1,10 @@
-summary: Admin Clear User Avatar
-operationId: adminClearUserAvatar
+summary: Clear User Profile
+operationId: clearUserProfile
 tags:
-  - Admin Users
+  - User Cleanups
 security:
   - basicAuth: []
-description: You must be Admin+.
+description: You must be Moderator+.
 parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 responses:

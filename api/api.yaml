@@ -1059,9 +1059,6 @@ paths:
   /admin/users/{id}/anonymize.json:
     post:
       $ref: "./paths/admin/users/confirm_anonymize.yaml"
-  /admin/users/{id}/clear_avatar.json:
-    post:
-      $ref: "./paths/admin/users/clear_avatar.yaml"
 
   /admin/automod_dmails.json:
     get:
@@ -1109,6 +1106,21 @@ paths:
       $ref: "./paths/moderator/post/approvals/create.yaml"
     delete:
       $ref: "./paths/moderator/post/approvals/destroy.yaml"
+  /moderator/user_cleanups/{id}/clear_avatar.json:
+    post:
+      $ref: "./paths/moderator/user_cleanups/clear_avatar.yaml"
+  /moderator/user_cleanups/{id}/clear_profile.json:
+    post:
+      $ref: "./paths/moderator/user_cleanups/clear_profile.yaml"
+  /moderator/user_cleanups/{id}/hide_comments.json:
+    post:
+      $ref: "./paths/moderator/user_cleanups/hide_comments.yaml"
+  /moderator/user_cleanups/{id}/hide_forum_posts.json:
+    post:
+      $ref: "./paths/moderator/user_cleanups/hide_forum_posts.yaml"
+  /moderator/user_cleanups/{id}/hide_blips.json:
+    post:
+      $ref: "./paths/moderator/user_cleanups/hide_blips.yaml"
 
   /moderator/post/disapprovals.json:
     get:
