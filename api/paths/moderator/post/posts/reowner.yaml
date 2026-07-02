@@ -1,0 +1,42 @@
+summary: Reown Post
+operationId: reownPost
+tags:
+  - Posts
+security:
+  - basicAuth: []
+description: You must have be Janitor+ and an Approver
+parameters:
+  - $ref: "../../../../components/parameters/path/id.yaml"
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - reowner[new_owner]
+        properties:
+          reowner[new_owner]:
+            type: string
+            description: |
+              Must be a string
+              Name: `name`
+              ID: `!1234`
+          reowner[reowner_versions]:
+            type: boolean
+            description: Also reown post versions, must be BD Staff to set to true. (default false)
+          reowner[post_events]:
+            type: boolean
+            description: Also reown post events, must be BD Staff to set to false. (default true)
+responses:
+  201:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components/schemas/rawPost.yaml"
+  204:
+    description: No Change
+  403:
+    $ref: "../../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../../components/responses/notFound.yaml"

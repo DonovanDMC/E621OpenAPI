@@ -134,6 +134,8 @@ components:
       $ref: "./components/schemas/ipBan.yaml"
     IqdbPost:
       $ref: "./components/schemas/iqdbPost.yaml"
+    RawPost:
+      $ref: "./components/schemas/rawPost.yaml"
     IqdbResponse:
       $ref: "./components/schemas/iqdbResponse.yaml"
     Mascot:
@@ -1101,11 +1103,18 @@ paths:
   /moderator/post/posts/{id}/ai_check.json:
     get:
       $ref: "./paths/moderator/post/posts/ai_check.yaml"
+  /moderator/post/posts/{id}/previous_owners.json:
+    get:
+      $ref: "./paths/moderator/post/posts/previous_owners.yaml"
+  /moderator/post/posts/{id}/reowner.json:
+    post:
+      $ref: "./paths/moderator/post/posts/reowner.yaml"
   /moderator/post/approval.json:
     post:
       $ref: "./paths/moderator/post/approvals/create.yaml"
     delete:
       $ref: "./paths/moderator/post/approvals/destroy.yaml"
+
   /moderator/user_cleanups/{id}/clear_avatar.json:
     post:
       $ref: "./paths/moderator/user_cleanups/clear_avatar.yaml"

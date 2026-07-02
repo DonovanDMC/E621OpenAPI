@@ -221,6 +221,10 @@ components:
         - upload_whitelist_update
         - upload_whitelist_delete
         - user_avatar_clear
+        - user_profile_clear
+        - user_comments_hide
+        - user_forum_posts_hide
+        - user_blips_delete
         - user_blacklist_changed
         - user_text_change
         - user_custom_title_change
@@ -290,6 +294,7 @@ components:
         - expunged
         - changed_bg_color
         - replacement_penalty_changed
+        - owner_changed
     Ratings:
       type: string
       enum:
@@ -490,7 +495,7 @@ components:
           type: integer
         staff_notes:
           type: string
-          description: Only visible to Janitor+
+          description: Only visible to Staff+
         details:
           type: string
         is_active:
@@ -521,7 +526,7 @@ components:
           type: string
         staff_notes:
           type: string
-          description: Only visible to Janitor+
+          description: Only visible to Staff+
         is_active:
           type: boolean
         updated_at:
@@ -1186,6 +1191,198 @@ components:
           type: string
           format: date-time
     IqdbPost:
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - up_score
+        - down_score
+        - score
+        - source
+        - md5
+        - rating
+        - is_note_locked
+        - is_rating_locked
+        - is_status_locked
+        - is_pending
+        - is_flagged
+        - is_deleted
+        - uploader_id
+        - approver_id
+        - last_noted_at
+        - last_comment_bumped_at
+        - fav_count
+        - tag_string
+        - tag_count
+        - tag_count_general
+        - tag_count_artist
+        - tag_count_character
+        - tag_count_copyright
+        - file_ext
+        - file_size
+        - image_width
+        - image_height
+        - parent_id
+        - has_children
+        - last_commented_at
+        - has_active_children
+        - bit_flags
+        - tag_count_meta
+        - locked_tags
+        - tag_count_species
+        - tag_count_invalid
+        - description
+        - comment_count
+        - change_seq
+        - tag_count_lore
+        - bg_color
+        - generated_samples
+        - duration
+        - is_comment_disabled
+        - is_comment_locked
+        - has_large
+        - has_visible_children
+        - children_ids
+        - pool_ids
+        - is_favorited
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        up_score:
+          type: integer
+        down_score:
+          type: integer
+        score:
+          type: integer
+        source:
+          type: string
+        md5:
+          type: string
+        rating:
+          $ref: '#/components/schemas/Ratings'
+        is_note_locked:
+          type: boolean
+        is_rating_locked:
+          type: boolean
+        is_status_locked:
+          type: boolean
+        is_pending:
+          type: boolean
+        is_flagged:
+          type: boolean
+        is_deleted:
+          type: boolean
+        uploader_id:
+          type: integer
+        approver_id:
+          type: integer
+        last_noted_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_comment_bumped_at:
+          type: string
+          format: date-time
+          nullable: true
+        fav_count:
+          type: integer
+        tag_string:
+          type: string
+        tag_count:
+          type: integer
+        tag_count_general:
+          type: integer
+        tag_count_artist:
+          type: integer
+        tag_count_character:
+          type: integer
+        tag_count_copyright:
+          type: integer
+        file_ext:
+          type: string
+        file_size:
+          type: integer
+          format: int64
+        image_width:
+          type: integer
+        image_height:
+          type: integer
+        parent_id:
+          type: integer
+          nullable: true
+        has_children:
+          type: boolean
+        last_commented_at:
+          type: string
+          format: date-time
+          nullable: true
+        has_active_children:
+          type: boolean
+        bit_flags:
+          type: integer
+        tag_count_meta:
+          type: integer
+        locked_tags:
+          type: string
+          nullable: true
+        tag_count_species:
+          type: integer
+        tag_count_invalid:
+          type: integer
+        description:
+          type: string
+        comment_count:
+          type: integer
+        change_seq:
+          type: integer
+        tag_count_lore:
+          type: integer
+        bg_color:
+          type: string
+          nullable: true
+        generated_samples:
+          type: array
+          nullable: true
+          items:
+            type: string
+            enum:
+              - 720p
+              - 480p
+              - original
+        duration:
+          type: string
+          nullable: true
+        is_comment_disabled:
+          type: boolean
+        is_comment_locked:
+          type: boolean
+        has_large:
+          type: boolean
+        has_visible_children:
+          type: boolean
+        children_ids:
+          type: string
+          nullable: true
+        pool_ids:
+          type: array
+          items:
+            type: integer
+        is_favorited:
+          type: boolean
+        file_url:
+          type: string
+        large_file_url:
+          type: string
+        preview_file_url:
+          type: string
+    RawPost:
       type: object
       required:
         - id
@@ -4086,6 +4283,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  '/appeals/{id}.json':
     patch:
       summary: Update Appeal
       operationId: updateAppeal
@@ -4119,9 +4317,6 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/appeals/{id}.json':
-    patch:
-      $ref: '#/paths/~1appeals.json/patch'
   '/appeals/{id}/claim.json':
     post:
       summary: Claim Appeal
@@ -4288,10 +4483,10 @@ paths:
                 linked_user_id:
                   type: integer
                   nullable: true
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_locked:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
       responses:
         '201':
           description: Success
@@ -4349,7 +4544,7 @@ paths:
       security:
         - basicAuth: []
       description: |
-        If an artist is locked, you must be Janitor+ to edit them.
+        If an artist is locked, you must be Staff+ to edit them.
         `other_names` & `urls` are silently truncated to 25 entries.
         `notes` is silently truncated to the wiki page limit (250,000).
         Individual `other_names` are silently truncated to 100 characters.
@@ -4364,7 +4559,7 @@ paths:
               properties:
                 name:
                   type: string
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 other_names:
                   type: array
                   items:
@@ -4380,10 +4575,10 @@ paths:
                 linked_user_id:
                   type: integer
                   nullable: true
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_locked:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
       responses:
         '204':
           description: Success
@@ -4420,7 +4615,7 @@ paths:
       security:
         - basicAuth: []
       description: |
-        If an artist is locked, you must be Janitor+ to revert them.
+        If an artist is locked, you must be Staff+ to revert them.
       parameters:
         - $ref: '#/components/parameters/idOrNamePath'
         - name: version_id
@@ -4627,7 +4822,7 @@ paths:
             type: string
         - name: 'search[staff_notes]'
           in: query
-          description: The staff notes on the avoid posting entry. Must be Janitor+ to use.
+          description: The staff notes on the avoid posting entry. Must be Staff+ to use.
           schema:
             type: string
         - name: 'search[is_active]'
@@ -5448,7 +5643,7 @@ paths:
                   type: boolean
                 is_sticky:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
@@ -5469,7 +5664,7 @@ paths:
       operationId: getComment
       tags:
         - Comments
-      description: 'If the comment is hidden, you must be the creator or Janitor+ to see it.'
+      description: 'If the comment is hidden, you must be the creator or Staff+ to see it.'
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -5504,7 +5699,7 @@ paths:
                   type: string
                 is_sticky:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
@@ -7820,7 +8015,7 @@ paths:
       operationId: deletePool
       tags:
         - Pools
-      description: You must be Janitor+.
+      description: You must be Staff+.
       security:
         - basicAuth: []
       parameters:
@@ -8187,10 +8382,10 @@ paths:
                   description: You must be Privileged+.
                 is_note_locked:
                   type: boolean
-                  description: You must be Janitor+.
+                  description: You must be Staff+.
                 bg_color:
                   type: string
-                  description: You must be Janitor+.
+                  description: You must be Staff+.
                 is_comment_locked:
                   type: boolean
                   description: You must be Moderator+.
@@ -9160,7 +9355,7 @@ paths:
                   type: string
                 'post_replacement[as_pending]':
                   type: boolean
-                  description: You must be Janitor+.
+                  description: You must be Approver
       responses:
         '200':
           description: Success
@@ -9721,7 +9916,7 @@ paths:
         - Tags
       security:
         - basicAuth: []
-      description: You must be Janitor+. `commit=Fix` must be set.
+      description: You must be Staff+. `commit=Fix` must be set.
       parameters:
         - $ref: '#/components/parameters/idPath'
       requestBody:
@@ -11009,44 +11204,44 @@ paths:
       operationId: searchTickets
       tags:
         - Tickets
-      description: You must be Janitor+ to see tickets you did not create.
+      description: You must be Staff+ to see tickets you did not create.
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
         - $ref: '#/components/parameters/idQuery'
         - in: query
           name: 'search[creator_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[creator_id]'
-          description: You must be Janitor+ unless providing your own id.
+          description: You must be Staff+ unless providing your own id.
           schema:
             type: integer
         - in: query
           name: 'search[claimant_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[claimant_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
           name: 'search[accused_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[accused_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
           name: 'search[disp_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
@@ -11055,7 +11250,7 @@ paths:
             $ref: '#/components/schemas/TicketTypes'
         - in: query
           name: 'search[reason]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
@@ -11087,7 +11282,7 @@ paths:
         - Tickets
       security:
         - basicAuth: []
-      description: You must be Janitor+ to see tickets you did not create.
+      description: You must be Staff+ to see tickets you did not create.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -11330,7 +11525,7 @@ paths:
       operationId: getUpload
       tags:
         - Uploads
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -11974,7 +12169,7 @@ paths:
         - $ref: '#/components/parameters/orderQuery'
         - in: query
           name: 'search[deleted]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
             enum:
@@ -12056,7 +12251,7 @@ paths:
       operationId: getUserFeedback
       tags:
         - User Feedbacks
-      description: You must be Janitor+ if the feedback is deleted.
+      description: You must be Staff+ if the feedback is deleted.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -12349,13 +12544,13 @@ paths:
                   description: Must be Privileged+ to use.
                 is_locked:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_deleted:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 skip_secondary_validations:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
       responses:
         '201':
           description: Success
@@ -12398,7 +12593,7 @@ paths:
         - Wiki Pages
       security:
         - basicAuth: []
-      description: You must be Janitor+ if the wiki page is locked.
+      description: You must be Staff+ if the wiki page is locked.
       parameters:
         - $ref: '#/components/parameters/idPath'
           required: true
@@ -12420,16 +12615,16 @@ paths:
                   description: Must be Privileged+ to use.
                 title:
                   type: string
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_locked:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_deleted:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 skip_secondary_validations:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 category_id:
                   $ref: '#/components/schemas/TagCategories'
                 category_is_locked:
@@ -12659,24 +12854,6 @@ paths:
             Success should be determined based on the html, any errors will be present in an alert.
         '404':
           $ref: '#/components/responses/NotFound'
-  '/admin/users/{id}/clear_avatar.json':
-    post:
-      summary: Admin Clear User Avatar
-      operationId: adminClearUserAvatar
-      tags:
-        - Admin Users
-      security:
-        - basicAuth: []
-      description: You must be Admin+.
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '302':
-          description: Success
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /admin/automod_dmails.json:
     get:
       summary: Get Automod DMails
@@ -12685,7 +12862,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
@@ -12743,7 +12920,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -12765,7 +12942,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -12783,7 +12960,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -12801,7 +12978,7 @@ paths:
         - Exception Logs
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
@@ -12844,7 +13021,7 @@ paths:
         - Exception Logs
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -13085,6 +13262,82 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/moderator/post/posts/{id}/previous_owners.json':
+    get:
+      summary: Get Post Previous Owners
+      operationId: getPostPreviousOwners
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      description: You must be an Approver
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - name
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/post/posts/{id}/reowner.json':
+    post:
+      summary: Reown Post
+      operationId: reownPost
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      description: You must have be Janitor+ and an Approver
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'reowner[new_owner]'
+              properties:
+                'reowner[new_owner]':
+                  type: string
+                  description: |
+                    Must be a string
+                    Name: `name`
+                    ID: `!1234`
+                'reowner[reowner_versions]':
+                  type: boolean
+                  description: 'Also reown post versions, must be BD Staff to set to true. (default false)'
+                'reowner[post_events]':
+                  type: boolean
+                  description: 'Also reown post events, must be BD Staff to set to false. (default true)'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema: null
+            $ref: '#/components/schemas/RawPost'
+        '204':
+          description: No Change
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /moderator/post/approval.json:
     post:
       summary: Approve Post
@@ -13143,6 +13396,96 @@ paths:
       responses:
         '204':
           description: Success/Failure
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/user_cleanups/{id}/clear_avatar.json':
+    post:
+      summary: Clear User Avatar
+      operationId: clearUserAvatar
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '302':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/user_cleanups/{id}/clear_profile.json':
+    post:
+      summary: Clear User Profile
+      operationId: clearUserProfile
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '302':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/user_cleanups/{id}/hide_comments.json':
+    post:
+      summary: Hide User Comments
+      operationId: hideUserComments
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '302':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/user_cleanups/{id}/hide_forum_posts.json':
+    post:
+      summary: Hide User Forum Posts
+      operationId: hideUserForumPosts
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '302':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/moderator/user_cleanups/{id}/hide_blips.json':
+    post:
+      summary: Hide User Blips
+      operationId: hideUserBlips
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '302':
+          description: Success
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':

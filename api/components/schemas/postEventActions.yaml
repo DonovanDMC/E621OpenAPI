@@ -23,3 +23,4 @@ enum:
   - expunged
   - changed_bg_color
   - replacement_penalty_changed
+  - owner_changed
