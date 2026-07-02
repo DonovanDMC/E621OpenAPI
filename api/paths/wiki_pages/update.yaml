@@ -4,7 +4,7 @@ tags:
   - Wiki Pages
 security:
   - basicAuth: []
-description: You must be Janitor+ if the wiki page is locked.
+description: You must be Staff+ if the wiki page is locked.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
     required: true
@@ -26,16 +26,16 @@ requestBody:
             description: Must be Privileged+ to use.
           title:
             type: string
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           is_locked:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           is_deleted:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           skip_secondary_validations:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           category_id:
             $ref: "../../components/schemas/tagCategories.yaml"
           category_is_locked:

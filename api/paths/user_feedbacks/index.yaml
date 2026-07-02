@@ -9,7 +9,7 @@ parameters:
   - $ref: "../../components/parameters/query/order.yaml"
   - in: query
     name: search[deleted]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: string
       enum:

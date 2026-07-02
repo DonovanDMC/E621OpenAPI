@@ -24,13 +24,13 @@ requestBody:
             description: Must be Privileged+ to use.
           is_locked:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           is_deleted:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
           skip_secondary_validations:
             type: boolean
-            description: Must be Janitor+ to use.
+            description: Must be Staff+ to use.
 responses:
   201:
     description: Success

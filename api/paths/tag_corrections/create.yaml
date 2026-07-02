@@ -4,7 +4,7 @@ tags:
   - Tags
 security:
   - basicAuth: []
-description: You must be Janitor+. `commit=Fix` must be set.
+description: You must be Staff+. `commit=Fix` must be set.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 requestBody:

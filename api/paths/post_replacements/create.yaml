@@ -25,7 +25,7 @@ requestBody:
             type: string
           post_replacement[as_pending]:
             type: boolean
-            description: You must be Janitor+.
+            description: You must be Approver
 responses:
   200:
     description: Success

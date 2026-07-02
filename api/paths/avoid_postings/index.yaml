@@ -43,7 +43,7 @@ parameters:
       type: string
   - name: search[staff_notes]
     in: query
-    description: The staff notes on the avoid posting entry. Must be Janitor+ to use.
+    description: The staff notes on the avoid posting entry. Must be Staff+ to use.
     schema:
       type: string
   - name: search[is_active]

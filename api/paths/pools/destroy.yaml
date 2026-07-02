@@ -2,7 +2,7 @@ summary: Delete Pool
 operationId: deletePool
 tags:
   - Pools
-description: You must be Janitor+.
+description: You must be Staff+.
 security:
   - basicAuth: []
 parameters:

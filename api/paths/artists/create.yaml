@@ -33,10 +33,10 @@ requestBody:
           linked_user_id:
             type: integer
             nullable: true
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
           is_locked:
             type: boolean
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
 responses:
   201:
     description: Success

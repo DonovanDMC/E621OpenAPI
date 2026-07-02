@@ -2,44 +2,44 @@ summary: Search Tickets
 operationId: searchTickets
 tags:
   - Tickets
-description: You must be Janitor+ to see tickets you did not create.
+description: You must be Staff+ to see tickets you did not create.
 parameters:
   - $ref: "../../components/parameters/query/limit.yaml"
   - $ref: "../../components/parameters/query/page.yaml"
   - $ref: "../../components/parameters/query/id.yaml"
   - in: query
     name: search[creator_name]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: string
   - in: query
     name: search[creator_id]
-    description: You must be Janitor+ unless providing your own id.
+    description: You must be Staff+ unless providing your own id.
     schema:
       type: integer
   - in: query
     name: search[claimant_name]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: string
   - in: query
     name: search[claimant_id]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: integer
   - in: query
     name: search[accused_name]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: string
   - in: query
     name: search[accused_id]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: integer
   - in: query
     name: search[disp_id]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: integer
   - in: query
@@ -48,7 +48,7 @@ parameters:
       $ref: "../../components/schemas/ticketTypes.yaml"
   - in: query
     name: search[reason]
-    description: You must be Janitor+.
+    description: You must be Staff+.
     schema:
       type: string
   - in: query

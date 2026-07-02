@@ -19,7 +19,7 @@ properties:
     type: integer
   staff_notes:
     type: string
-    description: Only visible to Janitor+
+    description: Only visible to Staff+
   details:
     type: string
   is_active:

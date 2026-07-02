@@ -5,7 +5,7 @@ tags:
 security:
   - basicAuth: []
 description: |
-  If an artist is locked, you must be Janitor+ to revert them.
+  If an artist is locked, you must be Staff+ to revert them.
 parameters:
   - $ref: "../../components/parameters/path/idOrName.yaml"
   - name: version_id

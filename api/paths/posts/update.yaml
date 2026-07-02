@@ -52,10 +52,10 @@ requestBody:
             description: You must be Privileged+.
           is_note_locked:
             type: boolean
-            description: You must be Janitor+.
+            description: You must be Staff+.
           bg_color:
             type: string
-            description: You must be Janitor+.
+            description: You must be Staff+.
           is_comment_locked:
             type: boolean
             description: You must be Moderator+.

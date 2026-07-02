@@ -21,7 +21,7 @@ requestBody:
             type: boolean
           is_sticky:
             type: boolean
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
           is_hidden:
             type: boolean
             description: Only usable for Moderator+

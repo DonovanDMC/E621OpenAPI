@@ -2,7 +2,7 @@ summary: Get Comment
 operationId: getComment
 tags:
   - Comments
-description: If the comment is hidden, you must be the creator or Janitor+ to see it.
+description: If the comment is hidden, you must be the creator or Staff+ to see it.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:

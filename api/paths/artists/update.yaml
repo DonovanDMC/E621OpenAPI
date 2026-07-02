@@ -5,7 +5,7 @@ tags:
 security:
   - basicAuth: []
 description: |
-  If an artist is locked, you must be Janitor+ to edit them.
+  If an artist is locked, you must be Staff+ to edit them.
   `other_names` & `urls` are silently truncated to 25 entries.
   `notes` is silently truncated to the wiki page limit (250,000).
   Individual `other_names` are silently truncated to 100 characters.
@@ -20,7 +20,7 @@ requestBody:
         properties:
           name:
             type: string
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
           other_names:
             type: array
             items:
@@ -36,10 +36,10 @@ requestBody:
           linked_user_id:
             type: integer
             nullable: true
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
           is_locked:
             type: boolean
-            description: Only usable for Janitor+
+            description: Only usable for Staff+
 responses:
   204:
     description: Success

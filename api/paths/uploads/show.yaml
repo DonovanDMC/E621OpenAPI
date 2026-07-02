@@ -2,7 +2,7 @@ summary: Get Upload
 operationId: getUpload
 tags:
   - Uploads
-description: You must be Janitor+.
+description: You must be Staff+.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:

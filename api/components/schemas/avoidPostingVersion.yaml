@@ -17,7 +17,7 @@ properties:
     type: string
   staff_notes:
     type: string
-    description: Only visible to Janitor+
+    description: Only visible to Staff+
   is_active:
     type: boolean
   updated_at:

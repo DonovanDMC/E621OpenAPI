@@ -4,7 +4,7 @@ tags:
   - Tickets
 security:
   - basicAuth: []
-description: You must be Janitor+ to see tickets you did not create.
+description: You must be Staff+ to see tickets you did not create.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:

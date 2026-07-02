@@ -2,7 +2,7 @@ summary: Get User Feedback
 operationId: getUserFeedback
 tags:
   - User Feedbacks
-description: You must be Janitor+ if the feedback is deleted.
+description: You must be Staff+ if the feedback is deleted.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:
