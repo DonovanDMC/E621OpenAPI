@@ -35,6 +35,6 @@ responses:
         schema:
           $ref: "../../components/schemas/uploadWhitelist.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responseBodies/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"

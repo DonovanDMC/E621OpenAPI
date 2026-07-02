@@ -34,6 +34,6 @@ responses:
           type: string
           example: _danbooru_session=(...); path=/; secure; httponly; samesite=lax
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   406:
     description: Failure

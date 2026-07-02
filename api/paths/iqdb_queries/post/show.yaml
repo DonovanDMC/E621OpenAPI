@@ -49,4 +49,4 @@ responses:
               items:
                 $ref: "../../../components/schemas/iqdbResponseV2.yaml"
   403:
-    $ref: "../../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../../components/responses/accessDenied.yaml"

@@ -16,4 +16,4 @@ responses:
             - $ref: "../../components/schemas/recommendedPosts.yaml"
             - $ref: "../../components/schemas/postData.yaml"
   404:
-    $ref: "../../components/responseBodies/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"

@@ -20,8 +20,8 @@ responses:
   204:
     description: Success
   400:
-    $ref: "../../components/responseBodies/messageError.yaml"
+    $ref: "../../components/responses/messageError.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responseBodies/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"

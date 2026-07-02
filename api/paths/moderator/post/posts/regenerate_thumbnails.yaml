@@ -20,8 +20,8 @@ responses:
             post:
               $ref: "../../../../components/schemas/post.yaml"
   403:
-    $ref: "../../../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../../components/responseBodies/notFound.yaml"
+    $ref: "../../../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../../components/responseBodies/expectedError.yaml"
+    $ref: "../../../../components/responses/expectedError.yaml"

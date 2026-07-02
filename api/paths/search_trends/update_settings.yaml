@@ -32,6 +32,6 @@ requestBody:
             type: integer
 responses:
   200:
-    $ref: "../../components/responseBodies/messageSuccess.yaml"
+    $ref: "../../components/responses/messageSuccess.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"

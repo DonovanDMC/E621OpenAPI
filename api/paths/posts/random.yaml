@@ -11,6 +11,6 @@ parameters:
       type: string
 responses:
   200:
-    $ref: "../../components/responseBodies/post.yaml"
+    $ref: "../../components/responses/post.yaml"
   404:
-    $ref: "../../components/responseBodies/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"

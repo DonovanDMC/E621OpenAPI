@@ -24,6 +24,6 @@ responses:
   302:
     description: Success
   403:
-    $ref: "../../../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../../components/responseBodies/notFound.yaml"
+    $ref: "../../../../components/responses/notFound.yaml"

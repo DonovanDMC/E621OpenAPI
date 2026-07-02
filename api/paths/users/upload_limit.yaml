@@ -8,6 +8,6 @@ parameters:
   - $ref: "../../components/parameters/path/idOrName.yaml"
 responses:
   200:
-    $ref: "../../components/responseBodies/user.yaml"
+    $ref: "../../components/responses/user.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"

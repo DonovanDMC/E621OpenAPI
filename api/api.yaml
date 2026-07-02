@@ -62,6 +62,8 @@ components:
     idOrNamePath:
       $ref: "./components/parameters/path/idOrName.yaml"
   schemas:
+    AccessDeniedResponse:
+      $ref: "./components/schemas/accessDenied.yaml"
     NotFoundResponse:
       $ref: "./components/schemas/notFound.yaml"
     WarningRecordType:
@@ -249,23 +251,23 @@ components:
     DBExportNames:
       $ref: "./components/schemas/dbExportNames.yaml"
 
-  responseBodies:
+  responses:
     NotFound:
-      $ref: "./components/responseBodies/notFound.yaml"
+      $ref: "./components/responses/notFound.yaml"
     AccessDenied:
-      $ref: "./components/responseBodies/accessDenied.yaml"
+      $ref: "./components/responses/accessDenied.yaml"
     ExpectedError:
-      $ref: "./components/responseBodies/expectedError.yaml"
+      $ref: "./components/responses/expectedError.yaml"
     MessageSuccess:
-      $ref: "./components/responseBodies/messageSuccess.yaml"
+      $ref: "./components/responses/messageSuccess.yaml"
     MessageError:
-      $ref: "./components/responseBodies/messageError.yaml"
+      $ref: "./components/responses/messageError.yaml"
     UserResponse:
-      $ref: "./components/responseBodies/user.yaml"
+      $ref: "./components/responses/user.yaml"
     PostResponse:
-      $ref: "./components/responseBodies/post.yaml"
+      $ref: "./components/responses/post.yaml"
     PostsResponse:
-      $ref: "./components/responseBodies/posts.yaml"
+      $ref: "./components/responses/posts.yaml"
   requestBodies:
     warning:
       $ref: "./components/requestBodies/warning.yaml"

@@ -25,4 +25,4 @@ responses:
           items:
             $ref: "../../components/schemas/tagPreview.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"

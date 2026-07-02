@@ -19,4 +19,4 @@ responses:
         schema:
           $ref: "../../components/schemas/wikiPage.yaml"
   404:
-    $ref: "../../components/responseBodies/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"

@@ -18,4 +18,4 @@ responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"

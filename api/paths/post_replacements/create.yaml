@@ -45,8 +45,8 @@ responses:
               type: string
               example: "/posts/1"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   412:
-    $ref: "../../components/responseBodies/messageError.yaml"
+    $ref: "../../components/responses/messageError.yaml"
   422:
-    $ref: "../../components/responseBodies/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"

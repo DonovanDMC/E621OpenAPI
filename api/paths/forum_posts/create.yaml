@@ -25,6 +25,6 @@ responses:
         schema:
           $ref: "../../components/schemas/forumPost.yaml"
   403:
-    $ref: "../../components/responseBodies/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responseBodies/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"

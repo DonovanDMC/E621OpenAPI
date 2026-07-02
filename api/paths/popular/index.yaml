@@ -23,6 +23,6 @@ parameters:
         - day
 responses:
   200:
-    $ref: "../../components/responseBodies/posts.yaml"
+    $ref: "../../components/responses/posts.yaml"
   422:
-    $ref: "../../components/responseBodies/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"
