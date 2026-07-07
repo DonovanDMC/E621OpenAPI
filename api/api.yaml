@@ -258,6 +258,10 @@ components:
       $ref: "./components/schemas/users/levelNames.yaml"
     StaffFile:
       $ref: "./components/schemas/staffFile.yaml"
+    StaffWiki:
+      $ref: "./components/schemas/staffWiki.yaml"
+    StaffWikiVersion:
+      $ref: "./components/schemas/staffWikiVersion.yaml"
 
   responses:
     NotFound:
@@ -1139,15 +1143,41 @@ paths:
     post:
       $ref: "./paths/moderator/post/disapprovals/create.yaml"
 
-  /staff/staff_files.json:
+  /staff/files.json:
     get:
       $ref: "./paths/staff/staff_files/index.yaml"
     post:
       $ref: "./paths/staff/staff_files/create.yaml"
-  /staff/staff_files/{id}.json:
+  /staff/files/{id}.json:
     get:
       $ref: "./paths/staff/staff_files/show.yaml"
     patch:
       $ref: "./paths/staff/staff_files/update.yaml"
     delete:
       $ref: "./paths/staff/staff_files/destroy.yaml"
+
+  /staff/wikis.json:
+    get:
+      $ref: "./paths/staff/staff_wikis/index.yaml"
+    post:
+      $ref: "./paths/staff/staff_wikis/create.yaml"
+  /staff/wikis/{id}.json:
+    get:
+      $ref: "./paths/staff/staff_wikis/show.yaml"
+    patch:
+      $ref: "./paths/staff/staff_wikis/update.yaml"
+    delete:
+      $ref: "./paths/staff/staff_wikis/destroy.yaml"
+  /staff/wikis/{id}/claim.json:
+    post:
+      $ref: "./paths/staff/staff_wikis/claim.yaml"
+  /staff/wikis/{id}/unclaim.json:
+    post:
+      $ref: "./paths/staff/staff_wikis/unclaim.yaml"
+
+  /staff/wiki_versions.json:
+    get:
+      $ref: "./paths/staff/staff_wiki_versions/index.yaml"
+  /staff/wiki_versions/{id}.json:
+    get:
+      $ref: "./paths/staff/staff_wiki_versions/show.yaml"

@@ -1,7 +1,7 @@
-summary: Search Staff Files
-operationId: searchStaffFiles
+summary: Search Staff Wiki Versions
+operationId: searchStaffWikiVersions
 tags:
-  - Staff Files
+  - Staff Wiki Versions
 security:
   - basicAuth: []
 description: You must be Staff+.
@@ -16,21 +16,24 @@ parameters:
       enum:
         - id_asc
         - id_desc
-        - original_filename
-        - time
-  - name: search[creator_id]
+        - title
+  - name: search[updater_id]
     in: query
     schema:
       type: integer
-  - name: search[creator_name]
+  - name: search[updater_name]
     in: query
     schema:
       type: string
-  - name: search[original_filename]
+  - name: search[staff_wiki_id]
+    in: query
+    schema:
+      type: integer
+  - name: search[title]
     in: query
     schema:
       type: string
-  - name: search[file_ext]
+  - name: search[body]
     in: query
     schema:
       type: string
@@ -42,6 +45,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../../components/schemas/staffFile.yaml"
+            $ref: "../../../components/schemas/staffWikiVersion.yaml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"

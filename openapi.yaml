@@ -14,7 +14,7 @@ info:
     url: 'https://e621.net/forum_topics/46279'
   version: '4614e41'
   x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
-  x-e621ng-master-behind-by: 77
+  x-e621ng-master-behind-by: 94
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
 servers:
   - url: 'https://e621.net'
@@ -199,6 +199,9 @@ components:
         - mascot_create
         - mascot_update
         - mascot_delete
+        - staff_file_create
+        - staff_file_update
+        - staff_file_delete
         - pool_delete
         - report_reason_create
         - report_reason_delete
@@ -3949,6 +3952,108 @@ components:
         - Janitor
         - Moderator
         - Admin
+    StaffFile:
+      type: object
+      required:
+        - id
+        - creator_id
+        - storage_id
+        - md5
+        - file_ext
+        - file_size
+        - original_filename
+        - title
+        - description
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        creator_id:
+          type: integer
+        storage_id:
+          type: string
+        md5:
+          type: string
+        file_ext:
+          type: string
+        file_size:
+          type: integer
+        original_filename:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StaffWiki:
+      type: object
+      required:
+        - id
+        - creator_id
+        - updater_id
+        - claimant_id
+        - title
+        - body
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        creator_id:
+          type: integer
+        updater_id:
+          type: integer
+        claimant_id:
+          type: integer
+          nullable: true
+        title:
+          type: string
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StaffWikiVersion:
+      type: object
+      required:
+        - id
+        - staff_wiki_id
+        - updater_id
+        - claimant_id
+        - title
+        - body
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        staff_wiki_id:
+          type: integer
+        updater_id:
+          type: integer
+        claimant_id:
+          type: integer
+          nullable: true
+        title:
+          type: string
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
   responses:
     NotFound:
       description: Not Found
@@ -13330,8 +13435,8 @@ paths:
           description: Success
           content:
             application/json:
-              schema: null
-            $ref: '#/components/schemas/RawPost'
+              schema:
+                $ref: '#/components/schemas/RawPost'
         '204':
           description: No Change
         '403':
@@ -13587,3 +13692,431 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  /staff/files.json:
+    get:
+      summary: Search Staff Files
+      operationId: searchStaffFiles
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - $ref: '#/components/parameters/idQuery'
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - original_filename
+              - time
+        - name: 'search[creator_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[creator_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[original_filename]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[file_ext]'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StaffFile'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+    post:
+      summary: Create Staff File
+      operationId: createStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - 'staff_file[file]'
+              properties:
+                'staff_file[file]':
+                  type: string
+                  format: binary
+                'staff_file[title]':
+                  type: string
+                'staff_file[description]':
+                  type: string
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffFile'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+  '/staff/files/{id}.json':
+    get:
+      summary: Get Staff File
+      operationId: getStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffFile'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Edit Staff File
+      operationId: editStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: 'You must be Admin+ if you did not create the file, else Staff+'
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                'staff_file[title]':
+                  type: string
+                'staff_file[description]':
+                  type: string
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+    delete:
+      summary: Delete Staff File
+      operationId: deleteStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: 'You must be Admin+ if you did not created the file, else Staff+'
+      parameters:
+        - $ref: '#/components/parameters/idOrNamePath'
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /staff/wikis.json:
+    get:
+      summary: Search Staff Wikis
+      operationId: searchStaffWikis
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - $ref: '#/components/parameters/idQuery'
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - title
+        - name: 'search[creator_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[creator_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[title]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[body_matches]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[editor_id]'
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StaffWiki'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+    post:
+      summary: Create Staff Wiki
+      operationId: createStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'staff_wiki[title]'
+              properties:
+                'staff_wiki[title]':
+                  type: string
+                'staff_wiki[body]':
+                  type: string
+                'staff_wiki[related_type]':
+                  type: string
+                  enum:
+                    - User
+                    - Artist
+                    - StaffWiki
+                'staff_wiki[related_id]':
+                  type: integer
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffWiki'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+  '/staff/wikis/{id}.json':
+    get:
+      summary: Get Staff Wiki
+      operationId: getStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffWiki'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Edit Staff Wiki
+      operationId: editStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                'staff_wiki[title]':
+                  type: string
+                'staff_wiki[body]':
+                  type: string
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+    delete:
+      summary: Delete Staff Wiki
+      operationId: deleteStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/idOrNamePath'
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/staff/wikis/{id}/claim.json':
+    post:
+      summary: Claim Staff Wiki
+      operationId: claimStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffWiki'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+  '/staff/wikis/{id}/unclaim.json':
+    post:
+      summary: Unclaim Staff Wiki
+      operationId: unclaimStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffWiki'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+  /staff/wiki_versions.json:
+    get:
+      summary: Search Staff Wiki Versions
+      operationId: searchStaffWikiVersions
+      tags:
+        - Staff Wiki Versions
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - $ref: '#/components/parameters/idQuery'
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - title
+        - name: 'search[updater_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[updater_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[staff_wiki_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[title]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[body]'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StaffWikiVersion'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+  '/staff/wiki_versions/{id}.json':
+    get:
+      summary: Get Staff Wiki Version
+      operationId: getStaffWikiVersion
+      tags:
+        - Staff Wiki Versions
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StaffWikiVersion'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'

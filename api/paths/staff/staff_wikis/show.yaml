@@ -1,15 +1,19 @@
-summary: Delete Staff File
-operationId: deleteStaffFile
+summary: Get Staff Wiki
+operationId: getStaffWiki
 tags:
-  - Staff Files
+  - Staff Wikis
 security:
   - basicAuth: []
-description: You must be Admin+ if you did not created the file, else Staff+
+description: You must be Staff+.
 parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 responses:
-  204:
+  200:
     description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/staffWiki.yaml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"
   404:

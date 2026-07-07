@@ -1,0 +1,30 @@
+type: object
+required:
+  - id
+  - staff_wiki_id
+  - updater_id
+  - claimant_id
+  - title
+  - body
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  staff_wiki_id:
+    type: integer
+  updater_id:
+    type: integer
+  claimant_id:
+    type: integer
+    nullable: true
+  title:
+    type: string
+  body:
+    type: string
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

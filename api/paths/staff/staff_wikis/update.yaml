@@ -1,10 +1,10 @@
-summary: Edit Staff File
-operationId: editStaffFile
+summary: Edit Staff Wiki
+operationId: editStaffWiki
 tags:
-  - Staff Files
+  - Staff Wikis
 security:
   - basicAuth: []
-description: You must be Admin+ if you did not create the file, else Staff+
+description: You must be Staff+
 parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 requestBody:
@@ -13,10 +13,13 @@ requestBody:
       schema:
         type: object
         properties:
-          staff_file[title]:
+          staff_wiki[title]:
             type: string
-          staff_file[description]:
+          staff_wiki[body]:
             type: string
+          # allowed by code but errors
+          #staff_wiki[edit_reason]:
+          #  type: string
 responses:
   204:
     description: Success
