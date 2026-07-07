@@ -1,0 +1,26 @@
+summary: Edit Staff File
+operationId: editStaffFile
+tags:
+  - Staff Files
+security:
+  - basicAuth: []
+description: You must be Admin+ if you did not created the file, else Staff+
+requestBody:
+  content:
+    multipart/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          staff_file[title]:
+            type: string
+          staff_file[description]:
+            type: string
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../../components/responses/expectedError.yaml"

@@ -1,0 +1,33 @@
+summary: Create Staff File
+operationId: createStaffFile
+tags:
+  - Staff Files
+security:
+  - basicAuth: []
+description: You must be Staff+
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - staff_file[file]
+        properties:
+          staff_file[file]:
+            type: string
+            format: binary
+          staff_file[title]:
+            type: string
+          staff_file[description]:
+            type: string
+responses:
+  201:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/staffFile.yaml"
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  422:
+    $ref: "../../../components/responses/expectedError.yaml"

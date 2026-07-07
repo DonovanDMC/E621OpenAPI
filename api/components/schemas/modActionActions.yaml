@@ -11,10 +11,10 @@ enum:
   - avoid_posting_delete
   - avoid_posting_undelete
   - avoid_posting_destroy
-  - staff_note_create
-  - staff_note_update
-  - staff_note_delete
-  - staff_note_undelete
+  - staff_note_create # Staff+
+  - staff_note_update # Staff+
+  - staff_note_delete # Staff+
+  - staff_note_undelete # Staff+
   - blip_destroy
   - blip_delete
   - blip_undelete
@@ -41,8 +41,8 @@ enum:
   - help_create
   - help_delete
   - help_update
-  - ip_ban_create
-  - ip_ban_delete
+  - ip_ban_create # Staff+
+  - ip_ban_delete # Staff+
   - search_trend_blacklist_create
   - search_trend_blacklist_update
   - search_trend_blacklist_delete
@@ -50,6 +50,9 @@ enum:
   - mascot_create
   - mascot_update
   - mascot_delete
+  - staff_file_create # Staff+
+  - staff_file_update # Staff+
+  - staff_file_delete # Staff+
   - pool_delete
   - report_reason_create
   - report_reason_delete
@@ -102,8 +105,8 @@ enum:
   - nuke_tag
   - takedown_delete
   - takedown_process
-  - post_version_hide
-  - post_version_unhide
+  - post_version_hide # Staff+
+  - post_version_unhide # Staff+
   # legacy
   - created_positive_record
   - created_neutral_record

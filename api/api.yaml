@@ -256,6 +256,8 @@ components:
       $ref: "./components/schemas/users/levels.yaml"
     UserLevelsNames:
       $ref: "./components/schemas/users/levelNames.yaml"
+    StaffFile:
+      $ref: "./components/schemas/staffFile.yaml"
 
   responses:
     NotFound:
@@ -1136,3 +1138,16 @@ paths:
       $ref: "./paths/moderator/post/disapprovals/index.yaml"
     post:
       $ref: "./paths/moderator/post/disapprovals/create.yaml"
+
+  /staff/staff_files.json:
+    get:
+      $ref: "./paths/staff/staff_files/index.yaml"
+    post:
+      $ref: "./paths/staff/staff_files/create.yaml"
+  /staff/staff_files/{id}.json:
+    get:
+      $ref: "./paths/staff/staff_files/show.yaml"
+    patch:
+      $ref: "./paths/staff/staff_files/update.yaml"
+    delete:
+      $ref: "./paths/staff/staff_files/destroy.yaml"

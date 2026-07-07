@@ -1,0 +1,39 @@
+type: object
+required:
+  - id
+  - creator_id
+  - storage_id
+  - md5
+  - file_ext
+  - file_size
+  - original_filename
+  - title
+  - description
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  storage_id:
+    type: string
+  md5:
+    type: string
+  file_ext:
+    type: string
+  file_size:
+    type: integer
+  original_filename:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+    nullable: true
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

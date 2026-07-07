@@ -1,0 +1,47 @@
+summary: Search Staff Files
+operationId: searchStaffFiles
+tags:
+  - Staff Files
+security:
+  - basicAuth: []
+description: You must be Staff+.
+parameters:
+  - $ref: "../../components/parameters/query/limit.yaml"
+  - $ref: "../../components/parameters/query/page.yaml"
+  - $ref: "../../components/parameters/query/id.yaml"
+  - name: search[order]
+    in: query
+    schema:
+      type: string
+      enum:
+        - id_asc
+        - id_desc
+        - original_filename
+        - time
+  - name: search[creator_id]
+    in: query
+    schema:
+      type: integer
+  - name: search[creator_name]
+    in: query
+    schema:
+      type: string
+  - name: search[original_filename]
+    in: query
+    schema:
+      type: string
+  - name: search[file_ext]
+    in: query
+    schema:
+      type: string
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/staffFile.yaml"
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
