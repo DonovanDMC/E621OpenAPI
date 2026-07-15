@@ -17,9 +17,7 @@ properties:
   post_count:
     type: integer
   related_tags:
-    type: array
-    items:
-      type: string
+    type: string
   related_tags_updated_at:
     type: string
     nullable: true
