@@ -12,9 +12,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 12b2374
+  version: b0bfb7b
   x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
-  x-e621ng-master-behind-by: 116
+  x-e621ng-master-behind-by: 117
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
 servers:
   - url: 'https://e621.net'
@@ -3138,9 +3138,7 @@ components:
         post_count:
           type: integer
         related_tags:
-          type: array
-          items:
-            type: string
+          type: string
         related_tags_updated_at:
           type: string
           nullable: true
@@ -3965,9 +3963,7 @@ components:
             post_count:
               type: integer
             related_tags:
-              type: array
-              items:
-                type: string
+              type: string
             related_tags_updated_at:
               type: string
               nullable: true
@@ -35250,9 +35246,7 @@ paths:
                     post_count:
                       type: integer
                     related_tags:
-                      type: array
-                      items:
-                        type: string
+                      type: string
                     related_tags_updated_at:
                       type: string
                       nullable: true
@@ -35315,9 +35309,7 @@ paths:
                   post_count:
                     type: integer
                   related_tags:
-                    type: array
-                    items:
-                      type: string
+                    type: string
                   related_tags_updated_at:
                     type: string
                     nullable: true
@@ -35573,9 +35565,7 @@ paths:
                       post_count:
                         type: integer
                       related_tags:
-                        type: array
-                        items:
-                          type: string
+                        type: string
                       related_tags_updated_at:
                         type: string
                         nullable: true
