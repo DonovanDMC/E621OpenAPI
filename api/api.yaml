@@ -989,12 +989,6 @@ paths:
   /users/{idOrName}/disable_uploads.json:
     post:
       $ref: "./paths/users/disable_uploads.yaml"
-  /users/{user_id}/dmails.json:
-    get:
-      $ref: "./paths/users/dmails/index.yaml"
-  /users/{user_id}/dmails/{id}.json:
-    get:
-      $ref: "./paths/users/dmails/show.yaml"
   /maintenance/user/count_fixes.json:
     post:
       $ref: "./paths/maintenance/user/count_fixes/create.yaml"
@@ -1058,126 +1052,133 @@ paths:
     get:
       $ref: "./paths/wiki_page_versions/show.yaml"
 
-  /admin/users/alt_list.json:
+  /staff/users/alt_list.json:
     get:
-      $ref: "./paths/admin/users/alt_list.yaml"
-  /admin/users/{id}.json:
+      $ref: "./paths/staff/users/alt_list.yaml"
+  /staff/users/{id}.json:
     patch:
-      $ref: "./paths/admin/users/update.yaml"
-  /admin/users/{id}/anonymize.json:
+      $ref: "./paths/staff/users/update.yaml"
+  /staff/users/{id}/anonymize.json:
     post:
-      $ref: "./paths/admin/users/confirm_anonymize.yaml"
+      $ref: "./paths/staff/users/confirm_anonymize.yaml"
 
-  /admin/automod_dmails.json:
+  /staff/users/{user_id}/dmails.json:
     get:
-      $ref: "./paths/admin/automod_dmails/index.yaml"
-  /admin/automod_dmails/{id}.json:
+      $ref: "./paths/staff/dmails/index.yaml"
+  /staff/users/{user_id}/dmails/{id}.json:
     get:
-      $ref: "./paths/admin/automod_dmails/show.yaml"
-  /admin/automod_dmails/{id}/mark_as_read.json:
+      $ref: "./paths/staff/dmails/show.yaml"
+
+  /staff/automod_dmails.json:
+    get:
+      $ref: "./paths/staff/automod_dmails/index.yaml"
+  /staff/automod_dmails/{id}.json:
+    get:
+      $ref: "./paths/staff/automod_dmails/show.yaml"
+  /staff/automod_dmails/{id}/mark_as_read.json:
     put:
-      $ref: "./paths/admin/automod_dmails/mark_as_read.yaml"
-  /admin/automod_dmails/{id}/mark_as_unread.json:
+      $ref: "./paths/staff/automod_dmails/mark_as_read.yaml"
+  /staff/automod_dmails/{id}/mark_as_unread.json:
     put:
-      $ref: "./paths/admin/automod_dmails/mark_as_unread.yaml"
+      $ref: "./paths/staff/automod_dmails/mark_as_unread.yaml"
 
-  /admin/exceptions.json:
+  /staff/exceptions.json:
     get:
-      $ref: "./paths/admin/exceptions/index.yaml"
-  /admin/exceptions/{id}.json:
+      $ref: "./paths/staff/exceptions/index.yaml"
+  /staff/exceptions/{id}.json:
     get:
-      $ref: "./paths/admin/exceptions/show.yaml"
+      $ref: "./paths/staff/exceptions/show.yaml"
 
-  /moderator/post/posts/{id}/delete.json:
+  /staff/post/posts/{id}/delete.json:
     post:
-      $ref: "./paths/moderator/post/posts/delete.yaml"
-  /moderator/post/posts/{id}/undelete.json:
+      $ref: "./paths/staff/post/posts/delete.yaml"
+  /staff/post/posts/{id}/undelete.json:
     post:
-      $ref: "./paths/moderator/post/posts/undelete.yaml"
-  /moderator/post/posts/{id}/regenerate_thumbnails.json:
+      $ref: "./paths/staff/post/posts/undelete.yaml"
+  /staff/post/posts/{id}/regenerate_thumbnails.json:
     post:
-      $ref: "./paths/moderator/post/posts/regenerate_thumbnails.yaml"
-  /moderator/post/posts/{id}/regenerate_videos.json:
+      $ref: "./paths/staff/post/posts/regenerate_thumbnails.yaml"
+  /staff/post/posts/{id}/regenerate_videos.json:
     post:
-      $ref: "./paths/moderator/post/posts/regenerate_videos.yaml"
-  /moderator/post/posts/{id}/expunge.json:
+      $ref: "./paths/staff/post/posts/regenerate_videos.yaml"
+  /staff/post/posts/{id}/expunge.json:
     post:
-      $ref: "./paths/moderator/post/posts/expunge.yaml"
-  /moderator/post/posts/{id}/move_favorites.json:
+      $ref: "./paths/staff/post/posts/expunge.yaml"
+  /staff/post/posts/{id}/move_favorites.json:
     post:
-      $ref: "./paths/moderator/post/posts/move_favorites.yaml"
-  /moderator/post/posts/{id}/ai_check.json:
+      $ref: "./paths/staff/post/posts/move_favorites.yaml"
+  /staff/post/posts/{id}/ai_check.json:
     get:
-      $ref: "./paths/moderator/post/posts/ai_check.yaml"
-  /moderator/post/posts/{id}/previous_owners.json:
+      $ref: "./paths/staff/post/posts/ai_check.yaml"
+  /staff/post/posts/{id}/previous_owners.json:
     get:
-      $ref: "./paths/moderator/post/posts/previous_owners.yaml"
-  /moderator/post/posts/{id}/reowner.json:
+      $ref: "./paths/staff/post/posts/previous_owners.yaml"
+  /staff/post/posts/{id}/reowner.json:
     post:
-      $ref: "./paths/moderator/post/posts/reowner.yaml"
-  /moderator/post/approval.json:
+      $ref: "./paths/staff/post/posts/reowner.yaml"
+  /staff/post/approval.json:
     post:
-      $ref: "./paths/moderator/post/approvals/create.yaml"
+      $ref: "./paths/staff/post/approvals/create.yaml"
     delete:
-      $ref: "./paths/moderator/post/approvals/destroy.yaml"
+      $ref: "./paths/staff/post/approvals/destroy.yaml"
 
-  /moderator/user_cleanups/{id}/clear_avatar.json:
+  /staff/user_cleanups/{id}/clear_avatar.json:
     post:
-      $ref: "./paths/moderator/user_cleanups/clear_avatar.yaml"
-  /moderator/user_cleanups/{id}/clear_profile.json:
+      $ref: "./paths/staff/user_cleanups/clear_avatar.yaml"
+  /staff/user_cleanups/{id}/clear_profile.json:
     post:
-      $ref: "./paths/moderator/user_cleanups/clear_profile.yaml"
-  /moderator/user_cleanups/{id}/hide_comments.json:
+      $ref: "./paths/staff/user_cleanups/clear_profile.yaml"
+  /staff/user_cleanups/{id}/hide_comments.json:
     post:
-      $ref: "./paths/moderator/user_cleanups/hide_comments.yaml"
-  /moderator/user_cleanups/{id}/hide_forum_posts.json:
+      $ref: "./paths/staff/user_cleanups/hide_comments.yaml"
+  /staff/user_cleanups/{id}/hide_forum_posts.json:
     post:
-      $ref: "./paths/moderator/user_cleanups/hide_forum_posts.yaml"
-  /moderator/user_cleanups/{id}/hide_blips.json:
+      $ref: "./paths/staff/user_cleanups/hide_forum_posts.yaml"
+  /staff/user_cleanups/{id}/hide_blips.json:
     post:
-      $ref: "./paths/moderator/user_cleanups/hide_blips.yaml"
+      $ref: "./paths/staff/user_cleanups/hide_blips.yaml"
 
-  /moderator/post/disapprovals.json:
+  /staff/post/disapprovals.json:
     get:
-      $ref: "./paths/moderator/post/disapprovals/index.yaml"
+      $ref: "./paths/staff/post/disapprovals/index.yaml"
     post:
-      $ref: "./paths/moderator/post/disapprovals/create.yaml"
+      $ref: "./paths/staff/post/disapprovals/create.yaml"
 
   /staff/files.json:
     get:
-      $ref: "./paths/staff/staff_files/index.yaml"
+      $ref: "./paths/staff/files/index.yaml"
     post:
-      $ref: "./paths/staff/staff_files/create.yaml"
+      $ref: "./paths/staff/files/create.yaml"
   /staff/files/{id}.json:
     get:
-      $ref: "./paths/staff/staff_files/show.yaml"
+      $ref: "./paths/staff/files/show.yaml"
     patch:
-      $ref: "./paths/staff/staff_files/update.yaml"
+      $ref: "./paths/staff/files/update.yaml"
     delete:
-      $ref: "./paths/staff/staff_files/destroy.yaml"
+      $ref: "./paths/staff/files/destroy.yaml"
 
   /staff/wikis.json:
     get:
-      $ref: "./paths/staff/staff_wikis/index.yaml"
+      $ref: "./paths/staff/wikis/index.yaml"
     post:
-      $ref: "./paths/staff/staff_wikis/create.yaml"
+      $ref: "./paths/staff/wikis/create.yaml"
   /staff/wikis/{id}.json:
     get:
-      $ref: "./paths/staff/staff_wikis/show.yaml"
+      $ref: "./paths/staff/wikis/show.yaml"
     patch:
-      $ref: "./paths/staff/staff_wikis/update.yaml"
+      $ref: "./paths/staff/wikis/update.yaml"
     delete:
-      $ref: "./paths/staff/staff_wikis/destroy.yaml"
+      $ref: "./paths/staff/wikis/destroy.yaml"
   /staff/wikis/{id}/claim.json:
     post:
-      $ref: "./paths/staff/staff_wikis/claim.yaml"
+      $ref: "./paths/staff/wikis/claim.yaml"
   /staff/wikis/{id}/unclaim.json:
     post:
-      $ref: "./paths/staff/staff_wikis/unclaim.yaml"
+      $ref: "./paths/staff/wikis/unclaim.yaml"
 
   /staff/wiki_versions.json:
     get:
-      $ref: "./paths/staff/staff_wiki_versions/index.yaml"
+      $ref: "./paths/staff/wiki_versions/index.yaml"
   /staff/wiki_versions/{id}.json:
     get:
-      $ref: "./paths/staff/staff_wiki_versions/show.yaml"
+      $ref: "./paths/staff/wiki_versions/show.yaml"
