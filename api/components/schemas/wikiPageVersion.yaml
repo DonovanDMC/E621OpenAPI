@@ -43,3 +43,7 @@ properties:
   parent:
     type: string
     nullable: true
+  featured_posts:
+    type: array
+    items:
+      type: integer

@@ -31,6 +31,9 @@ requestBody:
           skip_secondary_validations:
             type: boolean
             description: Must be Staff+ to use.
+          featured_posts_string:
+            type: string
+            description: Space separated
 responses:
   201:
     description: Success

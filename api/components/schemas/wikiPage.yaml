@@ -45,3 +45,7 @@ properties:
     type: string
   category_id:
     $ref: "./tagCategories.yaml"
+  featured_posts:
+    type: array
+    items:
+      type: integer

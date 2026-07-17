@@ -41,6 +41,9 @@ requestBody:
           category_is_locked:
             type: boolean
             description: Must be Admin+ to use.
+          featured_posts_string:
+            type: string
+            description: Space separated
 responses:
   204:
     description: Success
