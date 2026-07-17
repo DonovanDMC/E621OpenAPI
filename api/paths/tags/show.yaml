@@ -3,7 +3,14 @@ operationId: getTag
 tags:
   - Tags
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+  - name: id
+    in: path
+    required: true
+    schema:
+      oneOf:
+        - type: integer
+        - type: string
+    description: An ID that can be either an integer or a name.
 responses:
   200:
     description: Success
