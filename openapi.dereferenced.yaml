@@ -12,10 +12,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: b0bfb7b
-  x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
-  x-e621ng-master-behind-by: 117
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
+  version: 390a4a7
+  x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -199,6 +199,9 @@ components:
         - mascot_create
         - mascot_update
         - mascot_delete
+        - staff_file_create
+        - staff_file_update
+        - staff_file_delete
         - pool_delete
         - report_reason_create
         - report_reason_delete
@@ -221,6 +224,10 @@ components:
         - upload_whitelist_update
         - upload_whitelist_delete
         - user_avatar_clear
+        - user_profile_clear
+        - user_comments_hide
+        - user_forum_posts_hide
+        - user_blips_delete
         - user_blacklist_changed
         - user_text_change
         - user_custom_title_change
@@ -290,6 +297,7 @@ components:
         - expunged
         - changed_bg_color
         - replacement_penalty_changed
+        - owner_changed
     Ratings:
       type: string
       enum:
@@ -490,7 +498,7 @@ components:
           type: integer
         staff_notes:
           type: string
-          description: Only visible to Janitor+
+          description: Only visible to Staff+
         details:
           type: string
         is_active:
@@ -521,7 +529,7 @@ components:
           type: string
         staff_notes:
           type: string
-          description: Only visible to Janitor+
+          description: Only visible to Staff+
         is_active:
           type: boolean
         updated_at:
@@ -762,6 +770,16 @@ components:
               type: string
             level:
               type: integer
+              enum:
+                - 0
+                - 10
+                - 20
+                - 30
+                - 40
+                - 50
+                - 60
+                - 70
+                - 80
             base_upload_limit:
               type: integer
             post_upload_count:
@@ -778,6 +796,16 @@ components:
               type: boolean
             level_string:
               type: string
+              enum:
+                - Anonymous
+                - Blocked
+                - Member
+                - Privileged
+                - Former Staff
+                - Staff
+                - Janitor
+                - Moderator
+                - Admin
             avatar_id:
               type: integer
               nullable: true
@@ -785,6 +813,10 @@ components:
               type: boolean
             has_cropped_avatar:
               type: boolean
+            last_logged_in_at:
+              type: string
+              format: date-time
+              description: Only visible to Admin+.
         - type: object
           required:
             - blacklist_users
@@ -869,8 +901,10 @@ components:
               type: string
             last_logged_in_at:
               type: string
+              format: date-time
             last_forum_read_at:
               type: string
+              format: date-time
             recent_tags:
               type: string
             comment_threshold:
@@ -1274,6 +1308,16 @@ components:
                   type: string
                 level:
                   type: integer
+                  enum:
+                    - 0
+                    - 10
+                    - 20
+                    - 30
+                    - 40
+                    - 50
+                    - 60
+                    - 70
+                    - 80
                 base_upload_limit:
                   type: integer
                 post_upload_count:
@@ -1290,6 +1334,16 @@ components:
                   type: boolean
                 level_string:
                   type: string
+                  enum:
+                    - Anonymous
+                    - Blocked
+                    - Member
+                    - Privileged
+                    - Former Staff
+                    - Staff
+                    - Janitor
+                    - Moderator
+                    - Admin
                 avatar_id:
                   type: integer
                   nullable: true
@@ -1297,6 +1351,10 @@ components:
                   type: boolean
                 has_cropped_avatar:
                   type: boolean
+                last_logged_in_at:
+                  type: string
+                  format: date-time
+                  description: Only visible to Admin+.
             - type: object
               required:
                 - blacklist_users
@@ -1381,8 +1439,10 @@ components:
                   type: string
                 last_logged_in_at:
                   type: string
+                  format: date-time
                 last_forum_read_at:
                   type: string
+                  format: date-time
                 recent_tags:
                   type: string
                 comment_threshold:
@@ -1449,6 +1509,16 @@ components:
                   type: string
                 level:
                   type: integer
+                  enum:
+                    - 0
+                    - 10
+                    - 20
+                    - 30
+                    - 40
+                    - 50
+                    - 60
+                    - 70
+                    - 80
                 base_upload_limit:
                   type: integer
                 post_upload_count:
@@ -1465,6 +1535,16 @@ components:
                   type: boolean
                 level_string:
                   type: string
+                  enum:
+                    - Anonymous
+                    - Blocked
+                    - Member
+                    - Privileged
+                    - Former Staff
+                    - Staff
+                    - Janitor
+                    - Moderator
+                    - Admin
                 avatar_id:
                   type: integer
                   nullable: true
@@ -1472,6 +1552,10 @@ components:
                   type: boolean
                 has_cropped_avatar:
                   type: boolean
+                last_logged_in_at:
+                  type: string
+                  format: date-time
+                  description: Only visible to Admin+.
             - type: object
               required:
                 - wiki_page_version_count
@@ -1542,6 +1626,16 @@ components:
               type: string
             level:
               type: integer
+              enum:
+                - 0
+                - 10
+                - 20
+                - 30
+                - 40
+                - 50
+                - 60
+                - 70
+                - 80
             base_upload_limit:
               type: integer
             post_upload_count:
@@ -1558,6 +1652,16 @@ components:
               type: boolean
             level_string:
               type: string
+              enum:
+                - Anonymous
+                - Blocked
+                - Member
+                - Privileged
+                - Former Staff
+                - Staff
+                - Janitor
+                - Moderator
+                - Admin
             avatar_id:
               type: integer
               nullable: true
@@ -1565,6 +1669,10 @@ components:
               type: boolean
             has_cropped_avatar:
               type: boolean
+            last_logged_in_at:
+              type: string
+              format: date-time
+              description: Only visible to Admin+.
         - type: object
           required:
             - wiki_page_version_count
@@ -1657,6 +1765,202 @@ components:
           type: string
           format: date-time
     IqdbPost:
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - up_score
+        - down_score
+        - score
+        - source
+        - md5
+        - rating
+        - is_note_locked
+        - is_rating_locked
+        - is_status_locked
+        - is_pending
+        - is_flagged
+        - is_deleted
+        - uploader_id
+        - approver_id
+        - last_noted_at
+        - last_comment_bumped_at
+        - fav_count
+        - tag_string
+        - tag_count
+        - tag_count_general
+        - tag_count_artist
+        - tag_count_character
+        - tag_count_copyright
+        - file_ext
+        - file_size
+        - image_width
+        - image_height
+        - parent_id
+        - has_children
+        - last_commented_at
+        - has_active_children
+        - bit_flags
+        - tag_count_meta
+        - locked_tags
+        - tag_count_species
+        - tag_count_invalid
+        - description
+        - comment_count
+        - change_seq
+        - tag_count_lore
+        - bg_color
+        - generated_samples
+        - duration
+        - is_comment_disabled
+        - is_comment_locked
+        - has_large
+        - has_visible_children
+        - children_ids
+        - pool_ids
+        - is_favorited
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        up_score:
+          type: integer
+        down_score:
+          type: integer
+        score:
+          type: integer
+        source:
+          type: string
+        md5:
+          type: string
+        rating:
+          type: string
+          enum:
+            - s
+            - q
+            - e
+        is_note_locked:
+          type: boolean
+        is_rating_locked:
+          type: boolean
+        is_status_locked:
+          type: boolean
+        is_pending:
+          type: boolean
+        is_flagged:
+          type: boolean
+        is_deleted:
+          type: boolean
+        uploader_id:
+          type: integer
+        approver_id:
+          type: integer
+        last_noted_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_comment_bumped_at:
+          type: string
+          format: date-time
+          nullable: true
+        fav_count:
+          type: integer
+        tag_string:
+          type: string
+        tag_count:
+          type: integer
+        tag_count_general:
+          type: integer
+        tag_count_artist:
+          type: integer
+        tag_count_character:
+          type: integer
+        tag_count_copyright:
+          type: integer
+        file_ext:
+          type: string
+        file_size:
+          type: integer
+          format: int64
+        image_width:
+          type: integer
+        image_height:
+          type: integer
+        parent_id:
+          type: integer
+          nullable: true
+        has_children:
+          type: boolean
+        last_commented_at:
+          type: string
+          format: date-time
+          nullable: true
+        has_active_children:
+          type: boolean
+        bit_flags:
+          type: integer
+        tag_count_meta:
+          type: integer
+        locked_tags:
+          type: string
+          nullable: true
+        tag_count_species:
+          type: integer
+        tag_count_invalid:
+          type: integer
+        description:
+          type: string
+        comment_count:
+          type: integer
+        change_seq:
+          type: integer
+        tag_count_lore:
+          type: integer
+        bg_color:
+          type: string
+          nullable: true
+        generated_samples:
+          type: array
+          nullable: true
+          items:
+            type: string
+            enum:
+              - 720p
+              - 480p
+              - original
+        duration:
+          type: string
+          nullable: true
+        is_comment_disabled:
+          type: boolean
+        is_comment_locked:
+          type: boolean
+        has_large:
+          type: boolean
+        has_visible_children:
+          type: boolean
+        children_ids:
+          type: string
+          nullable: true
+        pool_ids:
+          type: array
+          items:
+            type: integer
+        is_favorited:
+          type: boolean
+        file_url:
+          type: string
+        large_file_url:
+          type: string
+        preview_file_url:
+          type: string
+    RawPost:
       type: object
       required:
         - id
@@ -2191,6 +2495,9 @@ components:
             - mascot_create
             - mascot_update
             - mascot_delete
+            - staff_file_create
+            - staff_file_update
+            - staff_file_delete
             - pool_delete
             - report_reason_create
             - report_reason_delete
@@ -2213,6 +2520,10 @@ components:
             - upload_whitelist_update
             - upload_whitelist_delete
             - user_avatar_clear
+            - user_profile_clear
+            - user_comments_hide
+            - user_forum_posts_hide
+            - user_blips_delete
             - user_blacklist_changed
             - user_text_change
             - user_custom_title_change
@@ -2804,6 +3115,7 @@ components:
             - expunged
             - changed_bg_color
             - replacement_penalty_changed
+            - owner_changed
         created_at:
           type: string
           format: date-time
@@ -3599,6 +3911,16 @@ components:
           type: string
         level:
           type: integer
+          enum:
+            - 0
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+            - 60
+            - 70
+            - 80
         base_upload_limit:
           type: integer
         post_upload_count:
@@ -3615,6 +3937,16 @@ components:
           type: boolean
         level_string:
           type: string
+          enum:
+            - Anonymous
+            - Blocked
+            - Member
+            - Privileged
+            - Former Staff
+            - Staff
+            - Janitor
+            - Moderator
+            - Admin
         avatar_id:
           type: integer
           nullable: true
@@ -3622,6 +3954,10 @@ components:
           type: boolean
         has_cropped_avatar:
           type: boolean
+        last_logged_in_at:
+          type: string
+          format: date-time
+          description: Only visible to Admin+.
     UserFeedback:
       type: object
       required:
@@ -3751,6 +4087,10 @@ components:
             - 6
             - 7
             - 8
+        featured_posts:
+          type: array
+          items:
+            type: integer
     WikiPageVersion:
       type: object
       required:
@@ -3797,6 +4137,10 @@ components:
         parent:
           type: string
           nullable: true
+        featured_posts:
+          type: array
+          items:
+            type: integer
     ApiKey:
       type: object
       required:
@@ -4173,6 +4517,16 @@ components:
           type: string
         level_string:
           type: string
+          enum:
+            - Anonymous
+            - Blocked
+            - Member
+            - Privileged
+            - Former Staff
+            - Staff
+            - Janitor
+            - Moderator
+            - Admin
         favorite_count:
           type: integer
     ThumbnailPost:
@@ -5409,6 +5763,7 @@ components:
         - file_size
         - updated_at
         - url
+        - checksum
       properties:
         name:
           type: string
@@ -5433,6 +5788,9 @@ components:
         url:
           type: string
           format: uri
+        checksum:
+          type: string
+          description: SHA-256
     DBExportNames:
       type: string
       enum:
@@ -5446,6 +5804,396 @@ components:
         - tag_implications
         - tags
         - wiki_pages
+    UserLevels:
+      type: integer
+      enum:
+        - 0
+        - 10
+        - 20
+        - 30
+        - 40
+        - 50
+        - 60
+        - 70
+        - 80
+    UserLevelsNames:
+      type: string
+      enum:
+        - Anonymous
+        - Blocked
+        - Member
+        - Privileged
+        - Former Staff
+        - Staff
+        - Janitor
+        - Moderator
+        - Admin
+    StaffFile:
+      type: object
+      required:
+        - id
+        - creator_id
+        - storage_id
+        - md5
+        - file_ext
+        - file_size
+        - original_filename
+        - title
+        - description
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        creator_id:
+          type: integer
+        storage_id:
+          type: string
+        md5:
+          type: string
+        file_ext:
+          type: string
+        file_size:
+          type: integer
+        original_filename:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StaffWiki:
+      type: object
+      required:
+        - id
+        - creator_id
+        - updater_id
+        - claimant_id
+        - title
+        - body
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        creator_id:
+          type: integer
+        updater_id:
+          type: integer
+        claimant_id:
+          type: integer
+          nullable: true
+        title:
+          type: string
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    StaffWikiVersion:
+      type: object
+      required:
+        - id
+        - staff_wiki_id
+        - updater_id
+        - claimant_id
+        - title
+        - body
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        staff_wiki_id:
+          type: integer
+        updater_id:
+          type: integer
+        claimant_id:
+          type: integer
+          nullable: true
+        title:
+          type: string
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    VoteTrend:
+      oneOf:
+        - type: object
+          required:
+            - id
+            - name
+            - post_count
+            - related_tags
+            - related_tags_updated_at
+            - category
+            - is_locked
+            - created_at
+            - updated_at
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            post_count:
+              type: integer
+            related_tags:
+              type: string
+            related_tags_updated_at:
+              type: string
+              nullable: true
+              format: date-time
+            category:
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+                - 7
+                - 8
+            is_locked:
+              type: boolean
+            created_at:
+              type: string
+              format: date-time
+            updated_at:
+              type: string
+              format: date-time
+        - type: object
+          required:
+            - name
+            - post_count
+            - uploader_id
+            - uploader
+          properties:
+            name:
+              type: string
+            post_count:
+              type: integer
+            uploader_id:
+              type: integer
+              nullable: true
+              enum:
+                - null
+            uploader:
+              type: object
+              nullable: true
+              enum:
+                - null
+        - type: object
+          required:
+            - name
+            - post_count
+            - uploader_id
+            - uploader
+          properties:
+            name:
+              type: string
+            post_count:
+              type: integer
+            uploader_id:
+              type: integer
+            uploader:
+              type: object
+              required:
+                - id
+                - created_at
+                - name
+                - level
+                - base_upload_limit
+                - post_upload_count
+                - post_update_count
+                - note_update_count
+                - is_banned
+                - can_approve_posts
+                - can_upload_free
+                - level_string
+                - avatar_id
+                - has_cropped_avatar
+              properties:
+                id:
+                  type: integer
+                created_at:
+                  type: string
+                  format: date-time
+                name:
+                  type: string
+                level:
+                  type: integer
+                  enum:
+                    - 0
+                    - 10
+                    - 20
+                    - 30
+                    - 40
+                    - 50
+                    - 60
+                    - 70
+                    - 80
+                base_upload_limit:
+                  type: integer
+                post_upload_count:
+                  type: integer
+                post_update_count:
+                  type: integer
+                note_update_count:
+                  type: integer
+                is_banned:
+                  type: boolean
+                can_approve_posts:
+                  type: boolean
+                can_upload_free:
+                  type: boolean
+                level_string:
+                  type: string
+                  enum:
+                    - Anonymous
+                    - Blocked
+                    - Member
+                    - Privileged
+                    - Former Staff
+                    - Staff
+                    - Janitor
+                    - Moderator
+                    - Admin
+                avatar_id:
+                  type: integer
+                  nullable: true
+                is_verified:
+                  type: boolean
+                has_cropped_avatar:
+                  type: boolean
+                last_logged_in_at:
+                  type: string
+                  format: date-time
+                  description: Only visible to Admin+.
+    VoteTrendMetatag:
+      type: object
+      required:
+        - name
+        - post_count
+        - uploader_id
+        - uploader
+      properties:
+        name:
+          type: string
+        post_count:
+          type: integer
+        uploader_id:
+          type: integer
+          nullable: true
+          enum:
+            - null
+        uploader:
+          type: object
+          nullable: true
+          enum:
+            - null
+    VoteTrendUploader:
+      type: object
+      required:
+        - name
+        - post_count
+        - uploader_id
+        - uploader
+      properties:
+        name:
+          type: string
+        post_count:
+          type: integer
+        uploader_id:
+          type: integer
+        uploader:
+          type: object
+          required:
+            - id
+            - created_at
+            - name
+            - level
+            - base_upload_limit
+            - post_upload_count
+            - post_update_count
+            - note_update_count
+            - is_banned
+            - can_approve_posts
+            - can_upload_free
+            - level_string
+            - avatar_id
+            - has_cropped_avatar
+          properties:
+            id:
+              type: integer
+            created_at:
+              type: string
+              format: date-time
+            name:
+              type: string
+            level:
+              type: integer
+              enum:
+                - 0
+                - 10
+                - 20
+                - 30
+                - 40
+                - 50
+                - 60
+                - 70
+                - 80
+            base_upload_limit:
+              type: integer
+            post_upload_count:
+              type: integer
+            post_update_count:
+              type: integer
+            note_update_count:
+              type: integer
+            is_banned:
+              type: boolean
+            can_approve_posts:
+              type: boolean
+            can_upload_free:
+              type: boolean
+            level_string:
+              type: string
+              enum:
+                - Anonymous
+                - Blocked
+                - Member
+                - Privileged
+                - Former Staff
+                - Staff
+                - Janitor
+                - Moderator
+                - Admin
+            avatar_id:
+              type: integer
+              nullable: true
+            is_verified:
+              type: boolean
+            has_cropped_avatar:
+              type: boolean
+            last_logged_in_at:
+              type: string
+              format: date-time
+              description: Only visible to Admin+.
   responses:
     NotFound:
       description: Not Found
@@ -5562,6 +6310,16 @@ components:
                         type: string
                       level:
                         type: integer
+                        enum:
+                          - 0
+                          - 10
+                          - 20
+                          - 30
+                          - 40
+                          - 50
+                          - 60
+                          - 70
+                          - 80
                       base_upload_limit:
                         type: integer
                       post_upload_count:
@@ -5578,6 +6336,16 @@ components:
                         type: boolean
                       level_string:
                         type: string
+                        enum:
+                          - Anonymous
+                          - Blocked
+                          - Member
+                          - Privileged
+                          - Former Staff
+                          - Staff
+                          - Janitor
+                          - Moderator
+                          - Admin
                       avatar_id:
                         type: integer
                         nullable: true
@@ -5585,6 +6353,10 @@ components:
                         type: boolean
                       has_cropped_avatar:
                         type: boolean
+                      last_logged_in_at:
+                        type: string
+                        format: date-time
+                        description: Only visible to Admin+.
                   - type: object
                     required:
                       - wiki_page_version_count
@@ -5655,6 +6427,16 @@ components:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -5671,6 +6453,16 @@ components:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -5678,6 +6470,10 @@ components:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - blacklist_users
@@ -5762,8 +6558,10 @@ components:
                             type: string
                           last_logged_in_at:
                             type: string
+                            format: date-time
                           last_forum_read_at:
                             type: string
+                            format: date-time
                           recent_tags:
                             type: string
                           comment_threshold:
@@ -5830,6 +6628,16 @@ components:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -5846,6 +6654,16 @@ components:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -5853,6 +6671,10 @@ components:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - wiki_page_version_count
@@ -8858,73 +9680,6 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/appeals/{id}/update.json':
-    post:
-      summary: Update Appeal
-      operationId: updateAppeal
-      tags:
-        - Appeals
-      description: You must be Janitor+.
-      security:
-        - basicAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: The ID of the item.
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  enum:
-                    - partial
-                    - approved
-                response:
-                  type: string
-                send_update_dmail:
-                  type: boolean
-                  description: An update dmail will always be sent when the status is changed.
-      responses:
-        '204':
-          description: Success
-        '403':
-          description: Access Denied
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - Access Denied
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - not found
   /artists.json:
     get:
       summary: Search Artists
@@ -9134,10 +9889,10 @@ paths:
                 linked_user_id:
                   type: integer
                   nullable: true
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_locked:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
       responses:
         '201':
           description: Success
@@ -9356,7 +10111,7 @@ paths:
       security:
         - basicAuth: []
       description: |
-        If an artist is locked, you must be Janitor+ to edit them.
+        If an artist is locked, you must be Staff+ to edit them.
         `other_names` & `urls` are silently truncated to 25 entries.
         `notes` is silently truncated to the wiki page limit (250,000).
         Individual `other_names` are silently truncated to 100 characters.
@@ -9378,7 +10133,7 @@ paths:
               properties:
                 name:
                   type: string
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 other_names:
                   type: array
                   items:
@@ -9394,10 +10149,10 @@ paths:
                 linked_user_id:
                   type: integer
                   nullable: true
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_locked:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
       responses:
         '204':
           description: Success
@@ -9512,7 +10267,7 @@ paths:
       security:
         - basicAuth: []
       description: |
-        If an artist is locked, you must be Janitor+ to revert them.
+        If an artist is locked, you must be Staff+ to revert them.
       parameters:
         - name: idOrName
           in: path
@@ -9945,7 +10700,7 @@ paths:
             type: string
         - name: 'search[staff_notes]'
           in: query
-          description: The staff notes on the avoid posting entry. Must be Janitor+ to use.
+          description: The staff notes on the avoid posting entry. Must be Staff+ to use.
           schema:
             type: string
         - name: 'search[is_active]'
@@ -9982,7 +10737,7 @@ paths:
                       type: integer
                     staff_notes:
                       type: string
-                      description: Only visible to Janitor+
+                      description: Only visible to Staff+
                     details:
                       type: string
                     is_active:
@@ -10060,7 +10815,7 @@ paths:
                     type: integer
                   staff_notes:
                     type: string
-                    description: Only visible to Janitor+
+                    description: Only visible to Staff+
                   details:
                     type: string
                   is_active:
@@ -10146,7 +10901,7 @@ paths:
                     type: integer
                   staff_notes:
                     type: string
-                    description: Only visible to Janitor+
+                    description: Only visible to Staff+
                   details:
                     type: string
                   is_active:
@@ -10536,7 +11291,7 @@ paths:
                       type: string
                     staff_notes:
                       type: string
-                      description: Only visible to Janitor+
+                      description: Only visible to Staff+
                     is_active:
                       type: boolean
                     updated_at:
@@ -11994,7 +12749,7 @@ paths:
             type: boolean
         - in: query
           name: 'search[is_hidden]'
-          description: Only usable by Moderator+
+          description: Only usable by Staff+
           schema:
             type: boolean
         - in: query
@@ -12096,7 +12851,7 @@ paths:
                   type: boolean
                 is_sticky:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
@@ -12208,7 +12963,7 @@ paths:
       operationId: getComment
       tags:
         - Comments
-      description: 'If the comment is hidden, you must be the creator or Janitor+ to see it.'
+      description: 'If the comment is hidden, you must be the creator or Staff+ to see it.'
       parameters:
         - name: id
           in: path
@@ -12343,7 +13098,7 @@ paths:
                   type: string
                 is_sticky:
                   type: boolean
-                  description: Only usable for Janitor+
+                  description: Only usable for Staff+
                 is_hidden:
                   type: boolean
                   description: Only usable for Moderator+
@@ -13237,6 +13992,7 @@ paths:
                     - file_size
                     - updated_at
                     - url
+                    - checksum
                   properties:
                     name:
                       type: string
@@ -13261,6 +14017,9 @@ paths:
                     url:
                       type: string
                       format: uri
+                    checksum:
+                      type: string
+                      description: SHA-256
   /health:
     get:
       summary: Get health
@@ -16239,6 +16998,103 @@ paths:
                     enum:
                       - not found
   '/forum_posts/{id}/votes.json':
+    get:
+      summary: List Forum Post Votes
+      operationId: listForumPostVotes
+      tags:
+        - Forum Post Votes
+      security:
+        - basicAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - forum_post_id
+                    - creator_id
+                    - score
+                    - created_at
+                    - updated_at
+                    - creator_name
+                  properties:
+                    id:
+                      type: integer
+                    forum_post_id:
+                      type: integer
+                    creator_id:
+                      type: integer
+                    score:
+                      type: integer
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    creator_name:
+                      type: string
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
     post:
       summary: Create Forum Post Vote
       operationId: createForumPostVote
@@ -17411,9 +18267,6 @@ paths:
       operationId: listHelpPages
       tags:
         - Help Pages
-      security:
-        - basicAuth: []
-      description: You must be Admin+.
       responses:
         '200':
           description: Success
@@ -19405,6 +20258,9 @@ paths:
               - mascot_create
               - mascot_update
               - mascot_delete
+              - staff_file_create
+              - staff_file_update
+              - staff_file_delete
               - pool_delete
               - report_reason_create
               - report_reason_delete
@@ -19427,6 +20283,10 @@ paths:
               - upload_whitelist_update
               - upload_whitelist_delete
               - user_avatar_clear
+              - user_profile_clear
+              - user_comments_hide
+              - user_forum_posts_hide
+              - user_blips_delete
               - user_blacklist_changed
               - user_text_change
               - user_custom_title_change
@@ -19549,6 +20409,9 @@ paths:
                         - mascot_create
                         - mascot_update
                         - mascot_delete
+                        - staff_file_create
+                        - staff_file_update
+                        - staff_file_delete
                         - pool_delete
                         - report_reason_create
                         - report_reason_delete
@@ -19571,6 +20434,10 @@ paths:
                         - upload_whitelist_update
                         - upload_whitelist_delete
                         - user_avatar_clear
+                        - user_profile_clear
+                        - user_comments_hide
+                        - user_forum_posts_hide
+                        - user_blips_delete
                         - user_blacklist_changed
                         - user_text_change
                         - user_custom_title_change
@@ -19704,6 +20571,9 @@ paths:
                       - mascot_create
                       - mascot_update
                       - mascot_delete
+                      - staff_file_create
+                      - staff_file_update
+                      - staff_file_delete
                       - pool_delete
                       - report_reason_create
                       - report_reason_delete
@@ -19726,6 +20596,10 @@ paths:
                       - upload_whitelist_update
                       - upload_whitelist_delete
                       - user_avatar_clear
+                      - user_profile_clear
+                      - user_comments_hide
+                      - user_forum_posts_hide
+                      - user_blips_delete
                       - user_blacklist_changed
                       - user_text_change
                       - user_custom_title_change
@@ -21113,7 +21987,7 @@ paths:
       operationId: deletePool
       tags:
         - Pools
-      description: You must be Janitor+.
+      description: You must be Staff+.
       security:
         - basicAuth: []
       parameters:
@@ -26936,10 +27810,10 @@ paths:
                   description: You must be Privileged+.
                 is_note_locked:
                   type: boolean
-                  description: You must be Janitor+.
+                  description: You must be Staff+.
                 bg_color:
                   type: string
-                  description: You must be Janitor+.
+                  description: You must be Staff+.
                 is_comment_locked:
                   type: boolean
                   description: You must be Moderator+.
@@ -31622,6 +32496,16 @@ paths:
                       type: string
                     level_string:
                       type: string
+                      enum:
+                        - Anonymous
+                        - Blocked
+                        - Member
+                        - Privileged
+                        - Former Staff
+                        - Staff
+                        - Janitor
+                        - Moderator
+                        - Admin
                     favorite_count:
                       type: integer
         '403':
@@ -33236,6 +34120,7 @@ paths:
               - expunged
               - changed_bg_color
               - replacement_penalty_changed
+              - owner_changed
       responses:
         '200':
           description: Success
@@ -33292,6 +34177,7 @@ paths:
                                 - expunged
                                 - changed_bg_color
                                 - replacement_penalty_changed
+                                - owner_changed
                             created_at:
                               type: string
                               format: date-time
@@ -33339,6 +34225,7 @@ paths:
                             - expunged
                             - changed_bg_color
                             - replacement_penalty_changed
+                            - owner_changed
                         created_at:
                           type: string
                           format: date-time
@@ -33923,7 +34810,7 @@ paths:
                   type: string
                 'post_replacement[as_pending]':
                   type: boolean
-                  description: You must be Janitor+.
+                  description: You must be Approver
       responses:
         '200':
           description: Success
@@ -35280,10 +36167,12 @@ paths:
       parameters:
         - name: id
           in: path
-          description: The ID of the item.
           required: true
           schema:
-            type: integer
+            oneOf:
+              - type: integer
+              - type: string
+          description: An ID that can be either an integer or a name.
       responses:
         '200':
           description: Success
@@ -35613,7 +36502,7 @@ paths:
         - Tags
       security:
         - basicAuth: []
-      description: You must be Janitor+. `commit=Fix` must be set.
+      description: You must be Staff+. `commit=Fix` must be set.
       parameters:
         - name: id
           in: path
@@ -38769,7 +39658,7 @@ paths:
       operationId: searchTickets
       tags:
         - Tickets
-      description: You must be Janitor+ to see tickets you did not create.
+      description: You must be Staff+ to see tickets you did not create.
       parameters:
         - name: limit
           in: query
@@ -38794,37 +39683,37 @@ paths:
               - type: string
         - in: query
           name: 'search[creator_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[creator_id]'
-          description: You must be Janitor+ unless providing your own id.
+          description: You must be Staff+ unless providing your own id.
           schema:
             type: integer
         - in: query
           name: 'search[claimant_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[claimant_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
           name: 'search[accused_name]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
           name: 'search[accused_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
           name: 'search[disp_id]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: integer
         - in: query
@@ -38844,7 +39733,7 @@ paths:
               - replacement
         - in: query
           name: 'search[reason]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
         - in: query
@@ -38952,7 +39841,7 @@ paths:
         - Tickets
       security:
         - basicAuth: []
-      description: You must be Janitor+ to see tickets you did not create.
+      description: You must be Staff+ to see tickets you did not create.
       parameters:
         - name: id
           in: path
@@ -39662,7 +40551,7 @@ paths:
       operationId: getUpload
       tags:
         - Uploads
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: id
           in: path
@@ -40270,14 +41159,44 @@ paths:
           name: 'search[level]'
           schema:
             type: integer
+            enum:
+              - 0
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
+              - 60
+              - 70
+              - 80
         - in: query
           name: 'search[min_level]'
           schema:
             type: integer
+            enum:
+              - 0
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
+              - 60
+              - 70
+              - 80
         - in: query
           name: 'search[max_level]'
           schema:
             type: integer
+            enum:
+              - 0
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
+              - 60
+              - 70
+              - 80
         - in: query
           name: 'search[can_upload_free]'
           schema:
@@ -40326,6 +41245,16 @@ paths:
                           type: string
                         level:
                           type: integer
+                          enum:
+                            - 0
+                            - 10
+                            - 20
+                            - 30
+                            - 40
+                            - 50
+                            - 60
+                            - 70
+                            - 80
                         base_upload_limit:
                           type: integer
                         post_upload_count:
@@ -40342,6 +41271,16 @@ paths:
                           type: boolean
                         level_string:
                           type: string
+                          enum:
+                            - Anonymous
+                            - Blocked
+                            - Member
+                            - Privileged
+                            - Former Staff
+                            - Staff
+                            - Janitor
+                            - Moderator
+                            - Admin
                         avatar_id:
                           type: integer
                           nullable: true
@@ -40349,6 +41288,10 @@ paths:
                           type: boolean
                         has_cropped_avatar:
                           type: boolean
+                        last_logged_in_at:
+                          type: string
+                          format: date-time
+                          description: Only visible to Admin+.
                     - allOf:
                         - allOf:
                             - type: object
@@ -40377,6 +41320,16 @@ paths:
                                   type: string
                                 level:
                                   type: integer
+                                  enum:
+                                    - 0
+                                    - 10
+                                    - 20
+                                    - 30
+                                    - 40
+                                    - 50
+                                    - 60
+                                    - 70
+                                    - 80
                                 base_upload_limit:
                                   type: integer
                                 post_upload_count:
@@ -40393,6 +41346,16 @@ paths:
                                   type: boolean
                                 level_string:
                                   type: string
+                                  enum:
+                                    - Anonymous
+                                    - Blocked
+                                    - Member
+                                    - Privileged
+                                    - Former Staff
+                                    - Staff
+                                    - Janitor
+                                    - Moderator
+                                    - Admin
                                 avatar_id:
                                   type: integer
                                   nullable: true
@@ -40400,6 +41363,10 @@ paths:
                                   type: boolean
                                 has_cropped_avatar:
                                   type: boolean
+                                last_logged_in_at:
+                                  type: string
+                                  format: date-time
+                                  description: Only visible to Admin+.
                             - type: object
                               required:
                                 - blacklist_users
@@ -40484,8 +41451,10 @@ paths:
                                   type: string
                                 last_logged_in_at:
                                   type: string
+                                  format: date-time
                                 last_forum_read_at:
                                   type: string
+                                  format: date-time
                                 recent_tags:
                                   type: string
                                 comment_threshold:
@@ -40552,6 +41521,16 @@ paths:
                                   type: string
                                 level:
                                   type: integer
+                                  enum:
+                                    - 0
+                                    - 10
+                                    - 20
+                                    - 30
+                                    - 40
+                                    - 50
+                                    - 60
+                                    - 70
+                                    - 80
                                 base_upload_limit:
                                   type: integer
                                 post_upload_count:
@@ -40568,6 +41547,16 @@ paths:
                                   type: boolean
                                 level_string:
                                   type: string
+                                  enum:
+                                    - Anonymous
+                                    - Blocked
+                                    - Member
+                                    - Privileged
+                                    - Former Staff
+                                    - Staff
+                                    - Janitor
+                                    - Moderator
+                                    - Admin
                                 avatar_id:
                                   type: integer
                                   nullable: true
@@ -40575,6 +41564,10 @@ paths:
                                   type: boolean
                                 has_cropped_avatar:
                                   type: boolean
+                                last_logged_in_at:
+                                  type: string
+                                  format: date-time
+                                  description: Only visible to Admin+.
                             - type: object
                               required:
                                 - wiki_page_version_count
@@ -40660,6 +41653,16 @@ paths:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -40676,6 +41679,16 @@ paths:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -40683,6 +41696,10 @@ paths:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - blacklist_users
@@ -40767,8 +41784,10 @@ paths:
                             type: string
                           last_logged_in_at:
                             type: string
+                            format: date-time
                           last_forum_read_at:
                             type: string
+                            format: date-time
                           recent_tags:
                             type: string
                           comment_threshold:
@@ -40835,6 +41854,16 @@ paths:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -40851,6 +41880,16 @@ paths:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -40858,6 +41897,10 @@ paths:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - wiki_page_version_count
@@ -40997,6 +42040,16 @@ paths:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -41013,6 +42066,16 @@ paths:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -41020,6 +42083,10 @@ paths:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - wiki_page_version_count
@@ -41090,6 +42157,16 @@ paths:
                                 type: string
                               level:
                                 type: integer
+                                enum:
+                                  - 0
+                                  - 10
+                                  - 20
+                                  - 30
+                                  - 40
+                                  - 50
+                                  - 60
+                                  - 70
+                                  - 80
                               base_upload_limit:
                                 type: integer
                               post_upload_count:
@@ -41106,6 +42183,16 @@ paths:
                                 type: boolean
                               level_string:
                                 type: string
+                                enum:
+                                  - Anonymous
+                                  - Blocked
+                                  - Member
+                                  - Privileged
+                                  - Former Staff
+                                  - Staff
+                                  - Janitor
+                                  - Moderator
+                                  - Admin
                               avatar_id:
                                 type: integer
                                 nullable: true
@@ -41113,6 +42200,10 @@ paths:
                                 type: boolean
                               has_cropped_avatar:
                                 type: boolean
+                              last_logged_in_at:
+                                type: string
+                                format: date-time
+                                description: Only visible to Admin+.
                           - type: object
                             required:
                               - blacklist_users
@@ -41197,8 +42288,10 @@ paths:
                                 type: string
                               last_logged_in_at:
                                 type: string
+                                format: date-time
                               last_forum_read_at:
                                 type: string
+                                format: date-time
                               recent_tags:
                                 type: string
                               comment_threshold:
@@ -41265,6 +42358,16 @@ paths:
                                 type: string
                               level:
                                 type: integer
+                                enum:
+                                  - 0
+                                  - 10
+                                  - 20
+                                  - 30
+                                  - 40
+                                  - 50
+                                  - 60
+                                  - 70
+                                  - 80
                               base_upload_limit:
                                 type: integer
                               post_upload_count:
@@ -41281,6 +42384,16 @@ paths:
                                 type: boolean
                               level_string:
                                 type: string
+                                enum:
+                                  - Anonymous
+                                  - Blocked
+                                  - Member
+                                  - Privileged
+                                  - Former Staff
+                                  - Staff
+                                  - Janitor
+                                  - Moderator
+                                  - Admin
                               avatar_id:
                                 type: integer
                                 nullable: true
@@ -41288,6 +42401,10 @@ paths:
                                 type: boolean
                               has_cropped_avatar:
                                 type: boolean
+                              last_logged_in_at:
+                                type: string
+                                format: date-time
+                                description: Only visible to Admin+.
                           - type: object
                             required:
                               - wiki_page_version_count
@@ -41518,6 +42635,16 @@ paths:
                             type: string
                           level:
                             type: integer
+                            enum:
+                              - 0
+                              - 10
+                              - 20
+                              - 30
+                              - 40
+                              - 50
+                              - 60
+                              - 70
+                              - 80
                           base_upload_limit:
                             type: integer
                           post_upload_count:
@@ -41534,6 +42661,16 @@ paths:
                             type: boolean
                           level_string:
                             type: string
+                            enum:
+                              - Anonymous
+                              - Blocked
+                              - Member
+                              - Privileged
+                              - Former Staff
+                              - Staff
+                              - Janitor
+                              - Moderator
+                              - Admin
                           avatar_id:
                             type: integer
                             nullable: true
@@ -41541,6 +42678,10 @@ paths:
                             type: boolean
                           has_cropped_avatar:
                             type: boolean
+                          last_logged_in_at:
+                            type: string
+                            format: date-time
+                            description: Only visible to Admin+.
                       - type: object
                         required:
                           - wiki_page_version_count
@@ -41611,6 +42752,16 @@ paths:
                                 type: string
                               level:
                                 type: integer
+                                enum:
+                                  - 0
+                                  - 10
+                                  - 20
+                                  - 30
+                                  - 40
+                                  - 50
+                                  - 60
+                                  - 70
+                                  - 80
                               base_upload_limit:
                                 type: integer
                               post_upload_count:
@@ -41627,6 +42778,16 @@ paths:
                                 type: boolean
                               level_string:
                                 type: string
+                                enum:
+                                  - Anonymous
+                                  - Blocked
+                                  - Member
+                                  - Privileged
+                                  - Former Staff
+                                  - Staff
+                                  - Janitor
+                                  - Moderator
+                                  - Admin
                               avatar_id:
                                 type: integer
                                 nullable: true
@@ -41634,6 +42795,10 @@ paths:
                                 type: boolean
                               has_cropped_avatar:
                                 type: boolean
+                              last_logged_in_at:
+                                type: string
+                                format: date-time
+                                description: Only visible to Admin+.
                           - type: object
                             required:
                               - blacklist_users
@@ -41718,8 +42883,10 @@ paths:
                                 type: string
                               last_logged_in_at:
                                 type: string
+                                format: date-time
                               last_forum_read_at:
                                 type: string
+                                format: date-time
                               recent_tags:
                                 type: string
                               comment_threshold:
@@ -41786,6 +42953,16 @@ paths:
                                 type: string
                               level:
                                 type: integer
+                                enum:
+                                  - 0
+                                  - 10
+                                  - 20
+                                  - 30
+                                  - 40
+                                  - 50
+                                  - 60
+                                  - 70
+                                  - 80
                               base_upload_limit:
                                 type: integer
                               post_upload_count:
@@ -41802,6 +42979,16 @@ paths:
                                 type: boolean
                               level_string:
                                 type: string
+                                enum:
+                                  - Anonymous
+                                  - Blocked
+                                  - Member
+                                  - Privileged
+                                  - Former Staff
+                                  - Staff
+                                  - Janitor
+                                  - Moderator
+                                  - Admin
                               avatar_id:
                                 type: integer
                                 nullable: true
@@ -41809,6 +42996,10 @@ paths:
                                 type: boolean
                               has_cropped_avatar:
                                 type: boolean
+                              last_logged_in_at:
+                                type: string
+                                format: date-time
+                                description: Only visible to Admin+.
                           - type: object
                             required:
                               - wiki_page_version_count
@@ -42093,218 +43284,6 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/users/{user_id}/dmails.json':
-    get:
-      summary: Audit User DMails
-      operationId: auditUserDMails
-      tags:
-        - DMails
-      security:
-        - basicAuth: []
-      description: Must have the bd auditor user flag.
-      parameters:
-        - name: limit
-          in: query
-          description: The maximum number of results to return. Between 0 and 320.
-          schema:
-            type: integer
-            minimum: 0
-            maximum: 320
-        - name: page
-          in: query
-          description: The page number of results to get. Between 1 and 750.
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 750
-        - name: user_id
-          in: path
-          required: true
-          description: The ID of the user.
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - id
-                    - owner_id
-                    - from_id
-                    - to_id
-                    - title
-                    - body
-                    - is_read
-                    - is_deleted
-                    - created_at
-                    - updated_at
-                    - to_name
-                    - from_name
-                  properties:
-                    id:
-                      type: integer
-                    owner_id:
-                      type: integer
-                    from_id:
-                      type: integer
-                    to_id:
-                      type: integer
-                    title:
-                      type: string
-                    body:
-                      type: string
-                    is_read:
-                      type: boolean
-                    is_deleted:
-                      type: boolean
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    to_name:
-                      type: string
-                    from_name:
-                      type: string
-        '403':
-          description: Access Denied
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - Access Denied
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - not found
-  '/users/{user_id}/dmails/{id}.json':
-    get:
-      summary: Audit User DMail
-      operationId: auditUserDMail
-      tags:
-        - DMails
-      security:
-        - basicAuth: []
-      description: Must have the bd auditor user flag.
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          description: The ID of the user.
-          schema:
-            type: integer
-        - name: id
-          in: path
-          description: The ID of the item.
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - id
-                  - owner_id
-                  - from_id
-                  - to_id
-                  - title
-                  - body
-                  - is_read
-                  - is_deleted
-                  - created_at
-                  - updated_at
-                  - to_name
-                  - from_name
-                properties:
-                  id:
-                    type: integer
-                  owner_id:
-                    type: integer
-                  from_id:
-                    type: integer
-                  to_id:
-                    type: integer
-                  title:
-                    type: string
-                  body:
-                    type: string
-                  is_read:
-                    type: boolean
-                  is_deleted:
-                    type: boolean
-                  created_at:
-                    type: string
-                    format: date-time
-                  updated_at:
-                    type: string
-                    format: date-time
-                  to_name:
-                    type: string
-                  from_name:
-                    type: string
-        '403':
-          description: Access Denied
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - Access Denied
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - success
-                  - reason
-                properties:
-                  success:
-                    type: boolean
-                  reason:
-                    type: string
-                    enum:
-                      - not found
   /maintenance/user/count_fixes.json:
     post:
       summary: Fix User Counts
@@ -42462,7 +43441,7 @@ paths:
               - id_desc
         - in: query
           name: 'search[deleted]'
-          description: You must be Janitor+.
+          description: You must be Staff+.
           schema:
             type: string
             enum:
@@ -42651,7 +43630,7 @@ paths:
       operationId: getUserFeedback
       tags:
         - User Feedbacks
-      description: You must be Janitor+ if the feedback is deleted.
+      description: You must be Staff+ if the feedback is deleted.
       parameters:
         - name: id
           in: path
@@ -43380,6 +44359,10 @@ paths:
                         - 6
                         - 7
                         - 8
+                    featured_posts:
+                      type: array
+                      items:
+                        type: integer
     post:
       summary: Create Wiki Page
       operationId: createWikiPage
@@ -43407,13 +44390,16 @@ paths:
                   description: Must be Privileged+ to use.
                 is_locked:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_deleted:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 skip_secondary_validations:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
+                featured_posts_string:
+                  type: string
+                  description: Space separated
       responses:
         '201':
           description: Success
@@ -43477,6 +44463,10 @@ paths:
                       - 6
                       - 7
                       - 8
+                  featured_posts:
+                    type: array
+                    items:
+                      type: integer
         '403':
           description: Access Denied
           content:
@@ -43588,6 +44578,10 @@ paths:
                       - 6
                       - 7
                       - 8
+                  featured_posts:
+                    type: array
+                    items:
+                      type: integer
         '404':
           description: Not Found
           content:
@@ -43611,7 +44605,7 @@ paths:
         - Wiki Pages
       security:
         - basicAuth: []
-      description: You must be Janitor+ if the wiki page is locked.
+      description: You must be Staff+ if the wiki page is locked.
       parameters:
         - name: id
           in: path
@@ -43634,16 +44628,16 @@ paths:
                   description: Must be Privileged+ to use.
                 title:
                   type: string
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_locked:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 is_deleted:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 skip_secondary_validations:
                   type: boolean
-                  description: Must be Janitor+ to use.
+                  description: Must be Staff+ to use.
                 category_id:
                   type: integer
                   enum:
@@ -43659,6 +44653,9 @@ paths:
                 category_is_locked:
                   type: boolean
                   description: Must be Admin+ to use.
+                featured_posts_string:
+                  type: string
+                  description: Space separated
       responses:
         '204':
           description: Success
@@ -43956,6 +44953,10 @@ paths:
                     parent:
                       type: string
                       nullable: true
+                    featured_posts:
+                      type: array
+                      items:
+                        type: integer
   '/wiki_page_versions/{id}.json':
     get:
       summary: Get Wiki Page Version
@@ -44020,6 +45021,10 @@ paths:
                   parent:
                     type: string
                     nullable: true
+                  featured_posts:
+                    type: array
+                    items:
+                      type: integer
         '404':
           description: Not Found
           content:
@@ -44036,7 +45041,7 @@ paths:
                     type: string
                     enum:
                       - not found
-  /admin/users/alt_list.json:
+  /staff/users/alt_list.json:
     get:
       summary: Get Alt List
       operationId: getAltList
@@ -44068,7 +45073,14 @@ paths:
                       items:
                         type: integer
                         description: ID of suspected alt.
-  '/admin/users/{id}.json':
+                example:
+                  - - - 1
+                      - - 2
+                        - 3
+                    - - 4
+                      - - 5
+                        - 6
+  '/staff/users/{id}.json':
     patch:
       summary: Admin Edit User
       operationId: adminEditUser
@@ -44095,6 +45107,16 @@ paths:
                   description: Must have the bd staff user flag to use.
                 level:
                   type: integer
+                  enum:
+                    - 0
+                    - 10
+                    - 20
+                    - 30
+                    - 40
+                    - 50
+                    - 60
+                    - 70
+                    - 80
                   description: Must have the bd staff user flag to promote to Admin+.
                 name:
                   type: string
@@ -44188,7 +45210,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/admin/users/{id}/anonymize.json':
+  '/staff/users/{id}/anonymize.json':
     post:
       summary: Admin Anonymize User
       operationId: adminAnonymizeUser
@@ -44225,25 +45247,85 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/admin/users/{id}/clear_avatar.json':
-    post:
-      summary: Admin Clear User Avatar
-      operationId: adminClearUserAvatar
+  '/staff/users/{user_id}/dmails.json':
+    get:
+      summary: Audit User DMails
+      operationId: auditUserDMails
       tags:
-        - Admin Users
+        - DMails
       security:
         - basicAuth: []
-      description: You must be Admin+.
+      description: Must have the bd auditor user flag.
       parameters:
-        - name: id
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: page
+          in: query
+          description: The page number of results to get. Between 1 and 750.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 750
+        - name: user_id
           in: path
-          description: The ID of the item.
           required: true
+          description: The ID of the user.
           schema:
             type: integer
       responses:
-        '302':
+        '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - owner_id
+                    - from_id
+                    - to_id
+                    - title
+                    - body
+                    - is_read
+                    - is_deleted
+                    - created_at
+                    - updated_at
+                    - to_name
+                    - from_name
+                  properties:
+                    id:
+                      type: integer
+                    owner_id:
+                      type: integer
+                    from_id:
+                      type: integer
+                    to_id:
+                      type: integer
+                    title:
+                      type: string
+                    body:
+                      type: string
+                    is_read:
+                      type: boolean
+                    is_deleted:
+                      type: boolean
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    to_name:
+                      type: string
+                    from_name:
+                      type: string
         '403':
           description: Access Denied
           content:
@@ -44276,7 +45358,108 @@ paths:
                     type: string
                     enum:
                       - not found
-  /admin/automod_dmails.json:
+  '/staff/users/{user_id}/dmails/{id}.json':
+    get:
+      summary: Audit User DMail
+      operationId: auditUserDMail
+      tags:
+        - DMails
+      security:
+        - basicAuth: []
+      description: Must have the bd auditor user flag.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the user.
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - owner_id
+                  - from_id
+                  - to_id
+                  - title
+                  - body
+                  - is_read
+                  - is_deleted
+                  - created_at
+                  - updated_at
+                  - to_name
+                  - from_name
+                properties:
+                  id:
+                    type: integer
+                  owner_id:
+                    type: integer
+                  from_id:
+                    type: integer
+                  to_id:
+                    type: integer
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  is_read:
+                    type: boolean
+                  is_deleted:
+                    type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  to_name:
+                    type: string
+                  from_name:
+                    type: string
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  /staff/automod_dmails.json:
     get:
       summary: Get Automod DMails
       operationId: getAutomodDMails
@@ -44284,7 +45467,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: limit
           in: query
@@ -44392,7 +45575,7 @@ paths:
                       type: string
                     from_name:
                       type: string
-  '/admin/automod_dmails/{id}.json':
+  '/staff/automod_dmails/{id}.json':
     get:
       summary: Get Automod DMail
       operationId: getAutomodDMail
@@ -44400,7 +45583,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: id
           in: path
@@ -44487,7 +45670,7 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/admin/automod_dmails/{id}/mark_as_read.json':
+  '/staff/automod_dmails/{id}/mark_as_read.json':
     put:
       summary: Mark Automod DMail As Read
       operationId: markAutomodDMailAsRead
@@ -44495,7 +45678,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: id
           in: path
@@ -44538,7 +45721,7 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/admin/automod_dmails/{id}/mark_as_unread.json':
+  '/staff/automod_dmails/{id}/mark_as_unread.json':
     put:
       summary: Mark Automod DMail As Unread
       operationId: markAutomodDMailAsUnread
@@ -44546,7 +45729,7 @@ paths:
         - DMails
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: id
           in: path
@@ -44589,7 +45772,7 @@ paths:
                     type: string
                     enum:
                       - not found
-  /admin/exceptions.json:
+  /staff/exceptions.json:
     get:
       summary: Get Exception Logs
       operationId: getExceptionLogs
@@ -44597,7 +45780,7 @@ paths:
         - Exception Logs
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: limit
           in: query
@@ -44692,7 +45875,7 @@ paths:
                       format: uuid
                     user_id:
                       type: integer
-  '/admin/exceptions/{id}.json':
+  '/staff/exceptions/{id}.json':
     get:
       summary: Get Exception Log
       operationId: getExceptionLog
@@ -44700,7 +45883,7 @@ paths:
         - Exception Logs
       security:
         - basicAuth: []
-      description: You must be Janitor+.
+      description: You must be Staff+.
       parameters:
         - name: id
           in: path
@@ -44750,7 +45933,7 @@ paths:
                     format: uuid
                   user_id:
                     type: integer
-  '/moderator/post/posts/{id}/delete.json':
+  '/staff/post/posts/{id}/delete.json':
     post:
       summary: Delete Post
       operationId: deletePost
@@ -44863,7 +46046,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/moderator/post/posts/{id}/undelete.json':
+  '/staff/post/posts/{id}/undelete.json':
     post:
       summary: Undelete Post
       operationId: undeletePost
@@ -45170,7 +46353,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/moderator/post/posts/{id}/regenerate_thumbnails.json':
+  '/staff/post/posts/{id}/regenerate_thumbnails.json':
     post:
       summary: Regenerate Post Thumbnails
       operationId: regeneratePostThumbnails
@@ -45477,7 +46660,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/moderator/post/posts/{id}/regenerate_videos.json':
+  '/staff/post/posts/{id}/regenerate_videos.json':
     post:
       summary: Regenerate Post Videos
       operationId: regeneratePostVideos
@@ -45545,7 +46728,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/moderator/post/posts/{id}/expunge.json':
+  '/staff/post/posts/{id}/expunge.json':
     post:
       summary: Expunge Post
       operationId: expungePost
@@ -45860,7 +47043,7 @@ paths:
                     type: array
                     items:
                       type: string
-  '/moderator/post/posts/{id}/move_favorites.json':
+  '/staff/post/posts/{id}/move_favorites.json':
     post:
       summary: Move Post Favorites
       operationId: movePostFavorites
@@ -45924,7 +47107,7 @@ paths:
                     type: string
                     enum:
                       - not found
-  '/moderator/post/posts/{id}/ai_check.json':
+  '/staff/post/posts/{id}/ai_check.json':
     get:
       summary: AI Check Post
       operationId: aiCheckPost
@@ -45992,7 +47175,343 @@ paths:
                     type: array
                     items:
                       type: string
-  /moderator/post/approval.json:
+  '/staff/post/posts/{id}/previous_owners.json':
+    get:
+      summary: Get Post Previous Owners
+      operationId: getPostPreviousOwners
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      description: You must be an Approver
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - name
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/post/posts/{id}/reowner.json':
+    post:
+      summary: Reown Post
+      operationId: reownPost
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      description: You must have be Janitor+ and an Approver
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'reowner[new_owner]'
+              properties:
+                'reowner[new_owner]':
+                  type: string
+                  description: |
+                    Must be a string
+                    Name: `name`
+                    ID: `!1234`
+                'reowner[reowner_versions]':
+                  type: boolean
+                  description: 'Also reown post versions, must be BD Staff to set to true. (default false)'
+                'reowner[post_events]':
+                  type: boolean
+                  description: 'Also reown post events, must be BD Staff to set to false. (default true)'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - created_at
+                  - updated_at
+                  - up_score
+                  - down_score
+                  - score
+                  - source
+                  - md5
+                  - rating
+                  - is_note_locked
+                  - is_rating_locked
+                  - is_status_locked
+                  - is_pending
+                  - is_flagged
+                  - is_deleted
+                  - uploader_id
+                  - approver_id
+                  - last_noted_at
+                  - last_comment_bumped_at
+                  - fav_count
+                  - tag_string
+                  - tag_count
+                  - tag_count_general
+                  - tag_count_artist
+                  - tag_count_character
+                  - tag_count_copyright
+                  - file_ext
+                  - file_size
+                  - image_width
+                  - image_height
+                  - parent_id
+                  - has_children
+                  - last_commented_at
+                  - has_active_children
+                  - bit_flags
+                  - tag_count_meta
+                  - locked_tags
+                  - tag_count_species
+                  - tag_count_invalid
+                  - description
+                  - comment_count
+                  - change_seq
+                  - tag_count_lore
+                  - bg_color
+                  - generated_samples
+                  - duration
+                  - is_comment_disabled
+                  - is_comment_locked
+                  - has_large
+                  - has_visible_children
+                  - children_ids
+                  - pool_ids
+                  - is_favorited
+                properties:
+                  id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  up_score:
+                    type: integer
+                  down_score:
+                    type: integer
+                  score:
+                    type: integer
+                  source:
+                    type: string
+                  md5:
+                    type: string
+                  rating:
+                    type: string
+                    enum:
+                      - s
+                      - q
+                      - e
+                  is_note_locked:
+                    type: boolean
+                  is_rating_locked:
+                    type: boolean
+                  is_status_locked:
+                    type: boolean
+                  is_pending:
+                    type: boolean
+                  is_flagged:
+                    type: boolean
+                  is_deleted:
+                    type: boolean
+                  uploader_id:
+                    type: integer
+                  approver_id:
+                    type: integer
+                  last_noted_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  last_comment_bumped_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  fav_count:
+                    type: integer
+                  tag_string:
+                    type: string
+                  tag_count:
+                    type: integer
+                  tag_count_general:
+                    type: integer
+                  tag_count_artist:
+                    type: integer
+                  tag_count_character:
+                    type: integer
+                  tag_count_copyright:
+                    type: integer
+                  file_ext:
+                    type: string
+                  file_size:
+                    type: integer
+                    format: int64
+                  image_width:
+                    type: integer
+                  image_height:
+                    type: integer
+                  parent_id:
+                    type: integer
+                    nullable: true
+                  has_children:
+                    type: boolean
+                  last_commented_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  has_active_children:
+                    type: boolean
+                  bit_flags:
+                    type: integer
+                  tag_count_meta:
+                    type: integer
+                  locked_tags:
+                    type: string
+                    nullable: true
+                  tag_count_species:
+                    type: integer
+                  tag_count_invalid:
+                    type: integer
+                  description:
+                    type: string
+                  comment_count:
+                    type: integer
+                  change_seq:
+                    type: integer
+                  tag_count_lore:
+                    type: integer
+                  bg_color:
+                    type: string
+                    nullable: true
+                  generated_samples:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      enum:
+                        - 720p
+                        - 480p
+                        - original
+                  duration:
+                    type: string
+                    nullable: true
+                  is_comment_disabled:
+                    type: boolean
+                  is_comment_locked:
+                    type: boolean
+                  has_large:
+                    type: boolean
+                  has_visible_children:
+                    type: boolean
+                  children_ids:
+                    type: string
+                    nullable: true
+                  pool_ids:
+                    type: array
+                    items:
+                      type: integer
+                  is_favorited:
+                    type: boolean
+                  file_url:
+                    type: string
+                  large_file_url:
+                    type: string
+                  preview_file_url:
+                    type: string
+        '204':
+          description: No Change
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  /staff/post/approval.json:
     post:
       summary: Approve Post
       operationId: approvePost
@@ -46110,7 +47629,262 @@ paths:
                     type: string
                     enum:
                       - not found
-  /moderator/post/disapprovals.json:
+  '/staff/user_cleanups/{id}/clear_avatar.json':
+    post:
+      summary: Clear User Avatar
+      operationId: clearUserAvatar
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/user_cleanups/{id}/clear_profile.json':
+    post:
+      summary: Clear User Profile
+      operationId: clearUserProfile
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/user_cleanups/{id}/hide_comments.json':
+    post:
+      summary: Hide User Comments
+      operationId: hideUserComments
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/user_cleanups/{id}/hide_forum_posts.json':
+    post:
+      summary: Hide User Forum Posts
+      operationId: hideUserForumPosts
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/user_cleanups/{id}/hide_blips.json':
+    post:
+      summary: Hide User Blips
+      operationId: hideUserBlips
+      tags:
+        - User Cleanups
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  /staff/post/disapprovals.json:
     get:
       summary: Search Post Disapprovals
       operationId: searchPostDisapprovals
@@ -46314,3 +48088,1442 @@ paths:
                     type: array
                     items:
                       type: string
+  /staff/files.json:
+    get:
+      summary: Search Staff Files
+      operationId: searchStaffFiles
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: page
+          in: query
+          description: The page number of results to get. Between 1 and 750.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 750
+        - name: 'search[id]'
+          in: query
+          description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - original_filename
+              - time
+        - name: 'search[creator_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[creator_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[original_filename]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[file_ext]'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - creator_id
+                    - storage_id
+                    - md5
+                    - file_ext
+                    - file_size
+                    - original_filename
+                    - title
+                    - description
+                    - created_at
+                    - updated_at
+                  properties:
+                    id:
+                      type: integer
+                    creator_id:
+                      type: integer
+                    storage_id:
+                      type: string
+                    md5:
+                      type: string
+                    file_ext:
+                      type: string
+                    file_size:
+                      type: integer
+                    original_filename:
+                      type: string
+                    title:
+                      type: string
+                    description:
+                      type: string
+                      nullable: true
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+    post:
+      summary: Create Staff File
+      operationId: createStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - 'staff_file[file]'
+              properties:
+                'staff_file[file]':
+                  type: string
+                  format: binary
+                'staff_file[title]':
+                  type: string
+                'staff_file[description]':
+                  type: string
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - storage_id
+                  - md5
+                  - file_ext
+                  - file_size
+                  - original_filename
+                  - title
+                  - description
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  storage_id:
+                    type: string
+                  md5:
+                    type: string
+                  file_ext:
+                    type: string
+                  file_size:
+                    type: integer
+                  original_filename:
+                    type: string
+                  title:
+                    type: string
+                  description:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+  '/staff/files/{id}.json':
+    get:
+      summary: Get Staff File
+      operationId: getStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - storage_id
+                  - md5
+                  - file_ext
+                  - file_size
+                  - original_filename
+                  - title
+                  - description
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  storage_id:
+                    type: string
+                  md5:
+                    type: string
+                  file_ext:
+                    type: string
+                  file_size:
+                    type: integer
+                  original_filename:
+                    type: string
+                  title:
+                    type: string
+                  description:
+                    type: string
+                    nullable: true
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+    patch:
+      summary: Edit Staff File
+      operationId: editStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: 'You must be Admin+ if you did not create the file, else Staff+'
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                'staff_file[title]':
+                  type: string
+                'staff_file[description]':
+                  type: string
+      responses:
+        '204':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+    delete:
+      summary: Delete Staff File
+      operationId: deleteStaffFile
+      tags:
+        - Staff Files
+      security:
+        - basicAuth: []
+      description: 'You must be Admin+ if you did not created the file, else Staff+'
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  /staff/wikis.json:
+    get:
+      summary: Search Staff Wikis
+      operationId: searchStaffWikis
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: page
+          in: query
+          description: The page number of results to get. Between 1 and 750.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 750
+        - name: 'search[id]'
+          in: query
+          description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - title
+        - name: 'search[creator_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[creator_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[title]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[body_matches]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[editor_id]'
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - creator_id
+                    - updater_id
+                    - claimant_id
+                    - title
+                    - body
+                    - created_at
+                    - updated_at
+                  properties:
+                    id:
+                      type: integer
+                    creator_id:
+                      type: integer
+                    updater_id:
+                      type: integer
+                    claimant_id:
+                      type: integer
+                      nullable: true
+                    title:
+                      type: string
+                    body:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+    post:
+      summary: Create Staff Wiki
+      operationId: createStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'staff_wiki[title]'
+              properties:
+                'staff_wiki[title]':
+                  type: string
+                'staff_wiki[body]':
+                  type: string
+                'staff_wiki[related_type]':
+                  type: string
+                  enum:
+                    - User
+                    - Artist
+                    - StaffWiki
+                'staff_wiki[related_id]':
+                  type: integer
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - updater_id
+                  - claimant_id
+                  - title
+                  - body
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  updater_id:
+                    type: integer
+                  claimant_id:
+                    type: integer
+                    nullable: true
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+  '/staff/wikis/{id}.json':
+    get:
+      summary: Get Staff Wiki
+      operationId: getStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - updater_id
+                  - claimant_id
+                  - title
+                  - body
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  updater_id:
+                    type: integer
+                  claimant_id:
+                    type: integer
+                    nullable: true
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+    patch:
+      summary: Edit Staff Wiki
+      operationId: editStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                'staff_wiki[title]':
+                  type: string
+                'staff_wiki[body]':
+                  type: string
+      responses:
+        '204':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+    delete:
+      summary: Delete Staff Wiki
+      operationId: deleteStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/wikis/{id}/claim.json':
+    post:
+      summary: Claim Staff Wiki
+      operationId: claimStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - updater_id
+                  - claimant_id
+                  - title
+                  - body
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  updater_id:
+                    type: integer
+                  claimant_id:
+                    type: integer
+                    nullable: true
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+  '/staff/wikis/{id}/unclaim.json':
+    post:
+      summary: Unclaim Staff Wiki
+      operationId: unclaimStaffWiki
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      description: You must be Staff+
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - creator_id
+                  - updater_id
+                  - claimant_id
+                  - title
+                  - body
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  creator_id:
+                    type: integer
+                  updater_id:
+                    type: integer
+                  claimant_id:
+                    type: integer
+                    nullable: true
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '422':
+          description: Invalid Input Data
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - errors
+                example:
+                  - errors:
+                      key:
+                        - the error
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+  /staff/wiki_versions.json:
+    get:
+      summary: Search Staff Wiki Versions
+      operationId: searchStaffWikiVersions
+      tags:
+        - Staff Wiki Versions
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: page
+          in: query
+          description: The page number of results to get. Between 1 and 750.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 750
+        - name: 'search[id]'
+          in: query
+          description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - title
+        - name: 'search[updater_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[updater_name]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[staff_wiki_id]'
+          in: query
+          schema:
+            type: integer
+        - name: 'search[title]'
+          in: query
+          schema:
+            type: string
+        - name: 'search[body]'
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - staff_wiki_id
+                    - updater_id
+                    - claimant_id
+                    - title
+                    - body
+                    - created_at
+                    - updated_at
+                  properties:
+                    id:
+                      type: integer
+                    staff_wiki_id:
+                      type: integer
+                    updater_id:
+                      type: integer
+                    claimant_id:
+                      type: integer
+                      nullable: true
+                    title:
+                      type: string
+                    body:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+  '/staff/wiki_versions/{id}.json':
+    get:
+      summary: Get Staff Wiki Version
+      operationId: getStaffWikiVersion
+      tags:
+        - Staff Wiki Versions
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - staff_wiki_id
+                  - updater_id
+                  - claimant_id
+                  - title
+                  - body
+                  - created_at
+                  - updated_at
+                properties:
+                  id:
+                    type: integer
+                  staff_wiki_id:
+                    type: integer
+                  updater_id:
+                    type: integer
+                  claimant_id:
+                    type: integer
+                    nullable: true
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  /staff/vote_trends.json:
+    get:
+      summary: Get Vote Trends
+      operationId: getVoteTrends
+      tags:
+        - Vote Trends
+      security:
+        - basicAuth: []
+      description: You must be Staff+.
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: user
+          in: query
+          required: true
+          description: The name or ID of the user. IDs must be prefixed with `!`.
+          schema:
+            oneOf:
+              - type: string
+              - type: integer
+        - name: disable_vote_normality
+          in: query
+          required: false
+          description: 'Boolean, must be `1` for true (casted to integer, checked `== 0`).'
+          schema:
+            type: integer
+        - name: threshold
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: float
+        - name: duration
+          in: query
+          required: false
+          description: days
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - oneOf:
+                        - type: object
+                          required:
+                            - id
+                            - name
+                            - post_count
+                            - related_tags
+                            - related_tags_updated_at
+                            - category
+                            - is_locked
+                            - created_at
+                            - updated_at
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            post_count:
+                              type: integer
+                            related_tags:
+                              type: string
+                            related_tags_updated_at:
+                              type: string
+                              nullable: true
+                              format: date-time
+                            category:
+                              type: integer
+                              enum:
+                                - 0
+                                - 1
+                                - 2
+                                - 3
+                                - 4
+                                - 5
+                                - 6
+                                - 7
+                                - 8
+                            is_locked:
+                              type: boolean
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                        - type: object
+                          required:
+                            - name
+                            - post_count
+                            - uploader_id
+                            - uploader
+                          properties:
+                            name:
+                              type: string
+                            post_count:
+                              type: integer
+                            uploader_id:
+                              type: integer
+                              nullable: true
+                              enum:
+                                - null
+                            uploader:
+                              type: object
+                              nullable: true
+                              enum:
+                                - null
+                        - type: object
+                          required:
+                            - name
+                            - post_count
+                            - uploader_id
+                            - uploader
+                          properties:
+                            name:
+                              type: string
+                            post_count:
+                              type: integer
+                            uploader_id:
+                              type: integer
+                            uploader:
+                              type: object
+                              required:
+                                - id
+                                - created_at
+                                - name
+                                - level
+                                - base_upload_limit
+                                - post_upload_count
+                                - post_update_count
+                                - note_update_count
+                                - is_banned
+                                - can_approve_posts
+                                - can_upload_free
+                                - level_string
+                                - avatar_id
+                                - has_cropped_avatar
+                              properties:
+                                id:
+                                  type: integer
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                name:
+                                  type: string
+                                level:
+                                  type: integer
+                                  enum:
+                                    - 0
+                                    - 10
+                                    - 20
+                                    - 30
+                                    - 40
+                                    - 50
+                                    - 60
+                                    - 70
+                                    - 80
+                                base_upload_limit:
+                                  type: integer
+                                post_upload_count:
+                                  type: integer
+                                post_update_count:
+                                  type: integer
+                                note_update_count:
+                                  type: integer
+                                is_banned:
+                                  type: boolean
+                                can_approve_posts:
+                                  type: boolean
+                                can_upload_free:
+                                  type: boolean
+                                level_string:
+                                  type: string
+                                  enum:
+                                    - Anonymous
+                                    - Blocked
+                                    - Member
+                                    - Privileged
+                                    - Former Staff
+                                    - Staff
+                                    - Janitor
+                                    - Moderator
+                                    - Admin
+                                avatar_id:
+                                  type: integer
+                                  nullable: true
+                                is_verified:
+                                  type: boolean
+                                has_cropped_avatar:
+                                  type: boolean
+                                last_logged_in_at:
+                                  type: string
+                                  format: date-time
+                                  description: Only visible to Admin+.
+                    - type: array
+                      items:
+                        type: integer
+                        format: float
+                        description: Score
+                  description: '2D array: first item VoteTrend, second item score'

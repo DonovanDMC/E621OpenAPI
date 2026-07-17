@@ -12,10 +12,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: b0bfb7b
-  x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
-  x-e621ng-master-behind-by: 117
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
+  version: 390a4a7
+  x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -10013,14 +10013,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
-  '/tags/{idOrName}.json':
+  '/tags/{id}.json':
     get:
       summary: Get Tag
       operationId: getTag
       tags:
         - Tags
       parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
+        - name: id
+          in: path
+          required: true
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          description: An ID that can be either an integer or a name.
       responses:
         '200':
           description: Success
@@ -10030,7 +10037,6 @@ paths:
                 $ref: '#/components/schemas/Tag'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/tags/{id}.json':
     patch:
       summary: Edit Tag
       operationId: editTag
