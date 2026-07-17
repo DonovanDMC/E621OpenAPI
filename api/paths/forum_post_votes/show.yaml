@@ -1,0 +1,23 @@
+summary: List Forum Post Votes
+operationId: listForumPostVotes
+tags:
+  - Forum Post Votes
+security:
+  - basicAuth: []
+parameters: # accepts no limit/page/etc, likely an oversight: https://github.com/e621ng/e621ng/blob/cd2d82f49aa1444b23505f6be8fd7e044f5589ad/app/controllers/forum_post_votes_controller.rb#L13-L16
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/forumPostVote.yaml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../components/responses/expectedError.yaml"

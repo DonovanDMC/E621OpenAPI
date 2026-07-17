@@ -520,10 +520,12 @@ paths:
       $ref: "./paths/forum_posts/warning.yaml"
 
   /forum_posts/{id}/votes.json:
+    get:
+      $ref: "./paths/forum_post_votes/show.yaml"
     post:
-      $ref: "./paths/forum_posts/votes/create.yaml"
+      $ref: "./paths/forum_post_votes/create.yaml"
     delete:
-      $ref: "./paths/forum_posts/votes/destroy.yaml"
+      $ref: "./paths/forum_post_votes/destroy.yaml"
 
   /forum_topics.json:
     get:

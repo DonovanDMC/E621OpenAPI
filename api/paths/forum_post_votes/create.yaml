@@ -5,7 +5,7 @@ tags:
 security:
   - basicAuth: []
 parameters:
-  - $ref: "../../../components/parameters/path/id.yaml"
+  - $ref: "../../components/parameters/path/id.yaml"
 requestBody:
   content:
     application/json:
@@ -15,17 +15,17 @@ requestBody:
           - score
         properties:
           score:
-            $ref: "../../../components/schemas/upDownMehVote.yaml"
+            $ref: "../../components/schemas/upDownMehVote.yaml"
 responses:
   200:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/forumPostVote.yaml"
+          $ref: "../../components/schemas/forumPostVote.yaml"
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../components/responses/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"
