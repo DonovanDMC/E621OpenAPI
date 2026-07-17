@@ -1,0 +1,51 @@
+summary: Get Vote Trends
+operationId: getVoteTrends
+tags:
+  - Vote Trends
+security:
+  - basicAuth: []
+description: You must be Admin+.
+parameters:
+  - $ref: "../../../components/parameters/query/limit.yaml"
+  - name: user
+    in: query
+    required: true
+    description: The name or ID of the user. IDs must be prefixed with `!`.
+    schema:
+      oneOf:
+        - type: string
+        - type: integer
+  - name: disable_vote_normality
+    in: query
+    required: false
+    description: Boolean, must be `1` for true (casted to integer, checked `== 0`).
+    schema:
+      type: integer
+  - name: threshold
+    in: query
+    required: false
+    schema:
+      type: integer
+      format: float
+  - name: duration
+    in: query
+    required: false
+    description: days
+    schema:
+      type: integer
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            oneOf:
+              - $ref: "../../../components/schemas/voteTrend.yaml"
+              - type: array
+                items:
+                  type: integer
+                  format: float
+                  description: Score
+            description: "2D array: first item VoteTrend, second item score"

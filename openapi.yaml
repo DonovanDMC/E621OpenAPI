@@ -12,9 +12,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: '4614e41'
+  version: b0bfb7b
   x-e621ng-commit: 0772f94b6b2e0e00e40dd74e34fbf5c56a00a219
-  x-e621ng-master-behind-by: 94
+  x-e621ng-master-behind-by: 117
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/0772f94b6b2e0e00e40dd74e34fbf5c56a00a219...master
 servers:
   - url: 'https://e621.net'
@@ -803,8 +803,10 @@ components:
               type: string
             last_logged_in_at:
               type: string
+              format: date-time
             last_forum_read_at:
               type: string
+              format: date-time
             recent_tags:
               type: string
             comment_threshold:
@@ -2910,6 +2912,10 @@ components:
           type: boolean
         has_cropped_avatar:
           type: boolean
+        last_logged_in_at:
+          type: string
+          format: date-time
+          description: Only visible to Admin+.
     UserFeedback:
       type: object
       required:
@@ -3902,6 +3908,7 @@ components:
         - file_size
         - updated_at
         - url
+        - checksum
       properties:
         name:
           $ref: '#/components/schemas/DBExportNames'
@@ -3915,6 +3922,9 @@ components:
         url:
           type: string
           format: uri
+        checksum:
+          type: string
+          description: SHA-256
     DBExportNames:
       type: string
       enum:
@@ -4054,6 +4064,46 @@ components:
         updated_at:
           type: string
           format: date-time
+    VoteTrend:
+      oneOf:
+        - $ref: '#/components/schemas/Tag'
+        - $ref: '#/components/schemas/VoteTrendMetatag'
+        - $ref: '#/components/schemas/VoteTrendUploader'
+    VoteTrendMetatag:
+      type: object
+      required:
+        - name
+        - post_count
+        - uploader_id
+        - uploader
+      properties:
+        name:
+          type: string
+        post_count:
+          type: integer
+        uploader_id:
+          type: integer
+          nullable: true
+        uploader:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/User'
+    VoteTrendUploader:
+      type: object
+      required:
+        - name
+        - post_count
+        - uploader_id
+        - uploader
+      properties:
+        name:
+          type: string
+        post_count:
+          type: integer
+        uploader_id:
+          type: integer
+        uploader:
+          $ref: '#/components/schemas/User'
   responses:
     NotFound:
       description: Not Found
@@ -7148,9 +7198,6 @@ paths:
       operationId: listHelpPages
       tags:
         - Help Pages
-      security:
-        - basicAuth: []
-      description: You must be Admin+.
       responses:
         '200':
           description: Success
@@ -12125,65 +12172,6 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/users/{user_id}/dmails.json':
-    get:
-      summary: Audit User DMails
-      operationId: auditUserDMails
-      tags:
-        - DMails
-      security:
-        - basicAuth: []
-      description: Must have the bd auditor user flag.
-      parameters:
-        - $ref: '#/components/parameters/limitQuery'
-        - $ref: '#/components/parameters/pageQuery'
-        - name: user_id
-          in: path
-          required: true
-          description: The ID of the user.
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DMail'
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/users/{user_id}/dmails/{id}.json':
-    get:
-      summary: Audit User DMail
-      operationId: auditUserDMail
-      tags:
-        - DMails
-      security:
-        - basicAuth: []
-      description: Must have the bd auditor user flag.
-      parameters:
-        - name: user_id
-          in: path
-          required: true
-          description: The ID of the user.
-          schema:
-            type: integer
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DMail'
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /maintenance/user/count_fixes.json:
     post:
       summary: Fix User Counts
@@ -12852,7 +12840,7 @@ paths:
                 $ref: '#/components/schemas/WikiPageVersion'
         '404':
           $ref: '#/components/responses/NotFound'
-  /admin/users/alt_list.json:
+  /staff/users/alt_list.json:
     get:
       summary: Get Alt List
       operationId: getAltList
@@ -12884,7 +12872,14 @@ paths:
                       items:
                         type: integer
                         description: ID of suspected alt.
-  '/admin/users/{id}.json':
+                example:
+                  - - - 1
+                      - - 2
+                        - 3
+                    - - 4
+                      - - 5
+                        - 6
+  '/staff/users/{id}.json':
     patch:
       summary: Admin Edit User
       operationId: adminEditUser
@@ -12941,7 +12936,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/admin/users/{id}/anonymize.json':
+  '/staff/users/{id}/anonymize.json':
     post:
       summary: Admin Anonymize User
       operationId: adminAnonymizeUser
@@ -12959,7 +12954,66 @@ paths:
             Success should be determined based on the html, any errors will be present in an alert.
         '404':
           $ref: '#/components/responses/NotFound'
-  /admin/automod_dmails.json:
+  '/staff/users/{user_id}/dmails.json':
+    get:
+      summary: Audit User DMails
+      operationId: auditUserDMails
+      tags:
+        - DMails
+      security:
+        - basicAuth: []
+      description: Must have the bd auditor user flag.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the user.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DMail'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/staff/users/{user_id}/dmails/{id}.json':
+    get:
+      summary: Audit User DMail
+      operationId: auditUserDMail
+      tags:
+        - DMails
+      security:
+        - basicAuth: []
+      description: Must have the bd auditor user flag.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the user.
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DMail'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /staff/automod_dmails.json:
     get:
       summary: Get Automod DMails
       operationId: getAutomodDMails
@@ -13017,7 +13071,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DMail'
-  '/admin/automod_dmails/{id}.json':
+  '/staff/automod_dmails/{id}.json':
     get:
       summary: Get Automod DMail
       operationId: getAutomodDMail
@@ -13039,7 +13093,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/admin/automod_dmails/{id}/mark_as_read.json':
+  '/staff/automod_dmails/{id}/mark_as_read.json':
     put:
       summary: Mark Automod DMail As Read
       operationId: markAutomodDMailAsRead
@@ -13057,7 +13111,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/admin/automod_dmails/{id}/mark_as_unread.json':
+  '/staff/automod_dmails/{id}/mark_as_unread.json':
     put:
       summary: Mark Automod DMail As Unread
       operationId: markAutomodDMailAsUnread
@@ -13075,7 +13129,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  /admin/exceptions.json:
+  /staff/exceptions.json:
     get:
       summary: Get Exception Logs
       operationId: getExceptionLogs
@@ -13118,7 +13172,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ExceptionLog'
-  '/admin/exceptions/{id}.json':
+  '/staff/exceptions/{id}.json':
     get:
       summary: Get Exception Log
       operationId: getExceptionLog
@@ -13136,7 +13190,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionLog'
-  '/moderator/post/posts/{id}/delete.json':
+  '/staff/post/posts/{id}/delete.json':
     post:
       summary: Delete Post
       operationId: deletePost
@@ -13201,7 +13255,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/undelete.json':
+  '/staff/post/posts/{id}/undelete.json':
     post:
       summary: Undelete Post
       operationId: undeletePost
@@ -13230,7 +13284,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/regenerate_thumbnails.json':
+  '/staff/post/posts/{id}/regenerate_thumbnails.json':
     post:
       summary: Regenerate Post Thumbnails
       operationId: regeneratePostThumbnails
@@ -13259,7 +13313,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/regenerate_videos.json':
+  '/staff/post/posts/{id}/regenerate_videos.json':
     post:
       summary: Regenerate Post Videos
       operationId: regeneratePostVideos
@@ -13279,7 +13333,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/expunge.json':
+  '/staff/post/posts/{id}/expunge.json':
     post:
       summary: Expunge Post
       operationId: expungePost
@@ -13316,7 +13370,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/move_favorites.json':
+  '/staff/post/posts/{id}/move_favorites.json':
     post:
       summary: Move Post Favorites
       operationId: movePostFavorites
@@ -13347,7 +13401,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/post/posts/{id}/ai_check.json':
+  '/staff/post/posts/{id}/ai_check.json':
     get:
       summary: AI Check Post
       operationId: aiCheckPost
@@ -13367,7 +13421,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/moderator/post/posts/{id}/previous_owners.json':
+  '/staff/post/posts/{id}/previous_owners.json':
     get:
       summary: Get Post Previous Owners
       operationId: getPostPreviousOwners
@@ -13399,7 +13453,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/post/posts/{id}/reowner.json':
+  '/staff/post/posts/{id}/reowner.json':
     post:
       summary: Reown Post
       operationId: reownPost
@@ -13443,7 +13497,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  /moderator/post/approval.json:
+  /staff/post/approval.json:
     post:
       summary: Approve Post
       operationId: approvePost
@@ -13505,7 +13559,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/user_cleanups/{id}/clear_avatar.json':
+  '/staff/user_cleanups/{id}/clear_avatar.json':
     post:
       summary: Clear User Avatar
       operationId: clearUserAvatar
@@ -13523,7 +13577,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/user_cleanups/{id}/clear_profile.json':
+  '/staff/user_cleanups/{id}/clear_profile.json':
     post:
       summary: Clear User Profile
       operationId: clearUserProfile
@@ -13541,7 +13595,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/user_cleanups/{id}/hide_comments.json':
+  '/staff/user_cleanups/{id}/hide_comments.json':
     post:
       summary: Hide User Comments
       operationId: hideUserComments
@@ -13559,7 +13613,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/user_cleanups/{id}/hide_forum_posts.json':
+  '/staff/user_cleanups/{id}/hide_forum_posts.json':
     post:
       summary: Hide User Forum Posts
       operationId: hideUserForumPosts
@@ -13577,7 +13631,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/moderator/user_cleanups/{id}/hide_blips.json':
+  '/staff/user_cleanups/{id}/hide_blips.json':
     post:
       summary: Hide User Blips
       operationId: hideUserBlips
@@ -13595,7 +13649,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  /moderator/post/disapprovals.json:
+  /staff/post/disapprovals.json:
     get:
       summary: Search Post Disapprovals
       operationId: searchPostDisapprovals
@@ -13835,7 +13889,7 @@ paths:
         - basicAuth: []
       description: 'You must be Admin+ if you did not created the file, else Staff+'
       parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
+        - $ref: '#/components/parameters/idPath'
       responses:
         '204':
           description: Success
@@ -13994,7 +14048,7 @@ paths:
         - basicAuth: []
       description: You must be Staff+.
       parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
+        - $ref: '#/components/parameters/idPath'
       responses:
         '204':
           description: Success
@@ -14120,3 +14174,56 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  /staff/vote_trends.json:
+    get:
+      summary: Get Vote Trends
+      operationId: getVoteTrends
+      tags:
+        - Vote Trends
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - name: user
+          in: query
+          required: true
+          description: The name or ID of the user. IDs must be prefixed with `!`.
+          schema:
+            oneOf:
+              - type: string
+              - type: integer
+        - name: disable_vote_normality
+          in: query
+          required: false
+          description: 'Boolean, must be `1` for true (casted to integer, checked `== 0`).'
+          schema:
+            type: integer
+        - name: threshold
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: float
+        - name: duration
+          in: query
+          required: false
+          description: days
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/VoteTrend'
+                    - type: array
+                      items:
+                        type: integer
+                        format: float
+                        description: Score
+                  description: '2D array: first item VoteTrend, second item score'

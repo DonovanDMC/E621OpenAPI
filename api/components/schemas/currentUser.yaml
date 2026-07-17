@@ -84,8 +84,10 @@ allOf:
         type: string
       last_logged_in_at:
         type: string
+        format: date-time
       last_forum_read_at:
         type: string
+        format: date-time
       recent_tags:
         type: string
       comment_threshold:

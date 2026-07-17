@@ -262,6 +262,12 @@ components:
       $ref: "./components/schemas/staffWiki.yaml"
     StaffWikiVersion:
       $ref: "./components/schemas/staffWikiVersion.yaml"
+    VoteTrend:
+      $ref: "./components/schemas/voteTrend.yaml"
+    VoteTrendMetatag:
+      $ref: "./components/schemas/voteTrend/metatag.yaml"
+    VoteTrendUploader:
+      $ref: "./components/schemas/voteTrend/uploader.yaml"
 
   responses:
     NotFound:
@@ -1182,3 +1188,7 @@ paths:
   /staff/wiki_versions/{id}.json:
     get:
       $ref: "./paths/staff/wiki_versions/show.yaml"
+
+  /staff/vote_trends.json:
+    get:
+      $ref: "./paths/staff/vote_trends/index.yaml"

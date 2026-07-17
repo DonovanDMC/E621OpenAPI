@@ -1,0 +1,21 @@
+type: object
+required:
+  - name
+  - post_count
+  - uploader_id
+  - uploader
+properties:
+  name:
+    type: string
+  post_count:
+    type: integer
+  uploader_id:
+    type: integer
+    nullable: true
+    enum:
+      - null
+  uploader:
+    type: object
+    nullable: true
+    enum:
+      - null
