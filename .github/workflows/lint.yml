@@ -47,6 +47,10 @@ jobs:
           repository: e621ng/e621ng
           ref: ${{ steps.e621ng.outputs.commit }}
           path: e621ng
+      # ruby-vips (used by e621ng for thumbnailing) dlopens libvips at boot,
+      # it's not installed on the runner image by default.
+      - name: Install libvips
+        run: sudo apt-get update && sudo apt-get install -y libvips42
       # bundler-cache keys the gem cache on the hash of e621ng/Gemfile.lock,
       # and runs `bundle install` for us.
       - uses: ruby/setup-ruby@v1
