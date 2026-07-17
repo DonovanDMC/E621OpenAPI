@@ -1,14 +1,7 @@
-# TODO: https://github.com/e621ng/e621ng/commit/5652eb10fd9ae1ab18ecc4b21169da218cd2ad6a
-# https://e621.net/forum_topics/64640?page=1#forum_post_496879
-# Hoping for a revert here, since there is now no way for non admins to get a list of help pages
-
 summary: List Help Pages
 operationId: listHelpPages
 tags:
   - Help Pages
-security:
-  - basicAuth: []
-description: You must be Admin+.
 responses:
   200:
     description: Success
