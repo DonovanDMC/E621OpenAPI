@@ -5,6 +5,7 @@ required:
   - file_size
   - updated_at
   - url
+  - checksum
 properties:
   name:
     $ref: "./dbExportNames.yaml"
@@ -18,3 +19,6 @@ properties:
   url:
     type: string
     format: uri
+  checksum:
+    type: string
+    description: SHA-256
