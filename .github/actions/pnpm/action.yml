@@ -1,10 +1,17 @@
 name: PNPM
 description: Initialize PNPM, install dependencies, and set up caching.
 
+inputs:
+  ref:
+    description: The git ref to check out. Defaults to actions/checkout's own default (the ref/sha that triggered the workflow).
+    required: false
+
 runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.ref }}
     - uses: pnpm/action-setup@v2
       with:
         version: 10.20.0

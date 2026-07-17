@@ -10,10 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # ./.github/actions/pnpm does its own checkout, which would otherwise
+      # clobber this ref with the default one (the commit that triggered the
+      # workflow, i.e. the one from *before* the Update API Version bot
+      # commit) - so the ref has to be passed through to it instead of
+      # checking out separately here.
+      - uses: ./.github/actions/pnpm
         with:
           ref: ${{ inputs.commit || github.sha }}
-      - uses: ./.github/actions/pnpm
       - name: Build Webpack
         run: pnpm run build:webpack:production
       - name: Upload Build
