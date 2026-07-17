@@ -60,7 +60,7 @@ parameters:
       type: boolean
   - in: query
     name: search[is_hidden]
-    description: Only usable by Moderator+
+    description: Only usable by Staff+
     schema:
       type: boolean
   - in: query
