@@ -10,11 +10,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # ./.github/actions/pnpm does its own checkout, which would otherwise
-      # clobber this ref with the default one (the commit that triggered the
+      # A local composite action has to be resolved from the checked-out
+      # filesystem before it can even run, so this first checkout (of
+      # whatever the default ref is) just has to happen for
+      # ./.github/actions/pnpm to be found at all. Its own internal checkout
+      # then switches to the actual ref we want - that one has to be passed
+      # through rather than checked out separately here, or it'll clobber
+      # this with the default ref again (the commit that triggered the
       # workflow, i.e. the one from *before* the Update API Version bot
-      # commit) - so the ref has to be passed through to it instead of
-      # checking out separately here.
+      # commit).
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm
         with:
           ref: ${{ inputs.commit || github.sha }}
