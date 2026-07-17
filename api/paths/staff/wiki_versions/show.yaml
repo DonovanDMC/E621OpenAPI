@@ -1,5 +1,5 @@
 summary: Get Staff Wiki Version
-operationId: getStaffWikiVersion
+operationId: staff/wiki_versions#show
 tags:
   - Staff Wiki Versions
 security:

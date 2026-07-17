@@ -1,5 +1,5 @@
-summary: Edit Tag Alias
-operationId: editTagAlias
+summary: Update Tag Alias
+operationId: tag_aliases#update
 tags:
   - Tag Aliases
 security:

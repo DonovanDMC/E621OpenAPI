@@ -1,5 +1,5 @@
 summary: Delete Post Set
-operationId: deletePostSet
+operationId: post_sets#destroy
 tags:
   - Post Sets
 security:

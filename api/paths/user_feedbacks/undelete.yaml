@@ -1,5 +1,5 @@
 summary: Undelete User Feedback
-operationId: undeleteUserFeedback
+operationId: user_feedbacks#undelete
 tags:
   - User Feedbacks
 security:

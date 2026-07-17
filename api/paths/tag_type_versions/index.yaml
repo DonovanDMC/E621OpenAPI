@@ -1,5 +1,5 @@
-summary: Search Tag Type Versions
-operationId: searchTagTypeVersions
+summary: Tag Type Versions Index
+operationId: tag_type_versions#index
 tags:
   - Tag Type Versions
 parameters:

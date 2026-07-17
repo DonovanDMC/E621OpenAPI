@@ -1,5 +1,5 @@
 summary: Hide Post Version
-operationId: hidePostVersion
+operationId: post_versions#hide
 tags:
   - Post Versions
 security:

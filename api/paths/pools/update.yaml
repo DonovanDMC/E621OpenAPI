@@ -1,5 +1,5 @@
-summary: Edit Pool
-operationId: editPool
+summary: Update Pool
+operationId: pools#update
 tags:
   - Pools
 security:

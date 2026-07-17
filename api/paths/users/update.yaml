@@ -1,5 +1,5 @@
-summary: Edit Current User
-operationId: editCurrentUser
+summary: Update Current User
+operationId: users#update
 tags:
   - Users
 parameters:

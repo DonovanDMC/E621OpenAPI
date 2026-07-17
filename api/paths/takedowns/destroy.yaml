@@ -1,5 +1,5 @@
 summary: Delete Takedown
-operationId: deleteTakedown
+operationId: takedowns#destroy
 tags:
   - Takedowns
 security:

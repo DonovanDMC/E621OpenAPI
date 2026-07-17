@@ -1,5 +1,5 @@
-summary: Search Search Trend Blacklists
-operationId: searchSearchTrendBlacklists
+summary: Search Trend Blacklists Index
+operationId: search_trend_blacklists#index
 tags:
   - Search Trend Blacklists
 security:

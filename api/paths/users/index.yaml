@@ -1,5 +1,5 @@
-summary: Search Users
-operationId: searchUsers
+summary: Users Index
+operationId: users#index
 tags:
   - Users
 parameters:

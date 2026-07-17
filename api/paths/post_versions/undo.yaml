@@ -1,5 +1,5 @@
 summary: Undo Post Version
-operationId: undoPostVersion
+operationId: post_versions#undo
 tags:
   - Post Versions
 security:

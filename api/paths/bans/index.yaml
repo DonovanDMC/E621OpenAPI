@@ -1,5 +1,5 @@
-summary: Search Bans
-operationId: searchBans
+summary: Bans Index
+operationId: bans#index
 tags:
   - Bans
 parameters:

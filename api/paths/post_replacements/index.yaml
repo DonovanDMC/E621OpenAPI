@@ -1,5 +1,5 @@
-summary: Search Post Replacements
-operationId: searchPostReplacements
+summary: Post Replacements Index
+operationId: post_replacements#index
 tags:
   - Post Replacements
 description: Rejected replacements can only be seen by staff.

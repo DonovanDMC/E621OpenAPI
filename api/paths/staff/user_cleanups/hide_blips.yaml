@@ -1,5 +1,5 @@
 summary: Hide User Blips
-operationId: hideUserBlips
+operationId: staff/user_cleanups#hide_blips
 tags:
   - User Cleanups
 security:

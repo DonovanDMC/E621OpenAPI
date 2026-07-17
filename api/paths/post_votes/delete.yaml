@@ -1,5 +1,5 @@
-summary: Delete Post Vote
-operationId: deletePostVotes
+summary: Delete Post Votes
+operationId: post_votes#delete
 tags:
   - Post Votes
 security:

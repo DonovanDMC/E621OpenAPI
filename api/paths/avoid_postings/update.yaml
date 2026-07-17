@@ -1,7 +1,7 @@
-summary: Edit Avoid Posting Entry
-operationId: editAvoidPosting
+summary: Update Avoid Posting
+operationId: avoid_postings#update
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 security:
   - basicAuth: []
 description: Must have the bd staff user flag.

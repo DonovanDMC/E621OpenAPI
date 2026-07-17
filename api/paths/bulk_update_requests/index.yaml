@@ -1,5 +1,5 @@
-summary: Search Bulk Update Requests
-operationId: searchBulkUpdateRequests
+summary: Bulk Update Requests Index
+operationId: bulk_update_requests#index
 tags:
   - Bulk Update Requests
 parameters:

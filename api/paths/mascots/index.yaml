@@ -1,5 +1,5 @@
-summary: Search Mascots
-operationId: searchMascots
+summary: Mascots Index
+operationId: mascots#index
 tags:
   - Mascots
 parameters:

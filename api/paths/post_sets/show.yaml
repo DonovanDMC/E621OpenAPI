@@ -1,5 +1,5 @@
 summary: Get Post Set
-operationId: getPostSet
+operationId: post_sets#show
 tags:
   - Post Sets
 description: You must be Moderator+ if the set is not public.

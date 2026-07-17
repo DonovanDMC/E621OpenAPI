@@ -1,5 +1,5 @@
 summary: Create Forum Post
-operationId: createForumPost
+operationId: forum_posts#create
 tags:
   - Forum Posts
 security:

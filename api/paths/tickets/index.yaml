@@ -1,5 +1,5 @@
-summary: Search Tickets
-operationId: searchTickets
+summary: Tickets Index
+operationId: tickets#index
 tags:
   - Tickets
 description: You must be Staff+ to see tickets you did not create.

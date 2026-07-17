@@ -1,5 +1,5 @@
-summary: Edit Tag
-operationId: editTag
+summary: Update Tag
+operationId: tags#update
 tags:
   - Tags
 security:

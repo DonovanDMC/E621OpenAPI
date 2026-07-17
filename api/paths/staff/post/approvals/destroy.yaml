@@ -1,5 +1,5 @@
 summary: Unapprove Post
-operationId: unapprovePost
+operationId: staff/post/approvals#destroy
 tags:
   - Posts
   - Post Approvals

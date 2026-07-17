@@ -1,5 +1,5 @@
 summary: Remove Posts From Post Set
-operationId: removePostsFromPostSet
+operationId: post_sets#remove_posts
 tags:
   - Post Sets
 security:

@@ -32,3 +32,34 @@ jobs:
       - uses: ./.github/actions/download-build
       - name: Lint
         run: pnpm run lint:validate
+  operation-ids:
+    runs-on: ubuntu-latest
+    name: Validate Operation IDs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm
+      - name: Read e621ng commit
+        id: e621ng
+        run: echo "commit=$(cat e621ng-commit)" >> "$GITHUB_OUTPUT"
+      - name: Checkout e621ng
+        uses: actions/checkout@v4
+        with:
+          repository: e621ng/e621ng
+          ref: ${{ steps.e621ng.outputs.commit }}
+          path: e621ng
+      # bundler-cache keys the gem cache on the hash of e621ng/Gemfile.lock,
+      # and runs `bundle install` for us.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: e621ng
+      - name: Set up danbooru_local_config
+        run: |
+          if [ ! -f e621ng/config/danbooru_local_config.rb ]; then
+            cp e621ng/docker/danbooru_local_config.rb e621ng/config/danbooru_local_config.rb
+          fi
+      - name: Validate Operation IDs
+        run: pnpm run validate:operation-ids
+        env:
+          E621NG_PATH: ${{ github.workspace }}/e621ng

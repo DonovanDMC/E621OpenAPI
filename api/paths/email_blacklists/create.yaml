@@ -1,5 +1,5 @@
 summary: Create Email Blacklist
-operationId: createEmailBlacklist
+operationId: email_blacklists#create
 tags:
   - Email Blacklists
 description: You must be Admin+.

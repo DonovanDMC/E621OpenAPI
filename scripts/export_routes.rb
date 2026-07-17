@@ -35,7 +35,7 @@ class RouteExporter
   def self.normalize_verb(verb)
     return nil if verb.nil?
 
-    raw = verb.source.gsub(/[$^]/, "")
+    raw = verb.respond_to?(:source) ? verb.source.gsub(/[$^]/, "") : verb.to_s
     return "ANY" if raw.empty?
 
     raw

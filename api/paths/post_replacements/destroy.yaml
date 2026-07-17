@@ -1,5 +1,5 @@
 summary: Delete Post Replacement
-operationId: deletePostReplacement
+operationId: post_replacements#destroy
 tags:
   - Post Replacements
 description: You must be Admin+.

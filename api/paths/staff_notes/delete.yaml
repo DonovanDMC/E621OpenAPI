@@ -1,5 +1,5 @@
 summary: Delete Staff Note
-operationId: deleteStaffNote
+operationId: staff_notes#delete
 tags:
   - Staff Notes
 security:

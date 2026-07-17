@@ -1,5 +1,5 @@
-summary: Search Upload Whitelists
-operationId: searchUploadWhitelists
+summary: Upload Whitelists Index
+operationId: upload_whitelists#index
 tags:
   - Upload Whitelists
 parameters:

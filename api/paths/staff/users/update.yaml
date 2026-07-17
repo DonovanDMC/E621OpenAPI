@@ -1,5 +1,5 @@
 summary: Admin Edit User
-operationId: adminEditUser
+operationId: staff/users#update
 tags:
   - Admin Users
 security:

@@ -1,5 +1,5 @@
 summary: Delete News Update
-operationId: deleteNewsUpdate
+operationId: news_updates#destroy
 tags:
   - News Updates
 security:

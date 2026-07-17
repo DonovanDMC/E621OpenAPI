@@ -1,5 +1,5 @@
 summary: Delete Staff Wiki
-operationId: deleteStaffWiki
+operationId: staff/wikis#destroy
 tags:
   - Staff Wikis
 security:

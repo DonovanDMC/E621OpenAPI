@@ -1,5 +1,5 @@
 summary: Lock Comment Votes
-operationId: lockCommentVotes
+operationId: comment_votes#lock
 tags:
   - Comment Votes
 security:

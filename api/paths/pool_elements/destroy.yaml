@@ -1,5 +1,5 @@
 summary: Remove Post From Pool
-operationId: removePostFromPool
+operationId: pool_elements#destroy
 tags:
   - Pools
 security:

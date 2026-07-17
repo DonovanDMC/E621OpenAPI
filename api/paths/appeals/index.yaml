@@ -1,5 +1,5 @@
-summary: Search Appeals
-operationId: searchAppeals
+summary: Appeals Index
+operationId: appeals#index
 tags:
   - Appeals
 security:

@@ -14,7 +14,8 @@
     "lint": "eslint src",
     "lint:api": "redocly lint openapi.yaml",
     "lint:validate": "npm exec swagger-cli -- validate ./openapi.yaml",
-    "validate": "scripts/validate.sh"
+    "validate": "scripts/validate.sh",
+    "validate:operation-ids": "node ./scripts/validate-operation-ids.mjs"
   },
   "repository": {
     "type": "git",

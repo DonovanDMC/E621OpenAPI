@@ -1,7 +1,7 @@
-summary: Destroy Avoid Posting Entry
-operationId: destroyAvoidPosting
+summary: Destroy Avoid Posting
+operationId: avoid_postings#destroy
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 security:
   - basicAuth: []
 description: Must have the bd staff user flag.

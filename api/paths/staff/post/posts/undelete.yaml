@@ -1,5 +1,5 @@
 summary: Undelete Post
-operationId: undeletePost
+operationId: staff/post/posts#undelete
 tags:
   - Posts
 security:

@@ -1,5 +1,5 @@
 summary: Get Post Previous Owners
-operationId: getPostPreviousOwners
+operationId: staff/post/posts#previous_owners
 tags:
   - Posts
 security:

@@ -1,5 +1,5 @@
-summary: Search Post Events
-operationId: searchPostEvents
+summary: Post Events Index
+operationId: post_events#index
 tags:
   - Post Events
 security:

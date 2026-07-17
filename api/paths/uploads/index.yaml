@@ -1,5 +1,5 @@
-summary: Search Uploads
-operationId: searchUploads
+summary: Uploads Index
+operationId: uploads#index
 tags:
   - Uploads
 parameters:

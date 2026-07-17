@@ -1,5 +1,5 @@
 summary: Get Comment
-operationId: getComment
+operationId: comments#show
 tags:
   - Comments
 description: If the comment is hidden, you must be the creator or Staff+ to see it.

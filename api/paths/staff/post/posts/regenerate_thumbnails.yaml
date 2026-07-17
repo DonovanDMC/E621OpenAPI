@@ -1,5 +1,5 @@
 summary: Regenerate Post Thumbnails
-operationId: regeneratePostThumbnails
+operationId: staff/post/posts#regenerate_thumbnails
 tags:
   - Posts
 security:

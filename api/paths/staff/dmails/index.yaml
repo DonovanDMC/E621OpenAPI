@@ -1,5 +1,5 @@
 summary: Audit User DMails
-operationId: auditUserDMails
+operationId: staff/dmails#index
 tags:
   - DMails
 security:

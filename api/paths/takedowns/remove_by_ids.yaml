@@ -1,5 +1,5 @@
 summary: Remove Posts From Takedown By IDs
-operationId: removePostsFromTakedownByIds
+operationId: takedowns#remove_by_ids
 tags:
   - Takedowns
 security:

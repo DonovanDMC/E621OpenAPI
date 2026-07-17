@@ -1,5 +1,5 @@
-summary: Search Tags
-operationId: searchTags
+summary: Tags Index
+operationId: tags#index
 tags:
   - Tags
 parameters:

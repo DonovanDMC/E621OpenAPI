@@ -1,5 +1,5 @@
 summary: Get Staff Wiki
-operationId: getStaffWiki
+operationId: staff/wikis#show
 tags:
   - Staff Wikis
 security:

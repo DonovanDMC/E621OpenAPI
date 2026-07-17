@@ -1,5 +1,5 @@
 summary: Reown Post
-operationId: reownPost
+operationId: staff/post/posts#reowner
 tags:
   - Posts
 security:

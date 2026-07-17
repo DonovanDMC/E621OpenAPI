@@ -1,5 +1,5 @@
 summary: Get Ticket
-operationId: getTicket
+operationId: tickets#show
 tags:
   - Tickets
 security:

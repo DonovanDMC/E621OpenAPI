@@ -1,5 +1,5 @@
 summary: Unsubscribe From Forum Topic
-operationId: unsubscribeForumTopic
+operationId: forum_topics#unsubscribe
 tags:
   - Forum Topics
 security:

@@ -1,5 +1,5 @@
-summary: Edit Staff File
-operationId: editStaffFile
+summary: Update Staff File
+operationId: staff/files#update
 tags:
   - Staff Files
 security:

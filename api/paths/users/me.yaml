@@ -1,5 +1,5 @@
 summary: Get Current User
-operationId: getMe
+operationId: users#me
 description: |
   This will return the default settings for anonymous users if no authentication is used.
   This most interesting part is probably the default blacklist, located in `blacklisted_tags`.

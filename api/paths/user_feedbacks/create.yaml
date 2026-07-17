@@ -1,5 +1,5 @@
 summary: Create User Feedback
-operationId: createUserFeedback
+operationId: user_feedbacks#create
 tags:
   - User Feedbacks
 security:

@@ -1,6 +1,6 @@
 # TODO: this can be massively overhauled
-summary: Search Mod Actions
-operationId: searchModActions
+summary: Mod Actions Index
+operationId: mod_actions#index
 tags:
   - Mod Actions
 description: |

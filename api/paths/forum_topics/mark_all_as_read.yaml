@@ -1,5 +1,5 @@
 summary: Mark All Forum Topics As Read
-operationId: markAllForumTopicsAsRead
+operationId: forum_topics#mark_all_as_read
 tags:
   - Forum Topics
 security:

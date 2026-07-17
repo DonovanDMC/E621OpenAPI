@@ -1,5 +1,5 @@
 summary: Delete Pool
-operationId: deletePool
+operationId: pools#destroy
 tags:
   - Pools
 description: You must be Staff+.

@@ -1,12 +1,12 @@
 summary: Unflag Post
-operationId: unflagPost
+operationId: post_flags#destroy
 tags:
   - Posts
 description: You must have the "Approve Posts" permission.
 security:
   - basicAuth: []
 parameters:
-  - $ref: "../../../components/parameters/path/id.yaml"
+  - $ref: "../../components/parameters/path/id.yaml"
 requestBody:
   content:
     application/json:
@@ -21,6 +21,6 @@ responses:
   204:
     description: Success
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"

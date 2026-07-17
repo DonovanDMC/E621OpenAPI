@@ -1,5 +1,5 @@
 summary: Delete User Feedback
-operationId: deleteUserFeedback
+operationId: user_feedbacks#delete
 tags:
   - User Feedbacks
 security:

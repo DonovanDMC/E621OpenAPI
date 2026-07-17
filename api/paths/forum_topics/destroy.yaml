@@ -1,5 +1,5 @@
 summary: Delete Forum Topic
-operationId: deleteForumTopic
+operationId: forum_topics#destroy
 tags:
   - Forum Topics
 security:

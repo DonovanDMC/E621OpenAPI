@@ -1,5 +1,5 @@
 summary: List Post Sets For Select
-operationId: listPostSetsForSelect
+operationId: post_sets#for_select
 tags:
   - Post Sets
 security:

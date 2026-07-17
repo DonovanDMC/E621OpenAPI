@@ -1,0 +1,17 @@
+summary: Delete Post Vote
+operationId: post_votes#destroy
+tags:
+  - Post Votes
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../components/responses/expectedError.yaml"

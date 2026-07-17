@@ -1,5 +1,5 @@
-summary: Search Comments
-operationId: searchComments
+summary: Comments Index
+operationId: comments#index
 tags:
   - Comments
 description: For searching comments, group_by=comment must be set.

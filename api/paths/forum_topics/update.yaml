@@ -1,5 +1,5 @@
-summary: Edit Forum Topic
-operationId: editForumTopic
+summary: Update Forum Topic
+operationId: forum_topics#update
 tags:
   - Forum Topics
 security:

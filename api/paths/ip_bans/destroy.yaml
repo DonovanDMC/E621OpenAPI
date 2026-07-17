@@ -1,5 +1,5 @@
 summary: Delete IP Ban
-operationId: deleteIpBan
+operationId: ip_bans#destroy
 tags:
   - IP Bans
 security:

@@ -1,5 +1,5 @@
-summary: Search Blips
-operationId: searchBlips
+summary: Blips Index
+operationId: blips#index
 tags:
   - Blips
 parameters:

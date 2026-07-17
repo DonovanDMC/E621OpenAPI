@@ -1,6 +1,6 @@
 # TODO: this can be massively overhauled
 summary: Get Mod Action
-operationId: getModAction
+operationId: mod_actions#show
 tags:
   - Mod Actions
 parameters:

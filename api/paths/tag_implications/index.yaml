@@ -1,5 +1,5 @@
-summary: Search Tag Implications
-operationId: searchTagImplications
+summary: Tag Implications Index
+operationId: tag_implications#index
 tags:
   - Tag Implications
 parameters:

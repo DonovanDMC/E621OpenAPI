@@ -1,5 +1,5 @@
 summary: Create Staff File
-operationId: createStaffFile
+operationId: staff/files#create
 tags:
   - Staff Files
 security:

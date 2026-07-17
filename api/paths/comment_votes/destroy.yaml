@@ -1,0 +1,17 @@
+summary: Delete Comment Vote
+operationId: comment_votes#destroy
+tags:
+  - Comment Votes
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../components/responses/expectedError.yaml"

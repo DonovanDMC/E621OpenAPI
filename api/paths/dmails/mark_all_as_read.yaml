@@ -1,5 +1,5 @@
 summary: Mark All DMails As Read
-operationId: markAllDMailsAsRead
+operationId: dmails#mark_all_as_read
 tags:
   - DMails
 security:

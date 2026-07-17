@@ -1,5 +1,5 @@
 summary: Add Posts To Post Set
-operationId: addPostsToPostSet
+operationId: post_sets#add_posts
 tags:
   - Post Sets
 security:

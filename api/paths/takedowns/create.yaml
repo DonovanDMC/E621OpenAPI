@@ -1,5 +1,5 @@
 summary: Create Takedown
-operationId: createTakedown
+operationId: takedowns#create
 tags:
   - Takedowns
 security:

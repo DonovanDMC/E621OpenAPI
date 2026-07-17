@@ -1,5 +1,5 @@
 summary: Mark Automod DMail As Unread
-operationId: markAutomodDMailAsUnread
+operationId: staff/automod_dmails#mark_as_unread
 tags:
   - DMails
 security:

@@ -1,5 +1,5 @@
-summary: Search Artist URLs
-operationId: searchArtistUrls
+summary: Artist URLs Index
+operationId: artist_urls#index
 tags:
   - Artist URLs
 parameters:

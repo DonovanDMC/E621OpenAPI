@@ -1,5 +1,5 @@
-summary: Search Pool Versions
-operationId: searchPoolVersions
+summary: Pool Versions Index
+operationId: pool_versions#index
 tags:
   - Pool Versions
 parameters:

@@ -1,5 +1,5 @@
-summary: Search Post Approvals
-operationId: searchPostApprovals
+summary: Post Approvals Index
+operationId: post_approvals#index
 tags:
   - Post Approvals
 parameters:

@@ -1,7 +1,7 @@
-summary: Create Avoid Posting Entry
-operationId: createAvoidPosting
+summary: Create Avoid Posting
+operationId: avoid_postings#create
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 security:
   - basicAuth: []
 description: Must have the bd staff user flag.

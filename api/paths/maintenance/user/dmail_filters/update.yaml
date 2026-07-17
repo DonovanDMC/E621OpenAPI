@@ -1,5 +1,5 @@
 summary: Update User Dmail Filter
-operationId: updateUserDmailFilter
+operationId: maintenance/user/dmail_filters#update
 tags:
   - DMails
 parameters:

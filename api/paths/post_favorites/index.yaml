@@ -1,7 +1,7 @@
-summary: List Post Favorites
-operationId: listPostFavorites
+summary: Post Favorites Index
+operationId: post_favorites#index
 tags:
-  - Posts
+  - Post Favorites
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
   - name: limit

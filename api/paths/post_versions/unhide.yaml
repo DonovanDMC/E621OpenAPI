@@ -1,5 +1,5 @@
 summary: Unhide Post Version
-operationId: unhidePostVersion
+operationId: post_versions#unhide
 tags:
   - Post Versions
 security:

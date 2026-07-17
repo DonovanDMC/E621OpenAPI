@@ -1,7 +1,7 @@
-summary: Undelete Avoid Posting Entry
-operationId: undeleteAvoidPosting
+summary: Undelete Avoid Posting
+operationId: avoid_postings#undelete
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 security:
   - basicAuth: []
 description: Must have the bd staff user flag.

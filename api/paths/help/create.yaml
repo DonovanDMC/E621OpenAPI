@@ -1,5 +1,5 @@
 summary: Create Help Page
-operationId: createHelpPage
+operationId: help#create
 tags:
   - Help Pages
 security:

@@ -1,5 +1,5 @@
 summary: Get Staff Note
-operationId: getStaffNote
+operationId: staff_notes#show
 tags:
   - Staff Notes
 parameters:

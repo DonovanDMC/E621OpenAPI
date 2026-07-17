@@ -1,5 +1,5 @@
 summary: Add Post To Pool
-operationId: addPostToPool
+operationId: pool_elements#create
 tags:
   - Pools
 security:

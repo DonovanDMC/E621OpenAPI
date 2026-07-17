@@ -1,5 +1,5 @@
-summary: List Most Upvoted Posts
-operationId: listPopular
+summary: Popular Index
+operationId: popular#index
 tags:
   - Popular
 parameters:

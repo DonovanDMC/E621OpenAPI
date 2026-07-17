@@ -1,5 +1,5 @@
 summary: Subscribe To Forum Topic
-operationId: subscribeForumTopic
+operationId: forum_topics#subscribe
 tags:
   - Forum Topics
 security:

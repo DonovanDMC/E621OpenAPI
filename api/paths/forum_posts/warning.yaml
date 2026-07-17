@@ -1,5 +1,5 @@
 summary: Mark Forum Post
-operationId: markForumPost
+operationId: forum_posts#warning
 tags:
   - Forum Posts
 security:

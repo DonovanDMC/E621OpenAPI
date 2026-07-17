@@ -1,5 +1,5 @@
-summary: Edit Help Page
-operationId: editHelpPage
+summary: Update Help Page
+operationId: help#update
 tags:
   - Help Pages
 security:

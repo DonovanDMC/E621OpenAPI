@@ -1,5 +1,5 @@
-summary: Search Artist Versions
-operationId: searchArtistVersions
+summary: Artist Versions Index
+operationId: artist_versions#index
 tags:
   - Artist Versions
 parameters:

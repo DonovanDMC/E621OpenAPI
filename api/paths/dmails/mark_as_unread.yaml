@@ -1,5 +1,5 @@
 summary: Mark DMail As Unread
-operationId: markDMailAsUnread
+operationId: dmails#mark_as_unread
 tags:
   - DMails
 security:

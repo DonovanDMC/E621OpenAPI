@@ -1,5 +1,5 @@
 summary: Hide User Comments
-operationId: hideUserComments
+operationId: staff/user_cleanups#hide_comments
 tags:
   - User Cleanups
 security:

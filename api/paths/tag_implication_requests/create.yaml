@@ -1,5 +1,5 @@
 summary: Create Tag Implication
-operationId: createTagImplication
+operationId: tag_implication_requests#create
 tags:
   - Tag Implications
 security:

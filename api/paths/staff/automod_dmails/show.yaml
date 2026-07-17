@@ -1,5 +1,5 @@
 summary: Get Automod DMail
-operationId: getAutomodDMail
+operationId: staff/automod_dmails#show
 tags:
   - DMails
 security:

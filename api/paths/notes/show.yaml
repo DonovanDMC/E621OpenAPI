@@ -1,5 +1,5 @@
 summary: Get Note
-operationId: getNote
+operationId: notes#show
 tags:
   - Notes
 parameters:

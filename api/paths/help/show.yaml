@@ -1,5 +1,5 @@
 summary: Get Help Page
-operationId: getHelpPage
+operationId: help#show
 tags:
   - Help Pages
 parameters:

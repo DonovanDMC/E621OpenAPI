@@ -1,5 +1,5 @@
 summary: Delete Search Trend Blacklist
-operationId: deleteSearchTrendBlacklist
+operationId: search_trend_blacklists#destroy
 tags:
   - Search Trend Blacklists
 security:

@@ -1,5 +1,5 @@
 summary: Approve Tag Implication
-operationId: approveTagImplication
+operationId: tag_implications#approve
 tags:
   - Tag Implications
 security:

@@ -1,5 +1,5 @@
 summary: Create Staff Note
-operationId: createStaffNote
+operationId: staff_notes#create
 tags:
   - Staff Notes
 security:

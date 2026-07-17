@@ -1,5 +1,5 @@
 summary: Get User Name Change Request
-operationId: getUserNameChangeRequest
+operationId: user_name_change_requests#show
 tags:
   - User Name Change Requests
 security:

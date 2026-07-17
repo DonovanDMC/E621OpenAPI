@@ -1,5 +1,5 @@
 summary: List Rising Search Trends
-operationId: listRisingSearchTrends
+operationId: search_trends#rising
 tags:
   - Search Trends
 responses:

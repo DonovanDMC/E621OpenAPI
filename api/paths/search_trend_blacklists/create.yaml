@@ -1,5 +1,5 @@
 summary: Create Search Trend Blacklist
-operationId: createSearchTrendBlacklist
+operationId: search_trend_blacklists#create
 tags:
   - Search Trend Blacklists
 security:

@@ -1,5 +1,5 @@
-summary: Edit Note
-operationId: editNote
+summary: Update Note
+operationId: notes#update
 tags:
   - Notes
 security:

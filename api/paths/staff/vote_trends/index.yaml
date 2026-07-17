@@ -1,5 +1,5 @@
 summary: Get Vote Trends
-operationId: getVoteTrends
+operationId: staff/vote_trends#index
 tags:
   - Vote Trends
 security:

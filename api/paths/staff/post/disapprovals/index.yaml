@@ -1,5 +1,5 @@
-summary: Search Post Disapprovals
-operationId: searchPostDisapprovals
+summary: Post Disapprovals Index
+operationId: staff/post/disapprovals#index
 tags:
   - Post Disapprovals
 security:

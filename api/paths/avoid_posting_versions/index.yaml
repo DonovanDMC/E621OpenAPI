@@ -1,5 +1,5 @@
-summary: Search Avoid Posting Versions
-operationId: searchAvoidPostingVersions
+summary: Avoid Posting Versions Index
+operationId: avoid_posting_versions#index
 tags:
   - Avoid Posting Versions
 parameters:

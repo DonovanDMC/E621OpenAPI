@@ -1,5 +1,5 @@
 summary: Check If URL Is Allowed
-operationId: checkIfUrlIsAllowed
+operationId: upload_whitelists#is_allowed
 tags:
   - Upload Whitelists
 security:

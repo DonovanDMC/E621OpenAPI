@@ -1,5 +1,5 @@
 summary: Approve Post
-operationId: approvePost
+operationId: staff/post/approvals#create
 tags:
   - Posts
   - Post Approvals

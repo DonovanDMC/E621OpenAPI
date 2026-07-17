@@ -1,5 +1,5 @@
 summary: Hide Forum Topic
-operationId: hideForumTopic
+operationId: forum_topics#hide
 tags:
   - Forum Topics
 security:

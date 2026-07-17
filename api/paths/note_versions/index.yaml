@@ -1,5 +1,5 @@
-summary: Search Note Versions
-operationId: searchNoteVersions
+summary: Note Versions Index
+operationId: note_versions#index
 tags:
   - Note Versions
 parameters:

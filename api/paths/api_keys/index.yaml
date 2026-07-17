@@ -1,5 +1,5 @@
-summary: Get API Keys
-operationId: getAPIKeys
+summary: API Keys Index
+operationId: api_keys#index
 tags:
   - API Keys
 security:

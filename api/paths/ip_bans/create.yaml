@@ -1,5 +1,5 @@
 summary: Create IP Ban
-operationId: createIpBan
+operationId: ip_bans#create
 tags:
   - IP Bans
 security:

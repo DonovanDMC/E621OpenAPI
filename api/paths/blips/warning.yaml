@@ -1,5 +1,5 @@
 summary: Mark Blip
-operationId: markBlip
+operationId: blips#warning
 tags:
   - Blips
 security:

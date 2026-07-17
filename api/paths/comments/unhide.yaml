@@ -1,5 +1,5 @@
 summary: Unhide Comment
-operationId: unhideComment
+operationId: comments#unhide
 tags:
   - Comments
 security:

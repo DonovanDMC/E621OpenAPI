@@ -1,5 +1,5 @@
 summary: Get Takedown
-operationId: getTakedown
+operationId: takedowns#show
 tags:
   - Takedowns
 parameters:

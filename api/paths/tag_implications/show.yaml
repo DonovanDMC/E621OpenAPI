@@ -1,5 +1,5 @@
 summary: Get Tag Implication
-operationId: getTagImplication
+operationId: tag_implications#show
 tags:
   - Tag Implications
 parameters:

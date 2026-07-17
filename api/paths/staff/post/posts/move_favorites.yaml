@@ -1,5 +1,5 @@
 summary: Move Post Favorites
-operationId: movePostFavorites
+operationId: staff/post/posts#move_favorites
 tags:
   - Posts
 security:

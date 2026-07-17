@@ -1,5 +1,5 @@
 summary: Lock Post Votes
-operationId: lockPostVotes
+operationId: post_votes#lock
 tags:
   - Post Votes
 security:

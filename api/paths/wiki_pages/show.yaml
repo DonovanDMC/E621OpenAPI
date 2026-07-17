@@ -1,5 +1,5 @@
 summary: Get Wiki Page
-operationId: getWikiPage
+operationId: wiki_pages#show
 tags:
   - Wiki Pages
 parameters:

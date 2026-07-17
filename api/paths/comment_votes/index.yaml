@@ -1,5 +1,5 @@
-summary: Search Comment Votes
-operationId: searchCommentVotes
+summary: Comment Votes Index
+operationId: comment_votes#index
 tags:
   - Comment Votes
 security:

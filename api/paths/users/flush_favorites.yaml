@@ -1,5 +1,5 @@
 summary: Clear User Favorites
-operationId: clearUserFavorites
+operationId: users#flush_favorites
 tags:
   - Users
 description: You must be Admin+.

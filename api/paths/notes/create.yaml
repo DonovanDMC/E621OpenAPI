@@ -1,5 +1,5 @@
 summary: Create Note
-operationId: createNote
+operationId: notes#create
 tags:
   - Notes
 security:

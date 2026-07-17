@@ -1,5 +1,5 @@
 summary: Staff Fix User Counts
-operationId: staffFixUserCounts
+operationId: users#fix_counts
 tags:
   - Users
 description: You must be Janitor+.

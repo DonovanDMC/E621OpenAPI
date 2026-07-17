@@ -1,5 +1,5 @@
 summary: Delete Mascot
-operationId: deleteMascot
+operationId: mascots#destroy
 tags:
   - Mascots
 security:

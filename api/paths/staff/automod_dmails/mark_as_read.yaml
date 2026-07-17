@@ -1,5 +1,5 @@
 summary: Mark Automod DMail As Read
-operationId: markAutomodDMailAsRead
+operationId: staff/automod_dmails#mark_as_read
 tags:
   - DMails
 security:

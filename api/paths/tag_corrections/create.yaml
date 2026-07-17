@@ -1,5 +1,5 @@
 summary: Correct Tag
-operationId: correctTag
+operationId: tag_corrections#create
 tags:
   - Tags
 security:

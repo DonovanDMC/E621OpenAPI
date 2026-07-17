@@ -1,5 +1,5 @@
-summary: Search Forum Posts
-operationId: searchForumPosts
+summary: Forum Posts Index
+operationId: forum_posts#index
 tags:
   - Forum Posts
 parameters:

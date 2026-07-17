@@ -1,5 +1,5 @@
 summary: Update Post Set Posts
-operationId: updatePostSetPosts
+operationId: post_sets#update_posts
 tags:
   - Post Sets
 security:

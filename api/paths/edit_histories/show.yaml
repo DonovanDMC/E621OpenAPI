@@ -1,5 +1,5 @@
 summary: Get Edit History
-operationId: getEditHistory
+operationId: edit_histories#show
 tags:
   - Edit Histories
 security:

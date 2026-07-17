@@ -1,5 +1,5 @@
 summary: Disable User Uploads
-operationId: disableUserUploads
+operationId: users#disable_uploads
 tags:
   - Users
 description: You must be Janitor+.

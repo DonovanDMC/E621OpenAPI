@@ -1,5 +1,5 @@
 summary: Create News Update
-operationId: createNewsUpdate
+operationId: news_updates#create
 tags:
   - News Updates
 security:

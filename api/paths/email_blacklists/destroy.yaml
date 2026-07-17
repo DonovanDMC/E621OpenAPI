@@ -1,5 +1,5 @@
 summary: Delete Email Blacklist
-operationId: deleteEmailBlacklist
+operationId: email_blacklists#destroy
 tags:
   - Email Blacklists
 security:

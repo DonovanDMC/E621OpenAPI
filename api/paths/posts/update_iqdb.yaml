@@ -1,5 +1,5 @@
 summary: Update Post IQDB
-operationId: updatePostIqdb
+operationId: posts#update_iqdb
 tags:
   - Posts
 security:

@@ -1,5 +1,5 @@
 summary: Create Tag Alias
-operationId: createTagAlias
+operationId: tag_alias_requests#create
 tags:
   - Tag Aliases
 security:

@@ -1,5 +1,5 @@
 summary: Create Forum Post Vote
-operationId: createForumPostVote
+operationId: forum_post_votes#create
 tags:
   - Forum Post Votes
 security:

@@ -1,5 +1,5 @@
-summary: Edit Wiki Page
-operationId: editWikiPage
+summary: Update Wiki Page
+operationId: wiki_pages#update
 tags:
   - Wiki Pages
 security:

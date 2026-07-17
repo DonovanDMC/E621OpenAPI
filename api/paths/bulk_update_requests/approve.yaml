@@ -1,5 +1,5 @@
 summary: Approve Bulk Update Request
-operationId: approveBulkUpdateRequest
+operationId: bulk_update_requests#approve
 tags:
   - Bulk Update Requests
 description: Must be Admin+.

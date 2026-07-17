@@ -1,5 +1,5 @@
 summary: Unhide Forum Post
-operationId: unhideForumPost
+operationId: forum_posts#unhide
 tags:
   - Forum Posts
 security:

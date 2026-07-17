@@ -1,5 +1,5 @@
-summary: Edit Bulk Update Request
-operationId: editBulkUpdateRequest
+summary: Update Bulk Update Request
+operationId: bulk_update_requests#update
 tags:
   - Bulk Update Requests
 security:

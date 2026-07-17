@@ -1,5 +1,5 @@
-summary: Search Tag Aliases
-operationId: searchTagAliases
+summary: Tag Aliases Index
+operationId: tag_aliases#index
 tags:
   - Tag Aliases
 parameters:

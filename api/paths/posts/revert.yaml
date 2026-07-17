@@ -1,5 +1,5 @@
 summary: Revert Post
-operationId: revertPost
+operationId: posts#revert
 tags:
   - Posts
 security:

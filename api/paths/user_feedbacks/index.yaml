@@ -1,5 +1,5 @@
-summary: Search User Feedbacks
-operationId: searchUserFeedbacks
+summary: User Feedbacks Index
+operationId: user_feedbacks#index
 tags:
   - User Feedbacks
 parameters:

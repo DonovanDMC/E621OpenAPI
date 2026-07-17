@@ -1,5 +1,5 @@
-summary: Edit Takedown
-operationId: editTakedown
+summary: Update Takedown
+operationId: takedowns#update
 tags:
   - Takedowns
 security:

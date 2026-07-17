@@ -1,5 +1,5 @@
 summary: Undelete Staff Note
-operationId: undeleteStaffNote
+operationId: staff_notes#undelete
 tags:
   - Staff Notes
 security:

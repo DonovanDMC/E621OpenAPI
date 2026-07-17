@@ -1,5 +1,5 @@
 summary: Create Upload Whitelist
-operationId: createUploadWhitelist
+operationId: upload_whitelists#create
 tags:
   - Upload Whitelists
 security:

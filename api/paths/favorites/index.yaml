@@ -1,5 +1,5 @@
-summary: List Favorites
-operationId: listFavorites
+summary: Favorites Index
+operationId: favorites#index
 tags:
   - Favorites
 parameters:

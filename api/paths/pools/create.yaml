@@ -1,5 +1,5 @@
 summary: Create Pool
-operationId: createPool
+operationId: pools#create
 tags:
   - Pools
 security:

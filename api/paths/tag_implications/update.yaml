@@ -1,5 +1,5 @@
-summary: Edit Tag Implication
-operationId: editTagImplication
+summary: Update Tag Implication
+operationId: tag_implications#update
 tags:
   - Tag Implications
 security:

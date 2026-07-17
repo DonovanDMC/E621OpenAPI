@@ -1,5 +1,5 @@
-summary: Search Staff Wiki Versions
-operationId: searchStaffWikiVersions
+summary: Staff Wiki Versions Index
+operationId: staff/wiki_versions#index
 tags:
   - Staff Wiki Versions
 security:

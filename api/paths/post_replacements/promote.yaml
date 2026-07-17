@@ -1,5 +1,5 @@
 summary: Promote Post Replacement
-operationId: promotePostReplacement
+operationId: post_replacements#promote
 tags:
   - Post Replacements
 security:

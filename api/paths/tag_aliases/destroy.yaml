@@ -1,5 +1,5 @@
 summary: Reject Tag Alias
-operationId: rejectTagAlias
+operationId: tag_aliases#destroy
 tags:
   - Tag Aliases
 description: You must be the creator of the request (if pending), or Admin+.

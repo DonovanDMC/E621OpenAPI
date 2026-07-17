@@ -1,5 +1,5 @@
 summary: Clear Search Trends Cache
-operationId: clearSearchTrendsCache
+operationId: search_trends#clear_cache
 tags:
   - Search Trends
 security:

@@ -1,5 +1,5 @@
 summary: Undelete Blip
-operationId: undeleteBlip
+operationId: blips#undelete
 tags:
   - Blips
 security:

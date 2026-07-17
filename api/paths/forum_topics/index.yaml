@@ -1,5 +1,5 @@
-summary: Search Forum Topics
-operationId: searchForumTopics
+summary: Forum Topics Index
+operationId: forum_topics#index
 tags:
   - Forum Topics
 parameters:

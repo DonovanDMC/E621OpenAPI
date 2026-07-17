@@ -1,5 +1,5 @@
 summary: Fix User Counts
-operationId: fixUserCounts
+operationId: maintenance/user/count_fixes#create
 tags:
   - Users
 security:

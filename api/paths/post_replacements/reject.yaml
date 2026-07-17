@@ -1,5 +1,5 @@
 summary: Reject Post Replacement
-operationId: rejectPostReplacement
+operationId: post_replacements#reject
 tags:
   - Post Replacements
 security:

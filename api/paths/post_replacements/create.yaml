@@ -1,5 +1,5 @@
 summary: Create Post Replacement
-operationId: createPostReplacement
+operationId: post_replacements#create
 tags:
   - Post Replacements
 security:

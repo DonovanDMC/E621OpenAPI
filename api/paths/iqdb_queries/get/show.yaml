@@ -1,5 +1,5 @@
 summary: Query IQDB
-operationId: queryIqdbGet
+operationId: iqdb_queries#show
 tags:
   - IQDB
 parameters:

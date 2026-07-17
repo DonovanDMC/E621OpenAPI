@@ -1,5 +1,5 @@
 summary: Unclaim Ticket
-operationId: unclaimTicket
+operationId: tickets#unclaim
 tags:
   - Tickets
 description: You must be Moderator+. Errors are quietly swallowed and shown as notices in html.

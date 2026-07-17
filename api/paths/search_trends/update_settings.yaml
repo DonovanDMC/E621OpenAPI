@@ -1,5 +1,5 @@
 summary: Update Search Trends Settings
-operationId: updateSearchTrendsSettings
+operationId: search_trends#update_settings
 tags:
   - Search Trends
 security:

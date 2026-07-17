@@ -4227,8 +4227,8 @@ components:
 paths:
   /api_keys.json:
     get:
-      summary: Get API Keys
-      operationId: getAPIKeys
+      summary: API Keys Index
+      operationId: api_keys#index
       tags:
         - API Keys
       security:
@@ -4284,7 +4284,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       summary: Create API Key
-      operationId: createAPIKey
+      operationId: api_keys#create
       tags:
         - API Keys
       security:
@@ -4330,7 +4330,7 @@ paths:
   '/api_keys/{id}.json':
     delete:
       summary: Delete API Key
-      operationId: deleteAPIKey
+      operationId: api_keys#destroy
       tags:
         - API Keys
       security:
@@ -4349,7 +4349,7 @@ paths:
   '/api_keys/{id}/regenerate.json':
     post:
       summary: Regenerate API Key
-      operationId: regenerateAPIKey
+      operationId: api_keys#regenerate
       tags:
         - API Keys
       security:
@@ -4382,8 +4382,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /appeals.json:
     get:
-      summary: Search Appeals
-      operationId: searchAppeals
+      summary: Appeals Index
+      operationId: appeals#index
       tags:
         - Appeals
       security:
@@ -4452,7 +4452,7 @@ paths:
   '/appeals/{id}.json':
     patch:
       summary: Update Appeal
-      operationId: updateAppeal
+      operationId: appeals#update
       tags:
         - Appeals
       description: You must be Janitor+.
@@ -4486,7 +4486,7 @@ paths:
   '/appeals/{id}/claim.json':
     post:
       summary: Claim Appeal
-      operationId: claimAppeal
+      operationId: appeals#claim
       tags:
         - Appeals
       description: You must be Janitor+
@@ -4508,7 +4508,7 @@ paths:
   '/appeals/{id}/unclaim.json':
     post:
       summary: Unclaim Appeal
-      operationId: unclaimAppeal
+      operationId: appeals#unclaim
       tags:
         - Appeals
       description: You must be Janitor+
@@ -4529,8 +4529,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /artists.json:
     get:
-      summary: Search Artists
-      operationId: searchArtists
+      summary: Artists Index
+      operationId: artists#index
       tags:
         - Artists
       parameters:
@@ -4615,7 +4615,7 @@ paths:
                             $ref: '#/components/schemas/ArtistUrl'
     post:
       summary: Create Artist
-      operationId: createArtist
+      operationId: artists#create
       tags:
         - Artists
       security:
@@ -4667,7 +4667,7 @@ paths:
   '/artists/{idOrName}.json':
     get:
       summary: Get Artist
-      operationId: getArtist
+      operationId: artists#show
       tags:
         - Artists
       parameters:
@@ -4703,8 +4703,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Artist
-      operationId: editArtist
+      summary: Update Artist
+      operationId: artists#update
       tags:
         - Artists
       security:
@@ -4756,7 +4756,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Artist
-      operationId: deleteArtist
+      operationId: artists#destroy
       tags:
         - Artists
       security:
@@ -4775,7 +4775,7 @@ paths:
   '/artists/{idOrName}/revert.json':
     put:
       summary: Revert Artist
-      operationId: revertArtist
+      operationId: artists#revert
       tags:
         - Artists
       security:
@@ -4801,8 +4801,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /artist_versions.json:
     get:
-      summary: Search Artist Versions
-      operationId: searchArtistVersions
+      summary: Artist Versions Index
+      operationId: artist_versions#index
       tags:
         - Artist Versions
       parameters:
@@ -4850,8 +4850,8 @@ paths:
                   $ref: '#/components/schemas/ArtistVersion'
   /artist_urls.json:
     get:
-      summary: Search Artist URLs
-      operationId: searchArtistUrls
+      summary: Artist URLs Index
+      operationId: artist_urls#index
       tags:
         - Artist URLs
       parameters:
@@ -4943,10 +4943,10 @@ paths:
                           $ref: '#/components/schemas/Artist'
   /avoid_postings.json:
     get:
-      summary: Search Avoid Posting Entries
-      operationId: searchAvoidPostings
+      summary: Avoid Posting Index
+      operationId: avoid_postings#index
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
@@ -5006,10 +5006,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/AvoidPosting'
     post:
-      summary: Create Avoid Posting Entry
-      operationId: createAvoidPosting
+      summary: Create Avoid Posting
+      operationId: avoid_postings#create
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       security:
         - basicAuth: []
       description: Must have the bd staff user flag.
@@ -5058,10 +5058,10 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   '/avoid_postings/{idOrName}.json':
     get:
-      summary: Get Avoid Posting Entry
-      operationId: getAvoidPosting
+      summary: Get Avoid Posting
+      operationId: avoid_postings#show
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       parameters:
         - $ref: '#/components/parameters/idOrNamePath'
       responses:
@@ -5074,10 +5074,10 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Avoid Posting Entry
-      operationId: editAvoidPosting
+      summary: Update Avoid Posting
+      operationId: avoid_postings#update
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       security:
         - basicAuth: []
       description: Must have the bd staff user flag.
@@ -5121,10 +5121,10 @@ paths:
         '422':
           $ref: '#/components/responses/ExpectedError'
     delete:
-      summary: Destroy Avoid Posting Entry
-      operationId: destroyAvoidPosting
+      summary: Destroy Avoid Posting
+      operationId: avoid_postings#destroy
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       security:
         - basicAuth: []
       description: Must have the bd staff user flag.
@@ -5139,10 +5139,10 @@ paths:
           $ref: '#/components/responses/NotFound'
   '/avoid_postings/{idOrName}/delete.json':
     put:
-      summary: Delete Avoid Posting Entry
-      operationId: deleteAvoidPosting
+      summary: Delete Avoid Posting
+      operationId: avoid_postings#delete
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       security:
         - basicAuth: []
       description: Soft deletion. Must have the bd staff user flag.
@@ -5157,10 +5157,10 @@ paths:
           $ref: '#/components/responses/NotFound'
   '/avoid_postings/{idOrName}/undelete.json':
     put:
-      summary: Undelete Avoid Posting Entry
-      operationId: undeleteAvoidPosting
+      summary: Undelete Avoid Posting
+      operationId: avoid_postings#undelete
       tags:
-        - Avoid Posting Entries
+        - Avoid Postings
       security:
         - basicAuth: []
       description: Must have the bd staff user flag.
@@ -5175,8 +5175,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /avoid_posting_versions.json:
     get:
-      summary: Search Avoid Posting Versions
-      operationId: searchAvoidPostingVersions
+      summary: Avoid Posting Versions Index
+      operationId: avoid_posting_versions#index
       tags:
         - Avoid Posting Versions
       parameters:
@@ -5236,8 +5236,8 @@ paths:
                   $ref: '#/components/schemas/AvoidPostingVersion'
   /bans.json:
     get:
-      summary: Search Bans
-      operationId: searchBans
+      summary: Bans Index
+      operationId: bans#index
       tags:
         - Bans
       parameters:
@@ -5295,7 +5295,7 @@ paths:
   '/bans/{id}.json':
     get:
       summary: Get Ban
-      operationId: getBan
+      operationId: bans#show
       tags:
         - Bans
       parameters:
@@ -5311,8 +5311,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /blips.json:
     get:
-      summary: Search Blips
-      operationId: searchBlips
+      summary: Blips Index
+      operationId: blips#index
       tags:
         - Blips
       parameters:
@@ -5356,7 +5356,7 @@ paths:
                   $ref: '#/components/schemas/Blip'
     post:
       summary: Create Blip
-      operationId: createBlip
+      operationId: blips#create
       tags:
         - Blips
       security:
@@ -5389,7 +5389,7 @@ paths:
   '/blips/{id}.json':
     get:
       summary: Get Blip
-      operationId: getBlip
+      operationId: blips#show
       tags:
         - Blips
       parameters:
@@ -5406,8 +5406,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Blip
-      operationId: editBlip
+      summary: Update Blip
+      operationId: blips#update
       tags:
         - Blips
       security:
@@ -5434,7 +5434,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Destroy Blip
-      operationId: destroyBlip
+      operationId: blips#destroy
       tags:
         - Blips
       security:
@@ -5453,7 +5453,7 @@ paths:
   '/blips/{id}/delete.json':
     post:
       summary: Delete Blip
-      operationId: deleteBlip
+      operationId: blips#delete
       tags:
         - Blips
       security:
@@ -5472,7 +5472,7 @@ paths:
   '/blips/{id}/undelete.json':
     post:
       summary: Undelete Blip
-      operationId: undeleteBlip
+      operationId: blips#undelete
       tags:
         - Blips
       security:
@@ -5491,7 +5491,7 @@ paths:
   '/blips/{id}/warning.json':
     post:
       summary: Mark Blip
-      operationId: markBlip
+      operationId: blips#warning
       tags:
         - Blips
       security:
@@ -5514,8 +5514,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /bulk_update_requests.json:
     get:
-      summary: Search Bulk Update Requests
-      operationId: searchBulkUpdateRequests
+      summary: Bulk Update Requests Index
+      operationId: bulk_update_requests#index
       tags:
         - Bulk Update Requests
       parameters:
@@ -5584,7 +5584,7 @@ paths:
                   $ref: '#/components/schemas/BulkUpdateRequest'
     post:
       summary: Create Bulk Update Request
-      operationId: createBulkUpdateRequest
+      operationId: bulk_update_requests#create
       tags:
         - Bulk Update Requests
       security:
@@ -5625,7 +5625,7 @@ paths:
   '/bulk_update_requests/{id}.json':
     get:
       summary: Get Bulk Update Request
-      operationId: getBulkUpdateRequest
+      operationId: bulk_update_requests#show
       tags:
         - Bulk Update Requests
       parameters:
@@ -5640,8 +5640,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Bulk Update Request
-      operationId: editBulkUpdateRequest
+      summary: Update Bulk Update Request
+      operationId: bulk_update_requests#update
       tags:
         - Bulk Update Requests
       security:
@@ -5674,7 +5674,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Reject Bulk Update Request
-      operationId: rejectBulkUpdateRequest
+      operationId: bulk_update_requests#destroy
       tags:
         - Bulk Update Requests
       security:
@@ -5692,7 +5692,7 @@ paths:
   '/bulk_update_requests/{id}/approve.json':
     post:
       summary: Approve Bulk Update Request
-      operationId: approveBulkUpdateRequest
+      operationId: bulk_update_requests#approve
       tags:
         - Bulk Update Requests
       description: Must be Admin+.
@@ -5707,8 +5707,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /comments.json:
     get:
-      summary: Search Comments
-      operationId: searchComments
+      summary: Comments Index
+      operationId: comments#index
       tags:
         - Comments
       description: 'For searching comments, group_by=comment must be set.'
@@ -5787,7 +5787,7 @@ paths:
                   $ref: '#/components/schemas/Comment'
     post:
       summary: Create Comment
-      operationId: createComment
+      operationId: comments#create
       tags:
         - Comments
       security:
@@ -5827,7 +5827,7 @@ paths:
   '/comments/{id}.json':
     get:
       summary: Get Comment
-      operationId: getComment
+      operationId: comments#show
       tags:
         - Comments
       description: 'If the comment is hidden, you must be the creator or Staff+ to see it.'
@@ -5845,8 +5845,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Comment
-      operationId: editComment
+      summary: Update Comment
+      operationId: comments#update
       tags:
         - Comments
       security:
@@ -5880,7 +5880,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Comment
-      operationId: deleteComment
+      operationId: comments#destroy
       tags:
         - Comments
       security:
@@ -5899,7 +5899,7 @@ paths:
   '/comments/{id}/hide.json':
     post:
       summary: Hide Comment
-      operationId: hideComment
+      operationId: comments#hide
       tags:
         - Comments
       security:
@@ -5922,7 +5922,7 @@ paths:
   '/comments/{id}/unhide.json':
     post:
       summary: Unhide Comment
-      operationId: unhideComment
+      operationId: comments#unhide
       tags:
         - Comments
       security:
@@ -5945,7 +5945,7 @@ paths:
   '/comments/{id}/warning.json':
     post:
       summary: Mark Comment
-      operationId: markComment
+      operationId: comments#warning
       tags:
         - Comments
       security:
@@ -5969,7 +5969,7 @@ paths:
   '/comments/{id}/votes.json':
     post:
       summary: Create Comment Vote
-      operationId: createCommentVote
+      operationId: comment_votes#create
       tags:
         - Comment Votes
       security:
@@ -6008,7 +6008,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Comment Vote
-      operationId: deleteCommentVote
+      operationId: comment_votes#destroy
       tags:
         - Comment Votes
       security:
@@ -6026,8 +6026,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /comment_votes.json:
     get:
-      summary: Search Comment Votes
-      operationId: searchCommentVotes
+      summary: Comment Votes Index
+      operationId: comment_votes#index
       tags:
         - Comment Votes
       security:
@@ -6095,7 +6095,7 @@ paths:
   /comment_votes/lock.json:
     post:
       summary: Lock Comment Votes
-      operationId: lockCommentVotes
+      operationId: comment_votes#lock
       tags:
         - Comment Votes
       security:
@@ -6121,7 +6121,7 @@ paths:
   /comment_votes/delete.json:
     post:
       summary: Delete Comment Votes
-      operationId: deleteCommentVotes
+      operationId: comment_votes#delete
       tags:
         - Comment Votes
       security:
@@ -6143,7 +6143,7 @@ paths:
   /db_exports.json:
     get:
       summary: Get DB Exports
-      operationId: getDBExports
+      operationId: db_exports#index
       tags:
         - System
       responses:
@@ -6158,7 +6158,7 @@ paths:
   /health:
     get:
       summary: Get health
-      operationId: getHealth
+      operationId: health#index
       tags:
         - System
       responses:
@@ -6171,8 +6171,8 @@ paths:
                 example: OK | app3 | 26.06.10-fix.3
   /dmails.json:
     get:
-      summary: Search DMails
-      operationId: searchDMails
+      summary: DMails Index
+      operationId: dmails#index
       tags:
         - DMails
       security:
@@ -6229,7 +6229,7 @@ paths:
   '/dmails/{id}.json':
     get:
       summary: Get DMail
-      operationId: getDMail
+      operationId: dmails#show
       tags:
         - DMails
       security:
@@ -6260,7 +6260,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       summary: Delete DMail
-      operationId: deleteDMail
+      operationId: dmails#destroy
       tags:
         - DMails
       security:
@@ -6278,7 +6278,7 @@ paths:
   '/dmails/{id}/mark_as_read.json':
     put:
       summary: Mark DMail As Read
-      operationId: markDMailAsRead
+      operationId: dmails#mark_as_read
       tags:
         - DMails
       security:
@@ -6295,7 +6295,7 @@ paths:
   '/dmails/{id}/mark_as_unread.json':
     put:
       summary: Mark DMail As Unread
-      operationId: markDMailAsUnread
+      operationId: dmails#mark_as_unread
       tags:
         - DMails
       security:
@@ -6312,7 +6312,7 @@ paths:
   /dmails/mark_all_as_read.json:
     put:
       summary: Mark All DMails As Read
-      operationId: markAllDMailsAsRead
+      operationId: dmails#mark_all_as_read
       tags:
         - DMails
       security:
@@ -6327,7 +6327,7 @@ paths:
   /dtext_preview.json:
     post:
       summary: Preview DText
-      operationId: previewDText
+      operationId: dtext_previews#create
       tags:
         - DText
       description: 'Note while this route does not require auth, without auth it requires a CSRF token. For that reason it has been marked as requiring auth.'
@@ -6353,8 +6353,8 @@ paths:
                 $ref: '#/components/schemas/DTextResponse'
   /edit_histories.json:
     get:
-      summary: Search Edit Histories
-      operationId: searchEditHistories
+      summary: Edit Histories Index
+      operationId: edit_histories#index
       tags:
         - Edit Histories
       security:
@@ -6408,7 +6408,7 @@ paths:
   '/edit_histories/{id}.json':
     get:
       summary: Get Edit History
-      operationId: getEditHistory
+      operationId: edit_histories#show
       tags:
         - Edit Histories
       security:
@@ -6439,8 +6439,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /email_blacklists.json:
     get:
-      summary: Search Email Blacklists
-      operationId: searchEmailBlacklists
+      summary: Email Blacklists Index
+      operationId: email_blacklists#index
       tags:
         - Email Blacklists
       parameters:
@@ -6475,7 +6475,7 @@ paths:
                   $ref: '#/components/schemas/EmailBlacklist'
     post:
       summary: Create Email Blacklist
-      operationId: createEmailBlacklist
+      operationId: email_blacklists#create
       tags:
         - Email Blacklists
       description: You must be Admin+.
@@ -6506,7 +6506,7 @@ paths:
   '/email_blacklists/{id}.json':
     delete:
       summary: Delete Email Blacklist
-      operationId: deleteEmailBlacklist
+      operationId: email_blacklists#destroy
       tags:
         - Email Blacklists
       security:
@@ -6523,8 +6523,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /favorites.json:
     get:
-      summary: List Favorites
-      operationId: listFavorites
+      summary: Favorites Index
+      operationId: favorites#index
       tags:
         - Favorites
       parameters:
@@ -6540,8 +6540,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     post:
-      summary: Add Favorite
-      operationId: addFavorite
+      summary: Create Favorite
+      operationId: favorites#create
       tags:
         - Favorites
       security:
@@ -6579,8 +6579,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   '/favorites/{id}.json':
     delete:
-      summary: Remove Favorite
-      operationId: removeFavorite
+      summary: Delete Favorite
+      operationId: favorites#destroy
       tags:
         - Favorites
       security:
@@ -6610,8 +6610,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /forum_posts.json:
     get:
-      summary: Search Forum Posts
-      operationId: searchForumPosts
+      summary: Forum Posts Index
+      operationId: forum_posts#index
       tags:
         - Forum Posts
       parameters:
@@ -6658,7 +6658,7 @@ paths:
                   $ref: '#/components/schemas/ForumPost'
     post:
       summary: Create Forum Post
-      operationId: createForumPost
+      operationId: forum_posts#create
       tags:
         - Forum Posts
       security:
@@ -6690,7 +6690,7 @@ paths:
   '/forum_posts/{id}.json':
     get:
       summary: Get Forum Post
-      operationId: getForumPost
+      operationId: forum_posts#show
       tags:
         - Forum Posts
       description: 'If the forum post is hidden, you must be the creator or Moderator+ to see it.'
@@ -6708,8 +6708,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Forum Post
-      operationId: editForumPost
+      summary: Update Forum Post
+      operationId: forum_posts#update
       tags:
         - Forum Posts
       security:
@@ -6736,7 +6736,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Forum Post
-      operationId: deleteForumPost
+      operationId: forum_posts#destroy
       tags:
         - Forum Posts
       security:
@@ -6754,7 +6754,7 @@ paths:
   '/forum_posts/{id}/hide.json':
     post:
       summary: Hide Forum Post
-      operationId: hideForumPost
+      operationId: forum_posts#hide
       tags:
         - Forum Posts
       security:
@@ -6776,7 +6776,7 @@ paths:
   '/forum_posts/{id}/unhide.json':
     post:
       summary: Unhide Forum Post
-      operationId: unhideForumPost
+      operationId: forum_posts#unhide
       tags:
         - Forum Posts
       security:
@@ -6798,7 +6798,7 @@ paths:
   '/forum_posts/{id}/warning.json':
     post:
       summary: Mark Forum Post
-      operationId: markForumPost
+      operationId: forum_posts#warning
       tags:
         - Forum Posts
       security:
@@ -6822,8 +6822,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   '/forum_posts/{id}/votes.json':
     get:
-      summary: List Forum Post Votes
-      operationId: listForumPostVotes
+      summary: Forum Post Votes Index
+      operationId: forum_post_votes#show
       tags:
         - Forum Post Votes
       security:
@@ -6847,7 +6847,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     post:
       summary: Create Forum Post Vote
-      operationId: createForumPostVote
+      operationId: forum_post_votes#create
       tags:
         - Forum Post Votes
       security:
@@ -6879,7 +6879,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Forum Post Vote
-      operationId: deleteForumPostVote
+      operationId: forum_post_votes#destroy
       tags:
         - Forum Post Votes
       security:
@@ -6897,8 +6897,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /forum_topics.json:
     get:
-      summary: Search Forum Topics
-      operationId: searchForumTopics
+      summary: Forum Topics Index
+      operationId: forum_topics#index
       tags:
         - Forum Topics
       parameters:
@@ -6948,7 +6948,7 @@ paths:
                   $ref: '#/components/schemas/ForumTopic'
     post:
       summary: Create Forum Topic
-      operationId: createForumTopic
+      operationId: forum_topics#create
       tags:
         - Forum Topics
       security:
@@ -6992,7 +6992,7 @@ paths:
   '/forum_topics/{id}.json':
     get:
       summary: Get Forum Forum Topic
-      operationId: getForumTopic
+      operationId: forum_topics#show
       tags:
         - Forum Topics
       description: 'If the forum topic is hidden, you must be the creator or Moderator+ to see it.'
@@ -7010,8 +7010,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Forum Topic
-      operationId: editForumTopic
+      summary: Update Forum Topic
+      operationId: forum_topics#update
       tags:
         - Forum Topics
       security:
@@ -7051,7 +7051,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Forum Topic
-      operationId: deleteForumTopic
+      operationId: forum_topics#destroy
       tags:
         - Forum Topics
       security:
@@ -7069,7 +7069,7 @@ paths:
   '/forum_topics/{id}/hide.json':
     post:
       summary: Hide Forum Topic
-      operationId: hideForumTopic
+      operationId: forum_topics#hide
       tags:
         - Forum Topics
       security:
@@ -7091,7 +7091,7 @@ paths:
   '/forum_topics/{id}/unhide.json':
     post:
       summary: Unhide Forum Topic
-      operationId: unhideForumTopic
+      operationId: forum_topics#unhide
       tags:
         - Forum Topics
       security:
@@ -7113,7 +7113,7 @@ paths:
   '/forum_topics/{id}/subscribe.json':
     post:
       summary: Subscribe To Forum Topic
-      operationId: subscribeForumTopic
+      operationId: forum_topics#subscribe
       tags:
         - Forum Topics
       security:
@@ -7134,7 +7134,7 @@ paths:
   '/forum_topics/{id}/unsubscribe.json':
     post:
       summary: Unsubscribe From Forum Topic
-      operationId: unsubscribeForumTopic
+      operationId: forum_topics#unsubscribe
       tags:
         - Forum Topics
       security:
@@ -7155,7 +7155,7 @@ paths:
   /forum_topics/mark_all_as_read.json:
     post:
       summary: Mark All Forum Topics As Read
-      operationId: markAllForumTopicsAsRead
+      operationId: forum_topics#mark_all_as_read
       tags:
         - Forum Topics
       security:
@@ -7178,7 +7178,7 @@ paths:
   /help.json:
     get:
       summary: Get Landing Help Page
-      operationId: getLandingHelpPage
+      operationId: help#index
       tags:
         - Help Pages
       responses:
@@ -7192,7 +7192,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       summary: Create Help Page
-      operationId: createHelpPage
+      operationId: help#create
       tags:
         - Help Pages
       security:
@@ -7229,8 +7229,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /help/list.json:
     get:
-      summary: List Help Pages
-      operationId: listHelpPages
+      summary: Help Pages Index
+      operationId: help#list
       tags:
         - Help Pages
       responses:
@@ -7245,7 +7245,7 @@ paths:
   '/help/{id}.json':
     get:
       summary: Get Help Page
-      operationId: getHelpPage
+      operationId: help#show
       tags:
         - Help Pages
       parameters:
@@ -7269,8 +7269,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Help Page
-      operationId: editHelpPage
+      summary: Update Help Page
+      operationId: help#update
       tags:
         - Help Pages
       security:
@@ -7304,7 +7304,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Help Page
-      operationId: deleteHelpPage
+      operationId: help#destroy
       tags:
         - Help Pages
       security:
@@ -7321,8 +7321,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /ip_bans.json:
     get:
-      summary: List IP Bans
-      operationId: listIpBans
+      summary: IP Bans Index
+      operationId: ip_bans#index
       tags:
         - IP Bans
       security:
@@ -7356,7 +7356,7 @@ paths:
                   $ref: '#/components/schemas/IpBan'
     post:
       summary: Create IP Ban
-      operationId: createIpBan
+      operationId: ip_bans#create
       tags:
         - IP Bans
       security:
@@ -7389,7 +7389,7 @@ paths:
   '/ip_bans/{id}.json':
     delete:
       summary: Delete IP Ban
-      operationId: deleteIpBan
+      operationId: ip_bans#destroy
       tags:
         - IP Bans
       security:
@@ -7407,7 +7407,7 @@ paths:
   /iqdb_queries.json:
     get:
       summary: Query IQDB
-      operationId: queryIqdbGet
+      operationId: iqdb_queries#show
       tags:
         - IQDB
       parameters:
@@ -7464,7 +7464,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
     post:
       summary: Query IQDB
-      operationId: queryIqdbPost
+      operationId: iqdb_queries#show_post
       tags:
         - IQDB
       parameters:
@@ -7517,8 +7517,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /mascots.json:
     get:
-      summary: Search Mascots
-      operationId: searchMascots
+      summary: Mascots Index
+      operationId: mascots#index
       tags:
         - Mascots
       parameters:
@@ -7536,7 +7536,7 @@ paths:
                   $ref: '#/components/schemas/Mascot'
     post:
       summary: Create Mascot
-      operationId: createMascot
+      operationId: mascots#create
       tags:
         - Mascots
       security:
@@ -7585,8 +7585,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   '/mascots/{id}.json':
     patch:
-      summary: Edit Mascot
-      operationId: editMascot
+      summary: Update Mascot
+      operationId: mascots#update
       tags:
         - Mascots
       security:
@@ -7629,7 +7629,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Mascot
-      operationId: deleteMascot
+      operationId: mascots#destroy
       tags:
         - Mascots
       security:
@@ -7646,8 +7646,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /mod_actions.json:
     get:
-      summary: Search Mod Actions
-      operationId: searchModActions
+      summary: Mod Actions Index
+      operationId: mod_actions#index
       tags:
         - Mod Actions
       description: |
@@ -7692,7 +7692,7 @@ paths:
   '/mod_actions/{id}.json':
     get:
       summary: Get Mod Action
-      operationId: getModAction
+      operationId: mod_actions#show
       tags:
         - Mod Actions
       parameters:
@@ -7710,8 +7710,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /news_updates.json:
     get:
-      summary: List News Updates
-      operationId: listNewsUpdates
+      summary: News Updates Index
+      operationId: news_updates#index
       tags:
         - News Updates
       parameters:
@@ -7728,7 +7728,7 @@ paths:
                   $ref: '#/components/schemas/NewsUpdate'
     post:
       summary: Create News Update
-      operationId: createNewsUpdate
+      operationId: news_updates#create
       tags:
         - News Updates
       security:
@@ -7757,8 +7757,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   '/news_updates/{id}.json':
     patch:
-      summary: Edit News Update
-      operationId: editNewsUpdate
+      summary: Update News Update
+      operationId: news_updates#update
       tags:
         - News Updates
       security:
@@ -7787,7 +7787,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete News Update
-      operationId: deleteNewsUpdate
+      operationId: news_updates#destroy
       tags:
         - News Updates
       security:
@@ -7804,8 +7804,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /notes.json:
     get:
-      summary: Search Notes
-      operationId: searchNotes
+      summary: Notes Index
+      operationId: notes#index
       tags:
         - Notes
       parameters:
@@ -7856,7 +7856,7 @@ paths:
                   $ref: '#/components/schemas/Note'
     post:
       summary: Create Note
-      operationId: createNote
+      operationId: notes#create
       tags:
         - Notes
       security:
@@ -7911,7 +7911,7 @@ paths:
   '/notes/{id}.json':
     get:
       summary: Get Note
-      operationId: getNote
+      operationId: notes#show
       tags:
         - Notes
       parameters:
@@ -7926,8 +7926,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Note
-      operationId: editNote
+      summary: Update Note
+      operationId: notes#update
       tags:
         - Notes
       security:
@@ -7961,7 +7961,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Note
-      operationId: deleteNote
+      operationId: notes#destroy
       tags:
         - Notes
       security:
@@ -7978,7 +7978,7 @@ paths:
   '/notes/{id}/revert.json':
     put:
       summary: Revert Note
-      operationId: revertNote
+      operationId: notes#revert
       tags:
         - Notes
       security:
@@ -8002,8 +8002,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /note_versions.json:
     get:
-      summary: Search Note Versions
-      operationId: searchNoteVersions
+      summary: Note Versions Index
+      operationId: note_versions#index
       tags:
         - Note Versions
       parameters:
@@ -8047,8 +8047,8 @@ paths:
                   $ref: '#/components/schemas/NoteVersion'
   /pools.json:
     get:
-      summary: Search Pools
-      operationId: searchPools
+      summary: Pools Index
+      operationId: pools#index
       tags:
         - Pools
       parameters:
@@ -8100,7 +8100,7 @@ paths:
                   $ref: '#/components/schemas/Pool'
     post:
       summary: Create Pool
-      operationId: createPool
+      operationId: pools#create
       tags:
         - Pools
       security:
@@ -8143,7 +8143,7 @@ paths:
   '/pools/{id}.json':
     get:
       summary: Get Pool
-      operationId: getPool
+      operationId: pools#show
       tags:
         - Pools
       parameters:
@@ -8158,8 +8158,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Pool
-      operationId: editPool
+      summary: Update Pool
+      operationId: pools#update
       tags:
         - Pools
       security:
@@ -8199,7 +8199,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Pool
-      operationId: deletePool
+      operationId: pools#destroy
       tags:
         - Pools
       description: You must be Staff+.
@@ -8217,7 +8217,7 @@ paths:
   '/pools/{id}/revert.json':
     put:
       summary: Revert Pool
-      operationId: revertPool
+      operationId: pools#revert
       tags:
         - Pools
       security:
@@ -8242,7 +8242,7 @@ paths:
   /pool_element.json:
     post:
       summary: Add Post To Pool
-      operationId: addPostToPool
+      operationId: pool_elements#create
       tags:
         - Pools
       security:
@@ -8274,7 +8274,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       summary: Remove Post From Pool
-      operationId: removePostFromPool
+      operationId: pool_elements#destroy
       tags:
         - Pools
       security:
@@ -8303,7 +8303,7 @@ paths:
   /pool_element/recent.json:
     get:
       summary: Get Recent Pools
-      operationId: getRecentPools
+      operationId: pool_elements#recent
       tags:
         - Pools
       security:
@@ -8343,8 +8343,8 @@ paths:
                       type: string
   /pool_versions.json:
     get:
-      summary: Search Pool Versions
-      operationId: searchPoolVersions
+      summary: Pool Versions Index
+      operationId: pool_versions#index
       tags:
         - Pool Versions
       parameters:
@@ -8376,8 +8376,8 @@ paths:
                   $ref: '#/components/schemas/PoolVersion'
   /popular.json:
     get:
-      summary: List Most Upvoted Posts
-      operationId: listPopular
+      summary: Popular Index
+      operationId: popular#index
       tags:
         - Popular
       parameters:
@@ -8406,8 +8406,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /posts.json:
     get:
-      summary: Search Posts
-      operationId: searchPosts
+      summary: Posts Index
+      operationId: posts#index
       tags:
         - Posts
       parameters:
@@ -8484,7 +8484,7 @@ paths:
   /posts/random.json:
     get:
       summary: Get Random Post
-      operationId: getRandomPost
+      operationId: posts#random
       tags:
         - Posts
       parameters:
@@ -8502,7 +8502,7 @@ paths:
   '/posts/{id}.json':
     get:
       summary: Get Post
-      operationId: getPost
+      operationId: posts#show
       tags:
         - Posts
       parameters:
@@ -8515,8 +8515,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Post
-      operationId: editPost
+      summary: Update Post
+      operationId: posts#update
       tags:
         - Posts
       security:
@@ -8603,7 +8603,7 @@ paths:
   '/posts/{id}/update_iqdb.json':
     get:
       summary: Update Post IQDB
-      operationId: updatePostIqdb
+      operationId: posts#update_iqdb
       tags:
         - Posts
       security:
@@ -8625,7 +8625,7 @@ paths:
   '/posts/{id}/mark_as_translated.json':
     put:
       summary: Mark Post As Translated
-      operationId: markPostAsTranslated
+      operationId: posts#mark_as_translated
       tags:
         - Posts
       security:
@@ -8657,7 +8657,7 @@ paths:
   '/posts/{id}/copy_notes.json':
     put:
       summary: Copy Notes To Post
-      operationId: copyNotesToPost
+      operationId: posts#copy_notes
       tags:
         - Posts
       security:
@@ -8686,7 +8686,7 @@ paths:
   '/posts/{id}/revert.json':
     put:
       summary: Revert Post
-      operationId: revertPost
+      operationId: posts#revert
       tags:
         - Posts
       security:
@@ -8711,7 +8711,7 @@ paths:
   '/posts/{id}/show_seq.json':
     get:
       summary: Get Post In Sequence
-      operationId: getPostInSequence
+      operationId: posts#show_seq
       tags:
         - Posts
       parameters:
@@ -8738,7 +8738,7 @@ paths:
   '/posts/{id}/flag.json':
     delete:
       summary: Unflag Post
-      operationId: unflagPost
+      operationId: post_flags#destroy
       tags:
         - Posts
       description: You must have the "Approve Posts" permission.
@@ -8764,10 +8764,10 @@ paths:
           $ref: '#/components/responses/NotFound'
   '/posts/{id}/favorites.json':
     get:
-      summary: List Post Favorites
-      operationId: listPostFavorites
+      summary: Post Favorites Index
+      operationId: post_favorites#index
       tags:
-        - Posts
+        - Post Favorites
       parameters:
         - $ref: '#/components/parameters/idPath'
         - name: limit
@@ -8795,7 +8795,7 @@ paths:
   '/posts/{id}/votes.json':
     post:
       summary: Create Post Vote
-      operationId: createPostVote
+      operationId: post_votes#create
       tags:
         - Post Votes
       security:
@@ -8840,7 +8840,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Post Vote
-      operationId: deletePostVote
+      operationId: post_votes#destroy
       tags:
         - Post Votes
       security:
@@ -8859,7 +8859,7 @@ paths:
   '/posts/{id}/similar/artist.json':
     get:
       summary: Get Recommended Posts For Artist
-      operationId: getRecommendedPostsArtist
+      operationId: post_recommendations#artist
       tags:
         - Posts
       parameters:
@@ -8880,7 +8880,7 @@ paths:
   '/posts/{id}/similar/tags.json':
     get:
       summary: Get Recommended Posts For Tags
-      operationId: getRecommendedPostsTags
+      operationId: post_recommendations#tags
       tags:
         - Posts
       parameters:
@@ -8900,8 +8900,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /post_sets.json:
     get:
-      summary: Search Post Sets
-      operationId: searchPostSets
+      summary: Post Sets Index
+      operationId: post_sets#index
       tags:
         - Post Sets
       parameters:
@@ -8962,7 +8962,7 @@ paths:
                   $ref: '#/components/schemas/PostSet'
     post:
       summary: Create Post Set
-      operationId: createPostSet
+      operationId: post_sets#create
       tags:
         - Post Sets
       security:
@@ -9000,7 +9000,7 @@ paths:
   '/post_sets/{id}.json':
     get:
       summary: Get Post Set
-      operationId: getPostSet
+      operationId: post_sets#show
       tags:
         - Post Sets
       description: You must be Moderator+ if the set is not public.
@@ -9018,8 +9018,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Post Set
-      operationId: editPostSet
+      summary: Update Post Set
+      operationId: post_sets#update
       tags:
         - Post Sets
       security:
@@ -9054,7 +9054,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Post Set
-      operationId: deletePostSet
+      operationId: post_sets#destroy
       tags:
         - Post Sets
       security:
@@ -9072,7 +9072,7 @@ paths:
   '/post_sets/{id}/update_posts.json':
     post:
       summary: Update Post Set Posts
-      operationId: updatePostSetPosts
+      operationId: post_sets#update_posts
       tags:
         - Post Sets
       security:
@@ -9106,7 +9106,7 @@ paths:
   '/post_sets/{id}/add_posts.json':
     post:
       summary: Add Posts To Post Set
-      operationId: addPostsToPostSet
+      operationId: post_sets#add_posts
       tags:
         - Post Sets
       security:
@@ -9143,7 +9143,7 @@ paths:
   '/post_sets/{id}/remove_posts.json':
     post:
       summary: Remove Posts From Post Set
-      operationId: removePostsFromPostSet
+      operationId: post_sets#remove_posts
       tags:
         - Post Sets
       security:
@@ -9180,7 +9180,7 @@ paths:
   /post_sets/for_select.json:
     get:
       summary: List Post Sets For Select
-      operationId: listPostSetsForSelect
+      operationId: post_sets#for_select
       tags:
         - Post Sets
       security:
@@ -9218,8 +9218,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /post_approvals.json:
     get:
-      summary: Search Post Approvals
-      operationId: searchPostApprovals
+      summary: Post Approvals Index
+      operationId: post_approvals#index
       tags:
         - Post Approvals
       parameters:
@@ -9254,8 +9254,8 @@ paths:
                   $ref: '#/components/schemas/PostApproval'
   /post_events.json:
     get:
-      summary: Search Post Events
-      operationId: searchPostEvents
+      summary: Post Events Index
+      operationId: post_events#index
       tags:
         - Post Events
       security:
@@ -9304,8 +9304,8 @@ paths:
                       $ref: '#/components/schemas/PostEvent'
   /post_flags.json:
     get:
-      summary: Search Post Flags
-      operationId: searchPostFlags
+      summary: Post Flags Index
+      operationId: post_flags#index
       tags:
         - Post Flags
       parameters:
@@ -9353,7 +9353,7 @@ paths:
                   $ref: '#/components/schemas/PostFlag'
     post:
       summary: Create Post Flag
-      operationId: createPostFlag
+      operationId: post_flags#create
       tags:
         - Post Flags
       security:
@@ -9400,7 +9400,7 @@ paths:
   '/post_flags/{id}.json':
     get:
       summary: Get Post Flag
-      operationId: getPostFlag
+      operationId: post_flags#show
       tags:
         - Post Flags
       parameters:
@@ -9417,7 +9417,7 @@ paths:
   '/post_flags/{id}/clear_note.json':
     post:
       summary: Clear Post Flag Note
-      operationId: clearPostFlagNote
+      operationId: post_flags#clear_note
       tags:
         - Post Flags
       security:
@@ -9438,8 +9438,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /post_replacements.json:
     get:
-      summary: Search Post Replacements
-      operationId: searchPostReplacements
+      summary: Post Replacements Index
+      operationId: post_replacements#index
       tags:
         - Post Replacements
       description: Rejected replacements can only be seen by staff.
@@ -9516,7 +9516,7 @@ paths:
                   $ref: '#/components/schemas/PostReplacement'
     post:
       summary: Create Post Replacement
-      operationId: createPostReplacement
+      operationId: post_replacements#create
       tags:
         - Post Replacements
       security:
@@ -9570,7 +9570,7 @@ paths:
   '/post_replacements/{id}.json':
     delete:
       summary: Delete Post Replacement
-      operationId: deletePostReplacement
+      operationId: post_replacements#destroy
       tags:
         - Post Replacements
       description: You must be Admin+.
@@ -9588,7 +9588,7 @@ paths:
   '/post_replacements/{id}/approve.json':
     put:
       summary: Approve Post Replacement
-      operationId: approvePostReplacement
+      operationId: post_replacements#approve
       tags:
         - Post Replacements
       security:
@@ -9612,7 +9612,7 @@ paths:
   '/post_replacements/{id}/reject.json':
     put:
       summary: Reject Post Replacement
-      operationId: rejectPostReplacement
+      operationId: post_replacements#reject
       tags:
         - Post Replacements
       security:
@@ -9632,7 +9632,7 @@ paths:
   '/post_replacements/{id}/promote.json':
     post:
       summary: Promote Post Replacement
-      operationId: promotePostReplacement
+      operationId: post_replacements#promote
       tags:
         - Post Replacements
       security:
@@ -9661,7 +9661,7 @@ paths:
   '/post_replacements/{id}/toggle_penalize.json':
     put:
       summary: Toggle Post Replacement Penalty
-      operationId: togglePostReplacementPenalty
+      operationId: post_replacements#toggle_penalize
       tags:
         - Post Replacements
       security:
@@ -9680,8 +9680,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /post_versions.json:
     get:
-      summary: Search Post Versions
-      operationId: searchPostVersions
+      summary: Post Versions Index
+      operationId: post_versions#index
       tags:
         - Post Versions
       parameters:
@@ -9791,7 +9791,7 @@ paths:
   '/post_versions/{id}/hide.json':
     put:
       summary: Hide Post Version
-      operationId: hidePostVersion
+      operationId: post_versions#hide
       tags:
         - Post Versions
       security:
@@ -9809,7 +9809,7 @@ paths:
   '/post_versions/{id}/unhide.json':
     put:
       summary: Unhide Post Version
-      operationId: unhidePostVersion
+      operationId: post_versions#unhide
       tags:
         - Post Versions
       security:
@@ -9827,7 +9827,7 @@ paths:
   '/post_versions/{id}/undo.json':
     put:
       summary: Undo Post Version
-      operationId: undoPostVersion
+      operationId: post_versions#undo
       tags:
         - Post Versions
       security:
@@ -9843,8 +9843,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /post_votes.json:
     get:
-      summary: Search Post Votes
-      operationId: searchPostVotes
+      summary: Post Votes Index
+      operationId: post_votes#index
       tags:
         - Post Votes
       security:
@@ -9912,7 +9912,7 @@ paths:
   /post_votes/lock.json:
     post:
       summary: Lock Post Votes
-      operationId: lockPostVotes
+      operationId: post_votes#lock
       tags:
         - Post Votes
       security:
@@ -9936,8 +9936,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /post_votes/delete.json:
     post:
-      summary: Delete Post Vote
-      operationId: deletePostVotes
+      summary: Delete Post Votes
+      operationId: post_votes#delete
       tags:
         - Post Votes
       security:
@@ -9957,8 +9957,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /tags.json:
     get:
-      summary: Search Tags
-      operationId: searchTags
+      summary: Tags Index
+      operationId: tags#index
       tags:
         - Tags
       parameters:
@@ -10016,7 +10016,7 @@ paths:
   '/tags/{id}.json':
     get:
       summary: Get Tag
-      operationId: getTag
+      operationId: tags#show
       tags:
         - Tags
       parameters:
@@ -10038,8 +10038,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Tag
-      operationId: editTag
+      summary: Update Tag
+      operationId: tags#update
       tags:
         - Tags
       security:
@@ -10069,7 +10069,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Tag
-      operationId: deleteTag
+      operationId: tags#destroy
       tags:
         - Tags
       security:
@@ -10089,7 +10089,7 @@ paths:
   '/tags/{id}/correction.json':
     get:
       summary: Get Tag Correction
-      operationId: getTagCorrection
+      operationId: tag_corrections#show
       tags:
         - Tags
       parameters:
@@ -10105,7 +10105,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       summary: Correct Tag
-      operationId: correctTag
+      operationId: tag_corrections#create
       tags:
         - Tags
       security:
@@ -10136,7 +10136,7 @@ paths:
   /tags/preview.json:
     post:
       summary: Preview Tags
-      operationId: previewTags
+      operationId: tags#preview
       tags:
         - Tags
       security:
@@ -10165,8 +10165,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /tag_type_versions.json:
     get:
-      summary: Search Tag Type Versions
-      operationId: searchTagTypeVersions
+      summary: Tag Type Versions Index
+      operationId: tag_type_versions#index
       tags:
         - Tag Type Versions
       parameters:
@@ -10196,8 +10196,8 @@ paths:
                   $ref: '#/components/schemas/TagTypeVersion'
   /tag_aliases.json:
     get:
-      summary: Search Tag Aliases
-      operationId: searchTagAliases
+      summary: Tag Aliases Index
+      operationId: tag_aliases#index
       tags:
         - Tag Aliases
       parameters:
@@ -10267,7 +10267,7 @@ paths:
   '/tag_aliases/{id}.json':
     get:
       summary: Get Tag Alias
-      operationId: getTagAlias
+      operationId: tag_aliases#show
       tags:
         - Tag Aliases
       parameters:
@@ -10282,8 +10282,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Tag Alias
-      operationId: editTagAlias
+      summary: Update Tag Alias
+      operationId: tag_aliases#update
       tags:
         - Tag Aliases
       security:
@@ -10314,7 +10314,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Reject Tag Alias
-      operationId: rejectTagAlias
+      operationId: tag_aliases#destroy
       tags:
         - Tag Aliases
       description: 'You must be the creator of the request (if pending), or Admin+.'
@@ -10332,7 +10332,7 @@ paths:
   '/tag_aliases/{id}/approve.json':
     post:
       summary: Approve Tag Alias
-      operationId: approveTagAlias
+      operationId: tag_aliases#approve
       tags:
         - Tag Aliases
       security:
@@ -10352,7 +10352,7 @@ paths:
   /tag_alias_requests.json:
     post:
       summary: Create Tag Alias
-      operationId: createTagAlias
+      operationId: tag_alias_requests#create
       tags:
         - Tag Aliases
       security:
@@ -10386,8 +10386,8 @@ paths:
           description: Failure
   /tag_implications.json:
     get:
-      summary: Search Tag Implications
-      operationId: searchTagImplications
+      summary: Tag Implications Index
+      operationId: tag_implications#index
       tags:
         - Tag Implications
       parameters:
@@ -10457,7 +10457,7 @@ paths:
   '/tag_implications/{id}.json':
     get:
       summary: Get Tag Implication
-      operationId: getTagImplication
+      operationId: tag_implications#show
       tags:
         - Tag Implications
       parameters:
@@ -10472,8 +10472,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Tag Implication
-      operationId: editTagImplication
+      summary: Update Tag Implication
+      operationId: tag_implications#update
       tags:
         - Tag Implications
       security:
@@ -10504,7 +10504,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Reject Tag Implication
-      operationId: rejectTagImplication
+      operationId: tag_implications#destroy
       tags:
         - Tag Implications
       description: 'You must be the creator of the request (if pending), or Admin+.'
@@ -10522,7 +10522,7 @@ paths:
   '/tag_implications/{id}/approve.json':
     post:
       summary: Approve Tag Implication
-      operationId: approveTagImplication
+      operationId: tag_implications#approve
       tags:
         - Tag Implications
       security:
@@ -10542,7 +10542,7 @@ paths:
   /tag_implication_requests.json:
     post:
       summary: Create Tag Implication
-      operationId: createTagImplication
+      operationId: tag_implication_requests#create
       tags:
         - Tag Implications
       security:
@@ -10577,7 +10577,7 @@ paths:
   /related_tag/bulk.json:
     post:
       summary: List Bulk Related Tags
-      operationId: listBulkRelatedTags
+      operationId: related_tags#bulk
       tags:
         - Related Tags
       security:
@@ -10608,8 +10608,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /search_trends.json:
     get:
-      summary: List Search Trends
-      operationId: listSearchTrends
+      summary: Search Trends Index
+      operationId: search_trends#index
       tags:
         - Search Trends
       parameters:
@@ -10632,7 +10632,7 @@ paths:
   /search_trends/rising.json:
     get:
       summary: List Rising Search Trends
-      operationId: listRisingSearchTrends
+      operationId: search_trends#rising
       tags:
         - Search Trends
       responses:
@@ -10647,7 +10647,7 @@ paths:
   /search_trends/clear_cache.json:
     post:
       summary: Clear Search Trends Cache
-      operationId: clearSearchTrendsCache
+      operationId: search_trends#clear_cache
       tags:
         - Search Trends
       security:
@@ -10661,7 +10661,7 @@ paths:
   /search_trends/update_settings.json:
     post:
       summary: Update Search Trends Settings
-      operationId: updateSearchTrendsSettings
+      operationId: search_trends#update_settings
       tags:
         - Search Trends
       security:
@@ -10697,10 +10697,37 @@ paths:
           $ref: '#/components/responses/MessageSuccess'
         '403':
           $ref: '#/components/responses/AccessDenied'
+  '/search_trends/{id}/purge.json':
+    delete:
+      summary: Purge Search Trends
+      operationId: search_trends#purge
+      tags:
+        - Search Trends
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - deleted_count
+                properties:
+                  deleted_count:
+                    type: integer
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /search_trend_blacklists.json:
     get:
-      summary: Search Search Trend Blacklists
-      operationId: searchSearchTrendBlacklists
+      summary: Search Trend Blacklists Index
+      operationId: search_trend_blacklists#index
       tags:
         - Search Trend Blacklists
       security:
@@ -10731,7 +10758,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
     post:
       summary: Create Search Trend Blacklist
-      operationId: createSearchTrendBlacklist
+      operationId: search_trend_blacklists#create
       tags:
         - Search Trend Blacklists
       security:
@@ -10764,7 +10791,7 @@ paths:
   '/search_trend_blacklists/{id}.json':
     delete:
       summary: Delete Search Trend Blacklist
-      operationId: deleteSearchTrendBlacklist
+      operationId: search_trend_blacklists#destroy
       tags:
         - Search Trend Blacklists
       security:
@@ -10779,37 +10806,10 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/search_trend_blacklists/{id}/purge.json':
-    delete:
-      summary: Purge Search Trend Blacklist
-      operationId: purgeSearchTrendBlacklist
-      tags:
-        - Search Trend Blacklists
-      security:
-        - basicAuth: []
-      description: You must be Admin+.
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - deleted_count
-                properties:
-                  deleted_count:
-                    type: integer
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /session.json:
     post:
       summary: Login
-      operationId: login
+      operationId: sessions#create
       tags:
         - Sessions
       security:
@@ -10849,8 +10849,8 @@ paths:
           description: Failure
   /staff_notes.json:
     get:
-      summary: Search Staff Notes
-      operationId: searchStaffNotes
+      summary: Staff Notes Index
+      operationId: staff_notes#index
       tags:
         - Staff Notes
       parameters:
@@ -10905,7 +10905,7 @@ paths:
                   $ref: '#/components/schemas/StaffNote'
     post:
       summary: Create Staff Note
-      operationId: createStaffNote
+      operationId: staff_notes#create
       tags:
         - Staff Notes
       security:
@@ -10936,7 +10936,7 @@ paths:
   '/staff_notes/{id}.json':
     get:
       summary: Get Staff Note
-      operationId: getStaffNote
+      operationId: staff_notes#show
       tags:
         - Staff Notes
       parameters:
@@ -10953,8 +10953,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Staff Note
-      operationId: editStaffNote
+      summary: Update Staff Note
+      operationId: staff_notes#update
       tags:
         - Staff Notes
       security:
@@ -10986,7 +10986,7 @@ paths:
   '/staff_notes/{id}/delete.json':
     put:
       summary: Delete Staff Note
-      operationId: deleteStaffNote
+      operationId: staff_notes#delete
       tags:
         - Staff Notes
       security:
@@ -11009,7 +11009,7 @@ paths:
   '/staff_notes/{id}/undelete.json':
     put:
       summary: Undelete Staff Note
-      operationId: undeleteStaffNote
+      operationId: staff_notes#undelete
       tags:
         - Staff Notes
       security:
@@ -11031,8 +11031,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /takedowns.json:
     get:
-      summary: Search Takedowns
-      operationId: searchTakedowns
+      summary: Takedowns Index
+      operationId: takedowns#index
       tags:
         - Takedowns
       parameters:
@@ -11120,7 +11120,7 @@ paths:
                   $ref: '#/components/schemas/Takedown'
     post:
       summary: Create Takedown
-      operationId: createTakedown
+      operationId: takedowns#create
       tags:
         - Takedowns
       security:
@@ -11176,7 +11176,7 @@ paths:
   '/takedowns/{id}.json':
     get:
       summary: Get Takedown
-      operationId: getTakedown
+      operationId: takedowns#show
       tags:
         - Takedowns
       parameters:
@@ -11191,8 +11191,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Takedown
-      operationId: editTakedown
+      summary: Update Takedown
+      operationId: takedowns#update
       tags:
         - Takedowns
       security:
@@ -11228,7 +11228,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Takedown
-      operationId: deleteTakedown
+      operationId: takedowns#destroy
       tags:
         - Takedowns
       security:
@@ -11246,7 +11246,7 @@ paths:
   '/takedowns/{id}/add_by_ids.json':
     post:
       summary: Add Posts To Takedown By IDs
-      operationId: addPostsToTakedownByIds
+      operationId: takedowns#add_by_ids
       tags:
         - Takedowns
       security:
@@ -11288,7 +11288,7 @@ paths:
   '/takedowns/{id}/add_by_tags.json':
     post:
       summary: Add Posts To Takedown By Tags
-      operationId: addPostsToTakedownByTags
+      operationId: takedowns#add_by_tags
       tags:
         - Takedowns
       security:
@@ -11330,7 +11330,7 @@ paths:
   '/takedowns/{id}/count_matching_posts.json':
     post:
       summary: Count Matching Posts
-      operationId: countMatchingPosts
+      operationId: takedowns#count_matching_posts
       tags:
         - Takedowns
       security:
@@ -11367,7 +11367,7 @@ paths:
   '/takedowns/{id}/remove_by_ids.json':
     post:
       summary: Remove Posts From Takedown By IDs
-      operationId: removePostsFromTakedownByIds
+      operationId: takedowns#remove_by_ids
       tags:
         - Takedowns
       security:
@@ -11394,8 +11394,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /tickets.json:
     get:
-      summary: Search Tickets
-      operationId: searchTickets
+      summary: Tickets Index
+      operationId: tickets#index
       tags:
         - Tickets
       description: You must be Staff+ to see tickets you did not create.
@@ -11471,7 +11471,7 @@ paths:
   '/tickets/{id}.json':
     get:
       summary: Get Ticket
-      operationId: getTicket
+      operationId: tickets#show
       tags:
         - Tickets
       security:
@@ -11491,8 +11491,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Ticket
-      operationId: editTicket
+      summary: Update Ticket
+      operationId: tickets#update
       tags:
         - Tickets
       description: You must be Moderator+.
@@ -11530,7 +11530,7 @@ paths:
   '/tickets/{id}/claim.json':
     post:
       summary: Claim Ticket
-      operationId: claimTicket
+      operationId: tickets#claim
       tags:
         - Tickets
       description: You must be Moderator+. Errors are quietly swallowed and shown as notices in html.
@@ -11552,7 +11552,7 @@ paths:
   '/tickets/{id}/unclaim.json':
     post:
       summary: Unclaim Ticket
-      operationId: unclaimTicket
+      operationId: tickets#unclaim
       tags:
         - Tickets
       description: You must be Moderator+. Errors are quietly swallowed and shown as notices in html.
@@ -11573,8 +11573,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /uploads.json:
     get:
-      summary: Search Uploads
-      operationId: searchUploads
+      summary: Uploads Index
+      operationId: uploads#index
       tags:
         - Uploads
       parameters:
@@ -11648,7 +11648,7 @@ paths:
                   $ref: '#/components/schemas/Upload'
     post:
       summary: Upload Post
-      operationId: uploadPost
+      operationId: uploads#create
       tags:
         - Uploads
         - Posts
@@ -11716,7 +11716,7 @@ paths:
   '/uploads/{id}.json':
     get:
       summary: Get Upload
-      operationId: getUpload
+      operationId: uploads#show
       tags:
         - Uploads
       description: You must be Staff+.
@@ -11735,8 +11735,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /upload_whitelists.json:
     get:
-      summary: Search Upload Whitelists
-      operationId: searchUploadWhitelists
+      summary: Upload Whitelists Index
+      operationId: upload_whitelists#index
       tags:
         - Upload Whitelists
       parameters:
@@ -11781,7 +11781,7 @@ paths:
                   $ref: '#/components/schemas/UploadWhitelist'
     post:
       summary: Create Upload Whitelist
-      operationId: createUploadWhitelist
+      operationId: upload_whitelists#create
       tags:
         - Upload Whitelists
       security:
@@ -11822,8 +11822,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   '/upload_whitelists/{id}.json':
     patch:
-      summary: Edit Upload Whitelist
-      operationId: editUploadWhitelist
+      summary: Update Upload Whitelist
+      operationId: upload_whitelists#update
       tags:
         - Upload Whitelists
       security:
@@ -11857,7 +11857,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Upload Whitelist
-      operationId: deleteUploadWhitelist
+      operationId: upload_whitelists#destroy
       tags:
         - Upload Whitelists
       security:
@@ -11875,7 +11875,7 @@ paths:
   /upload_whitelists/is_allowed.json:
     get:
       summary: Check If URL Is Allowed
-      operationId: checkIfUrlIsAllowed
+      operationId: upload_whitelists#is_allowed
       tags:
         - Upload Whitelists
       security:
@@ -11914,8 +11914,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /users.json:
     get:
-      summary: Search Users
-      operationId: searchUsers
+      summary: Users Index
+      operationId: users#index
       tags:
         - Users
       parameters:
@@ -11985,7 +11985,7 @@ paths:
   /users/me.json:
     get:
       summary: Get Current User
-      operationId: getMe
+      operationId: users#me
       description: |
         This will return the default settings for anonymous users if no authentication is used.
         This most interesting part is probably the default blacklist, located in `blacklisted_tags`.
@@ -12001,7 +12001,7 @@ paths:
   /users/avatar_menu.json:
     get:
       summary: Get Avatar Menu
-      operationId: getAvatarMenu
+      operationId: users#avatar_menu
       tags:
         - Users
       security:
@@ -12018,7 +12018,7 @@ paths:
   '/users/{idOrName}.json':
     get:
       summary: Get User
-      operationId: getUser
+      operationId: users#show
       tags:
         - Users
       parameters:
@@ -12029,8 +12029,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Current User
-      operationId: editCurrentUser
+      summary: Update Current User
+      operationId: users#update
       tags:
         - Users
       parameters:
@@ -12116,7 +12116,7 @@ paths:
   '/users/{idOrName}/upload_limit.json':
     get:
       summary: Get User Upload Limit
-      operationId: getUserUploadLimit
+      operationId: users#upload_limit
       tags:
         - Users
       security:
@@ -12131,7 +12131,7 @@ paths:
   '/users/{idOrName}/flush_favorites.json':
     post:
       summary: Clear User Favorites
-      operationId: clearUserFavorites
+      operationId: users#flush_favorites
       tags:
         - Users
       description: You must be Admin+.
@@ -12149,7 +12149,7 @@ paths:
   '/users/{idOrName}/fix_counts.json':
     get:
       summary: Staff Fix User Counts
-      operationId: staffFixUserCounts
+      operationId: users#fix_counts
       tags:
         - Users
       description: You must be Janitor+.
@@ -12167,7 +12167,7 @@ paths:
   '/users/{idOrName}/toggle_uploads.json':
     get:
       summary: Toggle User Uploads
-      operationId: toggleUserUploads
+      operationId: users#toggle_uploads
       tags:
         - Users
       description: |
@@ -12187,7 +12187,7 @@ paths:
   '/users/{idOrName}/disable_uploads.json':
     post:
       summary: Disable User Uploads
-      operationId: disableUserUploads
+      operationId: users#disable_uploads
       tags:
         - Users
       description: You must be Janitor+.
@@ -12217,7 +12217,7 @@ paths:
   /maintenance/user/count_fixes.json:
     post:
       summary: Fix User Counts
-      operationId: fixUserCounts
+      operationId: maintenance/user/count_fixes#create
       tags:
         - Users
       security:
@@ -12230,7 +12230,7 @@ paths:
   /maintenance/user/dmail_filter.json:
     patch:
       summary: Update User Dmail Filter
-      operationId: updateUserDmailFilter
+      operationId: maintenance/user/dmail_filters#update
       tags:
         - DMails
       parameters:
@@ -12260,7 +12260,7 @@ paths:
   /maintenance/user/avatar.json:
     patch:
       summary: Update Avatar Crop
-      operationId: updateAvatarCrop
+      operationId: maintenance/user/avatars#update
       tags:
         - Users
       security:
@@ -12293,8 +12293,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /user_feedbacks.json:
     get:
-      summary: Search User Feedbacks
-      operationId: searchUserFeedbacks
+      summary: User Feedbacks Index
+      operationId: user_feedbacks#index
       tags:
         - User Feedbacks
       parameters:
@@ -12346,7 +12346,7 @@ paths:
                   $ref: '#/components/schemas/UserFeedback'
     post:
       summary: Create User Feedback
-      operationId: createUserFeedback
+      operationId: user_feedbacks#create
       tags:
         - User Feedbacks
       security:
@@ -12383,7 +12383,7 @@ paths:
   '/user_feedbacks/{id}.json':
     get:
       summary: Get User Feedback
-      operationId: getUserFeedback
+      operationId: user_feedbacks#show
       tags:
         - User Feedbacks
       description: You must be Staff+ if the feedback is deleted.
@@ -12401,8 +12401,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit User Feedback
-      operationId: editUserFeedback
+      summary: Update User Feedback
+      operationId: user_feedbacks#update
       tags:
         - User Feedbacks
       security:
@@ -12431,7 +12431,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Destroy User Feedback
-      operationId: destroyUserFeedback
+      operationId: user_feedbacks#destroy
       tags:
         - User Feedbacks
       security:
@@ -12449,7 +12449,7 @@ paths:
   '/user_feedbacks/{id}/delete.json':
     put:
       summary: Delete User Feedback
-      operationId: deleteUserFeedback
+      operationId: user_feedbacks#delete
       tags:
         - User Feedbacks
       security:
@@ -12467,7 +12467,7 @@ paths:
   '/user_feedbacks/{id}/undelete.json':
     put:
       summary: Undelete User Feedback
-      operationId: undeleteUserFeedback
+      operationId: user_feedbacks#undelete
       tags:
         - User Feedbacks
       security:
@@ -12484,8 +12484,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /user_name_change_requests.json:
     get:
-      summary: Search User Name Change Requests
-      operationId: searchUserNameChangeRequests
+      summary: User Name Change Requests Index
+      operationId: user_name_change_requests#index
       tags:
         - User Name Change Requests
       security:
@@ -12523,7 +12523,7 @@ paths:
                   $ref: '#/components/schemas/UserNameChangeRequest'
     post:
       summary: Create User Name Change Request
-      operationId: createUserNameChangeRequest
+      operationId: user_name_change_requests#create
       tags:
         - User Name Change Requests
       security:
@@ -12550,7 +12550,7 @@ paths:
   '/user_name_change_requests/{id}.json':
     get:
       summary: Get User Name Change Request
-      operationId: getUserNameChangeRequest
+      operationId: user_name_change_requests#show
       tags:
         - User Name Change Requests
       security:
@@ -12571,7 +12571,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       summary: Delete User Name Change Request
-      operationId: deleteUserNameChangeRequest
+      operationId: user_name_change_requests#destroy
       tags:
         - User Name Change Requests
       security:
@@ -12586,8 +12586,8 @@ paths:
           $ref: '#/components/responses/AccessDenied'
   /wiki_pages.json:
     get:
-      summary: Search Wiki Pages
-      operationId: searchWikiPages
+      summary: Wiki Pages Index
+      operationId: wiki_pages#index
       tags:
         - Wiki Pages
       parameters:
@@ -12654,7 +12654,7 @@ paths:
                   $ref: '#/components/schemas/WikiPage'
     post:
       summary: Create Wiki Page
-      operationId: createWikiPage
+      operationId: wiki_pages#create
       tags:
         - Wiki Pages
       security:
@@ -12703,7 +12703,7 @@ paths:
   '/wiki_pages/{id}.json':
     get:
       summary: Get Wiki Page
-      operationId: getWikiPage
+      operationId: wiki_pages#show
       tags:
         - Wiki Pages
       parameters:
@@ -12725,8 +12725,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Wiki Page
-      operationId: editWikiPage
+      summary: Update Wiki Page
+      operationId: wiki_pages#update
       tags:
         - Wiki Pages
       security:
@@ -12782,7 +12782,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Wiki Page
-      operationId: deleteWikiPage
+      operationId: wiki_pages#destroy
       tags:
         - Wiki Pages
       security:
@@ -12800,7 +12800,7 @@ paths:
   '/wiki_pages/{id}/revert.json':
     put:
       summary: Revert Wiki Page
-      operationId: revertWikiPage
+      operationId: wiki_pages#revert
       tags:
         - Wiki Pages
       security:
@@ -12824,8 +12824,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /wiki_page_versions.json:
     get:
-      summary: Search Wiki Page Versions
-      operationId: searchWikiPageVersions
+      summary: Wiki Page Versions Index
+      operationId: wiki_page_versions#index
       tags:
         - Wiki Page Versions
       parameters:
@@ -12874,7 +12874,7 @@ paths:
   '/wiki_page_versions/{id}.json':
     get:
       summary: Get Wiki Page Version
-      operationId: getWikiPageVersion
+      operationId: wiki_page_versions#show
       tags:
         - Wiki Page Versions
       parameters:
@@ -12891,7 +12891,7 @@ paths:
   /staff/users/alt_list.json:
     get:
       summary: Get Alt List
-      operationId: getAltList
+      operationId: staff/users#alt_list
       tags:
         - Admin Users
       security:
@@ -12930,7 +12930,7 @@ paths:
   '/staff/users/{id}.json':
     patch:
       summary: Admin Edit User
-      operationId: adminEditUser
+      operationId: staff/users#update
       tags:
         - Admin Users
       security:
@@ -12987,7 +12987,7 @@ paths:
   '/staff/users/{id}/anonymize.json':
     post:
       summary: Admin Anonymize User
-      operationId: adminAnonymizeUser
+      operationId: staff/users#anonymize_confirm
       tags:
         - Admin Users
       security:
@@ -13005,7 +13005,7 @@ paths:
   '/staff/users/{user_id}/dmails.json':
     get:
       summary: Audit User DMails
-      operationId: auditUserDMails
+      operationId: staff/dmails#index
       tags:
         - DMails
       security:
@@ -13036,7 +13036,7 @@ paths:
   '/staff/users/{user_id}/dmails/{id}.json':
     get:
       summary: Audit User DMail
-      operationId: auditUserDMail
+      operationId: staff/dmails#show
       tags:
         - DMails
       security:
@@ -13064,7 +13064,7 @@ paths:
   /staff/automod_dmails.json:
     get:
       summary: Get Automod DMails
-      operationId: getAutomodDMails
+      operationId: staff/automod_dmails#index
       tags:
         - DMails
       security:
@@ -13122,7 +13122,7 @@ paths:
   '/staff/automod_dmails/{id}.json':
     get:
       summary: Get Automod DMail
-      operationId: getAutomodDMail
+      operationId: staff/automod_dmails#show
       tags:
         - DMails
       security:
@@ -13144,7 +13144,7 @@ paths:
   '/staff/automod_dmails/{id}/mark_as_read.json':
     put:
       summary: Mark Automod DMail As Read
-      operationId: markAutomodDMailAsRead
+      operationId: staff/automod_dmails#mark_as_read
       tags:
         - DMails
       security:
@@ -13162,7 +13162,7 @@ paths:
   '/staff/automod_dmails/{id}/mark_as_unread.json':
     put:
       summary: Mark Automod DMail As Unread
-      operationId: markAutomodDMailAsUnread
+      operationId: staff/automod_dmails#mark_as_unread
       tags:
         - DMails
       security:
@@ -13180,7 +13180,7 @@ paths:
   /staff/exceptions.json:
     get:
       summary: Get Exception Logs
-      operationId: getExceptionLogs
+      operationId: staff/exceptions#index
       tags:
         - Exception Logs
       security:
@@ -13223,7 +13223,7 @@ paths:
   '/staff/exceptions/{id}.json':
     get:
       summary: Get Exception Log
-      operationId: getExceptionLog
+      operationId: staff/exceptions#show
       tags:
         - Exception Logs
       security:
@@ -13241,7 +13241,7 @@ paths:
   '/staff/post/posts/{id}/delete.json':
     post:
       summary: Delete Post
-      operationId: deletePost
+      operationId: staff/post/posts#delete
       tags:
         - Posts
       security:
@@ -13306,7 +13306,7 @@ paths:
   '/staff/post/posts/{id}/undelete.json':
     post:
       summary: Undelete Post
-      operationId: undeletePost
+      operationId: staff/post/posts#undelete
       tags:
         - Posts
       security:
@@ -13335,7 +13335,7 @@ paths:
   '/staff/post/posts/{id}/regenerate_thumbnails.json':
     post:
       summary: Regenerate Post Thumbnails
-      operationId: regeneratePostThumbnails
+      operationId: staff/post/posts#regenerate_thumbnails
       tags:
         - Posts
       security:
@@ -13364,7 +13364,7 @@ paths:
   '/staff/post/posts/{id}/regenerate_videos.json':
     post:
       summary: Regenerate Post Videos
-      operationId: regeneratePostVideos
+      operationId: staff/post/posts#regenerate_videos
       tags:
         - Posts
       security:
@@ -13384,7 +13384,7 @@ paths:
   '/staff/post/posts/{id}/expunge.json':
     post:
       summary: Expunge Post
-      operationId: expungePost
+      operationId: staff/post/posts#expunge
       tags:
         - Posts
       security:
@@ -13421,7 +13421,7 @@ paths:
   '/staff/post/posts/{id}/move_favorites.json':
     post:
       summary: Move Post Favorites
-      operationId: movePostFavorites
+      operationId: staff/post/posts#move_favorites
       tags:
         - Posts
       security:
@@ -13452,7 +13452,7 @@ paths:
   '/staff/post/posts/{id}/ai_check.json':
     get:
       summary: AI Check Post
-      operationId: aiCheckPost
+      operationId: staff/post/posts#ai_check
       tags:
         - Posts
       security:
@@ -13472,7 +13472,7 @@ paths:
   '/staff/post/posts/{id}/previous_owners.json':
     get:
       summary: Get Post Previous Owners
-      operationId: getPostPreviousOwners
+      operationId: staff/post/posts#previous_owners
       tags:
         - Posts
       security:
@@ -13504,7 +13504,7 @@ paths:
   '/staff/post/posts/{id}/reowner.json':
     post:
       summary: Reown Post
-      operationId: reownPost
+      operationId: staff/post/posts#reowner
       tags:
         - Posts
       security:
@@ -13548,7 +13548,7 @@ paths:
   /staff/post/approval.json:
     post:
       summary: Approve Post
-      operationId: approvePost
+      operationId: staff/post/approvals#create
       tags:
         - Posts
         - Post Approvals
@@ -13583,7 +13583,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       summary: Unapprove Post
-      operationId: unapprovePost
+      operationId: staff/post/approvals#destroy
       tags:
         - Posts
         - Post Approvals
@@ -13610,7 +13610,7 @@ paths:
   '/staff/user_cleanups/{id}/clear_avatar.json':
     post:
       summary: Clear User Avatar
-      operationId: clearUserAvatar
+      operationId: staff/user_cleanups#clear_avatar
       tags:
         - User Cleanups
       security:
@@ -13628,7 +13628,7 @@ paths:
   '/staff/user_cleanups/{id}/clear_profile.json':
     post:
       summary: Clear User Profile
-      operationId: clearUserProfile
+      operationId: staff/user_cleanups#clear_profile
       tags:
         - User Cleanups
       security:
@@ -13646,7 +13646,7 @@ paths:
   '/staff/user_cleanups/{id}/hide_comments.json':
     post:
       summary: Hide User Comments
-      operationId: hideUserComments
+      operationId: staff/user_cleanups#hide_comments
       tags:
         - User Cleanups
       security:
@@ -13664,7 +13664,7 @@ paths:
   '/staff/user_cleanups/{id}/hide_forum_posts.json':
     post:
       summary: Hide User Forum Posts
-      operationId: hideUserForumPosts
+      operationId: staff/user_cleanups#hide_forum_posts
       tags:
         - User Cleanups
       security:
@@ -13682,7 +13682,7 @@ paths:
   '/staff/user_cleanups/{id}/hide_blips.json':
     post:
       summary: Hide User Blips
-      operationId: hideUserBlips
+      operationId: staff/user_cleanups#hide_blips
       tags:
         - User Cleanups
       security:
@@ -13699,8 +13699,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /staff/post/disapprovals.json:
     get:
-      summary: Search Post Disapprovals
-      operationId: searchPostDisapprovals
+      summary: Post Disapprovals Index
+      operationId: staff/post/disapprovals#index
       tags:
         - Post Disapprovals
       security:
@@ -13758,7 +13758,7 @@ paths:
                   $ref: '#/components/schemas/PostDisapproval'
     post:
       summary: Create Post Disapproval
-      operationId: createPostDisapproval
+      operationId: staff/post/disapprovals#create
       tags:
         - Post Disapprovals
       security:
@@ -13796,8 +13796,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /staff/files.json:
     get:
-      summary: Search Staff Files
-      operationId: searchStaffFiles
+      summary: Staff Files Index
+      operationId: staff/files#index
       tags:
         - Staff Files
       security:
@@ -13845,7 +13845,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
     post:
       summary: Create Staff File
-      operationId: createStaffFile
+      operationId: staff/files#create
       tags:
         - Staff Files
       security:
@@ -13880,7 +13880,7 @@ paths:
   '/staff/files/{id}.json':
     get:
       summary: Get Staff File
-      operationId: getStaffFile
+      operationId: staff/files#show
       tags:
         - Staff Files
       security:
@@ -13900,8 +13900,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Staff File
-      operationId: editStaffFile
+      summary: Update Staff File
+      operationId: staff/files#update
       tags:
         - Staff Files
       security:
@@ -13930,7 +13930,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Staff File
-      operationId: deleteStaffFile
+      operationId: staff/files#destroy
       tags:
         - Staff Files
       security:
@@ -13947,8 +13947,8 @@ paths:
           $ref: '#/components/responses/NotFound'
   /staff/wikis.json:
     get:
-      summary: Search Staff Wikis
-      operationId: searchStaffWikis
+      summary: Staff Wikis Index
+      operationId: staff/wikis#index
       tags:
         - Staff Wikis
       security:
@@ -13999,7 +13999,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
     post:
       summary: Create Staff Wiki
-      operationId: createStaffWiki
+      operationId: staff/wikis#create
       tags:
         - Staff Wikis
       security:
@@ -14039,7 +14039,7 @@ paths:
   '/staff/wikis/{id}.json':
     get:
       summary: Get Staff Wiki
-      operationId: getStaffWiki
+      operationId: staff/wikis#show
       tags:
         - Staff Wikis
       security:
@@ -14059,8 +14059,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     patch:
-      summary: Edit Staff Wiki
-      operationId: editStaffWiki
+      summary: Update Staff Wiki
+      operationId: staff/wikis#update
       tags:
         - Staff Wikis
       security:
@@ -14089,7 +14089,7 @@ paths:
           $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Staff Wiki
-      operationId: deleteStaffWiki
+      operationId: staff/wikis#destroy
       tags:
         - Staff Wikis
       security:
@@ -14107,7 +14107,7 @@ paths:
   '/staff/wikis/{id}/claim.json':
     post:
       summary: Claim Staff Wiki
-      operationId: claimStaffWiki
+      operationId: staff/wikis#claim
       tags:
         - Staff Wikis
       security:
@@ -14129,7 +14129,7 @@ paths:
   '/staff/wikis/{id}/unclaim.json':
     post:
       summary: Unclaim Staff Wiki
-      operationId: unclaimStaffWiki
+      operationId: staff/wikis#unclaim
       tags:
         - Staff Wikis
       security:
@@ -14150,8 +14150,8 @@ paths:
           $ref: '#/components/responses/ExpectedError'
   /staff/wiki_versions.json:
     get:
-      summary: Search Staff Wiki Versions
-      operationId: searchStaffWikiVersions
+      summary: Staff Wiki Versions Index
+      operationId: staff/wiki_versions#index
       tags:
         - Staff Wiki Versions
       security:
@@ -14203,7 +14203,7 @@ paths:
   '/staff/wiki_versions/{id}.json':
     get:
       summary: Get Staff Wiki Version
-      operationId: getStaffWikiVersion
+      operationId: staff/wiki_versions#show
       tags:
         - Staff Wiki Versions
       security:
@@ -14225,7 +14225,7 @@ paths:
   /staff/vote_trends.json:
     get:
       summary: Get Vote Trends
-      operationId: getVoteTrends
+      operationId: staff/vote_trends#index
       tags:
         - Vote Trends
       security:

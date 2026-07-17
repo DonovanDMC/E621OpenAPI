@@ -1,5 +1,5 @@
 summary: Get health
-operationId: getHealth
+operationId: health#index
 tags:
   - System
 responses:

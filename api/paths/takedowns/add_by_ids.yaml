@@ -1,5 +1,5 @@
 summary: Add Posts To Takedown By IDs
-operationId: addPostsToTakedownByIds
+operationId: takedowns#add_by_ids
 tags:
   - Takedowns
 security:

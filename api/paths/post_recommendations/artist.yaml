@@ -1,5 +1,5 @@
 summary: Get Recommended Posts For Artist
-operationId: getRecommendedPostsArtist
+operationId: post_recommendations#artist
 tags:
   - Posts
 parameters:

@@ -1,5 +1,5 @@
 summary: Get Alt List
-operationId: getAltList
+operationId: staff/users#alt_list
 tags:
   - Admin Users
 security:

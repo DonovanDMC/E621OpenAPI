@@ -1,5 +1,5 @@
 summary: Get Ban
-operationId: getBan
+operationId: bans#show
 tags:
   - Bans
 parameters:

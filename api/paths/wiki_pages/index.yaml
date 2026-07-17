@@ -1,5 +1,5 @@
-summary: Search Wiki Pages
-operationId: searchWikiPages
+summary: Wiki Pages Index
+operationId: wiki_pages#index
 tags:
   - Wiki Pages
 parameters:

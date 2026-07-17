@@ -1,5 +1,5 @@
 summary: Get Recommended Posts For Tags
-operationId: getRecommendedPostsTags
+operationId: post_recommendations#tags
 tags:
   - Posts
 parameters:

@@ -1,5 +1,5 @@
 summary: Get Tag Alias
-operationId: getTagAlias
+operationId: tag_aliases#show
 tags:
   - Tag Aliases
 parameters:

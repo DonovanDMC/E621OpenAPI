@@ -1,5 +1,5 @@
 summary: Create Bulk Update Request
-operationId: createBulkUpdateRequest
+operationId: bulk_update_requests#create
 tags:
   - Bulk Update Requests
 security:

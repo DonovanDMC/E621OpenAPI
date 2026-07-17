@@ -1,5 +1,5 @@
 summary: Delete Upload Whitelist
-operationId: deleteUploadWhitelist
+operationId: upload_whitelists#destroy
 tags:
   - Upload Whitelists
 security:

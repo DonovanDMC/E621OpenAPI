@@ -1,5 +1,5 @@
-summary: Edit Upload Whitelist
-operationId: editUploadWhitelist
+summary: Update Upload Whitelist
+operationId: upload_whitelists#update
 tags:
   - Upload Whitelists
 security:

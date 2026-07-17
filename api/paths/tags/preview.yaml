@@ -1,5 +1,5 @@
 summary: Preview Tags
-operationId: previewTags
+operationId: tags#preview
 tags:
   - Tags
 security:

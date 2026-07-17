@@ -1,5 +1,5 @@
-summary: Search Edit Histories
-operationId: searchEditHistories
+summary: Edit Histories Index
+operationId: edit_histories#index
 tags:
   - Edit Histories
 security:

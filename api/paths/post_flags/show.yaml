@@ -1,5 +1,5 @@
 summary: Get Post Flag
-operationId: getPostFlag
+operationId: post_flags#show
 tags:
   - Post Flags
 parameters:

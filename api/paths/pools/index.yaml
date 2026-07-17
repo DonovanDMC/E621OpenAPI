@@ -1,5 +1,5 @@
-summary: Search Pools
-operationId: searchPools
+summary: Pools Index
+operationId: pools#index
 tags:
   - Pools
 parameters:

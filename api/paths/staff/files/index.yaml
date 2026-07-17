@@ -1,5 +1,5 @@
-summary: Search Staff Files
-operationId: searchStaffFiles
+summary: Staff Files Index
+operationId: staff/files#index
 tags:
   - Staff Files
 security:

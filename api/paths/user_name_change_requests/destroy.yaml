@@ -1,5 +1,5 @@
 summary: Delete User Name Change Request
-operationId: deleteUserNameChangeRequest
+operationId: user_name_change_requests#destroy
 tags:
   - User Name Change Requests
 security:

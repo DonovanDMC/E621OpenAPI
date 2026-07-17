@@ -1,5 +1,5 @@
-summary: Search Wiki Page Versions
-operationId: searchWikiPageVersions
+summary: Wiki Page Versions Index
+operationId: wiki_page_versions#index
 tags:
   - Wiki Page Versions
 parameters:

@@ -1,5 +1,5 @@
 summary: Create Forum Topic
-operationId: createForumTopic
+operationId: forum_topics#create
 tags:
   - Forum Topics
 security:

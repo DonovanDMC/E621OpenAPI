@@ -1,5 +1,5 @@
-summary: Edit Ticket
-operationId: editTicket
+summary: Update Ticket
+operationId: tickets#update
 tags:
   - Tickets
 description: You must be Moderator+.

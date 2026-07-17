@@ -1,5 +1,5 @@
 summary: Reject Bulk Update Request
-operationId: rejectBulkUpdateRequest
+operationId: bulk_update_requests#destroy
 tags:
   - Bulk Update Requests
 security:

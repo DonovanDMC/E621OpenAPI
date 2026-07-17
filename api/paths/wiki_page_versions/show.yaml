@@ -1,5 +1,5 @@
 summary: Get Wiki Page Version
-operationId: getWikiPageVersion
+operationId: wiki_page_versions#show
 tags:
   - Wiki Page Versions
 parameters:

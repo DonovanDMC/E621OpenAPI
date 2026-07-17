@@ -1,5 +1,5 @@
 summary: Get Tag Correction
-operationId: getTagCorrection
+operationId: tag_corrections#show
 tags:
   - Tags
 parameters:

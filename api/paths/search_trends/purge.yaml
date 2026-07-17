@@ -1,7 +1,7 @@
-summary: Purge Search Trend Blacklist
-operationId: purgeSearchTrendBlacklist
+summary: Purge Search Trends
+operationId: search_trends#purge
 tags:
-  - Search Trend Blacklists
+  - Search Trends
 security:
   - basicAuth: []
 description: You must be Admin+.

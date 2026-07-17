@@ -1,5 +1,5 @@
 summary: Upload Post
-operationId: uploadPost
+operationId: uploads#create
 tags:
   - Uploads
   - Posts

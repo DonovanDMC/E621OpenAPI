@@ -1,5 +1,5 @@
-summary: Search Takedowns
-operationId: searchTakedowns
+summary: Takedowns Index
+operationId: takedowns#index
 tags:
   - Takedowns
 parameters:

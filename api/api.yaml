@@ -430,9 +430,9 @@ paths:
 
   /comments/{id}/votes.json:
     post:
-      $ref: "./paths/comments/votes/create.yaml"
+      $ref: "./paths/comment_votes/create.yaml"
     delete:
-      $ref: "./paths/comments/votes/destroy.yaml"
+      $ref: "./paths/comment_votes/destroy.yaml"
   /comment_votes.json:
     get:
       $ref: "./paths/comment_votes/index.yaml"
@@ -470,7 +470,7 @@ paths:
 
   /dtext_preview.json:
     post:
-      $ref: "./paths/dtext_preview/index.yaml"
+      $ref: "./paths/dtext_previews/create.yaml"
 
   /edit_histories.json:
     get:
@@ -693,15 +693,15 @@ paths:
       $ref: "./paths/posts/show_seq.yaml"
   /posts/{id}/flag.json:
     delete:
-      $ref: "./paths/posts/flag/destroy.yaml"
+      $ref: "./paths/post_flags/destroy.yaml"
   /posts/{id}/favorites.json:
     get:
-      $ref: "./paths/posts/favorites.yaml"
+      $ref: "./paths/post_favorites/index.yaml"
   /posts/{id}/votes.json:
     post:
-      $ref: "./paths/posts/votes/create.yaml"
+      $ref: "./paths/post_votes/create.yaml"
     delete:
-      $ref: "./paths/posts/votes/destroy.yaml"
+      $ref: "./paths/post_votes/destroy.yaml"
   /posts/{id}/similar/artist.json:
     get:
       $ref: "./paths/post_recommendations/artist.yaml"
@@ -871,6 +871,9 @@ paths:
   /search_trends/update_settings.json:
     post:
       $ref: "./paths/search_trends/update_settings.yaml"
+  /search_trends/{id}/purge.json:
+    delete:
+      $ref: "./paths/search_trends/purge.yaml"
 
   /search_trend_blacklists.json:
     get:
@@ -880,13 +883,10 @@ paths:
   /search_trend_blacklists/{id}.json:
     delete:
       $ref: "./paths/search_trend_blacklists/destroy.yaml"
-  /search_trend_blacklists/{id}/purge.json:
-    delete:
-      $ref: "./paths/search_trend_blacklists/purge.yaml"
 
   /session.json:
     post:
-      $ref: "./paths/session/create.yaml"
+      $ref: "./paths/sessions/create.yaml"
 
   /staff_notes.json:
     get:
@@ -1068,7 +1068,7 @@ paths:
       $ref: "./paths/staff/users/update.yaml"
   /staff/users/{id}/anonymize.json:
     post:
-      $ref: "./paths/staff/users/confirm_anonymize.yaml"
+      $ref: "./paths/staff/users/anonymize_confirm.yaml"
 
   /staff/users/{user_id}/dmails.json:
     get:

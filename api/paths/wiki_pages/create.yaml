@@ -1,5 +1,5 @@
 summary: Create Wiki Page
-operationId: createWikiPage
+operationId: wiki_pages#create
 tags:
   - Wiki Pages
 security:

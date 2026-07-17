@@ -1,5 +1,5 @@
 summary: Create Post Set
-operationId: createPostSet
+operationId: post_sets#create
 tags:
   - Post Sets
 security:

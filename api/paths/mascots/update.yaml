@@ -1,5 +1,5 @@
-summary: Edit Mascot
-operationId: editMascot
+summary: Update Mascot
+operationId: mascots#update
 tags:
   - Mascots
 security:

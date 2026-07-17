@@ -1,5 +1,5 @@
 summary: Hide Forum Post
-operationId: hideForumPost
+operationId: forum_posts#hide
 tags:
   - Forum Posts
 security:

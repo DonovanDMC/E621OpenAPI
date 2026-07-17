@@ -1,5 +1,5 @@
 summary: Login
-operationId: login
+operationId: sessions#create
 tags:
   - Sessions
 security:

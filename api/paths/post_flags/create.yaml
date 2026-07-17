@@ -1,5 +1,5 @@
 summary: Create Post Flag
-operationId: createPostFlag
+operationId: post_flags#create
 tags:
   - Post Flags
 security:

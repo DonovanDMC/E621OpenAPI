@@ -1,5 +1,5 @@
-summary: Search Staff Notes
-operationId: searchStaffNotes
+summary: Staff Notes Index
+operationId: staff_notes#index
 tags:
   - Staff Notes
 parameters:

@@ -1,5 +1,5 @@
-summary: Edit Post
-operationId: editPost
+summary: Update Post
+operationId: posts#update
 tags:
   - Posts
 security:

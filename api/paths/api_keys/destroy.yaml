@@ -1,5 +1,5 @@
 summary: Delete API Key
-operationId: deleteAPIKey
+operationId: api_keys#destroy
 tags:
   - API Keys
 security:

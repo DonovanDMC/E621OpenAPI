@@ -1,5 +1,5 @@
 summary: Get Artist
-operationId: getArtist
+operationId: artists#show
 tags:
   - Artists
 parameters:

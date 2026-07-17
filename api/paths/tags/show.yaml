@@ -1,5 +1,5 @@
 summary: Get Tag
-operationId: getTag
+operationId: tags#show
 tags:
   - Tags
 parameters:

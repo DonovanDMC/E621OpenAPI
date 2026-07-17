@@ -1,5 +1,5 @@
 summary: Create Staff Wiki
-operationId: createStaffWiki
+operationId: staff/wikis#create
 tags:
   - Staff Wikis
 security:

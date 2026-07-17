@@ -1,5 +1,5 @@
-summary: Remove Favorite
-operationId: removeFavorite
+summary: Delete Favorite
+operationId: favorites#destroy
 tags:
   - Favorites
 security:

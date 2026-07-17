@@ -1,5 +1,5 @@
 summary: Get Forum Post
-operationId: getForumPost
+operationId: forum_posts#show
 tags:
   - Forum Posts
 description: If the forum post is hidden, you must be the creator or Moderator+ to see it.

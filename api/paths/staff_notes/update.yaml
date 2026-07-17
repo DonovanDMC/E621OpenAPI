@@ -1,5 +1,5 @@
-summary: Edit Staff Note
-operationId: editStaffNote
+summary: Update Staff Note
+operationId: staff_notes#update
 tags:
   - Staff Notes
 security:

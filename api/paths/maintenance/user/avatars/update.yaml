@@ -1,5 +1,5 @@
 summary: Update Avatar Crop
-operationId: updateAvatarCrop
+operationId: maintenance/user/avatars#update
 tags:
   - Users
 security:

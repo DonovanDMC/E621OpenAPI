@@ -1,5 +1,5 @@
-summary: Search Notes
-operationId: searchNotes
+summary: Notes Index
+operationId: notes#index
 tags:
   - Notes
 parameters:

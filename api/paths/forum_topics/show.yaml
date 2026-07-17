@@ -1,5 +1,5 @@
 summary: Get Forum Forum Topic
-operationId: getForumTopic
+operationId: forum_topics#show
 tags:
   - Forum Topics
 description: If the forum topic is hidden, you must be the creator or Moderator+ to see it.

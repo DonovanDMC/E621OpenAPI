@@ -1,5 +1,5 @@
 summary: Delete Post
-operationId: deletePost
+operationId: staff/post/posts#delete
 tags:
   - Posts
 security:

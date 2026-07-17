@@ -1,5 +1,5 @@
 summary: Revert Pool
-operationId: revertPool
+operationId: pools#revert
 tags:
   - Pools
 security:

@@ -1,5 +1,5 @@
 summary: AI Check Post
-operationId: aiCheckPost
+operationId: staff/post/posts#ai_check
 tags:
   - Posts
 security:

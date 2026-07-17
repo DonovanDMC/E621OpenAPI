@@ -1,5 +1,5 @@
 summary: Revert Note
-operationId: revertNote
+operationId: notes#revert
 tags:
   - Notes
 security:

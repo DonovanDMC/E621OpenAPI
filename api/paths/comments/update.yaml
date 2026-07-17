@@ -1,5 +1,5 @@
-summary: Edit Comment
-operationId: editComment
+summary: Update Comment
+operationId: comments#update
 tags:
   - Comments
 security:

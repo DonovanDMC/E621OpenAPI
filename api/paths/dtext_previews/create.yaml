@@ -1,5 +1,5 @@
 summary: Preview DText
-operationId: previewDText
+operationId: dtext_previews#create
 tags:
   - DText
 description: Note while this route does not require auth, without auth it requires a CSRF token. For that reason it has been marked as requiring auth.

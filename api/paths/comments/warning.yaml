@@ -1,5 +1,5 @@
 summary: Mark Comment
-operationId: markComment
+operationId: comments#warning
 tags:
   - Comments
 security:

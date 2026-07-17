@@ -3,7 +3,7 @@
 # Hoping for a revert here, since there is now no way for non admins to get a list of help pages
 
 summary: Get Landing Help Page
-operationId: getLandingHelpPage
+operationId: help#index
 tags:
   - Help Pages
 responses:

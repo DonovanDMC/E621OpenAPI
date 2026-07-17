@@ -1,5 +1,5 @@
-summary: Search Post Versions
-operationId: searchPostVersions
+summary: Post Versions Index
+operationId: post_versions#index
 tags:
   - Post Versions
 parameters:

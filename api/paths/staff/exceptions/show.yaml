@@ -1,5 +1,5 @@
 summary: Get Exception Log
-operationId: getExceptionLog
+operationId: staff/exceptions#show
 tags:
   - Exception Logs
 security:

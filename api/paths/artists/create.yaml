@@ -1,5 +1,5 @@
 summary: Create Artist
-operationId: createArtist
+operationId: artists#create
 tags:
   - Artists
 security:

@@ -1,5 +1,5 @@
 summary: Delete Artist
-operationId: deleteArtist
+operationId: artists#destroy
 tags:
   - Artists
 security:

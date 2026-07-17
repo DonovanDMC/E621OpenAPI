@@ -1,5 +1,5 @@
-summary: Search Post Sets
-operationId: searchPostSets
+summary: Post Sets Index
+operationId: post_sets#index
 tags:
   - Post Sets
 parameters:

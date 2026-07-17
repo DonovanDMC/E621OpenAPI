@@ -1,5 +1,5 @@
 summary: Delete Forum Post Vote
-operationId: deleteForumPostVote
+operationId: forum_post_votes#destroy
 tags:
   - Forum Post Votes
 security:

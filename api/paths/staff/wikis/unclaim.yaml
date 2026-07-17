@@ -1,5 +1,5 @@
 summary: Unclaim Staff Wiki
-operationId: unclaimStaffWiki
+operationId: staff/wikis#unclaim
 tags:
   - Staff Wikis
 security:

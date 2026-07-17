@@ -1,5 +1,5 @@
 summary: Copy Notes To Post
-operationId: copyNotesToPost
+operationId: posts#copy_notes
 tags:
   - Posts
 security:

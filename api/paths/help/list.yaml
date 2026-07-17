@@ -1,5 +1,5 @@
-summary: List Help Pages
-operationId: listHelpPages
+summary: Help Pages Index
+operationId: help#list
 tags:
   - Help Pages
 responses:

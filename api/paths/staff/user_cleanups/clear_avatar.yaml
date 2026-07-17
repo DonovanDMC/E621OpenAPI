@@ -1,5 +1,5 @@
 summary: Clear User Avatar
-operationId: clearUserAvatar
+operationId: staff/user_cleanups#clear_avatar
 tags:
   - User Cleanups
 security:

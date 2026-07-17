@@ -1,5 +1,5 @@
 summary: Claim Staff Wiki
-operationId: claimStaffWiki
+operationId: staff/wikis#claim
 tags:
   - Staff Wikis
 security:

@@ -1,5 +1,5 @@
 summary: Create API Key
-operationId: createAPIKey
+operationId: api_keys#create
 tags:
   - API Keys
 security:

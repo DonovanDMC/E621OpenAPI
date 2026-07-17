@@ -1,5 +1,5 @@
 summary: Clear Post Flag Note
-operationId: clearPostFlagNote
+operationId: post_flags#clear_note
 tags:
   - Post Flags
 security:

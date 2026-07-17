@@ -1,5 +1,5 @@
 summary: Unhide Forum Topic
-operationId: unhideForumTopic
+operationId: forum_topics#unhide
 tags:
   - Forum Topics
 security:

@@ -1,5 +1,5 @@
 summary: Get Random Post
-operationId: getRandomPost
+operationId: posts#random
 tags:
   - Posts
 parameters:

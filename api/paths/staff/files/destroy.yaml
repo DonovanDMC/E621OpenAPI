@@ -1,5 +1,5 @@
 summary: Delete Staff File
-operationId: deleteStaffFile
+operationId: staff/files#destroy
 tags:
   - Staff Files
 security:

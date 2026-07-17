@@ -1,5 +1,5 @@
-summary: Search Email Blacklists
-operationId: searchEmailBlacklists
+summary: Email Blacklists Index
+operationId: email_blacklists#index
 tags:
   - Email Blacklists
 parameters:

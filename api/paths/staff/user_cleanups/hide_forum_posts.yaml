@@ -1,5 +1,5 @@
 summary: Hide User Forum Posts
-operationId: hideUserForumPosts
+operationId: staff/user_cleanups#hide_forum_posts
 tags:
   - User Cleanups
 security:

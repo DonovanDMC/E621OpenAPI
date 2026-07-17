@@ -1,5 +1,5 @@
 summary: Revert Wiki Page
-operationId: revertWikiPage
+operationId: wiki_pages#revert
 tags:
   - Wiki Pages
 security:

@@ -1,5 +1,5 @@
 summary: Update Appeal
-operationId: updateAppeal
+operationId: appeals#update
 tags:
   - Appeals
 description: You must be Janitor+.

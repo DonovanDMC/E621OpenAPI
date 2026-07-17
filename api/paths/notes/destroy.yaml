@@ -1,5 +1,5 @@
 summary: Delete Note
-operationId: deleteNote
+operationId: notes#destroy
 tags:
   - Notes
 security:

@@ -1,5 +1,5 @@
 summary: Admin Anonymize User
-operationId: adminAnonymizeUser
+operationId: staff/users#anonymize_confirm
 tags:
   - Admin Users
 security:

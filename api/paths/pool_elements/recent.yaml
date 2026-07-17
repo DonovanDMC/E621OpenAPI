@@ -1,5 +1,5 @@
 summary: Get Recent Pools
-operationId: getRecentPools
+operationId: pool_elements#recent
 tags:
   - Pools
 security:

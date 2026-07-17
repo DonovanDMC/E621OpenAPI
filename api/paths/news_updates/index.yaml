@@ -1,5 +1,5 @@
-summary: List News Updates
-operationId: listNewsUpdates
+summary: News Updates Index
+operationId: news_updates#index
 tags:
   - News Updates
 parameters:

@@ -1,5 +1,5 @@
 summary: Create Mascot
-operationId: createMascot
+operationId: mascots#create
 tags:
   - Mascots
 security:

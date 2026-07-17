@@ -1,5 +1,5 @@
 summary: Delete Forum Post
-operationId: deleteForumPost
+operationId: forum_posts#destroy
 tags:
   - Forum Posts
 security:

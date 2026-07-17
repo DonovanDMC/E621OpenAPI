@@ -1,5 +1,5 @@
 summary: Claim Appeal
-operationId: claimAppeal
+operationId: appeals#claim
 tags:
   - Appeals
 description: You must be Janitor+

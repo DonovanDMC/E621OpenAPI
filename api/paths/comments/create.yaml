@@ -1,5 +1,5 @@
 summary: Create Comment
-operationId: createComment
+operationId: comments#create
 tags:
   - Comments
 security:

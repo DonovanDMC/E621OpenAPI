@@ -1,5 +1,5 @@
 summary: Destroy User Feedback
-operationId: destroyUserFeedback
+operationId: user_feedbacks#destroy
 tags:
   - User Feedbacks
 security:

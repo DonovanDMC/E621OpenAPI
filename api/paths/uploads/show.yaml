@@ -1,5 +1,5 @@
 summary: Get Upload
-operationId: getUpload
+operationId: uploads#show
 tags:
   - Uploads
 description: You must be Staff+.

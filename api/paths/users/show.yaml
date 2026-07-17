@@ -1,5 +1,5 @@
 summary: Get User
-operationId: getUser
+operationId: users#show
 tags:
   - Users
 parameters:

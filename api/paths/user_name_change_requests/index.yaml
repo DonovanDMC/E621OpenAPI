@@ -1,5 +1,5 @@
-summary: Search User Name Change Requests
-operationId: searchUserNameChangeRequests
+summary: User Name Change Requests Index
+operationId: user_name_change_requests#index
 tags:
   - User Name Change Requests
 security:

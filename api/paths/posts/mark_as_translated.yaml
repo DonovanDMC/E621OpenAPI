@@ -1,5 +1,5 @@
 summary: Mark Post As Translated
-operationId: markPostAsTranslated
+operationId: posts#mark_as_translated
 tags:
   - Posts
 security:

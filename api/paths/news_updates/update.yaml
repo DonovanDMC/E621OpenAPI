@@ -1,5 +1,5 @@
-summary: Edit News Update
-operationId: editNewsUpdate
+summary: Update News Update
+operationId: news_updates#update
 tags:
   - News Updates
 security:

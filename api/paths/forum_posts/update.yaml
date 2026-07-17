@@ -1,5 +1,5 @@
-summary: Edit Forum Post
-operationId: editForumPost
+summary: Update Forum Post
+operationId: forum_posts#update
 tags:
   - Forum Posts
 security:

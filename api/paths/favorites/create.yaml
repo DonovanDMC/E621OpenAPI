@@ -1,5 +1,5 @@
-summary: Add Favorite
-operationId: addFavorite
+summary: Create Favorite
+operationId: favorites#create
 tags:
   - Favorites
 security:

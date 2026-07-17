@@ -1,7 +1,7 @@
-summary: Delete Avoid Posting Entry
-operationId: deleteAvoidPosting
+summary: Delete Avoid Posting
+operationId: avoid_postings#delete
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 security:
   - basicAuth: []
 description: Soft deletion. Must have the bd staff user flag.

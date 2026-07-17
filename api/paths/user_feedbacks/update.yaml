@@ -1,5 +1,5 @@
-summary: Edit User Feedback
-operationId: editUserFeedback
+summary: Update User Feedback
+operationId: user_feedbacks#update
 tags:
   - User Feedbacks
 security:

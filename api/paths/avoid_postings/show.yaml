@@ -1,7 +1,7 @@
-summary: Get Avoid Posting Entry
-operationId: getAvoidPosting
+summary: Get Avoid Posting
+operationId: avoid_postings#show
 tags:
-  - Avoid Posting Entries
+  - Avoid Postings
 parameters:
   - $ref: "../../components/parameters/path/idOrName.yaml"
 responses:

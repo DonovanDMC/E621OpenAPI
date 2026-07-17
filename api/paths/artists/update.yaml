@@ -1,5 +1,5 @@
-summary: Edit Artist
-operationId: editArtist
+summary: Update Artist
+operationId: artists#update
 tags:
   - Artists
 security:

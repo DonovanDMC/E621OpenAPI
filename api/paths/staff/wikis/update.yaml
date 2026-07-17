@@ -1,5 +1,5 @@
-summary: Edit Staff Wiki
-operationId: editStaffWiki
+summary: Update Staff Wiki
+operationId: staff/wikis#update
 tags:
   - Staff Wikis
 security:

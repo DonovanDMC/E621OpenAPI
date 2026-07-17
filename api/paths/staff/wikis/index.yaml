@@ -1,5 +1,5 @@
-summary: Search Staff Wikis
-operationId: searchStaffWikis
+summary: Staff Wikis Index
+operationId: staff/wikis#index
 tags:
   - Staff Wikis
 security:

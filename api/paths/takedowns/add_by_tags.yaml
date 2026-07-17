@@ -1,5 +1,5 @@
 summary: Add Posts To Takedown By Tags
-operationId: addPostsToTakedownByTags
+operationId: takedowns#add_by_tags
 tags:
   - Takedowns
 security:

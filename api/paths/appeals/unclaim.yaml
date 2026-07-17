@@ -1,5 +1,5 @@
 summary: Unclaim Appeal
-operationId: unclaimAppeal
+operationId: appeals#unclaim
 tags:
   - Appeals
 description: You must be Janitor+

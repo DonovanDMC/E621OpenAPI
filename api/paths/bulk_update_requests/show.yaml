@@ -1,5 +1,5 @@
 summary: Get Bulk Update Request
-operationId: getBulkUpdateRequest
+operationId: bulk_update_requests#show
 tags:
   - Bulk Update Requests
 parameters:

@@ -1,5 +1,5 @@
-summary: List Forum Post Votes
-operationId: listForumPostVotes
+summary: Forum Post Votes Index
+operationId: forum_post_votes#show
 tags:
   - Forum Post Votes
 security:

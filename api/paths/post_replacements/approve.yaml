@@ -1,5 +1,5 @@
 summary: Approve Post Replacement
-operationId: approvePostReplacement
+operationId: post_replacements#approve
 tags:
   - Post Replacements
 security:

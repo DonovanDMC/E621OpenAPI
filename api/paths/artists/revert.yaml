@@ -1,5 +1,5 @@
 summary: Revert Artist
-operationId: revertArtist
+operationId: artists#revert
 tags:
   - Artists
 security:

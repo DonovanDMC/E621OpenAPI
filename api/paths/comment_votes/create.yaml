@@ -1,16 +1,16 @@
 summary: Create Comment Vote
-operationId: createCommentVote
+operationId: comment_votes#create
 tags:
   - Comment Votes
 security:
   - basicAuth: []
 parameters:
-  - $ref: "../../../components/parameters/path/id.yaml"
+  - $ref: "../../components/parameters/path/id.yaml"
   - name: score
     in: query
     required: true
     schema:
-      $ref: "../../../components/schemas/upDownVote.yaml"
+      $ref: "../../components/schemas/upDownVote.yaml"
   - name: no_unvote
     in: query
     schema:
@@ -31,8 +31,8 @@ responses:
             our_score:
               type: integer
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    $ref: "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    $ref: "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../components/responses/expectedError.yaml"
+    $ref: "../../components/responses/expectedError.yaml"

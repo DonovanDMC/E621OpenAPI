@@ -1,5 +1,5 @@
 summary: Get User Upload Limit
-operationId: getUserUploadLimit
+operationId: users#upload_limit
 tags:
   - Users
 security:

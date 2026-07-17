@@ -1,5 +1,5 @@
 summary: Approve Tag Alias
-operationId: approveTagAlias
+operationId: tag_aliases#approve
 tags:
   - Tag Aliases
 security:

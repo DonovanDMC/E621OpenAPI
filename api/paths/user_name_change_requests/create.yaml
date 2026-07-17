@@ -1,5 +1,5 @@
 summary: Create User Name Change Request
-operationId: createUserNameChangeRequest
+operationId: user_name_change_requests#create
 tags:
   - User Name Change Requests
 security:

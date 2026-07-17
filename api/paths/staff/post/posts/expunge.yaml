@@ -1,5 +1,5 @@
 summary: Expunge Post
-operationId: expungePost
+operationId: staff/post/posts#expunge
 tags:
   - Posts
 security:

@@ -1,5 +1,5 @@
 summary: Get DB Exports
-operationId: getDBExports
+operationId: db_exports#index
 tags:
   - System
 responses:

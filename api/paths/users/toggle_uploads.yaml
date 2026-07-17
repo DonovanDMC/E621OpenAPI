@@ -1,5 +1,5 @@
 summary: Toggle User Uploads
-operationId: toggleUserUploads
+operationId: users#toggle_uploads
 tags:
   - Users
 description: |

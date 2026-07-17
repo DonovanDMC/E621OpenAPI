@@ -1,5 +1,5 @@
 summary: Clear User Profile
-operationId: clearUserProfile
+operationId: staff/user_cleanups#clear_profile
 tags:
   - User Cleanups
 security:

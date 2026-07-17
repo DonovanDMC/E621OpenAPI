@@ -1,5 +1,5 @@
 summary: Delete Wiki Page
-operationId: deleteWikiPage
+operationId: wiki_pages#destroy
 tags:
   - Wiki Pages
 security:

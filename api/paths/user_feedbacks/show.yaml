@@ -1,5 +1,5 @@
 summary: Get User Feedback
-operationId: getUserFeedback
+operationId: user_feedbacks#show
 tags:
   - User Feedbacks
 description: You must be Staff+ if the feedback is deleted.

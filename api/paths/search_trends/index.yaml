@@ -1,5 +1,5 @@
-summary: List Search Trends
-operationId: listSearchTrends
+summary: Search Trends Index
+operationId: search_trends#index
 tags:
   - Search Trends
 parameters:

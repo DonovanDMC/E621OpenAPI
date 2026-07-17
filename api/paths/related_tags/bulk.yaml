@@ -1,5 +1,5 @@
 summary: List Bulk Related Tags
-operationId: listBulkRelatedTags
+operationId: related_tags#bulk
 tags:
   - Related Tags
 security:

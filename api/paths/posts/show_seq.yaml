@@ -1,5 +1,5 @@
 summary: Get Post In Sequence
-operationId: getPostInSequence
+operationId: posts#show_seq
 tags:
   - Posts
 parameters:

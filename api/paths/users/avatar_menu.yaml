@@ -1,5 +1,5 @@
 summary: Get Avatar Menu
-operationId: getAvatarMenu
+operationId: users#avatar_menu
 tags:
   - Users
 security:

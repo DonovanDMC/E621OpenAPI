@@ -1,5 +1,5 @@
-summary: Search Post Flags
-operationId: searchPostFlags
+summary: Post Flags Index
+operationId: post_flags#index
 tags:
   - Post Flags
 parameters:

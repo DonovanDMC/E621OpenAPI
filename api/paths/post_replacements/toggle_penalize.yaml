@@ -1,5 +1,5 @@
 summary: Toggle Post Replacement Penalty
-operationId: togglePostReplacementPenalty
+operationId: post_replacements#toggle_penalize
 tags:
   - Post Replacements
 security:
