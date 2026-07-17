@@ -97,7 +97,16 @@ function exportRoutes(e621ngDir) {
     console.log("Booting e621ng to dump its route table...");
     run("bundle", ["exec", "rails", "runner", runnerPath], {
       cwd: e621ngDir,
-      env: { ...process.env, RAILS_ENV: "test" }
+      env: {
+        ...process.env,
+        RAILS_ENV: "test",
+        // config/initializers/secret_token.rb requires these to be set
+        // (either as files under ~/.danbooru or as env vars) before it'll
+        // boot at all. We're only introspecting routes, not serving
+        // requests, so throwaway values are fine.
+        SECRET_TOKEN: process.env.SECRET_TOKEN ?? "0".repeat(32),
+        SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY ?? "0".repeat(32)
+      }
     });
 
     return JSON.parse(readFileSync(outFile, "utf8"));
