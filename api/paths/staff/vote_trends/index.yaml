@@ -4,7 +4,7 @@ tags:
   - Vote Trends
 security:
   - basicAuth: []
-description: You must be Admin+.
+description: You must be Staff+.
 parameters:
   - $ref: "../../../components/parameters/query/limit.yaml"
   - name: user
