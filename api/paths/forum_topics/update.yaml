@@ -16,10 +16,10 @@ requestBody:
             type: string
           category_id:
             type: integer
-          original_post_attributes][id:
+          original_post_attributes[id]:
             type: integer
             description: Forum post ID. Silently ignored
-          original_post_attributes][body:
+          original_post_attributes[body]:
             type: string
             description: First forum post body.
           is_sticky:

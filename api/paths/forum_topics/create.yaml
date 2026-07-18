@@ -17,10 +17,10 @@ requestBody:
             type: string
           category_id:
             type: integer
-          original_post_attributes][id:
+          original_post_attributes[id]:
             type: integer
             description: Forum post ID. Mutually exclusive with body, one must be provided.
-          original_post_attributes][body:
+          original_post_attributes[body]:
             type: string
             description: First forum post body. Mutually exclusive with id, one must be provided.
           is_sticky:
