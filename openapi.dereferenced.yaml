@@ -12,7 +12,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: '10467e1'
+  version: 61ad04f
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
@@ -44,8 +44,8 @@ components:
       description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
       schema:
         oneOf:
-          - type: integer
           - type: string
+          - type: integer
     limitQuery:
       name: limit
       in: query
@@ -8818,8 +8818,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -9265,8 +9265,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -9804,8 +9804,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -10458,8 +10458,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -10568,8 +10568,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -10748,8 +10748,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -11307,8 +11307,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -11421,8 +11421,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -11587,8 +11587,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -12285,8 +12285,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -12788,8 +12788,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -13879,8 +13879,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results. You must be Admin+.
@@ -14160,8 +14160,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[title_matches]'
           schema:
@@ -14685,8 +14685,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -14902,8 +14902,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -16350,8 +16350,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -17394,8 +17394,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -18645,8 +18645,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -19933,8 +19933,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
       responses:
         '200':
           description: Success
@@ -20291,8 +20291,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -21066,8 +21066,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -21595,8 +21595,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -21712,8 +21712,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -22408,8 +22408,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -33202,8 +33202,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -34088,8 +34088,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -34170,8 +34170,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -34360,8 +34360,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -34761,8 +34761,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[file_ext]'
           schema:
@@ -35572,8 +35572,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[updater_name]'
           schema:
@@ -35946,8 +35946,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results. You must be Admin+.
@@ -36160,8 +36160,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -36762,8 +36762,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[tag]'
           in: query
           schema:
@@ -36859,8 +36859,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -37363,8 +37363,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -38479,8 +38479,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -39044,8 +39044,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -39784,8 +39784,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[creator_name]'
           description: You must be Staff+.
@@ -40389,8 +40389,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -40812,8 +40812,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -41230,8 +41230,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -43534,8 +43534,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -44079,8 +44079,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           description: The order of the results.
@@ -44348,8 +44348,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -44962,8 +44962,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[ip_addr]'
           in: query
           description: 'Must be Admin+ to use. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
@@ -45593,8 +45593,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[title_matches]'
           schema:
@@ -45914,8 +45914,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - in: query
           name: 'search[user_name]'
           schema:
@@ -48018,8 +48018,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -48222,8 +48222,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -48662,8 +48662,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
@@ -49253,8 +49253,8 @@ paths:
           description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
           schema:
             oneOf:
-              - type: integer
               - type: string
+              - type: integer
         - name: 'search[order]'
           in: query
           schema:
