@@ -307,6 +307,8 @@ paths:
     get:
       $ref: "./paths/appeals/index.yaml"
   /appeals/{id}.json:
+    get:
+      $ref: "./paths/appeals/show.yaml"
     patch:
       $ref: "./paths/appeals/update.yaml"
   /appeals/{id}/claim.json:

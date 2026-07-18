@@ -1,0 +1,20 @@
+summary: Get Appeal
+operationId: appeals#show
+tags:
+  - Appeals
+description: Requires Janitor+ to see appeals not created by you.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+security:
+  - basicAuth: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/appeal.yaml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
