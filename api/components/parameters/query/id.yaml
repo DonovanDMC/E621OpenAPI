@@ -2,6 +2,6 @@ name: search[id]
 in: query
 description: Search for a specific id. Multiple can be separated by commas, up to 320.
 schema:
-  oneOf:
-    - type: integer
+  oneOf: # string should be first so SwaggerUI shows it
     - type: string
+    - type: integer
