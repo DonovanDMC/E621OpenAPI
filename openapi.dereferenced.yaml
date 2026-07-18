@@ -12,7 +12,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 8ddd615
+  version: '10467e1'
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
@@ -17489,23 +17489,27 @@ paths:
               required:
                 - title
                 - category_id
+                - original_post_attributes
               properties:
                 title:
                   type: string
                 category_id:
                   type: integer
-                'original_post_attributes[id]':
-                  type: integer
-                  description: 'Forum post ID. Mutually exclusive with body, one must be provided.'
-                'original_post_attributes[body]':
-                  type: string
-                  description: 'First forum post body. Mutually exclusive with id, one must be provided.'
                 is_sticky:
                   type: boolean
                   description: You must be Moderator+.
                 is_locked:
                   type: boolean
                   description: You must be Moderator+.
+                original_post_attributes:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 'Forum post ID. Mutually exclusive with body, one must be provided.'
+                    body:
+                      type: string
+                      description: 'First forum post body. Mutually exclusive with id, one must be provided.'
       responses:
         '201':
           description: Success
@@ -17697,18 +17701,21 @@ paths:
                   type: string
                 category_id:
                   type: integer
-                'original_post_attributes[id]':
-                  type: integer
-                  description: Forum post ID. Silently ignored
-                'original_post_attributes[body]':
-                  type: string
-                  description: First forum post body.
                 is_sticky:
                   type: boolean
                   description: You must be Moderator+.
                 is_locked:
                   type: boolean
                   description: You must be Moderator+.
+                original_post_attributes:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Forum post ID. Silently ignored
+                    body:
+                      type: string
+                      description: First forum post body.
       responses:
         '204':
           description: Success
