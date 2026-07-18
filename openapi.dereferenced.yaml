@@ -12,7 +12,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 61ad04f
+  version: e55ca37
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
@@ -22512,13 +22512,6 @@ paths:
       tags:
         - Popular
       parameters:
-        - name: limit
-          in: query
-          description: The maximum number of results to return. Between 0 and 320.
-          schema:
-            type: integer
-            minimum: 0
-            maximum: 320
         - in: query
           name: v2
           description: Use the new V2 format. See the `v2=true` responses.
