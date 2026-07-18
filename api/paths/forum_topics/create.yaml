@@ -12,23 +12,28 @@ requestBody:
         required:
           - title
           - category_id
+          - original_post_attributes
         properties:
           title:
             type: string
           category_id:
             type: integer
-          original_post_attributes[id]:
-            type: integer
-            description: Forum post ID. Mutually exclusive with body, one must be provided.
-          original_post_attributes[body]:
-            type: string
-            description: First forum post body. Mutually exclusive with id, one must be provided.
           is_sticky:
             type: boolean
             description: You must be Moderator+.
           is_locked:
             type: boolean
             description: You must be Moderator+.
+          original_post_attributes:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Forum post ID. Mutually exclusive with body, one must be provided.
+              body:
+                type: string
+                description: First forum post body. Mutually exclusive with id, one must be provided.
+
 responses:
   201:
     description: Success

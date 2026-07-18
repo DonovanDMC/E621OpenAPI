@@ -16,18 +16,21 @@ requestBody:
             type: string
           category_id:
             type: integer
-          original_post_attributes[id]:
-            type: integer
-            description: Forum post ID. Silently ignored
-          original_post_attributes[body]:
-            type: string
-            description: First forum post body.
           is_sticky:
             type: boolean
             description: You must be Moderator+.
           is_locked:
             type: boolean
             description: You must be Moderator+.
+          original_post_attributes:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Forum post ID. Silently ignored
+              body:
+                type: string
+                description: First forum post body.
 responses:
   204:
     description: Success
