@@ -12,7 +12,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 26d440f
+  version: 2f29834
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
@@ -6613,6 +6613,29 @@ paths:
               schema:
                 type: string
                 example: OK | app3 | 26.06.10-fix.3
+  /status.json:
+    get:
+      summary: Get status
+      operationId: rails/health#show
+      tags:
+        - System
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - timestamp
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - up
+                  timestamp:
+                    type: string
   /.well-known/openid-configuration:
     get:
       summary: Get OpenID Connect Discovery Document
@@ -11621,6 +11644,31 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '406':
           description: Failure
+    delete:
+      summary: Logout
+      operationId: sessions#destroy
+      tags:
+        - Sessions
+      security:
+        - csrfToken: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - authenticity_token
+              properties:
+                authenticity_token:
+                  type: string
+                  description: CSRF Token
+      responses:
+        '302':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '406':
+          description: Failure
   /staff_notes.json:
     get:
       summary: Staff Notes Index
@@ -12953,7 +13001,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/toggle_uploads.json':
+  '/users/{idOrName}/toggle_uploads':
     get:
       summary: Toggle User Uploads
       operationId: users#toggle_uploads
@@ -12973,7 +13021,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/disable_uploads.json':
+  '/users/{idOrName}/disable_uploads':
     post:
       summary: Disable User Uploads
       operationId: users#disable_uploads
@@ -12994,6 +13042,34 @@ paths:
               properties:
                 body:
                   type: string
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user_reverts:
+    post:
+      summary: Revert User
+      operationId: user_reverts#create
+      tags:
+        - Users
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: integer
       responses:
         '302':
           description: |
@@ -13773,7 +13849,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/staff/users/{id}/anonymize_confirm.json':
+  '/staff/users/{id}/anonymize_confirm':
     post:
       summary: Anonymize User
       operationId: staff/users#anonymize_confirm
@@ -13791,7 +13867,7 @@ paths:
             Success should be determined based on the html, any errors will be present in an alert.
         '404':
           $ref: '#/components/responses/NotFound'
-  '/staff/users/{id}/update_blacklist.json':
+  '/staff/users/{id}/update_blacklist':
     post:
       summary: Staff Update User Blacklist
       operationId: staff/users#update_blacklist
@@ -14324,7 +14400,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/staff/post/posts/{id}/reowner.json':
+  '/staff/post/posts/{id}/reowner':
     post:
       summary: Reown Post
       operationId: staff/post/posts#reowner
@@ -14996,6 +15072,69 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/staff/wikis/{id}/references':
+    post:
+      summary: Create Staff Wiki Ref
+      operationId: staff/wiki_refs#create
+      tags:
+        - Staff Wiki Refs
+      security:
+        - basicAuth: []
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      description: You must be Staff+.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'staff_wiki_ref[related_type]'
+                - 'staff_wiki_ref[related_id]'
+              properties:
+                'staff_wiki_ref[related_type]':
+                  type: string
+                  enum:
+                    - User
+                    - Artist
+                    - StaffWiki
+                'staff_wiki_ref[related_id]':
+                  type: integer
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/staff/wikis/{wiki_id}/references/{id}':
+    delete:
+      summary: Delete Staff Wiki Ref
+      operationId: staff/wiki_refs#destroy
+      tags:
+        - Staff Wiki Refs
+      security:
+        - basicAuth: []
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+        - name: wiki_id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      description: You must be Staff+.
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /staff/wiki_versions.json:
     get:
       summary: Staff Wiki Versions Index
@@ -15219,3 +15358,63 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  /staff/reowner.json:
+    post:
+      summary: Reown Posts
+      operationId: staff/reowner#create
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'reowner[new_owner]'
+              properties:
+                'reowner[new_owner]':
+                  type: string
+                  description: |
+                    Must be a string
+                    Name: `name`
+                    ID: `!1234`
+                'reowner[reowner_versions]':
+                  type: boolean
+                  description: Also reown post versions. (default false)
+                'reowner[post_events]':
+                  type: boolean
+                  description: Also reown post events. (default true)
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+  /staff/stuck_dnp.json:
+    post:
+      summary: Stuck DNP
+      operationId: staff/stuck_dnp#create
+      tags:
+        - Posts
+      security:
+        - basicAuth: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'stuck_dnp[query]'
+              properties:
+                'stuck_dnp[query]':
+                  type: string
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
