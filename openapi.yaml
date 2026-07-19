@@ -12,7 +12,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: e55ca37
+  version: 38442de
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
@@ -323,15 +323,17 @@ components:
         - neutral
         - positive
     TagRequestStatuses:
-      type: string
-      enum:
-        - active
-        - deleted
-        - processing
-        - queued
-        - retired
-        - error
-        - pending
+      oneOf:
+        - type: string
+          enum:
+            - active
+            - deleted
+            - processing
+            - queued
+            - retired
+            - pending
+        - type: string
+          pattern: '^error: .*$'
     WarningTypes:
       type: string
       enum:
