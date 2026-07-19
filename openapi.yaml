@@ -12,10 +12,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 04b3b06
+  version: 26d440f
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
-  x-e621ng-master-behind-by: 0
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
+  x-e621ng-master-behind-by: unknown
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/commits/master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -4117,6 +4117,96 @@ components:
           type: integer
         uploader:
           $ref: '#/components/schemas/User'
+    SearchTrendHourly:
+      type: object
+      required:
+        - tag
+        - count
+        - hour
+        - processed
+      properties:
+        tag:
+          type: string
+        count:
+          type: integer
+        hour:
+          type: string
+          format: date-time
+        processed:
+          type: boolean
+    TrackedSearchTrend:
+      type: object
+      required:
+        - count
+        - day
+      properties:
+        count:
+          type: integer
+        day:
+          type: string
+          format: date-time
+    StaffIPAddrSum:
+      type: object
+      description: Dictionary of ip address to count.
+      additionalProperties:
+        type: integer
+    StaffIPAddrIPListing:
+      allOf:
+        - type: object
+          required:
+            - comment
+            - dmail
+            - blip
+            - post_flag
+            - posts
+            - users
+          properties:
+            comment:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            blip:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            dmail:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            post_flag:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            posts:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            users:
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            artist_version:
+              description: 'If `search[with_history]=true`'
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            note_version:
+              description: 'If `search[with_history]=true`'
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            pool_version:
+              description: 'If `search[with_history]=true`'
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            post_version:
+              description: 'If `search[with_history]=true`'
+              $ref: '#/components/schemas/StaffIPAddrSum'
+            wiki_page_version:
+              description: 'If `search[with_history]=true`'
+              $ref: '#/components/schemas/StaffIPAddrSum'
+        - type: object
+          required:
+            - last_login
+          properties:
+            last_login:
+              additionalProperties:
+                type: integer
+    StaffIPAddrUserListing:
+      type: object
+      required:
+        - sums
+        - ip_addrs
+      properties:
+        sums:
+          $ref: '#/components/schemas/StaffIPAddrIPListing/allOf/0'
+        ip_addrs:
+          type: array
+          items:
+            type: string
   responses:
     NotFound:
       description: Not Found
@@ -5917,6 +6007,23 @@ paths:
           description: Success
         '403':
           $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/comments/{id}/for_post.json':
+    get:
+      summary: Comments For Post
+      operationId: comments#for_post
+      tags:
+        - Comments
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DTextResponse'
         '404':
           $ref: '#/components/responses/NotFound'
   '/comments/{id}/hide.json':
@@ -9098,6 +9205,26 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  '/post_sets/{id}/post_list.json':
+    get:
+      summary: Post Set Post List
+      operationId: post_sets#post_list
+      tags:
+        - Post Sets
+      description: You must be Moderator+ if the set is not public.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSet'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
   '/post_sets/{id}/update_posts.json':
     post:
       summary: Update Post Set Posts
@@ -10673,6 +10800,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RisingSearchTrend'
+  /search_trends/track.json:
+    get:
+      summary: Search Trends Track
+      operationId: search_trends#track
+      tags:
+        - Search Trends
+      parameters:
+        - in: query
+          name: tag
+          schema:
+            type: string
+            description: Up to 10 comma separated values.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Dictionary of tag to trends.
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TrackedSearchTrend'
   /search_trends/clear_cache.json:
     post:
       summary: Clear Search Trends Cache
@@ -10818,6 +10969,33 @@ paths:
         '422':
           $ref: '#/components/responses/ExpectedError'
   '/search_trend_blacklists/{id}.json':
+    patch:
+      summary: Update Search Trend Blacklist
+      operationId: search_trend_blacklists#update
+      tags:
+        - Search Trend Blacklists
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
     delete:
       summary: Delete Search Trend Blacklist
       operationId: search_trend_blacklists#destroy
@@ -10835,6 +11013,38 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  /search_trend_hourlies.json:
+    get:
+      summary: Search Trend Hourlies Index
+      operationId: search_trend_hourlies#index
+      tags:
+        - Search Trend Hourlies
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - in: query
+          name: 'search[name_matches]'
+          schema:
+            type: string
+        - in: query
+          name: hour
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchTrendHourly'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
   /session.json:
     post:
       summary: Login
@@ -12044,6 +12254,21 @@ paths:
                 $ref: '#/components/schemas/UserAvatarMenu'
         '403':
           $ref: '#/components/responses/AccessDenied'
+  /users/custom_style.css:
+    get:
+      summary: Get Custom Style
+      operationId: users#custom_style
+      tags:
+        - Users
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/css: {}
+        '406':
+          description: Not Logged In
   '/users/{idOrName}.json':
     get:
       summary: Get User
@@ -12922,7 +13147,7 @@ paths:
       summary: Get Alt List
       operationId: staff/users#alt_list
       tags:
-        - Admin Users
+        - Staff Users
       security:
         - basicAuth: []
       description: You must be Admin+.
@@ -12961,7 +13186,7 @@ paths:
       summary: Admin Edit User
       operationId: staff/users#update
       tags:
-        - Admin Users
+        - Staff Users
       security:
         - basicAuth: []
       description: 'You must be Admin+. If editing an Admin+, you must be Owner+.'
@@ -13013,12 +13238,12 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/staff/users/{id}/anonymize.json':
+  '/staff/users/{id}/anonymize_confirm.json':
     post:
-      summary: Admin Anonymize User
+      summary: Anonymize User
       operationId: staff/users#anonymize_confirm
       tags:
-        - Admin Users
+        - Staff Users
       security:
         - basicAuth: []
       description: You must have the bd staff user flag. Cannot be used on staff.
@@ -13029,6 +13254,40 @@ paths:
           description: |
             Redirect
             Success should be determined based on the html, any errors will be present in an alert.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  '/staff/users/{id}/update_blacklist.json':
+    post:
+      summary: Staff Update User Blacklist
+      operationId: staff/users#update_blacklist
+      tags:
+        - Staff Users
+      security:
+        - basicAuth: []
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user
+              properties:
+                user:
+                  type: object
+                  required:
+                    - blacklisted_tags
+                  properties:
+                    blacklisted_tags:
+                      type: string
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
   '/staff/users/{user_id}/dmails.json':
@@ -14177,6 +14436,31 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/staff/wikis/{id}/revert.json':
+    put:
+      summary: Revert Staff Wiki
+      operationId: staff/wikis#revert
+      tags:
+        - Staff Wikis
+      security:
+        - basicAuth: []
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+        - name: version_id
+          in: query
+          required: true
+          description: The version ID to revert to.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
   /staff/wiki_versions.json:
     get:
       summary: Staff Wiki Versions Index
@@ -14304,3 +14588,99 @@ paths:
                         format: float
                         description: Score
                   description: '2D array: first item VoteTrend, second item score'
+  /staff/ip_addrs.json:
+    get:
+      summary: Staff IP Addrs Index
+      operationId: staff/ip_addrs#index
+      tags:
+        - Staff IP Addrs
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - name: 'search[with_history]'
+          in: query
+          schema:
+            type: boolean
+        - name: 'search[user_id]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[user_name]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[ip_addr]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[add_ip_mask]'
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/StaffIPAddrUserListing'
+                      description: 'If `search[user_id]` or `search[user_name]` is used.'
+                    - $ref: '#/components/schemas/StaffIPAddrIPListing'
+                      description: 'If `search[ip_addr]` is used.'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
+  /staff/ip_addrs/export.json:
+    get:
+      summary: Staff IP Addrs Export
+      operationId: staff/ip_addrs#export
+      tags:
+        - Staff IP Addrs
+      security:
+        - basicAuth: []
+      description: You must be Admin+. Nothing will be returned if one of the `user_id`/`user_name` search options is not specified.
+      parameters:
+        - name: 'search[with_history]'
+          in: query
+          schema:
+            type: boolean
+        - name: 'search[user_id]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[user_name]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[ip_addr]'
+          in: query
+          description: Accepts multiple comma separated values.
+          schema:
+            type: string
+        - name: 'search[add_ip_mask]'
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
