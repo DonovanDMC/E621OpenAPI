@@ -1,0 +1,23 @@
+summary: Revert Staff Wiki
+operationId: staff/wikis#revert
+tags:
+  - Staff Wikis
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../../components/parameters/path/id.yaml"
+  - name: version_id
+    in: query
+    required: true
+    description: The version ID to revert to.
+    schema:
+      type: integer
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../../components/responses/expectedError.yaml"

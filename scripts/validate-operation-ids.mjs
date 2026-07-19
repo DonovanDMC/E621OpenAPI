@@ -7,6 +7,15 @@
 //   4. is exposed in api/api.yaml under an HTTP method that pair is actually
 //      routed on in e621ng
 //
+// It also checks the other direction: every e621ng route that actually
+// supports JSON (has a `respond_to :json` covering that action) but isn't
+// documented anywhere is reported as a missing route, unless it's listed in
+// ignored-routes.json at the repo root - either as an exact "controller#action"
+// pair, "*#action" to match that action on any controller, or "controller#*"
+// to ignore an entire controller. Either side can also contain shell-style
+// `{a,b,c}` brace groups to cover several entries in one line, e.g.
+// "staff/{wiki_versions,post_versions}#diff".
+//
 // Usage:
 //   node scripts/validate-operation-ids.mjs
 //
@@ -19,9 +28,18 @@
 // commit you want to check against, with `bundle install` already run) to
 // skip the clone/bundle step, e.g. for local iteration:
 //   E621NG_PATH=/path/to/e621ng node scripts/validate-operation-ids.mjs
+//
+// The exported route table is cached at .cache/routes/<commit>-<exporter
+// hash>.json, so most runs skip the clone/bundle/boot entirely - CI persists
+// that directory across runs. The commit is either the one pinned in
+// e621ng-commit, or (when E621NG_PATH is set) whatever HEAD actually is at
+// that path, as long as it's a clean checkout - a dirty tree always gets a
+// fresh, uncached export, so iterating on local e621ng changes never reads
+// stale results. Delete .cache/routes to force a fresh export regardless.
 
+import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -115,7 +133,45 @@ function exportRoutes(e621ngDir) {
   }
 }
 
-const HTTP_METHODS = new Set(["get", "post", "put", "patch", "delete"]);
+const routeCacheDir = path.join(repoRoot, ".cache/routes");
+
+// The commit actually checked out at `dir`, or null if that's not a clean
+// checkout of *some* commit (uncommitted changes, or not a git repo at
+// all) - in which case caching would risk serving stale/wrong results, so
+// callers should treat null as "don't cache".
+function resolveCleanCommit(dir) {
+  try {
+    const status = execFileSync("git", ["status", "--porcelain"], { cwd: dir, encoding: "utf8" });
+    if (status.trim() !== "") return null;
+    return execFileSync("git", ["rev-parse", "HEAD"], { cwd: dir, encoding: "utf8" }).trim();
+  } catch {
+    return null;
+  }
+}
+
+// Cache key covers both the e621ng commit and export_routes.rb's own
+// content, so editing the exporter (e.g. adding a new field) invalidates
+// caches from before that change instead of silently serving stale data.
+function routeCacheKey(commit) {
+  const exporterHash = createHash("sha256")
+    .update(readFileSync(path.join(repoRoot, "scripts/export_routes.rb")))
+    .digest("hex")
+    .slice(0, 16);
+  return `${commit}-${exporterHash}`;
+}
+
+function getCachedRoutes(commit) {
+  const cachePath = path.join(routeCacheDir, `${routeCacheKey(commit)}.json`);
+  if (!existsSync(cachePath)) return null;
+  console.log(`Using cached route table at ${cachePath}`);
+  return JSON.parse(readFileSync(cachePath, "utf8"));
+}
+
+function setCachedRoutes(commit, routes) {
+  mkdirSync(routeCacheDir, { recursive: true });
+  const cachePath = path.join(routeCacheDir, `${routeCacheKey(commit)}.json`);
+  writeFileSync(cachePath, JSON.stringify(routes));
+}
 
 // Maps each `./paths/...yaml` $ref in api/api.yaml to the HTTP method it's
 // nested under, e.g. "post_flags/destroy.yaml" -> Set{"DELETE"}. Parsed with
@@ -154,6 +210,65 @@ function parseApiYamlMethods() {
   return methodsByFile;
 }
 
+// Expands shell-style `{a,b,c}` brace groups anywhere in a string into every
+// literal combination, e.g. "staff/{wiki,post}_versions" -> ["staff/wiki_versions",
+// "staff/post_versions"], and "{a,b}/{c,d}" -> all four combinations. Groups
+// don't nest. A string with no `{...}` group is returned as a single-element
+// array unchanged.
+function expandBraces(pattern) {
+  const match = pattern.match(/\{([^{}]*)\}/);
+  if (!match) return [pattern];
+  const [whole, inner] = match;
+  const before = pattern.slice(0, match.index);
+  const after = pattern.slice(match.index + whole.length);
+  return inner.split(",").flatMap(option => expandBraces(`${before}${option}${after}`));
+}
+
+// ignored-routes.json maps a "controller#action" pair to a human-readable
+// reason. Used to silence routes that are real and JSON-capable per
+// e621ng's own `respond_to` declarations, but aren't meaningfully part of
+// the documented API (HTML-only forms/confirmation pages that just happen
+// to inherit a blanket `respond_to :json`, etc). Either side can be `*`:
+// "*#action" matches that action on any controller (e.g. "*#new"),
+// "controller#*" ignores an entire controller (e.g. "staff/ip_addrs#*").
+// Either side can also contain `{a,b,c}` brace groups (see expandBraces),
+// e.g. "staff/users#{anonymize,edit_blacklist}" covers two actions on one
+// controller in a single entry.
+function loadIgnoredRoutes() {
+  const raw = JSON.parse(readFileSync(path.join(repoRoot, "ignored-routes.json"), "utf8"));
+  const exact = new Set();
+  const wildcardActions = new Set();
+  const wildcardControllers = new Set();
+  const rawKeyMatchers = new Map();
+  for (const key of Object.keys(raw)) {
+    const [controllerPattern, actionPattern] = key.split("#");
+    const matchers = [];
+    for (const controller of expandBraces(controllerPattern)) {
+      for (const action of expandBraces(actionPattern)) {
+        if (controller === "*") {
+          wildcardActions.add(action);
+          matchers.push({ type: "wildcardAction", value: action });
+        } else if (action === "*") {
+          wildcardControllers.add(controller);
+          matchers.push({ type: "wildcardController", value: controller });
+        } else {
+          const pair = `${controller}#${action}`;
+          exact.add(pair);
+          matchers.push({ type: "exact", value: pair });
+        }
+      }
+    }
+    rawKeyMatchers.set(key, matchers);
+  }
+  return { exact, wildcardActions, wildcardControllers, raw, rawKeyMatchers };
+}
+
+function isIgnored(pair, ignored) {
+  if (ignored.exact.has(pair)) return true;
+  const [controller, action] = pair.split("#");
+  return ignored.wildcardActions.has(action) || ignored.wildcardControllers.has(controller);
+}
+
 function walkYamlFiles(dir) {
   const results = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -167,7 +282,20 @@ function walkYamlFiles(dir) {
   return results;
 }
 
-function main() {
+// E621NG_PATH, when given, is trusted to be cacheable too, but only once we
+// can confirm it's a clean checkout of a known commit - a dirty tree (local
+// routes.rb edits being iterated on) always gets a fresh, uncached export.
+function getRoutes() {
+  const explicitDir = process.env.E621NG_PATH?.trim();
+  const expectedCommit = explicitDir
+    ? resolveCleanCommit(explicitDir)
+    : readFileSync(path.join(repoRoot, "e621ng-commit"), "utf8").trim();
+
+  if (expectedCommit) {
+    const cached = getCachedRoutes(expectedCommit);
+    if (cached) return cached;
+  }
+
   const { dir: e621ngDir, cleanup } = setupE621ng();
   let routes;
   try {
@@ -175,6 +303,13 @@ function main() {
   } finally {
     cleanup();
   }
+
+  if (expectedCommit) setCachedRoutes(expectedCommit, routes);
+  return routes;
+}
+
+function main() {
+  const routes = getRoutes();
 
   // controller#action -> set of HTTP methods e621ng actually routes it on
   const realMethodsByPair = new Map();
@@ -193,6 +328,7 @@ function main() {
   const routeMismatches = [];
   const shapeMismatches = [];
   const methodMismatches = [];
+  const documentedPairs = new Set();
 
   for (const file of files) {
     const rel = path.relative(pathsDir, file).split(path.sep).join("/");
@@ -226,6 +362,7 @@ function main() {
     }
 
     const routeKey = ROUTE_EXCEPTIONS.get(operationId) ?? operationId;
+    documentedPairs.add(routeKey);
     const realMethods = realMethodsByPair.get(routeKey);
     if (!realMethods) {
       routeMismatches.push(`${rel}: operationId '${operationId}' has no matching route in e621ng`);
@@ -246,7 +383,41 @@ function main() {
     }
   }
 
-  const problems = shapeMismatches.length + routeMismatches.length + methodMismatches.length;
+  // Real, JSON-capable e621ng routes with no documentation and no entry in
+  // ignored-routes.json.
+  const ignored = loadIgnoredRoutes();
+  const realJsonCapablePairs = new Set(
+    routes.filter(r => r.controller && r.action && r.json_capable).map(r => `${r.controller}#${r.action}`)
+  );
+  const missingRoutes = [...realJsonCapablePairs]
+    .filter(pair => !documentedPairs.has(pair) && !isIgnored(pair, ignored))
+    .sort();
+
+  // ignored-routes.json entries that no longer match anything real,
+  // undocumented, and JSON-capable - either the route's gone, e621ng
+  // stopped exposing it as JSON, or it got documented since. Surfaced as a
+  // nudge to prune the file, not a failure.
+  const wouldBeMissingWithoutIgnores = new Set(
+    [...realJsonCapablePairs].filter(pair => !documentedPairs.has(pair))
+  );
+  // A raw key is stale only if every one of its (possibly brace-expanded)
+  // exact/wildcard-controller matchers is unused - a brace group where only
+  // some options still match something real is left alone rather than
+  // reported. "*#action" entries are never checked, same as before brace
+  // groups existed: a blanket action-wildcard is expected to sit unused for
+  // most controllers.
+  const staleIgnores = [...ignored.rawKeyMatchers.entries()]
+    .filter(([, matchers]) => {
+      const checkable = matchers.filter(m => m.type !== "wildcardAction");
+      if (checkable.length === 0) return false;
+      return checkable.every(m => m.type === "exact"
+        ? !wouldBeMissingWithoutIgnores.has(m.value)
+        : ![...wouldBeMissingWithoutIgnores].some(pair => pair.startsWith(`${m.value}#`)));
+    })
+    .map(([key]) => key)
+    .sort();
+
+  const problems = shapeMismatches.length + routeMismatches.length + methodMismatches.length + missingRoutes.length;
   if (problems) {
     if (shapeMismatches.length) {
       console.error(`\n${shapeMismatches.length} operationId/path naming mismatch(es):`);
@@ -260,11 +431,20 @@ function main() {
       console.error(`\n${methodMismatches.length} HTTP method mismatch(es):`);
       for (const m of methodMismatches) console.error(`  ${m}`);
     }
+    if (missingRoutes.length) {
+      console.error(`\n${missingRoutes.length} route(s) in e621ng with no documentation (add to api/paths, or to ignored-routes.json if intentional):`);
+      for (const m of missingRoutes) console.error(`  ${m}`);
+    }
     console.error(`\n${files.length} files checked, ${problems} problem(s) found.`);
     process.exit(1);
   }
 
-  console.log(`All ${files.length} operationIds match their directory/file name and a real e621ng route + method.`);
+  if (staleIgnores.length) {
+    console.warn(`\n${staleIgnores.length} ignored-routes.json entr(y/ies) no longer apply (route missing, no longer JSON, or already documented) - consider pruning:`);
+    for (const m of staleIgnores) console.warn(`  ${m}`);
+  }
+
+  console.log(`All ${files.length} operationIds match their directory/file name and a real e621ng route + method, and no undocumented JSON routes were found.`);
 }
 
 main();

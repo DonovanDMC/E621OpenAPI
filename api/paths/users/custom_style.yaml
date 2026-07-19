@@ -1,0 +1,13 @@
+summary: Get Custom Style
+operationId: users#custom_style
+tags:
+  - Users
+security:
+  - basicAuth: []
+responses:
+  200:
+    description: Success
+    content:
+      application/css: {}
+  406:
+    description: Not Logged In

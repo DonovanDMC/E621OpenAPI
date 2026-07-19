@@ -1,7 +1,7 @@
 summary: Admin Edit User
 operationId: staff/users#update
 tags:
-  - Admin Users
+  - Staff Users
 security:
   - basicAuth: []
 description: You must be Admin+. If editing an Admin+, you must be Owner+.

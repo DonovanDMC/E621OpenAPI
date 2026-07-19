@@ -1,0 +1,22 @@
+summary: Search Trends Track
+operationId: search_trends#track
+tags:
+  - Search Trends
+parameters:
+  - in: query
+    name: tag
+    schema:
+      type: string
+      description: Up to 10 comma separated values.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          description: Dictionary of tag to trends.
+          additionalProperties:
+            type: array
+            items:
+              $ref: "../../components/schemas/trackedSearchTrend.yaml"

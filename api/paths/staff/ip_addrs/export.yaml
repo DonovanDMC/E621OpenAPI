@@ -1,0 +1,44 @@
+summary: Staff IP Addrs Export
+operationId: staff/ip_addrs#export
+tags:
+  - Staff IP Addrs
+security:
+  - basicAuth: []
+description: You must be Admin+. Nothing will be returned if one of the `user_id`/`user_name` search options is not specified.
+parameters:
+  - name: search[with_history]
+    in: query
+    schema:
+      type: boolean
+  - name: search[user_id]
+    in: query
+    description: Accepts multiple comma separated values.
+    schema:
+      type: string
+  - name: search[user_name]
+    in: query
+    description: Accepts multiple comma separated values.
+    schema:
+      type: string
+  - name: search[ip_addr]
+    in: query
+    description: Accepts multiple comma separated values.
+    schema:
+      type: string
+  - name: search[add_ip_mask]
+    in: query
+    schema:
+      type: boolean
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: string
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  422:
+    $ref: "../../../components/responses/expectedError.yaml"

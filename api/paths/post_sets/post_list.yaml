@@ -1,0 +1,19 @@
+# TODO: Currently always errors, see: https://github.com/e621ng/e621ng/pull/2304
+summary: Post Set Post List
+operationId: post_sets#post_list
+tags:
+  - Post Sets
+description: You must be Moderator+ if the set is not public.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/postSet.yaml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"

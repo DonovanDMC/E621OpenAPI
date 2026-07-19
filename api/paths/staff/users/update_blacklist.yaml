@@ -1,0 +1,33 @@
+summary: Staff Update User Blacklist
+operationId: staff/users#update_blacklist
+tags:
+  - Staff Users
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../../components/parameters/path/id.yaml"
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - user
+        properties:
+          user:
+            type: object
+            required:
+              - blacklisted_tags
+            properties:
+              blacklisted_tags:
+                type: string
+
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"

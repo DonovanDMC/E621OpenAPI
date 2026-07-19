@@ -1,0 +1,16 @@
+type: object
+required:
+  - tag
+  - count
+  - hour
+  - processed
+properties:
+  tag:
+    type: string
+  count:
+    type: integer
+  hour:
+    type: string
+    format: date-time
+  processed:
+    type: boolean

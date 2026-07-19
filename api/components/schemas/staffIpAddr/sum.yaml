@@ -1,0 +1,4 @@
+type: object
+description: Dictionary of ip address to count.
+additionalProperties:
+  type: integer

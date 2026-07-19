@@ -1,7 +1,7 @@
-summary: Admin Anonymize User
+summary: Anonymize User
 operationId: staff/users#anonymize_confirm
 tags:
-  - Admin Users
+  - Staff Users
 security:
   - basicAuth: []
 description: You must have the bd staff user flag. Cannot be used on staff.

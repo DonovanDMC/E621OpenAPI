@@ -268,6 +268,16 @@ components:
       $ref: "./components/schemas/voteTrend/metatag.yaml"
     VoteTrendUploader:
       $ref: "./components/schemas/voteTrend/uploader.yaml"
+    SearchTrendHourly:
+      $ref: "./components/schemas/searchTrendHourly.yaml"
+    TrackedSearchTrend:
+      $ref: "./components/schemas/trackedSearchTrend.yaml"
+    StaffIPAddrSum:
+      $ref: "./components/schemas/staffIpAddr/sum.yaml"
+    StaffIPAddrIPListing:
+      $ref: "./components/schemas/staffIpAddr/ipListing.yaml"
+    StaffIPAddrUserListing:
+      $ref: "./components/schemas/staffIpAddr/userListing.yaml"
 
   responses:
     NotFound:
@@ -420,6 +430,9 @@ paths:
       $ref: "./paths/comments/update.yaml"
     delete:
       $ref: "./paths/comments/destroy.yaml"
+  /comments/{id}/for_post.json:
+    get:
+      $ref: "./paths/comments/for_post.yaml"
   /comments/{id}/hide.json:
     post:
       $ref: "./paths/comments/hide.yaml"
@@ -723,6 +736,9 @@ paths:
       $ref: "./paths/post_sets/update.yaml"
     delete:
       $ref: "./paths/post_sets/destroy.yaml"
+  /post_sets/{id}/post_list.json:
+    get:
+      $ref: "./paths/post_sets/post_list.yaml"
   /post_sets/{id}/update_posts.json:
     post:
       $ref: "./paths/post_sets/update_posts.yaml"
@@ -867,6 +883,9 @@ paths:
   /search_trends/rising.json:
     get:
       $ref: "./paths/search_trends/rising.yaml"
+  /search_trends/track.json:
+    get:
+      $ref: "./paths/search_trends/track.yaml"
   /search_trends/clear_cache.json:
     post:
       $ref: "./paths/search_trends/clear_cache.yaml"
@@ -883,8 +902,14 @@ paths:
     post:
       $ref: "./paths/search_trend_blacklists/create.yaml"
   /search_trend_blacklists/{id}.json:
+    patch:
+      $ref: "./paths/search_trend_blacklists/update.yaml"
     delete:
       $ref: "./paths/search_trend_blacklists/destroy.yaml"
+
+  /search_trend_hourlies.json:
+    get:
+      $ref: "./paths/search_trend_hourlies/index.yaml"
 
   /session.json:
     post:
@@ -979,6 +1004,9 @@ paths:
   /users/avatar_menu.json:
     get:
       $ref: "./paths/users/avatar_menu.yaml"
+  /users/custom_style.css:
+    get:
+      $ref: "./paths/users/custom_style.yaml"
   /users/{idOrName}.json:
     get:
       $ref: "./paths/users/show.yaml"
@@ -1068,9 +1096,12 @@ paths:
   /staff/users/{id}.json:
     patch:
       $ref: "./paths/staff/users/update.yaml"
-  /staff/users/{id}/anonymize.json:
+  /staff/users/{id}/anonymize_confirm.json:
     post:
       $ref: "./paths/staff/users/anonymize_confirm.yaml"
+  /staff/users/{id}/update_blacklist.json:
+    post:
+      $ref: "./paths/staff/users/update_blacklist.yaml"
 
   /staff/users/{user_id}/dmails.json:
     get:
@@ -1185,6 +1216,9 @@ paths:
   /staff/wikis/{id}/unclaim.json:
     post:
       $ref: "./paths/staff/wikis/unclaim.yaml"
+  /staff/wikis/{id}/revert.json:
+    put:
+      $ref: "./paths/staff/wikis/revert.yaml"
 
   /staff/wiki_versions.json:
     get:
@@ -1196,3 +1230,10 @@ paths:
   /staff/vote_trends.json:
     get:
       $ref: "./paths/staff/vote_trends/index.yaml"
+
+  /staff/ip_addrs.json:
+    get:
+      $ref: "./paths/staff/ip_addrs/index.yaml"
+  /staff/ip_addrs/export.json:
+    get:
+      $ref: "./paths/staff/ip_addrs/export.yaml"

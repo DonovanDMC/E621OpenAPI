@@ -1,0 +1,15 @@
+summary: Comments For Post
+operationId: comments#for_post
+tags:
+  - Comments
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/dTextResponse.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"

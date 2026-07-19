@@ -1,0 +1,26 @@
+summary: Update Search Trend Blacklist
+operationId: search_trend_blacklists#update
+tags:
+  - Search Trend Blacklists
+security:
+  - basicAuth: []
+description: You must be Admin+.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          tag:
+            type: string
+          reason:
+            type: string
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  422:
+    $ref: "../../components/responses/expectedError.yaml"

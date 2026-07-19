@@ -9,6 +9,7 @@ class RouteExporter
     :action,
     :defaults,
     :constraints,
+    :json_capable,
     keyword_init: true
   )
 
@@ -27,9 +28,34 @@ class RouteExporter
         controller: reqs[:controller],
         action: reqs[:action],
         defaults: route.defaults,
-        constraints: extract_constraints(route)
+        constraints: extract_constraints(route),
+        json_capable: json_capable?(reqs[:controller], reqs[:action])
       ).to_h
     end
+  end
+
+  # Whether `controller#action` actually has a `respond_to :json` (directly,
+  # via the `responders` gem's `respond_to`/`mimes_for_respond_to`, not
+  # inline `render json:`/`respond_to do |format| ... end` calls, which
+  # aren't statically discoverable). Used to tell "not a JSON endpoint at
+  # all" apart from "a JSON endpoint we just haven't documented yet".
+  def self.json_capable?(controller, action)
+    klass = "#{controller}_controller".classify.safe_constantize
+    return false unless klass && klass.respond_to?(:mimes_for_respond_to)
+
+    json = klass.mimes_for_respond_to[:json]
+    return false unless json
+
+    return true if json[:only].nil? && json[:except].nil?
+    return json[:only].map(&:to_s).include?(action) if json[:only]
+
+    !json[:except].map(&:to_s).include?(action)
+  rescue StandardError
+    # Some controller names (e.g. gem-provided dev/test-only ones like
+    # view_components' own routes) don't resolve cleanly through
+    # classify/const lookup. Not worth crashing the whole export over -
+    # treat as not JSON-capable.
+    false
   end
 
   def self.normalize_verb(verb)

@@ -1,7 +1,7 @@
 summary: Get Alt List
 operationId: staff/users#alt_list
 tags:
-  - Admin Users
+  - Staff Users
 security:
   - basicAuth: []
 description: You must be Admin+.

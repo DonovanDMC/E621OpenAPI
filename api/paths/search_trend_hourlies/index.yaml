@@ -1,0 +1,30 @@
+summary: Search Trend Hourlies Index
+operationId: search_trend_hourlies#index
+tags:
+  - Search Trend Hourlies
+security:
+  - basicAuth: []
+description: You must be Admin+.
+parameters:
+  - $ref: "../../components/parameters/query/limit.yaml"
+  - $ref: "../../components/parameters/query/page.yaml"
+  - in: query
+    name: search[name_matches]
+    schema:
+      type: string
+  - in: query
+    name: hour
+    schema:
+      type: string
+      format: date-time
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/searchTrendHourly.yaml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
