@@ -16,9 +16,3 @@ jobs:
     name: Update API Version
     uses: ./.github/workflows/update-api-version.yml
     needs: [lint]
-  deploy:
-    name: Deploy
-    uses: ./.github/workflows/deploy.yml
-    needs: [update-api-version]
-    with:
-      commit: ${{ needs.update-api-version.outputs.commit }}

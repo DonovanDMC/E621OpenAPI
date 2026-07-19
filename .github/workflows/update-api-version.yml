@@ -2,9 +2,6 @@ name: Update API Version
 
 on:
     workflow_call:
-        outputs:
-            commit:
-                value: ${{ jobs.update-api-version.outputs.commit }}
     workflow_dispatch:
 
 jobs:
@@ -13,8 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             contents: write
-        outputs:
-            commit: ${{ steps.head.outputs.commit_hash }}
+            actions: write
         steps:
             - uses: actions/checkout@v4
               with:
@@ -51,8 +47,11 @@ jobs:
                   commit_user_name: "github-actions[bot]"
                   commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
                   commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-            - name: Capture Current HEAD
-              id: head
+            # dispatched (rather than deployed via a needs/with commit sha in the
+            # same run) so it always checks out whatever just got pushed above -
+            # workflow_dispatch is exempt from GITHUB_TOKEN's no-recursive-runs rule
+            - name: Trigger Deploy
               shell: bash
-              run: |
-                  echo "commit_hash=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+              run: gh workflow run deploy.yml --ref "$GITHUB_REF_NAME"
+              env:
+                  GH_TOKEN: ${{ github.token }}
