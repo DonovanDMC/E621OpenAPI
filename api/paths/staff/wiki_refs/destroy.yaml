@@ -1,0 +1,24 @@
+summary: Delete Staff Wiki Ref
+operationId: staff/wiki_refs#destroy
+tags:
+  - Staff Wiki Refs
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../../components/parameters/path/id.yaml"
+  - name: wiki_id
+    in: path
+    description: The ID of the item.
+    required: true
+    schema:
+      type: integer
+description: You must be Staff+.
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"

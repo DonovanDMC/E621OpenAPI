@@ -1,0 +1,8 @@
+type: object
+required:
+  - keys
+properties:
+  keys:
+    type: array
+    items:
+      $ref: "./jwks/key.yaml"

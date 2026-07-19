@@ -1,0 +1,41 @@
+summary: Introspect OAuth Token
+operationId: doorkeeper/tokens#introspect
+tags:
+  - OpenID Connect
+description: |
+  [RFC 7662](https://datatracker.ietf.org/doc/html/rfc7662) token introspection. The caller must
+  authenticate as the token's OAuth client (`client_id`/`client_secret` as form fields below, or
+  HTTP Basic Auth), or present the token itself as a Bearer token in the `Authorization` header.
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - token
+        properties:
+          token:
+            type: string
+            description: The access or refresh token to introspect.
+          token_type_hint:
+            type: string
+            enum:
+              - access_token
+              - refresh_token
+          client_id:
+            type: string
+          client_secret:
+            type: string
+responses:
+  200:
+    description: "Success. Note that an unrecognized, expired, or revoked token is reported as `{\"active\": false}`, not an error."
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauth/introspection.yaml"
+  401:
+    description: Client or bearer token authentication failed.
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauthError.yaml"

@@ -1,0 +1,26 @@
+summary: Revert User
+operationId: user_reverts#create
+tags:
+  - Users
+security:
+  - basicAuth: []
+description: You must be Moderator+.
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - user_id
+        properties:
+          user_id:
+            type: integer
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"

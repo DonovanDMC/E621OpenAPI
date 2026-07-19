@@ -1,0 +1,11 @@
+type: object
+required:
+  - error
+properties:
+  error:
+    type: string
+    description: OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.
+  error_description:
+    type: string
+  state:
+    type: string

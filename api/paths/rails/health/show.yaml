@@ -1,0 +1,21 @@
+summary: Get status
+operationId: rails/health#show
+tags:
+  - System
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - timestamp
+          properties:
+            status:
+              type: string
+              enum:
+                - up
+            timestamp:
+              type: string

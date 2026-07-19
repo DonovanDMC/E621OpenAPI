@@ -1,0 +1,17 @@
+type: string
+enum:
+  - can_approve_posts
+  - can_upload_free
+  - is_bd_staff
+  - is_bd_auditor
+  - can_view_staff_notes
+  - can_handle_takedowns
+  - can_edit_avoid_posting_entries
+  - is_blocked # TODO: currently included for all users, likely an oversight: https://github.com/e621ng/e621ng/issues/2305
+  - is_member
+  - is_privileged
+  - is_former_staff
+  - is_staff
+  - is_janitor
+  - is_moderator
+  - is_admin

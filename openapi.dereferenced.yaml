@@ -14,8 +14,8 @@ info:
     url: 'https://e621.net/forum_topics/46279'
   version: 26d440f
   x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
-  x-e621ng-master-behind-by: unknown
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/commits/master
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -37,6 +37,9 @@ components:
       in: query
       name: authenticity_token
       description: Retrieved via scraping html for the `csrf-token` meta tag.
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://e621.net/.well-known/openid-configuration'
   parameters:
     idQuery:
       name: 'search[id]'
@@ -364,6 +367,336 @@ components:
         - pending
         - partial
         - approved
+    OpenIdConfiguration:
+      type: object
+      required:
+        - issuer
+        - authorization_endpoint
+        - token_endpoint
+        - revocation_endpoint
+        - introspection_endpoint
+        - userinfo_endpoint
+        - jwks_uri
+        - scopes_supported
+        - response_types_supported
+        - response_modes_supported
+        - grant_types_supported
+        - token_endpoint_auth_methods_supported
+        - subject_types_supported
+        - id_token_signing_alg_values_supported
+        - claim_types_supported
+        - claims_supported
+        - code_challenge_methods_supported
+      properties:
+        issuer:
+          type: string
+          format: uri
+        authorization_endpoint:
+          type: string
+          format: uri
+        token_endpoint:
+          type: string
+          format: uri
+        revocation_endpoint:
+          type: string
+          format: uri
+        introspection_endpoint:
+          type: string
+          format: uri
+        userinfo_endpoint:
+          type: string
+          format: uri
+        jwks_uri:
+          type: string
+          format: uri
+        scopes_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - openid
+              - profile
+              - email
+              - full
+        response_types_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - code
+        response_modes_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - query
+              - fragment
+              - form_post
+        grant_types_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - authorization_code
+              - refresh_token
+        token_endpoint_auth_methods_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - client_secret_basic
+              - client_secret_post
+        subject_types_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - public
+        id_token_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - RS256
+        claim_types_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - normal
+        claims_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - iss
+              - sub
+              - aud
+              - exp
+              - iat
+              - preferred_username
+              - name
+              - picture
+              - updated_at
+              - e621_level
+              - e621_level_string
+              - e621_avatar_id
+              - e621_permissions
+              - email
+              - email_verified
+        code_challenge_methods_supported:
+          type: array
+          items:
+            type: string
+            enum:
+              - S256
+    UserInfo:
+      type: object
+      description: null properties are entriely absent
+      required:
+        - preferred_username
+        - name
+        - updated_at
+        - e621_level
+        - e621_level_string
+        - e621_permissions
+        - sub
+      properties:
+        preferred_username:
+          type: string
+        name:
+          type: string
+        picture:
+          type: string
+        updated_at:
+          type: integer
+        e621_level:
+          type: integer
+          enum:
+            - 0
+            - 10
+            - 20
+            - 30
+            - 40
+            - 50
+            - 60
+            - 70
+            - 80
+        e621_level_string:
+          type: string
+          enum:
+            - Anonymous
+            - Blocked
+            - Member
+            - Privileged
+            - Former Staff
+            - Staff
+            - Janitor
+            - Moderator
+            - Admin
+        e621_avatar_id:
+          type: integer
+        e621_permissions:
+          type: string
+          enum:
+            - can_approve_posts
+            - can_upload_free
+            - is_bd_staff
+            - is_bd_auditor
+            - can_view_staff_notes
+            - can_handle_takedowns
+            - can_edit_avoid_posting_entries
+            - is_blocked
+            - is_member
+            - is_privileged
+            - is_former_staff
+            - is_staff
+            - is_janitor
+            - is_moderator
+            - is_admin
+        email:
+          type: string
+          description: Requires `email` scope.
+        email_verified:
+          type: boolean
+          description: Requires `email` scope.
+        sub:
+          type: string
+    Jwks:
+      type: object
+      required:
+        - keys
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            required:
+              - kty
+              - use
+              - alg
+              - kid
+              - 'n'
+              - e
+            properties:
+              kty:
+                type: string
+                enum:
+                  - RSA
+              use:
+                type: string
+                enum:
+                  - sig
+              alg:
+                type: string
+                enum:
+                  - RS256
+              kid:
+                type: string
+                description: 'Key ID, matched against the `kid` header of a signed JWT to select the key that verifies it.'
+              'n':
+                type: string
+                description: 'RSA modulus, base64url-encoded.'
+              e:
+                type: string
+                description: 'RSA public exponent, base64url-encoded.'
+    OAuthError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+        error_description:
+          type: string
+        state:
+          type: string
+    OAuthToken:
+      type: object
+      required:
+        - access_token
+        - token_type
+        - expires_in
+        - refresh_token
+        - scope
+        - created_at
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          enum:
+            - Bearer
+        expires_in:
+          type: integer
+          description: Seconds until `access_token` expires.
+        refresh_token:
+          type: string
+        scope:
+          type: string
+          description: Space-separated list of granted scopes.
+        created_at:
+          type: integer
+          description: Unix timestamp of when the token was issued.
+        id_token:
+          type: string
+          description: A signed JWT containing the user's ID token claims. Present only when the `openid` scope was granted.
+    OAuthIntrospection:
+      type: object
+      required:
+        - active
+      description: Only `active` is present when the token is inactive/unknown - the other fields are omitted entirely.
+      properties:
+        active:
+          type: boolean
+        scope:
+          type: string
+          description: Space-separated list of the token's granted scopes.
+        client_id:
+          type: string
+          description: The `uid` of the OAuth application the token was issued to.
+        token_type:
+          type: string
+          enum:
+            - Bearer
+        iat:
+          type: integer
+          description: Unix timestamp of when the token was issued.
+        exp:
+          type: integer
+          description: Unix timestamp of when the token expires. Omitted for tokens that don't expire.
+    OAuthTokenInfo:
+      type: object
+      required:
+        - resource_owner_id
+        - scope
+        - expires_in
+        - application
+        - created_at
+      properties:
+        resource_owner_id:
+          type: integer
+        scope:
+          type: array
+          items:
+            type: string
+            enum:
+              - openid
+              - profile
+              - email
+              - full
+        expires_in:
+          type: integer
+        application:
+          type: object
+          required:
+            - uid
+          properties:
+            uid:
+              type: string
+        created_at:
+          type: integer
     Artist:
       type: object
       required:
@@ -6414,6 +6747,22 @@ components:
                 type: string
                 enum:
                   - Access Denied
+    OAuthUnauthorized:
+      description: 'The access token is missing, expired, or revoked.'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+                description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+              error_description:
+                type: string
+              state:
+                type: string
     ExpectedError:
       description: Invalid Input Data
       content:
@@ -14439,6 +14788,601 @@ paths:
               schema:
                 type: string
                 example: OK | app3 | 26.06.10-fix.3
+  /.well-known/openid-configuration:
+    get:
+      summary: Get OpenID Connect Discovery Document
+      operationId: doorkeeper/openid_connect/discovery#provider
+      tags:
+        - OpenID Connect
+      description: |
+        Returns e621's [OpenID Connect discovery document](https://openid.net/specs/openid-connect-discovery-1_0.html),
+        advertising its OAuth 2.0/OIDC endpoints and the capabilities it supports on them.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - issuer
+                  - authorization_endpoint
+                  - token_endpoint
+                  - revocation_endpoint
+                  - introspection_endpoint
+                  - userinfo_endpoint
+                  - jwks_uri
+                  - scopes_supported
+                  - response_types_supported
+                  - response_modes_supported
+                  - grant_types_supported
+                  - token_endpoint_auth_methods_supported
+                  - subject_types_supported
+                  - id_token_signing_alg_values_supported
+                  - claim_types_supported
+                  - claims_supported
+                  - code_challenge_methods_supported
+                properties:
+                  issuer:
+                    type: string
+                    format: uri
+                  authorization_endpoint:
+                    type: string
+                    format: uri
+                  token_endpoint:
+                    type: string
+                    format: uri
+                  revocation_endpoint:
+                    type: string
+                    format: uri
+                  introspection_endpoint:
+                    type: string
+                    format: uri
+                  userinfo_endpoint:
+                    type: string
+                    format: uri
+                  jwks_uri:
+                    type: string
+                    format: uri
+                  scopes_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - openid
+                        - profile
+                        - email
+                        - full
+                  response_types_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - code
+                  response_modes_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - query
+                        - fragment
+                        - form_post
+                  grant_types_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - authorization_code
+                        - refresh_token
+                  token_endpoint_auth_methods_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - client_secret_basic
+                        - client_secret_post
+                  subject_types_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - public
+                  id_token_signing_alg_values_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - RS256
+                  claim_types_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - normal
+                  claims_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - iss
+                        - sub
+                        - aud
+                        - exp
+                        - iat
+                        - preferred_username
+                        - name
+                        - picture
+                        - updated_at
+                        - e621_level
+                        - e621_level_string
+                        - e621_avatar_id
+                        - e621_permissions
+                        - email
+                        - email_verified
+                  code_challenge_methods_supported:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - S256
+  /oauth/discovery/keys:
+    get:
+      summary: Get OpenID Connect JSON Web Key Set
+      operationId: doorkeeper/openid_connect/discovery#keys
+      tags:
+        - OpenID Connect
+      description: |
+        Returns the [JSON Web Key Set](https://www.rfc-editor.org/rfc/rfc7517) used to verify the
+        signature of issued ID tokens, as advertised by `jwks_uri` in the discovery document.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - keys
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - kty
+                        - use
+                        - alg
+                        - kid
+                        - 'n'
+                        - e
+                      properties:
+                        kty:
+                          type: string
+                          enum:
+                            - RSA
+                        use:
+                          type: string
+                          enum:
+                            - sig
+                        alg:
+                          type: string
+                          enum:
+                            - RS256
+                        kid:
+                          type: string
+                          description: 'Key ID, matched against the `kid` header of a signed JWT to select the key that verifies it.'
+                        'n':
+                          type: string
+                          description: 'RSA modulus, base64url-encoded.'
+                        e:
+                          type: string
+                          description: 'RSA public exponent, base64url-encoded.'
+  /oauth/userinfo:
+    get:
+      summary: Get OpenID Connect User Info
+      operationId: doorkeeper/openid_connect/userinfo#show
+      tags:
+        - OpenID Connect
+      description: |
+        Returns claims about the authenticated user, gated by the scopes granted to the access token.
+        Also reachable via POST with an identical response.
+      security:
+        - openId:
+            - openid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                description: null properties are entriely absent
+                required:
+                  - preferred_username
+                  - name
+                  - updated_at
+                  - e621_level
+                  - e621_level_string
+                  - e621_permissions
+                  - sub
+                properties:
+                  preferred_username:
+                    type: string
+                  name:
+                    type: string
+                  picture:
+                    type: string
+                  updated_at:
+                    type: integer
+                  e621_level:
+                    type: integer
+                    enum:
+                      - 0
+                      - 10
+                      - 20
+                      - 30
+                      - 40
+                      - 50
+                      - 60
+                      - 70
+                      - 80
+                  e621_level_string:
+                    type: string
+                    enum:
+                      - Anonymous
+                      - Blocked
+                      - Member
+                      - Privileged
+                      - Former Staff
+                      - Staff
+                      - Janitor
+                      - Moderator
+                      - Admin
+                  e621_avatar_id:
+                    type: integer
+                  e621_permissions:
+                    type: string
+                    enum:
+                      - can_approve_posts
+                      - can_upload_free
+                      - is_bd_staff
+                      - is_bd_auditor
+                      - can_view_staff_notes
+                      - can_handle_takedowns
+                      - can_edit_avoid_posting_entries
+                      - is_blocked
+                      - is_member
+                      - is_privileged
+                      - is_former_staff
+                      - is_staff
+                      - is_janitor
+                      - is_moderator
+                      - is_admin
+                  email:
+                    type: string
+                    description: Requires `email` scope.
+                  email_verified:
+                    type: boolean
+                    description: Requires `email` scope.
+                  sub:
+                    type: string
+        '401':
+          description: 'The access token is missing, expired, or revoked.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
+  /oauth/token:
+    post:
+      summary: Create OAuth Token
+      operationId: doorkeeper/tokens#create
+      tags:
+        - OpenID Connect
+      description: |
+        OAuth 2.0 token endpoint. Supports the `authorization_code` and `refresh_token` grant types.
+        The client can authenticate with `client_id`/`client_secret` as form fields (below) or via HTTP Basic Auth instead.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                    - authorization_code
+                    - refresh_token
+                code:
+                  type: string
+                  description: Required for the `authorization_code` grant type.
+                redirect_uri:
+                  type: string
+                  description: Required for the `authorization_code` grant type. Must match the `redirect_uri` used to obtain `code`.
+                code_verifier:
+                  type: string
+                  description: Required for the `authorization_code` grant type (PKCE is enforced).
+                refresh_token:
+                  type: string
+                  description: Required for the `refresh_token` grant type.
+                scope:
+                  type: string
+                  description: Space-separated list of scopes to narrow the token to. Only used by the `refresh_token` grant type.
+                client_id:
+                  type: string
+                  description: Required unless authenticating via HTTP Basic Auth instead.
+                client_secret:
+                  type: string
+                  description: 'Required unless authenticating via HTTP Basic Auth instead, or the client is public.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - access_token
+                  - token_type
+                  - expires_in
+                  - refresh_token
+                  - scope
+                  - created_at
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                    enum:
+                      - Bearer
+                  expires_in:
+                    type: integer
+                    description: Seconds until `access_token` expires.
+                  refresh_token:
+                    type: string
+                  scope:
+                    type: string
+                    description: Space-separated list of granted scopes.
+                  created_at:
+                    type: integer
+                    description: Unix timestamp of when the token was issued.
+                  id_token:
+                    type: string
+                    description: A signed JWT containing the user's ID token claims. Present only when the `openid` scope was granted.
+        '400':
+          description: 'Invalid request, client, grant, or scope.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
+        '401':
+          description: Client authentication failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
+  /oauth/revoke:
+    post:
+      summary: Revoke OAuth Token
+      operationId: doorkeeper/tokens#revoke
+      tags:
+        - OpenID Connect
+      description: |
+        [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009) token revocation. Always responds
+        with 200 and an empty body, even if the token was already invalid - the client can authenticate
+        with `client_id`/`client_secret` as form fields (below) or via HTTP Basic Auth instead.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: The access or refresh token to revoke.
+                token_type_hint:
+                  type: string
+                  enum:
+                    - access_token
+                    - refresh_token
+                client_id:
+                  type: string
+                  description: 'Required unless authenticating via HTTP Basic Auth instead, or the token was issued without a client.'
+                client_secret:
+                  type: string
+                  description: 'Required unless authenticating via HTTP Basic Auth instead, or the token was issued without a client.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: The token was issued to a different client than the one making this request.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
+  /oauth/introspect:
+    post:
+      summary: Introspect OAuth Token
+      operationId: doorkeeper/tokens#introspect
+      tags:
+        - OpenID Connect
+      description: |
+        [RFC 7662](https://datatracker.ietf.org/doc/html/rfc7662) token introspection. The caller must
+        authenticate as the token's OAuth client (`client_id`/`client_secret` as form fields below, or
+        HTTP Basic Auth), or present the token itself as a Bearer token in the `Authorization` header.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: The access or refresh token to introspect.
+                token_type_hint:
+                  type: string
+                  enum:
+                    - access_token
+                    - refresh_token
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+      responses:
+        '200':
+          description: 'Success. Note that an unrecognized, expired, or revoked token is reported as `{"active": false}`, not an error.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - active
+                description: Only `active` is present when the token is inactive/unknown - the other fields are omitted entirely.
+                properties:
+                  active:
+                    type: boolean
+                  scope:
+                    type: string
+                    description: Space-separated list of the token's granted scopes.
+                  client_id:
+                    type: string
+                    description: The `uid` of the OAuth application the token was issued to.
+                  token_type:
+                    type: string
+                    enum:
+                      - Bearer
+                  iat:
+                    type: integer
+                    description: Unix timestamp of when the token was issued.
+                  exp:
+                    type: integer
+                    description: Unix timestamp of when the token expires. Omitted for tokens that don't expire.
+        '401':
+          description: Client or bearer token authentication failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
+  /oauth/token/info:
+    get:
+      summary: Get OAuth Token Info
+      operationId: doorkeeper/token_info#show
+      tags:
+        - OpenID Connect
+      description: Returns metadata about the access token used to authenticate the request.
+      security:
+        - openId: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - resource_owner_id
+                  - scope
+                  - expires_in
+                  - application
+                  - created_at
+                properties:
+                  resource_owner_id:
+                    type: integer
+                  scope:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                        - openid
+                        - profile
+                        - email
+                        - full
+                  expires_in:
+                    type: integer
+                  application:
+                    type: object
+                    required:
+                      - uid
+                    properties:
+                      uid:
+                        type: string
+                  created_at:
+                    type: integer
+        '401':
+          description: 'The access token is missing, expired, or revoked.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    description: 'OAuth 2.0 error code (RFC 6749 §5.2 / RFC 6750 §3), e.g. `invalid_token`.'
+                  error_description:
+                    type: string
+                  state:
+                    type: string
   /dmails.json:
     get:
       summary: DMails Index

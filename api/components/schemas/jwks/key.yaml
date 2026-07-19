@@ -1,0 +1,30 @@
+type: object
+required:
+  - kty
+  - use
+  - alg
+  - kid
+  - n
+  - e
+properties:
+  kty:
+    type: string
+    enum:
+      - RSA
+  use:
+    type: string
+    enum:
+      - sig
+  alg:
+    type: string
+    enum:
+      - RS256
+  kid:
+    type: string
+    description: Key ID, matched against the `kid` header of a signed JWT to select the key that verifies it.
+  n:
+    type: string
+    description: RSA modulus, base64url-encoded.
+  e:
+    type: string
+    description: RSA public exponent, base64url-encoded.

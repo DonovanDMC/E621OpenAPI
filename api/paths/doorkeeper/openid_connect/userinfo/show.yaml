@@ -1,0 +1,19 @@
+summary: Get OpenID Connect User Info
+operationId: doorkeeper/openid_connect/userinfo#show
+tags:
+  - OpenID Connect
+description: |
+  Returns claims about the authenticated user, gated by the scopes granted to the access token.
+  Also reachable via POST with an identical response.
+security:
+  - openId:
+      - openid
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components/schemas/oauth/userInfo.yaml"
+  401:
+    $ref: "../../../../components/responses/oauthUnauthorized.yaml"

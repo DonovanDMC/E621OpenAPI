@@ -1,0 +1,17 @@
+type: string
+enum:
+  - iss
+  - sub
+  - aud
+  - exp
+  - iat
+  - preferred_username
+  - name
+  - picture
+  - updated_at
+  - e621_level
+  - e621_level_string
+  - e621_avatar_id
+  - e621_permissions
+  - email
+  - email_verified

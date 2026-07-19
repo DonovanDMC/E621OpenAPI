@@ -1,0 +1,14 @@
+summary: Get OpenID Connect JSON Web Key Set
+operationId: doorkeeper/openid_connect/discovery#keys
+tags:
+  - OpenID Connect
+description: |
+  Returns the [JSON Web Key Set](https://www.rfc-editor.org/rfc/rfc7517) used to verify the
+  signature of issued ID tokens, as advertised by `jwks_uri` in the discovery document.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components/schemas/jwks.yaml"

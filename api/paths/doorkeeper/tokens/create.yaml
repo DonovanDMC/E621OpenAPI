@@ -1,0 +1,60 @@
+summary: Create OAuth Token
+operationId: doorkeeper/tokens#create
+tags:
+  - OpenID Connect
+description: |
+  OAuth 2.0 token endpoint. Supports the `authorization_code` and `refresh_token` grant types.
+  The client can authenticate with `client_id`/`client_secret` as form fields (below) or via HTTP Basic Auth instead.
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - grant_type
+        properties:
+          grant_type:
+            type: string
+            enum:
+              - authorization_code
+              - refresh_token
+          code:
+            type: string
+            description: Required for the `authorization_code` grant type.
+          redirect_uri:
+            type: string
+            description: Required for the `authorization_code` grant type. Must match the `redirect_uri` used to obtain `code`.
+          code_verifier:
+            type: string
+            description: Required for the `authorization_code` grant type (PKCE is enforced).
+          refresh_token:
+            type: string
+            description: Required for the `refresh_token` grant type.
+          scope:
+            type: string
+            description: Space-separated list of scopes to narrow the token to. Only used by the `refresh_token` grant type.
+          client_id:
+            type: string
+            description: Required unless authenticating via HTTP Basic Auth instead.
+          client_secret:
+            type: string
+            description: Required unless authenticating via HTTP Basic Auth instead, or the client is public.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauth/token.yaml"
+  400:
+    description: Invalid request, client, grant, or scope.
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauthError.yaml"
+  401:
+    description: Client authentication failed.
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauthError.yaml"

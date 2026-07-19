@@ -7,10 +7,9 @@
 //   4. is exposed in api/api.yaml under an HTTP method that pair is actually
 //      routed on in e621ng
 //
-// It also checks the other direction: every e621ng route that actually
-// supports JSON (has a `respond_to :json` covering that action) but isn't
+// It also checks the other direction: every e621ng route that exists but isn't
 // documented anywhere is reported as a missing route, unless it's listed in
-// ignored-routes.json at the repo root - either as an exact "controller#action"
+// ignored-routes.jsonc at the repo root - either as an exact "controller#action"
 // pair, "*#action" to match that action on any controller, or "controller#*"
 // to ignore an entire controller. Either side can also contain shell-style
 // `{a,b,c}` brace groups to cover several entries in one line, e.g.
@@ -224,18 +223,68 @@ function expandBraces(pattern) {
   return inner.split(",").flatMap(option => expandBraces(`${before}${option}${after}`));
 }
 
-// ignored-routes.json maps a "controller#action" pair to a human-readable
-// reason. Used to silence routes that are real and JSON-capable per
-// e621ng's own `respond_to` declarations, but aren't meaningfully part of
-// the documented API (HTML-only forms/confirmation pages that just happen
-// to inherit a blanket `respond_to :json`, etc). Either side can be `*`:
+// Strips `//` and `/* */` comments from JSONC source ahead of JSON.parse,
+// respecting string contents (so a reason like "https://..." or an escaped
+// quote doesn't get misread as the start/end of a comment).
+function stripJsonComments(text) {
+  let result = "";
+  let inString = false;
+  let inLineComment = false;
+  let inBlockComment = false;
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (inLineComment) {
+      if (char === "\n") {
+        inLineComment = false;
+        result += char;
+      }
+      continue;
+    }
+    if (inBlockComment) {
+      if (char === "*" && next === "/") {
+        inBlockComment = false;
+        i++;
+      }
+      continue;
+    }
+    if (inString) {
+      result += char;
+      if (char === "\\") {
+        result += next;
+        i++;
+      } else if (char === "\"") {
+        inString = false;
+      }
+      continue;
+    }
+    if (char === "\"") {
+      inString = true;
+      result += char;
+    } else if (char === "/" && next === "/") {
+      inLineComment = true;
+      i++;
+    } else if (char === "/" && next === "*") {
+      inBlockComment = true;
+      i++;
+    } else {
+      result += char;
+    }
+  }
+  return result;
+}
+
+// ignored-routes.jsonc maps a "controller#action" pair to a human-readable
+// reason. Used to silence routes that are real, but aren't meaningfully part of
+// the documented API (HTML-only forms/confirmation pages, etc). Either side can be `*`:
 // "*#action" matches that action on any controller (e.g. "*#new"),
 // "controller#*" ignores an entire controller (e.g. "staff/ip_addrs#*").
 // Either side can also contain `{a,b,c}` brace groups (see expandBraces),
 // e.g. "staff/users#{anonymize,edit_blacklist}" covers two actions on one
 // controller in a single entry.
 function loadIgnoredRoutes() {
-  const raw = JSON.parse(readFileSync(path.join(repoRoot, "ignored-routes.json"), "utf8"));
+  const raw = JSON.parse(stripJsonComments(readFileSync(path.join(repoRoot, "ignored-routes.jsonc"), "utf8")));
   const exact = new Set();
   const wildcardActions = new Set();
   const wildcardControllers = new Set();
@@ -383,22 +432,20 @@ function main() {
     }
   }
 
-  // Real, JSON-capable e621ng routes with no documentation and no entry in
-  // ignored-routes.json.
+  // Real e621ng routes with no documentation and no entry in gnored-routes.json.
   const ignored = loadIgnoredRoutes();
-  const realJsonCapablePairs = new Set(
-    routes.filter(r => r.controller && r.action && r.json_capable).map(r => `${r.controller}#${r.action}`)
+  const realPairs = new Set(
+    routes.filter(r => r.controller && r.action).map(r => `${r.controller}#${r.action}`)
   );
-  const missingRoutes = [...realJsonCapablePairs]
+  const missingRoutes = [...realPairs]
     .filter(pair => !documentedPairs.has(pair) && !isIgnored(pair, ignored))
     .sort();
 
-  // ignored-routes.json entries that no longer match anything real,
-  // undocumented, and JSON-capable - either the route's gone, e621ng
-  // stopped exposing it as JSON, or it got documented since. Surfaced as a
-  // nudge to prune the file, not a failure.
+  // ignored-routes.jsonc entries that no longer match anything real and undocumented - either
+  // the route's gone, e621ng, or it got documented since. Surfaced as a nudge to prune the file,
+  // not a failure.
   const wouldBeMissingWithoutIgnores = new Set(
-    [...realJsonCapablePairs].filter(pair => !documentedPairs.has(pair))
+    [...realPairs].filter(pair => !documentedPairs.has(pair))
   );
   // A raw key is stale only if every one of its (possibly brace-expanded)
   // exact/wildcard-controller matchers is unused - a brace group where only
@@ -432,7 +479,7 @@ function main() {
       for (const m of methodMismatches) console.error(`  ${m}`);
     }
     if (missingRoutes.length) {
-      console.error(`\n${missingRoutes.length} route(s) in e621ng with no documentation (add to api/paths, or to ignored-routes.json if intentional):`);
+      console.error(`\n${missingRoutes.length} route(s) in e621ng with no documentation (add to api/paths, or to ignored-routes.jsonc if intentional):`);
       for (const m of missingRoutes) console.error(`  ${m}`);
     }
     console.error(`\n${files.length} files checked, ${problems} problem(s) found.`);
@@ -440,7 +487,7 @@ function main() {
   }
 
   if (staleIgnores.length) {
-    console.warn(`\n${staleIgnores.length} ignored-routes.json entr(y/ies) no longer apply (route missing, no longer JSON, or already documented) - consider pruning:`);
+    console.warn(`\n${staleIgnores.length} ignored-routes.jsonc entr(y/ies) no longer apply (route missing, no longer JSON, or already documented) - consider pruning:`);
     for (const m of staleIgnores) console.warn(`  ${m}`);
   }
 

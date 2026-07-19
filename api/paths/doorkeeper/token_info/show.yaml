@@ -1,0 +1,16 @@
+summary: Get OAuth Token Info
+operationId: doorkeeper/token_info#show
+tags:
+  - OpenID Connect
+description: Returns metadata about the access token used to authenticate the request.
+security:
+  - openId: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauth/tokenInfo.yaml"
+  401:
+    $ref: "../../../components/responses/oauthUnauthorized.yaml"

@@ -1,0 +1,14 @@
+summary: Get OpenID Connect Discovery Document
+operationId: doorkeeper/openid_connect/discovery#provider
+tags:
+  - OpenID Connect
+description: |
+  Returns e621's [OpenID Connect discovery document](https://openid.net/specs/openid-connect-discovery-1_0.html),
+  advertising its OAuth 2.0/OIDC endpoints and the capabilities it supports on them.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components/schemas/openIdConfiguration.yaml"

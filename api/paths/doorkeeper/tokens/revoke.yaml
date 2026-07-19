@@ -1,0 +1,43 @@
+summary: Revoke OAuth Token
+operationId: doorkeeper/tokens#revoke
+tags:
+  - OpenID Connect
+description: |
+  [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009) token revocation. Always responds
+  with 200 and an empty body, even if the token was already invalid - the client can authenticate
+  with `client_id`/`client_secret` as form fields (below) or via HTTP Basic Auth instead.
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - token
+        properties:
+          token:
+            type: string
+            description: The access or refresh token to revoke.
+          token_type_hint:
+            type: string
+            enum:
+              - access_token
+              - refresh_token
+          client_id:
+            type: string
+            description: Required unless authenticating via HTTP Basic Auth instead, or the token was issued without a client.
+          client_secret:
+            type: string
+            description: Required unless authenticating via HTTP Basic Auth instead, or the token was issued without a client.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+  403:
+    description: The token was issued to a different client than the one making this request.
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/oauthError.yaml"

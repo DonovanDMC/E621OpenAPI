@@ -1,0 +1,23 @@
+type: object
+required:
+  - active
+description: Only `active` is present when the token is inactive/unknown - the other fields are omitted entirely.
+properties:
+  active:
+    type: boolean
+  scope:
+    type: string
+    description: Space-separated list of the token's granted scopes.
+  client_id:
+    type: string
+    description: The `uid` of the OAuth application the token was issued to.
+  token_type:
+    type: string
+    enum:
+      - Bearer
+  iat:
+    type: integer
+    description: Unix timestamp of when the token was issued.
+  exp:
+    type: integer
+    description: Unix timestamp of when the token expires. Omitted for tokens that don't expire.

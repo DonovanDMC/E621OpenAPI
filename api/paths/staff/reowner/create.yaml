@@ -1,0 +1,33 @@
+summary: Reown Posts
+operationId: staff/reowner#create
+tags:
+  - Posts
+security:
+  - basicAuth: []
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - reowner[new_owner]
+        properties:
+          reowner[new_owner]:
+            type: string
+            description: |
+              Must be a string
+              Name: `name`
+              ID: `!1234`
+          reowner[reowner_versions]:
+            type: boolean
+            description: Also reown post versions. (default false)
+          reowner[post_events]:
+            type: boolean
+            description: Also reown post events. (default true)
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"

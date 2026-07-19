@@ -1,0 +1,5 @@
+description: The access token is missing, expired, or revoked.
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/oauthError.yaml"

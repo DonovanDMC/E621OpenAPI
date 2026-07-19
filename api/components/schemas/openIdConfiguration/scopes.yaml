@@ -1,0 +1,6 @@
+type: string
+enum:
+  - openid
+  - profile
+  - email
+  - full

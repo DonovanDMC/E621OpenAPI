@@ -42,6 +42,9 @@ components:
       in: query
       name: authenticity_token
       description: "Retrieved via scraping html for the `csrf-token` meta tag."
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://e621.net/.well-known/openid-configuration
   parameters:
     idQuery:
       $ref: "./components/parameters/query/id.yaml"
@@ -88,6 +91,20 @@ components:
       $ref: "./components/schemas/ticketTypes.yaml"
     TicketStatuses:
       $ref: "./components/schemas/ticketStatuses.yaml"
+    OpenIdConfiguration:
+      $ref: "./components/schemas/openIdConfiguration.yaml"
+    UserInfo:
+      $ref: "./components/schemas/oauth/userInfo.yaml"
+    Jwks:
+      $ref: "./components/schemas/jwks.yaml"
+    OAuthError:
+      $ref: "./components/schemas/oauthError.yaml"
+    OAuthToken:
+      $ref: "./components/schemas/oauth/token.yaml"
+    OAuthIntrospection:
+      $ref: "./components/schemas/oauth/introspection.yaml"
+    OAuthTokenInfo:
+      $ref: "./components/schemas/oauth/tokenInfo.yaml"
     Artist:
       $ref: "./components/schemas/artist.yaml"
     ArtistUrl:
@@ -284,6 +301,8 @@ components:
       $ref: "./components/responses/notFound.yaml"
     AccessDenied:
       $ref: "./components/responses/accessDenied.yaml"
+    OAuthUnauthorized:
+      $ref: "./components/responses/oauthUnauthorized.yaml"
     ExpectedError:
       $ref: "./components/responses/expectedError.yaml"
     MessageSuccess:
@@ -464,6 +483,30 @@ paths:
   /health:
     get:
       $ref: "./paths/health/index.yaml"
+  /status.json:
+    get:
+      $ref: "./paths/rails/health/show.yaml"
+  /.well-known/openid-configuration:
+    get:
+      $ref: "./paths/doorkeeper/openid_connect/discovery/provider.yaml"
+  /oauth/discovery/keys:
+    get:
+      $ref: "./paths/doorkeeper/openid_connect/discovery/keys.yaml"
+  /oauth/userinfo:
+    get:
+      $ref: "./paths/doorkeeper/openid_connect/userinfo/show.yaml"
+  /oauth/token:
+    post:
+      $ref: "./paths/doorkeeper/tokens/create.yaml"
+  /oauth/revoke:
+    post:
+      $ref: "./paths/doorkeeper/tokens/revoke.yaml"
+  /oauth/introspect:
+    post:
+      $ref: "./paths/doorkeeper/tokens/introspect.yaml"
+  /oauth/token/info:
+    get:
+      $ref: "./paths/doorkeeper/token_info/show.yaml"
 
   /dmails.json:
     get:
@@ -914,6 +957,8 @@ paths:
   /session.json:
     post:
       $ref: "./paths/sessions/create.yaml"
+    delete:
+      $ref: "./paths/sessions/destroy.yaml"
 
   /staff_notes.json:
     get:
@@ -1021,12 +1066,17 @@ paths:
   /users/{idOrName}/fix_counts.json:
     get:
       $ref: "./paths/users/fix_counts.yaml"
-  /users/{idOrName}/toggle_uploads.json:
+  /users/{idOrName}/toggle_uploads:
     get:
       $ref: "./paths/users/toggle_uploads.yaml"
-  /users/{idOrName}/disable_uploads.json:
+  /users/{idOrName}/disable_uploads:
     post:
       $ref: "./paths/users/disable_uploads.yaml"
+
+  /user_reverts:
+    post:
+      $ref: "./paths/user_reverts/create.yaml"
+
   /maintenance/user/count_fixes.json:
     post:
       $ref: "./paths/maintenance/user/count_fixes/create.yaml"
@@ -1096,10 +1146,10 @@ paths:
   /staff/users/{id}.json:
     patch:
       $ref: "./paths/staff/users/update.yaml"
-  /staff/users/{id}/anonymize_confirm.json:
+  /staff/users/{id}/anonymize_confirm:
     post:
       $ref: "./paths/staff/users/anonymize_confirm.yaml"
-  /staff/users/{id}/update_blacklist.json:
+  /staff/users/{id}/update_blacklist:
     post:
       $ref: "./paths/staff/users/update_blacklist.yaml"
 
@@ -1154,7 +1204,7 @@ paths:
   /staff/post/posts/{id}/previous_owners.json:
     get:
       $ref: "./paths/staff/post/posts/previous_owners.yaml"
-  /staff/post/posts/{id}/reowner.json:
+  /staff/post/posts/{id}/reowner:
     post:
       $ref: "./paths/staff/post/posts/reowner.yaml"
   /staff/post/approval.json:
@@ -1219,6 +1269,12 @@ paths:
   /staff/wikis/{id}/revert.json:
     put:
       $ref: "./paths/staff/wikis/revert.yaml"
+  /staff/wikis/{id}/references:
+    post:
+      $ref: "./paths/staff/wiki_refs/create.yaml"
+  /staff/wikis/{wiki_id}/references/{id}:
+    delete:
+      $ref: "./paths/staff/wiki_refs/destroy.yaml"
 
   /staff/wiki_versions.json:
     get:
@@ -1237,3 +1293,11 @@ paths:
   /staff/ip_addrs/export.json:
     get:
       $ref: "./paths/staff/ip_addrs/export.yaml"
+
+  /staff/reowner.json:
+    post:
+      $ref: "./paths/staff/reowner/create.yaml"
+
+  /staff/stuck_dnp.json:
+    post:
+      $ref: "./paths/staff/stuck_dnp/create.yaml"

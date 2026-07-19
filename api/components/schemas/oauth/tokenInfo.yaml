@@ -1,0 +1,25 @@
+type: object
+required:
+  - resource_owner_id
+  - scope
+  - expires_in
+  - application
+  - created_at
+properties:
+  resource_owner_id:
+    type: integer
+  scope:
+    type: array
+    items:
+      $ref: "../openIdConfiguration/scopes.yaml"
+  expires_in:
+    type: integer
+  application:
+    type: object
+    required:
+      - uid
+    properties:
+      uid:
+        type: string
+  created_at:
+    type: integer

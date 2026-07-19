@@ -1,0 +1,4 @@
+type: string
+enum:
+  - authorization_code
+  - refresh_token

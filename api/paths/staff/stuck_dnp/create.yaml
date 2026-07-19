@@ -1,0 +1,23 @@
+summary: Stuck DNP
+operationId: staff/stuck_dnp#create
+tags:
+  - Posts
+security:
+  - basicAuth: []
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - stuck_dnp[query]
+        properties:
+          stuck_dnp[query]:
+            type: string
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
