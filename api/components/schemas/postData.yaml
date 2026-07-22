@@ -1,8 +1,0 @@
-type: object
-required:
-  - post_data
-properties:
-  post_data:
-    type: array
-    items:
-      $ref: "../../components/schemas/thumbnailPost.yaml"

@@ -1,0 +1,11 @@
+oneOf:
+  - type: string
+    enum:
+      - active
+      - deleted
+      - processing
+      - queued
+      - retired
+      - pending
+  - type: string
+    pattern: "^error: .*$"

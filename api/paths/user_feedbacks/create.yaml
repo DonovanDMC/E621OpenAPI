@@ -21,14 +21,14 @@ requestBody:
           body:
             type: string
           category:
-            $ref: "../../components/schemas/feedbackCategories.yaml"
+            $ref: "../../components/schemas/enums/UserFeedbackCategory.yml"
 responses:
   201:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/userFeedback.yaml"
+          $ref: "../../components/schemas/models/UserFeedback.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

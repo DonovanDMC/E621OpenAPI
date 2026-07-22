@@ -24,7 +24,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/ipBan.yaml"
+          $ref: "../../components/schemas/models/IPBan.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

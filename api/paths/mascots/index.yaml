@@ -14,4 +14,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/mascot.yaml"
+            $ref: "../../components/schemas/models/Mascot.yml"

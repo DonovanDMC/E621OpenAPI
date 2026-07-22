@@ -10,7 +10,7 @@ parameters:
     in: query
     required: true
     schema:
-      $ref: "../../components/schemas/upDownVote.yaml"
+      $ref: "../../components/schemas/enums/UpDownVote.yml"
   - name: no_unvote
     in: query
     schema:

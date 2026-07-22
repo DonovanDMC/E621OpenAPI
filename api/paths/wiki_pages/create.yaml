@@ -40,7 +40,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/wikiPage.yaml"
+          $ref: "../../components/schemas/models/WikiPage.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

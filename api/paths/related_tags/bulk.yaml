@@ -13,14 +13,14 @@ requestBody:
           query:
             type: string
           category_id:
-            $ref: "../../components/schemas/tagCategories.yaml"
+            $ref: "../../components/schemas/enums/TagCategory.yml"
 responses:
   200:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/bulkRelatedTag.yaml"
+          $ref: "../../components/schemas/models/BulkRelatedTag.yml"
           example:
             - {"male":[{"name":"male","count":0,"category_id":0}]}
   403:

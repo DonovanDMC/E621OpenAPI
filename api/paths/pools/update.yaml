@@ -19,7 +19,7 @@ requestBody:
           is_active:
             type: boolean
           category:
-            $ref: "../../components/schemas/poolCategories.yaml"
+            $ref: "../../components/schemas/enums/PoolCategory.yml"
           post_ids_string:
             type: string
             description: Space separated list of post IDs. Mutually exclusive with post_ids.

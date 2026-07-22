@@ -1,0 +1,18 @@
+type: object
+required:
+  - post_count
+  - real_post_count
+  - category
+  - category_cache
+  - tag
+properties:
+  post_count:
+    type: integer
+  real_post_count:
+    type: integer
+  category:
+    $ref: "../enums/TagCategory.yml"
+  category_cache:
+    $ref: "../enums/TagCategory.yml"
+  tag:
+    $ref: "./Tag.yml"

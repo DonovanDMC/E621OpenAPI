@@ -24,7 +24,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/searchTrendBlacklist.yaml"
+          $ref: "../../components/schemas/models/SearchTrendBlacklist.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

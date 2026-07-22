@@ -13,7 +13,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/forumPost.yaml"
+          $ref: "../../components/schemas/models/ForumPost.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

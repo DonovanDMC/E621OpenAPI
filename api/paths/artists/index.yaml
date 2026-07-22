@@ -73,7 +73,7 @@ responses:
           type: array
           items:
             allOf:
-              - $ref: "../../components/schemas/artist.yaml"
+              - $ref: "../../components/schemas/models/Artist.yml"
               - type: object
                 required:
                   - urls
@@ -81,4 +81,4 @@ responses:
                   urls:
                     type: array
                     items:
-                      $ref: "../../components/schemas/artistUrl.yaml"
+                      $ref: "../../components/schemas/models/ArtistURL.yml"

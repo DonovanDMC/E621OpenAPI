@@ -1,5 +1,0 @@
-type: integer
-enum:
-  - -1
-  - 0
-  - 1

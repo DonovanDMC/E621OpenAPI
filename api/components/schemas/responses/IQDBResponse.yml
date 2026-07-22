@@ -1,0 +1,23 @@
+type: object
+required:
+  - hash
+  - post_id
+  - score
+  - post
+properties:
+  hash:
+    type: string
+  post_id:
+    type: integer
+  score:
+    type: number
+    format: float
+    minimum: 0
+    maximum: 100
+  post:
+    type: object
+    required:
+      - posts
+    properties:
+      posts:
+        $ref: "../models/IQDBPost.yml"

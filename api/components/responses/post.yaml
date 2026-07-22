@@ -11,13 +11,13 @@ content:
             - post
           properties:
             post:
-              $ref: "../../components/schemas/legacyPost.yaml"
+              $ref: "../schemas/models/LegacyPost.yml"
         - allOf:
-            - $ref: "../../components/schemas/basicPost.yaml"
+            - $ref: "../schemas/models/BasicPost.yml"
             - description: The basic format, returned with `v2=true` and mode is not set.
         - allOf:
-            - $ref: "../../components/schemas/extendedPost.yaml"
+            - $ref: "../schemas/models/ExtendedPost.yml"
             - description: The extended format, returned with `v2=true` and `mode=extended`.
         - allOf:
-            - $ref: "../../components/schemas/thumbnailPost.yaml"
+            - $ref: "../schemas/models/ThumbnailPost.yml"
             - description: The thumbnail format, returned with `v2=true` and `mode=thumbnail`.

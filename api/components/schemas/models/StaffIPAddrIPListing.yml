@@ -1,0 +1,9 @@
+allOf:
+  - $ref: "./StaffIPAddrSums.yml"
+  - type: object
+    required:
+      - last_login
+    properties:
+      last_login:
+        additionalProperties:
+          type: integer

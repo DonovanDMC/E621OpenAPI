@@ -1,0 +1,35 @@
+type: object
+description: null properties are entriely absent
+required:
+  - preferred_username
+  - name
+  - updated_at
+  - e621_level
+  - e621_level_string
+  - e621_permissions
+  - sub
+properties:
+  preferred_username:
+    type: string
+  name:
+    type: string
+  picture:
+    type: string
+  updated_at:
+    type: integer
+  e621_level:
+    $ref: "../enums/UserLevel.yml"
+  e621_level_string:
+    $ref: "../enums/UserLevelName.yml"
+  e621_avatar_id:
+    type: integer
+  e621_permissions:
+    $ref: "../enums/OAuthPermission.yml"
+  email:
+    type: string
+    description: Requires `email` scope.
+  email_verified:
+    type: boolean
+    description: Requires `email` scope.
+  sub:
+    type: string

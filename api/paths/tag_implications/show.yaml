@@ -10,6 +10,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/tagImplication.yaml"
+          $ref: "../../components/schemas/models/TagImplication.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

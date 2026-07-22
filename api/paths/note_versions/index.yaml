@@ -40,4 +40,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/noteVersion.yaml"
+            $ref: "../../components/schemas/models/NoteVersion.yml"

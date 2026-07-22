@@ -40,7 +40,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/forumTopic.yaml"
+          $ref: "../../components/schemas/models/ForumTopic.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

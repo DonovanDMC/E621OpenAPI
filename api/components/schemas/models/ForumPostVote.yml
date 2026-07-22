@@ -1,0 +1,26 @@
+type: object
+required:
+  - id
+  - forum_post_id
+  - creator_id
+  - score
+  - created_at
+  - updated_at
+  - creator_name
+properties:
+  id:
+    type: integer
+  forum_post_id:
+    type: integer
+  creator_id:
+    type: integer
+  score:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  creator_name:
+    type: string

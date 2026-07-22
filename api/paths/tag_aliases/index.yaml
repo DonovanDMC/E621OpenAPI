@@ -32,15 +32,15 @@ parameters:
   - in: query
     name: search[status]
     schema:
-      $ref: "../../components/schemas/tagRequestStatuses.yaml"
+      $ref: "../../components/schemas/enums/TagRequestStatus.yml"
   - in: query
     name: search[antecedent_tag_category]
     schema:
-      $ref: "../../components/schemas/tagCategories.yaml"
+      $ref: "../../components/schemas/enums/TagCategory.yml"
   - in: query
     name: search[consequent_tag_category]
     schema:
-      $ref: "../../components/schemas/tagCategories.yaml"
+      $ref: "../../components/schemas/enums/TagCategory.yml"
   - in: query
     name: search[creator_id]
     schema:
@@ -65,4 +65,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/tagAlias.yaml"
+            $ref: "../../components/schemas/models/TagAlias.yml"

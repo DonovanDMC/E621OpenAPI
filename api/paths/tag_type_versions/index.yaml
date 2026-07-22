@@ -26,4 +26,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/tagTypeVersion.yaml"
+            $ref: "../../components/schemas/models/TagTypeVersion.yml"

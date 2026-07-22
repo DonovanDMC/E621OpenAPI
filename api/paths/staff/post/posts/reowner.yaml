@@ -33,7 +33,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../../components/schemas/rawPost.yaml"
+          $ref: "../../../../components/schemas/models/RawPost.yml"
   204:
     description: No Change
   403:

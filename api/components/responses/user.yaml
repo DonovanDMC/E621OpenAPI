@@ -3,5 +3,5 @@ content:
   application/json:
     schema:
       oneOf:
-        - $ref: "../../components/schemas/fullUser.yaml"
-        - $ref: "../../components/schemas/fullCurrentUser.yaml"
+        - $ref: "../schemas/models/FullUser.yml"
+        - $ref: "../schemas/models/FullCurrentUser.yml"

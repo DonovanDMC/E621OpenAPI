@@ -24,6 +24,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/emailBlacklist.yaml"
+          $ref: "../../components/schemas/models/EmailBlacklist.yml"
   422:
     $ref: "../../components/responses/expectedError.yaml"

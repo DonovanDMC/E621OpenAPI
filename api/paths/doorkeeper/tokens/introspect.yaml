@@ -32,10 +32,10 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauth/introspection.yaml"
+          $ref: "../../../components/schemas/models/OAuthIntrospection.yml"
   401:
     description: Client or bearer token authentication failed.
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauthError.yaml"
+          $ref: "../../../components/schemas/responses/OAuthError.yml"

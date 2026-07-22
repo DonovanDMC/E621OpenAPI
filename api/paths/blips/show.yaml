@@ -10,7 +10,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/blip.yaml"
+          $ref: "../../components/schemas/models/Blip.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

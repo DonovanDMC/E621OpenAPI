@@ -28,4 +28,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/poolVersion.yaml"
+            $ref: "../../components/schemas/models/PoolVersion.yml"

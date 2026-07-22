@@ -39,7 +39,7 @@ responses:
       application/json:
         schema:
           allOf:
-            - $ref: "../../components/schemas/note.yaml"
+            - $ref: "../../components/schemas/models/Note.yml"
             - type: object
               required:
                 - html_id

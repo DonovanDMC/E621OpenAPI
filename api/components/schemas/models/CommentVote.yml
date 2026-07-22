@@ -1,0 +1,23 @@
+type: object
+required:
+  - id
+  - comment_id
+  - user_id
+  - score
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  comment_id:
+    type: integer
+  user_id:
+    type: integer
+  score:
+    $ref: "../enums/UpDownVote.yml"
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

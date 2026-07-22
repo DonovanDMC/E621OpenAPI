@@ -45,7 +45,7 @@ parameters:
   - in: query
     name: search[qtype]
     schema:
-      $ref: "../../components/schemas/ticketTypes.yaml"
+      $ref: "../../components/schemas/enums/TicketType.yml"
   - in: query
     name: search[reason]
     description: You must be Staff+.
@@ -69,6 +69,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/ticket.yaml"
+            $ref: "../../components/schemas/models/Ticket.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"

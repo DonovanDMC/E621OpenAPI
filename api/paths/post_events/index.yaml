@@ -25,7 +25,7 @@ parameters:
   - in: query
     name: search[action]
     schema:
-      $ref: "../../components/schemas/postEventActions.yaml"
+      $ref: "../../components/schemas/enums/PostEventAction.yml"
 responses:
   200:
     description: Success
@@ -41,8 +41,8 @@ responses:
                 post_events:
                   type: array
                   items:
-                    $ref: "../../components/schemas/postEvent.yaml"
+                    $ref: "../../components/schemas/models/PostEvent.yml"
             - type: array
               description: The new format, returned with `v2=true`.
               items:
-                $ref: "../../components/schemas/postEvent.yaml"
+                $ref: "../../components/schemas/models/PostEvent.yml"

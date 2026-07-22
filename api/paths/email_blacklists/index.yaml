@@ -31,4 +31,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/emailBlacklist.yaml"
+            $ref: "../../components/schemas/models/EmailBlacklist.yml"

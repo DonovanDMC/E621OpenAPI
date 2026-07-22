@@ -34,4 +34,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/userNameChangeRequest.yaml"
+            $ref: "../../components/schemas/models/UserNameChangeRequest.yml"

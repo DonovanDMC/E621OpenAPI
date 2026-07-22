@@ -37,7 +37,7 @@ requestBody:
             type: boolean
             description: Must be Staff+ to use.
           category_id:
-            $ref: "../../components/schemas/tagCategories.yaml"
+            $ref: "../../components/schemas/enums/TagCategory.yml"
           category_is_locked:
             type: boolean
             description: Must be Admin+ to use.

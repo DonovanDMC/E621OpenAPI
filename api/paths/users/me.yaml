@@ -11,4 +11,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/fullCurrentUser.yaml"
+          $ref: "../../components/schemas/models/FullCurrentUser.yml"

@@ -2,4 +2,4 @@ description: Success
 content:
   application/json:
     schema:
-      $ref: "../schemas/messageSuccess.yaml"
+      $ref: "../schemas/responses/MessageSuccessResponse.yml"

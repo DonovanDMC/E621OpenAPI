@@ -65,237 +65,299 @@ components:
     idOrNamePath:
       $ref: "./components/parameters/path/idOrName.yaml"
   schemas:
-    AccessDeniedResponse:
-      $ref: "./components/schemas/accessDenied.yaml"
-    NotFoundResponse:
-      $ref: "./components/schemas/notFound.yaml"
-    WarningRecordType:
-      $ref: "./components/schemas/warningRecord.yaml"
-    ModActionActions:
-      $ref: "./components/schemas/modActionActions.yaml"
-    PostEventActions:
-      $ref: "./components/schemas/postEventActions.yaml"
-    Ratings:
-      $ref: "./components/schemas/ratings.yaml"
-    TagCategories:
-      $ref: "./components/schemas/tagCategories.yaml"
-    FeedbackCategories:
-      $ref: "./components/schemas/feedbackCategories.yaml"
-    TagRequestStatuses:
-      $ref: "./components/schemas/tagRequestStatuses.yaml"
-    WarningTypes:
-      $ref: "./components/schemas/warningTypes.yaml"
-    PoolCategories:
-      $ref: "./components/schemas/poolCategories.yaml"
-    TicketTypes:
-      $ref: "./components/schemas/ticketTypes.yaml"
-    TicketStatuses:
-      $ref: "./components/schemas/ticketStatuses.yaml"
-    OpenIdConfiguration:
-      $ref: "./components/schemas/openIdConfiguration.yaml"
-    UserInfo:
-      $ref: "./components/schemas/oauth/userInfo.yaml"
-    Jwks:
-      $ref: "./components/schemas/jwks.yaml"
-    OAuthError:
-      $ref: "./components/schemas/oauthError.yaml"
-    OAuthToken:
-      $ref: "./components/schemas/oauth/token.yaml"
-    OAuthIntrospection:
-      $ref: "./components/schemas/oauth/introspection.yaml"
-    OAuthTokenInfo:
-      $ref: "./components/schemas/oauth/tokenInfo.yaml"
-    Artist:
-      $ref: "./components/schemas/artist.yaml"
-    ArtistUrl:
-      $ref: "./components/schemas/artistUrl.yaml"
-    ArtistVersion:
-      $ref: "./components/schemas/artistVersion.yaml"
-    AvoidPosting:
-      $ref: "./components/schemas/avoidPosting.yaml"
-    AvoidPostingVersion:
-      $ref: "./components/schemas/avoidPostingVersion.yaml"
-    Ban:
-      $ref: "./components/schemas/ban.yaml"
-    Blip:
-      $ref: "./components/schemas/blip.yaml"
-    BulkRelatedTag:
-      $ref: "./components/schemas/bulkRelatedTag.yaml"
-    BulkUpdateRequest:
-      $ref: "./components/schemas/bulkUpdateRequest.yaml"
-    Comment:
-      $ref: "./components/schemas/comment.yaml"
-    CurrentUser:
-      $ref: "./components/schemas/currentUser.yaml"
-    DMail:
-      $ref: "./components/schemas/dMail.yaml"
-    DeferredPost:
-      $ref: "./components/schemas/deferredPost.yaml"
-    DTextResponse:
-      $ref: "./components/schemas/dTextResponse.yaml"
-    EmailBlacklist:
-      $ref: "./components/schemas/emailBlacklist.yaml"
-    ForumPost:
-      $ref: "./components/schemas/forumPost.yaml"
-    ForumPostVote:
-      $ref: "./components/schemas/forumPostVote.yaml"
-    ForumTopic:
-      $ref: "./components/schemas/forumTopic.yaml"
-    FullCurrentUser:
-      $ref: "./components/schemas/fullCurrentUser.yaml"
-    FullUser:
-      $ref: "./components/schemas/fullUser.yaml"
-    HelpPage:
-      $ref: "./components/schemas/helpPage.yaml"
-    IpBan:
-      $ref: "./components/schemas/ipBan.yaml"
-    IqdbPost:
-      $ref: "./components/schemas/iqdbPost.yaml"
-    RawPost:
-      $ref: "./components/schemas/rawPost.yaml"
-    IqdbResponse:
-      $ref: "./components/schemas/iqdbResponse.yaml"
-    Mascot:
-      $ref: "./components/schemas/mascot.yaml"
-    ModAction:
-      $ref: "./components/schemas/modAction.yaml"
-    NewsUpdate:
-      $ref: "./components/schemas/newsUpdate.yaml"
-    Note:
-      $ref: "./components/schemas/note.yaml"
-    NoteVersion:
-      $ref: "./components/schemas/noteVersion.yaml"
-    Pool:
-      $ref: "./components/schemas/pool.yaml"
-    PoolVersion:
-      $ref: "./components/schemas/poolVersion.yaml"
-    Post:
-      $ref: "./components/schemas/post.yaml"
-    PostApproval:
-      $ref: "./components/schemas/postApproval.yaml"
-    PostDisapproval:
-      $ref: "./components/schemas/postDisapproval.yaml"
-    PostEvent:
-      $ref: "./components/schemas/postEvent.yaml"
-    PostFlag:
-      $ref: "./components/schemas/postFlag.yaml"
-    PostReplacement:
-      $ref: "./components/schemas/postReplacement.yaml"
-    PostSampleAlternate:
-      $ref: "./components/schemas/postSampleAlternate.yaml"
-    PostSet:
-      $ref: "./components/schemas/postSet.yaml"
-    PostVersion:
-      $ref: "./components/schemas/postVersion.yaml"
-    RelatedTag:
-      $ref: "./components/schemas/relatedTag.yaml"
-    StaffNote:
-      $ref: ./components/schemas/staffNote.yaml
-    Tag:
-      $ref: "./components/schemas/tag.yaml"
-    TagAlias:
-      $ref: "./components/schemas/tagAlias.yaml"
-    TagImplication:
-      $ref: "./components/schemas/tagImplication.yaml"
-    TagPreview:
-      $ref: "./components/schemas/tagPreview.yaml"
-    TagTypeVersion:
-      $ref: "./components/schemas/tagTypeVersion.yaml"
-    Takedown:
-      $ref: "./components/schemas/takedown.yaml"
-    Ticket:
-      $ref: "./components/schemas/ticket.yaml"
-    UploadWhitelist:
-      $ref: "./components/schemas/uploadWhitelist.yaml"
-    Upload:
-      $ref: "./components/schemas/upload.yaml"
-    User:
-      $ref: "./components/schemas/user.yaml"
-    UserFeedback:
-      $ref: "./components/schemas/userFeedback.yaml"
-    UserNameChangeRequest:
-      $ref: "./components/schemas/userNameChangeRequest.yaml"
-    WikiPage:
-      $ref: "./components/schemas/wikiPage.yaml"
-    WikiPageVersion:
-      $ref: "./components/schemas/wikiPageVersion.yaml"
-    ApiKey:
-      $ref: "./components/schemas/apiKey.yaml"
-    EditHistory:
-      $ref: "./components/schemas/editHistory.yaml"
-    UserAvatarMenu:
-      $ref: "./components/schemas/userAvatarMenu.yaml"
-    TagCorrection:
-      $ref: "./components/schemas/tagCorrection.yaml"
-    SearchTrend:
-      $ref: "./components/schemas/searchTrend.yaml"
-    RisingSearchTrend:
-      $ref: "./components/schemas/risingSearchTrend.yaml"
-    SearchTrendBlacklist:
-      $ref: "./components/schemas/searchTrendBlacklist.yaml"
-    MessageErrorResponse:
-      $ref: "./components/schemas/messageError.yaml"
-    MessageSuccessResponse:
-      $ref: "./components/schemas/messageSuccess.yaml"
-    PostRecommendation:
-      $ref: "./components/schemas/postRecommendation.yaml"
-    RecommendedPosts:
-      $ref: "./components/schemas/recommendedPosts.yaml"
-    PostVote:
-      $ref: "./components/schemas/postVote.yaml"
-    UpDownVote:
-      $ref: "./components/schemas/upDownVote.yaml"
+    # Enums
+    AppealStatus:
+      $ref: "./components/schemas/enums/AppealStatus.yml"
+    AppealType:
+      $ref: "./components/schemas/enums/AppealType.yml"
+    DBExportName:
+      $ref: "./components/schemas/enums/DBExportName.yml"
+    EditHistoryVersionableType:
+      $ref: "./components/schemas/enums/EditHistoryVersionableType.yml"
+    JWKSAlgorithm:
+      $ref: "./components/schemas/enums/JWKSAlgorithm.yml"
+    ModActionAction:
+      $ref: "./components/schemas/enums/ModActionAction.yml"
+    OAuthClaim:
+      $ref: "./components/schemas/enums/OAuthClaim.yml"
+    OAuthClaimType:
+      $ref: "./components/schemas/enums/OAuthClaimType.yml"
+    OAuthCodeChallengeMethod:
+      $ref: "./components/schemas/enums/OAuthCodeChallengeMethod.yml"
+    OAuthGrantType:
+      $ref: "./components/schemas/enums/OAuthGrantType.yml"
+    OAuthIDTokenSigningAlgValue:
+      $ref: "./components/schemas/enums/OAuthIDTokenSigningAlgValue.yml"
+    OAuthPermission:
+      $ref: "./components/schemas/enums/OAuthPermission.yml"
+    OAuthResponseMode:
+      $ref: "./components/schemas/enums/OAuthResponseMode.yml"
+    OAuthResponseType:
+      $ref: "./components/schemas/enums/OAuthResponseType.yml"
+    OAuthScope:
+      $ref: "./components/schemas/enums/OAuthScope.yml"
+    OAuthSubjectType:
+      $ref: "./components/schemas/enums/OAuthSubjectType.yml"
+    OAuthTokenEndpointAuthMethod:
+      $ref: "./components/schemas/enums/OAuthTokenEndpointAuthMethod.yml"
+    PoolCategory:
+      $ref: "./components/schemas/enums/PoolCategory.yml"
+    PostEventAction:
+      $ref: "./components/schemas/enums/PostEventAction.yml"
+    Rating:
+      $ref: "./components/schemas/enums/Rating.yml"
+    StaffWikiRefRelatedType:
+      $ref: "./components/schemas/enums/StaffWikiRefRelatedType.yml"
+    TagCategory:
+      $ref: "./components/schemas/enums/TagCategory.yml"
+    TagCategoryNames:
+      $ref: "./components/schemas/enums/TagCategoryNames.yml"
+    TagRequestStatus:
+      $ref: "./components/schemas/enums/TagRequestStatus.yml"
+    TicketStatus:
+      $ref: "./components/schemas/enums/TicketStatus.yml"
+    TicketType:
+      $ref: "./components/schemas/enums/TicketType.yml"
     UpDownMehVote:
-      $ref: "./components/schemas/upDownMehVote.yaml"
-    MinimalUser:
-      $ref: "./components/schemas/minimalUser.yaml"
-    ThumbnailPost:
-      $ref: "./components/schemas/thumbnailPost.yaml"
-    PostData:
-      $ref: "./components/schemas/postData.yaml"
-    CommentVote:
-      $ref: "./components/schemas/commentVote.yaml"
-    LegacyPost:
-      $ref: "./components/schemas/legacyPost.yaml"
-    BasicPost:
-      $ref: "./components/schemas/basicPost.yaml"
-    ExtendedPost:
-      $ref: "./components/schemas/extendedPost.yaml"
-    ExceptionLog:
-      $ref: "./components/schemas/exceptionLog.yaml"
+      $ref: "./components/schemas/enums/UpDownMehVote.yml"
+    UpDownVote:
+      $ref: "./components/schemas/enums/UpDownVote.yml"
+    UserFeedbackCategory:
+      $ref: "./components/schemas/enums/UserFeedbackCategory.yml"
+    UserLevel:
+      $ref: "./components/schemas/enums/UserLevel.yml"
+    UserLevelName:
+      $ref: "./components/schemas/enums/UserLevelName.yml"
+    WarningType:
+      $ref: "./components/schemas/enums/WarningType.yml"
+    # Models
+    APIKey:
+      $ref: "./components/schemas/models/APIKey.yml"
     Appeal:
-      $ref: "./components/schemas/appeal.yaml"
+      $ref: "./components/schemas/models/Appeal.yml"
+    Artist:
+      $ref: "./components/schemas/models/Artist.yml"
+    ArtistURL:
+      $ref: "./components/schemas/models/ArtistURL.yml"
+    ArtistVersion:
+      $ref: "./components/schemas/models/ArtistVersion.yml"
+    AvoidPosting:
+      $ref: "./components/schemas/models/AvoidPosting.yml"
+    AvoidPostingVersion:
+      $ref: "./components/schemas/models/AvoidPostingVersion.yml"
+    Ban:
+      $ref: "./components/schemas/models/Ban.yml"
+    BasicPost:
+      $ref: "./components/schemas/models/BasicPost.yml"
+    Blip:
+      $ref: "./components/schemas/models/Blip.yml"
+    BulkRelatedTag:
+      $ref: "./components/schemas/models/BulkRelatedTag.yml"
+    BulkUpdateRequest:
+      $ref: "./components/schemas/models/BulkUpdateRequest.yml"
+    Comment:
+      $ref: "./components/schemas/models/Comment.yml"
+    CommentVote:
+      $ref: "./components/schemas/models/CommentVote.yml"
+    CurrentUser:
+      $ref: "./components/schemas/models/CurrentUser.yml"
     DBExport:
-      $ref: "./components/schemas/dbExport.yaml"
-    DBExportNames:
-      $ref: "./components/schemas/dbExportNames.yaml"
-    UserLevels:
-      $ref: "./components/schemas/users/levels.yaml"
-    UserLevelsNames:
-      $ref: "./components/schemas/users/levelNames.yaml"
-    StaffFile:
-      $ref: "./components/schemas/staffFile.yaml"
-    StaffWiki:
-      $ref: "./components/schemas/staffWiki.yaml"
-    StaffWikiVersion:
-      $ref: "./components/schemas/staffWikiVersion.yaml"
-    VoteTrend:
-      $ref: "./components/schemas/voteTrend.yaml"
-    VoteTrendMetatag:
-      $ref: "./components/schemas/voteTrend/metatag.yaml"
-    VoteTrendUploader:
-      $ref: "./components/schemas/voteTrend/uploader.yaml"
+      $ref: "./components/schemas/models/DBExport.yml"
+    DMail:
+      $ref: "./components/schemas/models/DMail.yml"
+    DeferredPost:
+      $ref: "./components/schemas/models/DeferredPost.yml"
+    EditHistory:
+      $ref: "./components/schemas/models/EditHistory.yml"
+    EmailBlacklist:
+      $ref: "./components/schemas/models/EmailBlacklist.yml"
+    ExceptionLog:
+      $ref: "./components/schemas/models/ExceptionLog.yml"
+    ExtendedPost:
+      $ref: "./components/schemas/models/ExtendedPost.yml"
+    ForumPost:
+      $ref: "./components/schemas/models/ForumPost.yml"
+    ForumPostVote:
+      $ref: "./components/schemas/models/ForumPostVote.yml"
+    ForumTopic:
+      $ref: "./components/schemas/models/ForumTopic.yml"
+    FullCurrentUser:
+      $ref: "./components/schemas/models/FullCurrentUser.yml"
+    FullUser:
+      $ref: "./components/schemas/models/FullUser.yml"
+    HelpPage:
+      $ref: "./components/schemas/models/HelpPage.yml"
+    IPBan:
+      $ref: "./components/schemas/models/IPBan.yml"
+    IQDBPost:
+      $ref: "./components/schemas/models/IQDBPost.yml"
+    JWKS:
+      $ref: "./components/schemas/models/JWKS.yml"
+    JWKSKey:
+      $ref: "./components/schemas/models/JWKSKey.yml"
+    LegacyPost:
+      $ref: "./components/schemas/models/LegacyPost.yml"
+    Mascot:
+      $ref: "./components/schemas/models/Mascot.yml"
+    MinimalUser:
+      $ref: "./components/schemas/models/MinimalUser.yml"
+    ModAction:
+      $ref: "./components/schemas/models/ModAction.yml"
+    NewsUpdate:
+      $ref: "./components/schemas/models/NewsUpdate.yml"
+    Note:
+      $ref: "./components/schemas/models/Note.yml"
+    NoteVersion:
+      $ref: "./components/schemas/models/NoteVersion.yml"
+    OAuthIntrospection:
+      $ref: "./components/schemas/models/OAuthIntrospection.yml"
+    OAuthToken:
+      $ref: "./components/schemas/models/OAuthToken.yml"
+    OAuthTokenInfo:
+      $ref: "./components/schemas/models/OAuthTokenInfo.yml"
+    OAuthUserInfo:
+      $ref: "./components/schemas/models/OAuthUserInfo.yml"
+    OpenIDConfiguration:
+      $ref: "./components/schemas/models/OpenIDConfiguration.yml"
+    Pool:
+      $ref: "./components/schemas/models/Pool.yml"
+    PoolVersion:
+      $ref: "./components/schemas/models/PoolVersion.yml"
+    Post:
+      $ref: "./components/schemas/models/Post.yml"
+    PostApproval:
+      $ref: "./components/schemas/models/PostApproval.yml"
+    PostData:
+      $ref: "./components/schemas/models/PostData.yml"
+    PostDisapproval:
+      $ref: "./components/schemas/models/PostDisapproval.yml"
+    PostEvent:
+      $ref: "./components/schemas/models/PostEvent.yml"
+    PostFiles:
+      $ref: "./components/schemas/models/PostFiles.yml"
+    PostFilesMeta:
+      $ref: "./components/schemas/models/PostFilesMeta.yml"
+    PostFilesOriginal:
+      $ref: "./components/schemas/models/PostFilesOriginal.yml"
+    PostFilesPreview:
+      $ref: "./components/schemas/models/PostFilesPreview.yml"
+    PostFilesSample:
+      $ref: "./components/schemas/models/PostFilesSample.yml"
+    PostFlag:
+      $ref: "./components/schemas/models/PostFlag.yml"
+    PostFlags:
+      $ref: "./components/schemas/models/PostFlags.yml"
+    PostHas:
+      $ref: "./components/schemas/models/PostHas.yml"
+    PostRecommendation:
+      $ref: "./components/schemas/models/PostRecommendation.yml"
+    PostRelationships:
+      $ref: "./components/schemas/models/PostRelationships.yml"
+    PostReplacement:
+      $ref: "./components/schemas/models/PostReplacement.yml"
+    PostSampleAlternate:
+      $ref: "./components/schemas/models/PostSampleAlternate.yml"
+    PostSet:
+      $ref: "./components/schemas/models/PostSet.yml"
+    PostStats:
+      $ref: "./components/schemas/models/PostStats.yml"
+    PostStatsScore:
+      $ref: "./components/schemas/models/PostStatsScore.yml"
+    PostVersion:
+      $ref: "./components/schemas/models/PostVersion.yml"
+    PostVote:
+      $ref: "./components/schemas/models/PostVote.yml"
+    RawPost:
+      $ref: "./components/schemas/models/RawPost.yml"
+    RecommendedPosts:
+      $ref: "./components/schemas/models/RecommendedPosts.yml"
+    RelatedTag:
+      $ref: "./components/schemas/models/RelatedTag.yml"
+    RisingSearchTrend:
+      $ref: "./components/schemas/models/RisingSearchTrend.yml"
+    SearchTrend:
+      $ref: "./components/schemas/models/SearchTrend.yml"
+    SearchTrendBlacklist:
+      $ref: "./components/schemas/models/SearchTrendBlacklist.yml"
     SearchTrendHourly:
-      $ref: "./components/schemas/searchTrendHourly.yaml"
-    TrackedSearchTrend:
-      $ref: "./components/schemas/trackedSearchTrend.yaml"
-    StaffIPAddrSum:
-      $ref: "./components/schemas/staffIpAddr/sum.yaml"
+      $ref: "./components/schemas/models/SearchTrendHourly.yml"
+    StaffFile:
+      $ref: "./components/schemas/models/StaffFile.yml"
     StaffIPAddrIPListing:
-      $ref: "./components/schemas/staffIpAddr/ipListing.yaml"
+      $ref: "./components/schemas/models/StaffIPAddrIPListing.yml"
+    StaffIPAddrSum:
+      $ref: "./components/schemas/models/StaffIPAddrSum.yml"
+    StaffIPAddrSums:
+      $ref: "./components/schemas/models/StaffIPAddrSums.yml"
     StaffIPAddrUserListing:
-      $ref: "./components/schemas/staffIpAddr/userListing.yaml"
-
+      $ref: "./components/schemas/models/StaffIPAddrUserListing.yml"
+    StaffNote:
+      $ref: "./components/schemas/models/StaffNote.yml"
+    StaffWiki:
+      $ref: "./components/schemas/models/StaffWiki.yml"
+    StaffWikiVersion:
+      $ref: "./components/schemas/models/StaffWikiVersion.yml"
+    Tag:
+      $ref: "./components/schemas/models/Tag.yml"
+    TagAlias:
+      $ref: "./components/schemas/models/TagAlias.yml"
+    TagCorrection:
+      $ref: "./components/schemas/models/TagCorrection.yml"
+    TagImplication:
+      $ref: "./components/schemas/models/TagImplication.yml"
+    TagPreview:
+      $ref: "./components/schemas/models/TagPreview.yml"
+    TagTypeVersion:
+      $ref: "./components/schemas/models/TagTypeVersion.yml"
+    Takedown:
+      $ref: "./components/schemas/models/Takedown.yml"
+    ThumbnailPost:
+      $ref: "./components/schemas/models/ThumbnailPost.yml"
+    Ticket:
+      $ref: "./components/schemas/models/Ticket.yml"
+    TrackedSearchTrend:
+      $ref: "./components/schemas/models/TrackedSearchTrend.yml"
+    Upload:
+      $ref: "./components/schemas/models/Upload.yml"
+    UploadWhitelist:
+      $ref: "./components/schemas/models/UploadWhitelist.yml"
+    User:
+      $ref: "./components/schemas/models/User.yml"
+    UserAvatarMenu:
+      $ref: "./components/schemas/models/UserAvatarMenu.yml"
+    UserFeedback:
+      $ref: "./components/schemas/models/UserFeedback.yml"
+    UserNameChangeRequest:
+      $ref: "./components/schemas/models/UserNameChangeRequest.yml"
+    VoteTrend:
+      $ref: "./components/schemas/models/VoteTrend.yml"
+    VoteTrendMetatag:
+      $ref: "./components/schemas/models/VoteTrendMetatag.yml"
+    VoteTrendUploader:
+      $ref: "./components/schemas/models/VoteTrendUploader.yml"
+    WarningRecordType:
+      $ref: "./components/schemas/models/WarningRecordType.yml"
+    WikiPage:
+      $ref: "./components/schemas/models/WikiPage.yml"
+    WikiPageVersion:
+      $ref: "./components/schemas/models/WikiPageVersion.yml"
+    # Responses
+    AccessDeniedResponse:
+      $ref: "./components/schemas/responses/AccessDeniedResponse.yml"
+    DTextResponse:
+      $ref: "./components/schemas/responses/DTextResponse.yml"
+    IQDBResponse:
+      $ref: "./components/schemas/responses/IQDBResponse.yml"
+    IQDBResponseV2:
+      $ref: "./components/schemas/responses/IQDBResponseV2.yml"
+    MessageErrorResponse:
+      $ref: "./components/schemas/responses/MessageErrorResponse.yml"
+    MessageSuccessResponse:
+      $ref: "./components/schemas/responses/MessageSuccessResponse.yml"
+    NotFoundResponse:
+      $ref: "./components/schemas/responses/NotFoundResponse.yml"
+    OAuthError:
+      $ref: "./components/schemas/responses/OAuthError.yml"
   responses:
     NotFound:
       $ref: "./components/responses/notFound.yaml"

@@ -14,7 +14,7 @@ requestBody:
         type: object
         properties:
           category:
-            $ref: "../../components/schemas/tagCategories.yaml"
+            $ref: "../../components/schemas/enums/TagCategory.yml"
           is_locked:
             description: Must be Admin+.
             type: boolean

@@ -10,6 +10,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/userAvatarMenu.yaml"
+          $ref: "../../components/schemas/models/UserAvatarMenu.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"

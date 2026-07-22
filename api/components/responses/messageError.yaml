@@ -2,4 +2,4 @@ description: Error
 content:
   application/json:
     schema:
-      $ref: "../schemas/messageError.yaml"
+      $ref: "../schemas/responses/MessageErrorResponse.yml"

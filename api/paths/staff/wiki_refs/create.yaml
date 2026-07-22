@@ -17,7 +17,7 @@ requestBody:
           - staff_wiki_ref[related_id]
         properties:
           staff_wiki_ref[related_type]:
-            $ref: "../../../components/schemas/staffWikiRefRelatedType.yaml"
+            $ref: "../../../components/schemas/enums/StaffWikiRefRelatedType.yml"
           staff_wiki_ref[related_id]:
             type: integer
 responses:

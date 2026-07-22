@@ -11,7 +11,7 @@ responses:
       application/json:
         schema:
           allOf:
-            - $ref: "../../components/schemas/artist.yaml"
+            - $ref: "../../components/schemas/models/Artist.yml"
             - type: object
               required:
                 - domains
@@ -29,6 +29,6 @@ responses:
                 urls:
                   type: array
                   items:
-                    $ref: "../../components/schemas/artistUrl.yaml"
+                    $ref: "../../components/schemas/models/ArtistURL.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

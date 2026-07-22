@@ -43,12 +43,12 @@ parameters:
   - name: search[qtype]
     in: query
     schema:
-      $ref: "../../components/schemas/appeal/qtype.yaml"
+      $ref: "../../components/schemas/enums/AppealType.yml"
   - name: search[status]
     in: query
     schema:
       allOf:
-        - $ref: "../../components/schemas/appeal/status.yaml"
+        - $ref: "../../components/schemas/enums/AppealStatus.yml"
         - enum:
             - pending_claimed
             - pending_unclaimed
@@ -60,7 +60,7 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/apiKey.yaml"
+            $ref: "../../components/schemas/models/APIKey.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

@@ -18,7 +18,7 @@ responses:
             - post
           properties:
             post:
-              $ref: "../../../../components/schemas/post.yaml"
+              $ref: "../../../../components/schemas/models/Post.yml"
   403:
     $ref: "../../../../components/responses/accessDenied.yaml"
   404:

@@ -1,0 +1,44 @@
+type: object
+required:
+  - id
+  - creator_id
+  - forum_topic_id
+  - script
+  - status
+  - created_at
+  - updated_at
+  - approver_id
+  - forum_post_id
+  - title
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  forum_topic_id:
+    type: integer
+    nullable: true
+  script:
+    type: string
+    example:
+      - "alias a -> b"
+  status:
+    type: string
+    enum:
+      - approved
+      - rejected
+      - pending
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  approver_id:
+    type: integer
+    nullable: true
+  forum_post_id:
+    type: integer
+    nullable: true
+  title:
+    type: string

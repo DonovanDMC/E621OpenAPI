@@ -13,4 +13,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/exceptionLog.yaml"
+          $ref: "../../../components/schemas/models/ExceptionLog.yml"

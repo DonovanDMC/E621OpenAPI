@@ -45,16 +45,16 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauth/token.yaml"
+          $ref: "../../../components/schemas/models/OAuthToken.yml"
   400:
     description: Invalid request, client, grant, or scope.
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauthError.yaml"
+          $ref: "../../../components/schemas/responses/OAuthError.yml"
   401:
     description: Client authentication failed.
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauthError.yaml"
+          $ref: "../../../components/schemas/responses/OAuthError.yml"

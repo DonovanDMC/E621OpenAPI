@@ -44,4 +44,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/artistVersion.yaml"
+            $ref: "../../components/schemas/models/ArtistVersion.yml"

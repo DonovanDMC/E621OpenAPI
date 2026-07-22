@@ -17,7 +17,7 @@ requestBody:
           description:
             type: string
           category:
-            $ref: "../../components/schemas/poolCategories.yaml"
+            $ref: "../../components/schemas/enums/PoolCategory.yml"
           is_active:
             type: boolean
           post_ids_string:
@@ -34,7 +34,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/pool.yaml"
+          $ref: "../../components/schemas/models/Pool.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

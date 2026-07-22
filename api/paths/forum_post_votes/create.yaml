@@ -15,14 +15,14 @@ requestBody:
           - score
         properties:
           score:
-            $ref: "../../components/schemas/upDownMehVote.yaml"
+            $ref: "../../components/schemas/enums/UpDownMehVote.yml"
 responses:
   200:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/forumPostVote.yaml"
+          $ref: "../../components/schemas/models/ForumPostVote.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

@@ -32,7 +32,7 @@ parameters:
   - in: query
     name: search[category]
     schema:
-      $ref: "../../components/schemas/tagCategories.yaml"
+      $ref: "../../components/schemas/enums/TagCategory.yml"
   - in: query
     name: search[hide_empty]
     schema:
@@ -53,4 +53,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/tag.yaml"
+            $ref: "../../components/schemas/models/Tag.yml"

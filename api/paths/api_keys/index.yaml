@@ -58,7 +58,7 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/apiKey.yaml"
+            $ref: "../../components/schemas/models/APIKey.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

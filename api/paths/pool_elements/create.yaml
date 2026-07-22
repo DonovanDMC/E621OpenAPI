@@ -26,6 +26,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/pool.yaml"
+          $ref: "../../components/schemas/models/Pool.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

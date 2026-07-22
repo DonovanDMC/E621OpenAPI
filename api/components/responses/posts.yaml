@@ -13,16 +13,16 @@ content:
             posts:
               type: array
               items:
-                $ref: "../../components/schemas/legacyPost.yaml"
+                $ref: "../schemas/models/LegacyPost.yml"
         - type: array
           description: The basic format, returned with `v2=true` and mode is not set.
           items:
-            $ref: "../../components/schemas/basicPost.yaml"
+            $ref: "../schemas/models/BasicPost.yml"
         - type: array
           description: The extended format, returned with `v2=true` and `mode=extended`.
           items:
-            $ref: "../../components/schemas/extendedPost.yaml"
+            $ref: "../schemas/models/ExtendedPost.yml"
         - type: array
           description: The thumbnail format, returned with `v2=true` and `mode=thumbnail`.
           items:
-            $ref: "../../components/schemas/thumbnailPost.yaml"
+            $ref: "../schemas/models/ThumbnailPost.yml"

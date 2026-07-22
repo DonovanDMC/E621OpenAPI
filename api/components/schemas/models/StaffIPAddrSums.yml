@@ -1,0 +1,36 @@
+type: object
+required:
+  - comment
+  - dmail
+  - blip
+  - post_flag
+  - posts
+  - users
+properties:
+  comment:
+    $ref: "./StaffIPAddrSum.yml"
+  blip:
+    $ref: "./StaffIPAddrSum.yml"
+  dmail:
+    $ref: "./StaffIPAddrSum.yml"
+  post_flag:
+    $ref: "./StaffIPAddrSum.yml"
+  posts:
+    $ref: "./StaffIPAddrSum.yml"
+  users:
+    $ref: "./StaffIPAddrSum.yml"
+  artist_version:
+    description: If `search[with_history]=true`
+    $ref: "./StaffIPAddrSum.yml"
+  note_version:
+    description: If `search[with_history]=true`
+    $ref: "./StaffIPAddrSum.yml"
+  pool_version:
+    description: If `search[with_history]=true`
+    $ref: "./StaffIPAddrSum.yml"
+  post_version:
+    description: If `search[with_history]=true`
+    $ref: "./StaffIPAddrSum.yml"
+  wiki_page_version:
+    description: If `search[with_history]=true`
+    $ref: "./StaffIPAddrSum.yml"

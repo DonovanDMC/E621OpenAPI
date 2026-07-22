@@ -84,4 +84,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/takedown.yaml"
+            $ref: "../../components/schemas/models/Takedown.yml"

@@ -42,6 +42,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../../components/schemas/staffFile.yaml"
+            $ref: "../../../components/schemas/models/StaffFile.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"

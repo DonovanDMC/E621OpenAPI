@@ -1,4 +1,4 @@
 content:
   application/json:
     schema:
-      $ref: "../schemas/warningRecord.yaml"
+      $ref: "../schemas/models/WarningRecordType.yml"

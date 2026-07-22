@@ -13,7 +13,7 @@ responses:
       application/json:
         schema:
           allOf:
-            - $ref: "../../components/schemas/recommendedPosts.yaml"
-            - $ref: "../../components/schemas/postData.yaml"
+            - $ref: "../../components/schemas/models/RecommendedPosts.yml"
+            - $ref: "../../components/schemas/models/PostData.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

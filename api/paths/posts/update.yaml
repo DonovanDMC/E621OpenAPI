@@ -42,9 +42,9 @@ requestBody:
           old_description:
             type: string
           rating:
-            $ref: "../../components/schemas/ratings.yaml"
+            $ref: "../../components/schemas/enums/Rating.yml"
           old_rating:
-            $ref: "../../components/schemas/ratings.yaml"
+            $ref: "../../components/schemas/enums/Rating.yml"
           edit_reason:
             type: string
           is_rating_locked:

@@ -1,0 +1,20 @@
+type: object
+required:
+  - name
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  resolved:
+    type: string
+  category:
+    $ref: "../enums/TagCategory.yml"
+  post_count:
+    type: integer
+  alias:
+    type: string
+  implies:
+    type: array
+    items:
+      type: string

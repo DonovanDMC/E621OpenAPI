@@ -1,0 +1,43 @@
+type: object
+required:
+  - id
+  - name
+  - updated_at
+  - is_active
+  - other_names
+  - group_name
+  - linked_user_id
+  - created_at
+  - creator_id
+  - is_locked
+  - notes
+  - urls
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  updated_at:
+    type: string
+    format: date-time
+  is_active:
+    type: boolean
+  other_names:
+    type: array
+    items:
+      type: string
+  group_name:
+    type: string
+  linked_user_id:
+    type: integer
+    nullable: true
+  created_at:
+    type: string
+    format: date-time
+  creator_id:
+    type: integer
+  is_locked:
+    type: boolean
+  notes:
+    type: string
+    nullable: true

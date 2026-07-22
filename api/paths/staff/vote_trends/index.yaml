@@ -42,7 +42,7 @@ responses:
           type: array
           items:
             oneOf:
-              - $ref: "../../../components/schemas/voteTrend.yaml"
+              - $ref: "../../../components/schemas/models/VoteTrend.yml"
               - type: array
                 items:
                   type: integer

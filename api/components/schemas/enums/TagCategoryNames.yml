@@ -1,0 +1,11 @@
+type: string
+enum:
+  - general
+  - artist
+  - contributor
+  - copyright
+  - character
+  - species
+  - invalid
+  - meta
+  - lore

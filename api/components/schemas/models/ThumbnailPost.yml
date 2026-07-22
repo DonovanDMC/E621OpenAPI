@@ -1,0 +1,91 @@
+type: object
+required:
+  - id
+  - created_at
+  - md5
+  - file_ext
+  - width
+  - height
+  - size
+  - preview_url
+  - preview_webp
+  - sample_url
+  - file_url
+  - preview_width
+  - preview_height
+  - uploader_id
+  - uploader
+  - score
+  - fav_count
+  - is_favorited
+  - vote
+  - comment_count
+  - flags
+  - pools
+  - rating
+  - tags
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  md5:
+    type: string
+  file_ext:
+    type: string
+  width:
+    type: integer
+  height:
+    type: integer
+  size:
+    type: integer
+    format: int64
+  preview_url:
+    type: string
+    format: uri
+    nullable: true
+  preview_webp:
+    type: string
+    format: uri
+    nullable: true
+  sample_url:
+    type: string
+    format: uri
+    nullable: true
+  file_url:
+    type: string
+    format: uri
+    nullable: true
+  preview_width:
+    type: integer
+  preview_height:
+    type: integer
+  uploader_id:
+    type: integer
+  uploader:
+    type: string
+  score:
+    type: integer
+  fav_count:
+    type: integer
+  is_favorited:
+    type: boolean
+  vote:
+    $ref: "../enums/UpDownMehVote.yml"
+  comment_count:
+    type: integer
+  flags:
+    type: string
+    description: |
+      space separated list of flags:
+      - pending
+      - flagged
+      - deleted
+  pools:
+    type: string
+    description: space separated list of ids
+  rating:
+    $ref: "../enums/Rating.yml"
+  tags:
+    type: string

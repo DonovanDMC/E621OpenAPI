@@ -11,7 +11,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/userFeedback.yaml"
+          $ref: "../../components/schemas/models/UserFeedback.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

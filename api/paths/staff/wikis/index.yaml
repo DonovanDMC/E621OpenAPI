@@ -45,6 +45,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../../components/schemas/staffWiki.yaml"
+            $ref: "../../../components/schemas/models/StaffWiki.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"

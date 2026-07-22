@@ -56,4 +56,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/avoidPostingVersion.yaml"
+            $ref: "../../components/schemas/models/AvoidPostingVersion.yml"

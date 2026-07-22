@@ -11,4 +11,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../../components/schemas/jwks.yaml"
+          $ref: "../../../../components/schemas/models/JWKS.yml"

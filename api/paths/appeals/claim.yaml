@@ -13,7 +13,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/appeal.yaml"
+          $ref: "../../components/schemas/models/Appeal.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

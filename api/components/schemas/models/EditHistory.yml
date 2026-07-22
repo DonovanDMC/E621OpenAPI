@@ -1,0 +1,33 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - body
+  - subject
+  - versionable_type
+  - versionable_id
+  - version
+  - user_id
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  body:
+    type: string
+  subject:
+    type: string
+    nullable: true
+  versionable_type:
+    $ref: "../enums/EditHistoryVersionableType.yml"
+  versionable_id:
+    type: integer
+  version:
+    type: integer
+  user_id:
+    type: integer

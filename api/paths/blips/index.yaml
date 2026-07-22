@@ -40,4 +40,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/blip.yaml"
+            $ref: "../../components/schemas/models/Blip.yml"

@@ -12,6 +12,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/helpPage.yaml"
+          $ref: "../../components/schemas/models/HelpPage.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

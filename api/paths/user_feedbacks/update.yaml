@@ -16,7 +16,7 @@ requestBody:
           body:
             type: string
           category:
-            $ref: "../../components/schemas/feedbackCategories.yaml"
+            $ref: "../../components/schemas/enums/UserFeedbackCategory.yml"
 responses:
   204:
     description: Success

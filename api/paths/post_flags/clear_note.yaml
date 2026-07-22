@@ -13,7 +13,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/postFlag.yaml"
+          $ref: "../../components/schemas/models/PostFlag.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

@@ -10,6 +10,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/dTextResponse.yaml"
+          $ref: "../../components/schemas/responses/DTextResponse.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

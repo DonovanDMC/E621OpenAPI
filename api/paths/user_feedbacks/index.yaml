@@ -39,7 +39,7 @@ parameters:
   - in: query
     name: search[category]
     schema:
-      $ref: "../../components/schemas/feedbackCategories.yaml"
+      $ref: "../../components/schemas/enums/UserFeedbackCategory.yml"
 responses:
   200:
     description: Success
@@ -48,4 +48,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/userFeedback.yaml"
+            $ref: "../../components/schemas/models/UserFeedback.yml"

@@ -11,6 +11,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauth/tokenInfo.yaml"
+          $ref: "../../../components/schemas/models/OAuthTokenInfo.yml"
   401:
     $ref: "../../../components/responses/oauthUnauthorized.yaml"

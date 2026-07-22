@@ -1,0 +1,18 @@
+type: object
+required:
+  - score
+  - fav_count
+  - is_favorited
+  - vote
+  - comment_count
+properties:
+  score:
+    $ref: "./PostStatsScore.yml"
+  fav_count:
+    type: integer
+  is_favorited:
+    type: boolean
+  vote:
+    $ref: "../enums/UpDownMehVote.yml"
+  comment_count:
+    type: integer

@@ -18,4 +18,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/searchTrend.yaml"
+            $ref: "../../components/schemas/models/SearchTrend.yml"

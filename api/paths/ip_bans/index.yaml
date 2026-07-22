@@ -30,4 +30,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/ipBan.yaml"
+            $ref: "../../components/schemas/models/IPBan.yml"

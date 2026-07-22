@@ -1,0 +1,24 @@
+type: object
+required:
+  - name
+  - file_name
+  - file_size
+  - updated_at
+  - url
+  - checksum
+properties:
+  name:
+    $ref: "../enums/DBExportName.yml"
+  file_name:
+    type: string
+  file_size:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time
+  url:
+    type: string
+    format: uri
+  checksum:
+    type: string
+    description: SHA-256

@@ -1,4 +1,0 @@
-oneOf:
-  - $ref: "./tag.yaml"
-  - $ref: "./voteTrend/metatag.yaml"
-  - $ref: "./voteTrend/uploader.yaml"

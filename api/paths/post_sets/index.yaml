@@ -57,4 +57,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/postSet.yaml"
+            $ref: "../../components/schemas/models/PostSet.yml"

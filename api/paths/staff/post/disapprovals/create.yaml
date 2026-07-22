@@ -30,7 +30,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../../components/schemas/postDisapproval.yaml"
+          $ref: "../../../../components/schemas/models/PostDisapproval.yml"
   403:
     $ref: "../../../../components/responses/accessDenied.yaml"
   422:

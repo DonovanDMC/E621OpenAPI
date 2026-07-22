@@ -10,6 +10,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/ban.yaml"
+          $ref: "../../components/schemas/models/Ban.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

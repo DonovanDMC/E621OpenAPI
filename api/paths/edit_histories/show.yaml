@@ -25,6 +25,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/editHistory.yaml"
+            $ref: "../../components/schemas/models/EditHistory.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"

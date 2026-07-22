@@ -31,7 +31,7 @@ parameters:
   - in: query
     name: search[rating]
     schema:
-      $ref: "../../components/schemas/ratings.yaml"
+      $ref: "../../components/schemas/enums/Rating.yml"
   - in: query
     name: search[rating_changed]
     schema:
@@ -105,4 +105,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/postVersion.yaml"
+            $ref: "../../components/schemas/models/PostVersion.yml"

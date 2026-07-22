@@ -1,0 +1,64 @@
+type: object
+required:
+  - id
+  - created_at
+  - updated_at
+  - change_seq
+  - files
+  - uploader_id
+  - uploader_name
+  - approver_id
+  - stats
+  - flags
+  - has
+  - relationships
+  - pools
+  - rating
+  - locked_tags
+  - sources
+  - description
+  - tags
+properties:
+  id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  change_seq:
+    type: integer
+  files:
+    $ref: "./PostFiles.yml"
+  uploader_id:
+    type: integer
+  uploader_name:
+    type: string
+  approver_id:
+    type: integer
+    nullable: true
+  stats:
+    $ref: "./PostStats.yml"
+  flags:
+    $ref: "./PostFlags.yml"
+  has:
+    $ref: "./PostHas.yml"
+  relationships:
+    $ref: "./PostRelationships.yml"
+  pools:
+    type: array
+    items:
+      type: integer
+  rating:
+    $ref: "../enums/Rating.yml"
+  locked_tags:
+    type: array
+    items:
+      type: string
+  sources:
+    type: array
+    items:
+      type: string
+  description:
+    type: string

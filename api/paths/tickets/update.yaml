@@ -23,7 +23,7 @@ requestBody:
           response:
             type: string
           record_type:
-            $ref: "../../components/schemas/warningTypes.yaml"
+            $ref: "../../components/schemas/enums/WarningType.yml"
           send_update_dmail:
             type: boolean
             description: An update dmail will always be sent when the status is changed.

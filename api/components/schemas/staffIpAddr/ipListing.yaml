@@ -1,9 +1,0 @@
-allOf:
-  - $ref: "./sums.yaml"
-  - type: object
-    required:
-      - last_login
-    properties:
-      last_login:
-        additionalProperties:
-          type: integer

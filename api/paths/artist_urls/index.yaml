@@ -82,10 +82,10 @@ responses:
           type: array
           items:
             allOf:
-              - $ref: "../../components/schemas/artistUrl.yaml"
+              - $ref: "../../components/schemas/models/ArtistURL.yml"
               - type: object
                 required:
                   - artist
                 properties:
                   artist:
-                    $ref: "../../components/schemas/artist.yaml"
+                    $ref: "../../components/schemas/models/Artist.yml"

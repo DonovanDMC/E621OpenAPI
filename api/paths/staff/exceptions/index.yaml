@@ -38,4 +38,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../../components/schemas/exceptionLog.yaml"
+            $ref: "../../../components/schemas/models/ExceptionLog.yml"

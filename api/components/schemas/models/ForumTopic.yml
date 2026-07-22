@@ -1,0 +1,38 @@
+type: object
+required:
+  - id
+  - creator_id
+  - updater_id
+  - title
+  - response_count
+  - is_sticky
+  - is_locked
+  - is_hidden
+  - created_at
+  - updated_at
+  - category_id
+properties:
+  id:
+    type: integer
+  creator_id:
+    type: integer
+  updater_id:
+    type: integer
+  title:
+    type: string
+  response_count:
+    type: integer
+  is_sticky:
+    type: boolean
+  is_locked:
+    type: boolean
+  is_hidden:
+    type: boolean
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  category_id:
+    type: integer

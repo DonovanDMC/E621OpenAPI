@@ -32,7 +32,7 @@ parameters:
   - in: query
     name: search[action]
     schema:
-      $ref: "../../components/schemas/modActionActions.yaml"
+      $ref: "../../components/schemas/enums/ModActionAction.yml"
 responses:
   200:
     description: Success
@@ -41,4 +41,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/modAction.yaml"
+            $ref: "../../components/schemas/models/ModAction.yml"

@@ -46,4 +46,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/forumTopic.yaml"
+            $ref: "../../components/schemas/models/ForumTopic.yml"

@@ -63,4 +63,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/wikiPage.yaml"
+            $ref: "../../components/schemas/models/WikiPage.yml"

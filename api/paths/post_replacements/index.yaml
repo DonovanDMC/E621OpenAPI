@@ -73,4 +73,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/postReplacement.yaml"
+            $ref: "../../components/schemas/models/PostReplacement.yml"

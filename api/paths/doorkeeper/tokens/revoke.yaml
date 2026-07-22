@@ -40,4 +40,4 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/oauthError.yaml"
+          $ref: "../../../components/schemas/responses/OAuthError.yml"

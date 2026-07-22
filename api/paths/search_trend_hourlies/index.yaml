@@ -25,6 +25,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/searchTrendHourly.yaml"
+            $ref: "../../components/schemas/models/SearchTrendHourly.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"

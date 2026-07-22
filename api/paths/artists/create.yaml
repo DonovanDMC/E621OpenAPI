@@ -43,7 +43,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/artist.yaml"
+          $ref: "../../components/schemas/models/Artist.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

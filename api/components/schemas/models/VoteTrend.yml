@@ -1,0 +1,4 @@
+oneOf:
+  - $ref: "./Tag.yml"
+  - $ref: "./VoteTrendMetatag.yml"
+  - $ref: "./VoteTrendUploader.yml"

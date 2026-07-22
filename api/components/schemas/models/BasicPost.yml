@@ -1,0 +1,10 @@
+allOf:
+  - $ref: "./Post.yml"
+  - type: object
+    required:
+      - tags
+    properties:
+      tags:
+        type: array
+        items:
+          type: string

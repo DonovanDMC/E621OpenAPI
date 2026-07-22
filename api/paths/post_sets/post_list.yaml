@@ -12,7 +12,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/postSet.yaml"
+          $ref: "../../components/schemas/models/PostSet.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

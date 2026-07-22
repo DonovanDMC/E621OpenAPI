@@ -38,9 +38,9 @@ responses:
           type: array
           items:
             oneOf:
-              - $ref: "../../../components/schemas/staffIpAddr/userListing.yaml"
+              - $ref: "../../../components/schemas/models/StaffIPAddrUserListing.yml"
                 description: If `search[user_id]` or `search[user_name]` is used.
-              - $ref: "../../../components/schemas/staffIpAddr/ipListing.yaml"
+              - $ref: "../../../components/schemas/models/StaffIPAddrIPListing.yml"
                 description: If `search[ip_addr]` is used.
   403:
     $ref: "../../../components/responses/accessDenied.yaml"

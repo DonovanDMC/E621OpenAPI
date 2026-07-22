@@ -43,10 +43,10 @@ responses:
             - type: array
               description: The legacy format, returned by default. This format is deprecated.
               items:
-                $ref: "../../../components/schemas/iqdbResponse.yaml"
+                $ref: "../../../components/schemas/responses/IQDBResponse.yml"
             - type: array
               description: The new format, returned with `v2=true`.
               items:
-                $ref: "../../../components/schemas/iqdbResponseV2.yaml"
+                $ref: "../../../components/schemas/responses/IQDBResponseV2.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"

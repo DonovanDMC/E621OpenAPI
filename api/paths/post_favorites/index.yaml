@@ -21,7 +21,7 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/minimalUser.yaml"
+            $ref: "../../components/schemas/models/MinimalUser.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

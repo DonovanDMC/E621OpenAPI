@@ -36,19 +36,19 @@ responses:
                 posts:
                   type: array
                   items:
-                    $ref: "../../components/schemas/legacyPost.yaml"
+                    $ref: "../../components/schemas/models/LegacyPost.yml"
             - type: array
               description: The basic format, returned with `v2=true` and mode is not set.
               items:
-                $ref: "../../components/schemas/basicPost.yaml"
+                $ref: "../../components/schemas/models/BasicPost.yml"
             - type: array
               description: The extended format, returned with `v2=true` and `mode=extended`.
               items:
-                $ref: "../../components/schemas/extendedPost.yaml"
+                $ref: "../../components/schemas/models/ExtendedPost.yml"
             - type: array
               description: The thumbnail format, returned with `v2=true` and `mode=thumbnail`.
               items:
-                $ref: "../../components/schemas/thumbnailPost.yaml"
+                $ref: "../../components/schemas/models/ThumbnailPost.yml"
             - type: object
               description: |
                 When searching by md5.
@@ -57,19 +57,19 @@ responses:
                 - post
               properties:
                 post:
-                  $ref: "../../components/schemas/legacyPost.yaml"
+                  $ref: "../../components/schemas/models/LegacyPost.yml"
             - allOf:
-                - $ref: "../../components/schemas/basicPost.yaml"
+                - $ref: "../../components/schemas/models/BasicPost.yml"
                 - description: |
                     When searching by md5.
                     The basic format, returned with `v2=true` and mode is not set.
             - allOf:
-                - $ref: "../../components/schemas/extendedPost.yaml"
+                - $ref: "../../components/schemas/models/ExtendedPost.yml"
                 - description: |
                     When searching by md5.
                     The extended format, returned with `v2=true` and `mode=extended`.
             - allOf:
-                - $ref: "../../components/schemas/thumbnailPost.yaml"
+                - $ref: "../../components/schemas/models/ThumbnailPost.yml"
                 - description: |
                     When searching by md5.
                     The thumbnail format, returned with `v2=true` and `mode=thumbnail`.

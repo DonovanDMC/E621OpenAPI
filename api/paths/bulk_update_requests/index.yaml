@@ -65,4 +65,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/bulkUpdateRequest.yaml"
+            $ref: "../../components/schemas/models/BulkUpdateRequest.yml"

@@ -1,0 +1,3 @@
+allOf:
+  - $ref: "./CurrentUser.yml"
+  - $ref: "./FullUser.yml"

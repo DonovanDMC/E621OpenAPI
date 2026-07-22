@@ -26,7 +26,7 @@ parameters:
   - in: query
     name: search[rating]
     schema:
-      $ref: "../../components/schemas/ratings.yaml"
+      $ref: "../../components/schemas/enums/Rating.yml"
   - in: query
     name: search[parent_id]
     schema:
@@ -70,4 +70,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/upload.yaml"
+            $ref: "../../components/schemas/models/Upload.yml"

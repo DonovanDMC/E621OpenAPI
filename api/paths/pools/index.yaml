@@ -35,7 +35,7 @@ parameters:
   - in: query
     name: search[category]
     schema:
-      $ref: "../../components/schemas/poolCategories.yaml"
+      $ref: "../../components/schemas/enums/PoolCategory.yml"
   - in: query
     name: search[is_active]
     schema:
@@ -48,4 +48,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/pool.yaml"
+            $ref: "../../components/schemas/models/Pool.yml"

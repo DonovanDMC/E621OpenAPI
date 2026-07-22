@@ -17,6 +17,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/wikiPage.yaml"
+          $ref: "../../components/schemas/models/WikiPage.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"

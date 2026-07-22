@@ -31,4 +31,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/postApproval.yaml"
+            $ref: "../../components/schemas/models/PostApproval.yml"

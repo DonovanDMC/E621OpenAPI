@@ -22,7 +22,7 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../../components/schemas/dMail.yaml"
+            $ref: "../../../components/schemas/models/DMail.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"
   404:

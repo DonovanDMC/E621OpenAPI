@@ -15,7 +15,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/dTextResponse.yaml"
+          $ref: "../../components/schemas/responses/DTextResponse.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   404:

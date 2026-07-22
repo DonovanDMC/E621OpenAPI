@@ -1,0 +1,11 @@
+type: object
+required:
+  - sums
+  - ip_addrs
+properties:
+  sums:
+    $ref: "./StaffIPAddrSums.yml"
+  ip_addrs:
+    type: array
+    items:
+      type: string

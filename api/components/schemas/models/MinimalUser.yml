@@ -1,0 +1,15 @@
+type: object
+required:
+  - id
+  - name
+  - level_string
+  - favorite_count
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  level_string:
+    $ref: "../enums/UserLevelName.yml"
+  favorite_count:
+    type: integer

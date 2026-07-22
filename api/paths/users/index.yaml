@@ -33,15 +33,15 @@ parameters:
   - in: query
     name: search[level]
     schema:
-      $ref: "../../components/schemas/users/levels.yaml"
+      $ref: "../../components/schemas/enums/UserLevel.yml"
   - in: query
     name: search[min_level]
     schema:
-      $ref: "../../components/schemas/users/levels.yaml"
+      $ref: "../../components/schemas/enums/UserLevel.yml"
   - in: query
     name: search[max_level]
     schema:
-      $ref: "../../components/schemas/users/levels.yaml"
+      $ref: "../../components/schemas/enums/UserLevel.yml"
   - in: query
     name: search[can_upload_free]
     schema:
@@ -64,5 +64,5 @@ responses:
           type: array
           items:
             oneOf:
-              - $ref: "../../components/schemas/user.yaml"
-              - $ref: "../../components/schemas/fullCurrentUser.yaml"
+              - $ref: "../../components/schemas/models/User.yml"
+              - $ref: "../../components/schemas/models/FullCurrentUser.yml"

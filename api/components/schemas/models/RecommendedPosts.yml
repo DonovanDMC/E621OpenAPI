@@ -1,0 +1,15 @@
+type: object
+required:
+  - post_id
+  - model_version
+  - results
+  - post_data
+properties:
+  post_id:
+    type: integer
+  model_version:
+    type: string
+  results:
+    type: array
+    items:
+      $ref: "./PostRecommendation.yml"

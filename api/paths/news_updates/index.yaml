@@ -13,4 +13,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/newsUpdate.yaml"
+            $ref: "../../components/schemas/models/NewsUpdate.yml"

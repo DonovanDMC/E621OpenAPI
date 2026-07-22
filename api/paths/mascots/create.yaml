@@ -41,7 +41,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/mascot.yaml"
+          $ref: "../../components/schemas/models/Mascot.yml"
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   422:

@@ -51,4 +51,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/staffNote.yaml"
+            $ref: "../../components/schemas/models/StaffNote.yml"

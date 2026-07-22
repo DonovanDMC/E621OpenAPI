@@ -44,4 +44,4 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/wikiPageVersion.yaml"
+            $ref: "../../components/schemas/models/WikiPageVersion.yml"

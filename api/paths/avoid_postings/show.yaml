@@ -10,6 +10,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/avoidPosting.yaml"
+          $ref: "../../components/schemas/models/AvoidPosting.yml"
   404:
     $ref: "../../components/responses/notFound.yaml"
