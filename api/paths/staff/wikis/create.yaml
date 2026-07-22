@@ -7,7 +7,7 @@ security:
 description: You must be Staff+
 requestBody:
   content:
-    multipart/x-www-form-urlencoded:
+    multipart/form-data:
       schema:
         type: object
         required:

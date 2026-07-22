@@ -9,7 +9,7 @@ parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    multipart/x-www-form-urlencoded:
+    multipart/form-data:
       schema:
         type: object
         properties:
