@@ -2,9 +2,9 @@ type: object
 required:
   - id
   - user_id
+  - banner_id
   - reason
   - expires_at
-  - banner_id
   - created_at
   - updated_at
 properties:
@@ -14,12 +14,12 @@ properties:
     type: integer
   reason:
     type: string
+  banner_id:
+    type: integer
   expires_at:
     type: string
     format: date-time
     nullable: true
-  banner_id:
-    type: integer
   created_at:
     type: string
     format: date-time
