@@ -1,6 +1,7 @@
 type: string
 enum:
   - admin_user_delete
+  - artist_delete
   - artist_page_rename
   - artist_page_lock
   - artist_page_unlock
