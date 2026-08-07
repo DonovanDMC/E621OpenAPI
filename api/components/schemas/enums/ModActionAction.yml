@@ -44,10 +44,10 @@ enum:
   - help_update
   - ip_ban_create # Staff+
   - ip_ban_delete # Staff+
-  - search_trend_blacklist_create
-  - search_trend_blacklist_update
-  - search_trend_blacklist_delete
-  - search_trend_blacklist_purge
+  - search_trend_blacklist_create # Staff+
+  - search_trend_blacklist_update # Staff+
+  - search_trend_blacklist_delete # Staff+
+  - search_trend_blacklist_purge # Staff+
   - mascot_create
   - mascot_update
   - mascot_delete
@@ -81,7 +81,8 @@ enum:
   - user_forum_posts_hide
   - user_blips_delete
   - user_blacklist_changed
-  - totp_reset
+  - totp_reset # Staff+
+  - password_reset # Staff+
   - user_text_change
   - user_custom_title_change
   - user_upload_limit_change
