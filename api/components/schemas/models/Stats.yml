@@ -1,0 +1,213 @@
+type: object
+required:
+  - started
+  - total_posts
+  - active_posts
+  - deleted_posts
+  - existing_posts
+  - destroyed_posts
+  - total_votes
+  - total_notes
+  - total_favorites
+  - total_pools
+  - public_sets
+  - private_sets
+  - total_sets
+  - average_posts_per_pool
+  - average_posts_per_set
+  - safe_posts
+  - questionable_posts
+  - explicit_posts
+  - jpg_posts
+  - png_posts
+  - webp_posts
+  - gif_posts
+  - swf_posts
+  - webm_posts
+  - mp4_posts
+  - average_file_size
+  - total_file_size
+  - average_posts_per_day
+  - total_users
+  - anonymous_users
+  - blocked_users
+  - member_users
+  - privileged_users
+  - "former staff_users" # TODO: https://github.com/e621ng/e621ng/pull/2388
+  - staff_users
+  - janitor_users
+  - moderator_users
+  - admin_users
+  - unactivated_users
+  - total_dmails
+  - average_registrations_per_day
+  - active_users
+  - total_comments
+  - active_comments
+  - hidden_comments
+  - deleted_comments
+  - average_comments_per_day
+  - total_forum_threads
+  - total_forum_posts
+  - average_posts_per_thread
+  - average_forum_posts_per_day
+  - total_blips
+  - active_blips
+  - deleted_blips
+  - destroyed_blips
+  - average_blips_per_day
+  - total_tags
+  - general_tags
+  - species_tags
+  - character_tags
+  - copyright_tags
+  - artist_tags
+  - contributor_tags
+  - invalid_tags
+  - lore_tags
+  - meta_tags
+  - updated_at
+properties:
+  started:
+    type: string
+    format: date-time
+    description: When the first post was created.
+  total_posts:
+    type: integer
+  active_posts:
+    type: integer
+  deleted_posts:
+    type: integer
+  existing_posts:
+    type: integer
+    description: "`active_posts + deleted_posts`"
+  destroyed_posts:
+    type: integer
+  total_votes:
+    type: integer
+  total_notes:
+    type: integer
+  total_favorites:
+    type: integer
+  total_pools:
+    type: integer
+  public_sets:
+    type: integer
+  private_sets:
+    type: integer
+  total_sets:
+    type: integer
+  average_posts_per_pool:
+    type: number
+    format: float
+  average_posts_per_set:
+    type: number
+    format: float
+  safe_posts:
+    type: integer
+  questionable_posts:
+    type: integer
+  explicit_posts:
+    type: integer
+  jpg_posts:
+    type: integer
+  png_posts:
+    type: integer
+  webp_posts:
+    type: integer
+  gif_posts:
+    type: integer
+  swf_posts:
+    type: integer
+  webm_posts:
+    type: integer
+  mp4_posts:
+    type: integer
+  average_file_size:
+    type: number
+    format: float
+  total_file_size:
+    type: integer
+    format: int64
+  average_posts_per_day:
+    type: integer
+  total_users:
+    type: integer
+  anonymous_users:
+    type: integer
+  blocked_users:
+    type: integer
+  member_users:
+    type: integer
+  privileged_users:
+    type: integer
+  "former staff_users":
+    type: integer
+  staff_users:
+    type: integer
+  janitor_users:
+    type: integer
+  moderator_users:
+    type: integer
+  admin_users:
+    type: integer
+  unactivated_users:
+    type: integer
+  total_dmails:
+    type: integer
+  average_registrations_per_day:
+    type: integer
+  active_users:
+    type: integer
+    description: Users who have logged in within the last 3 months.
+  total_comments:
+    type: integer
+  active_comments:
+    type: integer
+  hidden_comments:
+    type: integer
+  deleted_comments:
+    type: integer
+  average_comments_per_day:
+    type: integer
+  total_forum_threads:
+    type: integer
+  total_forum_posts:
+    type: integer
+  average_posts_per_thread:
+    type: integer
+  average_forum_posts_per_day:
+    type: integer
+  total_blips:
+    type: integer
+  active_blips:
+    type: integer
+  deleted_blips:
+    type: integer
+  destroyed_blips:
+    type: integer
+  average_blips_per_day:
+    type: integer
+  total_tags:
+    type: integer
+  general_tags:
+    type: integer
+  species_tags:
+    type: integer
+  character_tags:
+    type: integer
+  copyright_tags:
+    type: integer
+  artist_tags:
+    type: integer
+  contributor_tags:
+    type: integer
+  invalid_tags:
+    type: integer
+  lore_tags:
+    type: integer
+  meta_tags:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time

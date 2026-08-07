@@ -63,6 +63,5 @@
   "forum_categories#*": "Doesn't support JSON",
   "meta_searches#*": "Doesn't support JSON",
   "related_tags#show": "Doesn't support JSON",
-  "staff/destroyed_posts#*": "Doesn't support JSON",
-  "stats#*": "Doesn't support JSON" // https://github.com/e621ng/e621ng/pull/2306
+  "staff/destroyed_posts#*": "Doesn't support JSON"
 }

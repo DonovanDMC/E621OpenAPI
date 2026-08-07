@@ -297,6 +297,8 @@ components:
       $ref: "./components/schemas/models/StaffWiki.yml"
     StaffWikiVersion:
       $ref: "./components/schemas/models/StaffWikiVersion.yml"
+    Stats:
+      $ref: "./components/schemas/models/Stats.yml"
     Tag:
       $ref: "./components/schemas/models/Tag.yml"
     TagAlias:
@@ -1363,3 +1365,7 @@ paths:
   /staff/stuck_dnp.json:
     post:
       $ref: "./paths/staff/stuck_dnp/create.yaml"
+
+  /stats.json:
+    get:
+      $ref: "./paths/stats/index.yaml"

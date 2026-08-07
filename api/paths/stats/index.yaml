@@ -1,0 +1,11 @@
+summary: Get Site Stats
+operationId: stats#index
+tags:
+  - Stats
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/models/Stats.yml"
