@@ -1037,6 +1037,9 @@ paths:
       $ref: "./paths/sessions/create.yaml"
     delete:
       $ref: "./paths/sessions/destroy.yaml"
+  /session/verify_totp.json:
+    post:
+      $ref: "./paths/sessions/verify_totp.yaml"
 
   /staff_notes.json:
     get:
@@ -1233,6 +1236,9 @@ paths:
   /staff/users/{id}/anonymize_confirm:
     post:
       $ref: "./paths/staff/users/anonymize_confirm.yaml"
+  /staff/users/{id}/totp_reset:
+    post:
+      $ref: "./paths/staff/users/totp_reset.yaml"
   /staff/users/{id}/update_blacklist:
     post:
       $ref: "./paths/staff/users/update_blacklist.yaml"

@@ -1,5 +1,5 @@
-summary: Login
-operationId: sessions#create
+summary: Verify TOTP
+operationId: sessions#verify_totp
 tags:
   - Sessions
 security:
@@ -11,19 +11,14 @@ requestBody:
         type: object
         required:
           - authenticity_token
-          - session[name]
-          - session[password]
+          - totp[code]
         properties:
           authenticity_token:
             type: string
             description: CSRF Token
-          session[url]:
+          totp[code]:
             type: string
-            description: Optional relative URL to redirect to after login, defaults to `/posts`.
-          session[name]:
-            type: string
-          session[password]:
-            type: string
+            description: Code or backup code
 responses:
   200:
     description: Success
@@ -38,38 +33,35 @@ responses:
         schema:
           type: object
           required:
-            - error
-            - code
             - url
           properties:
-            error:
-              type: string
-            code:
-              type: string
-              enum:
-                - totp_required
             url:
               type: string
   401:
-    description: Two-factor authentication required - verification required within 5 minutes
+    description: Challenge expired or code incorrect
     content:
       application/json:
         schema:
           type: object
           required:
             - error
-            - code
-            - url
           properties:
             error:
               type: string
             code:
               type: string
               enum:
-                - totp_required
-            url:
-              type: string
+                - challenge_expired
   403:
     $ref: "../../components/responses/accessDenied.yaml"
-  406:
-    description: Failure
+  429:
+    description: Ratelimited
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - error
+          properties:
+            error:
+              type: string

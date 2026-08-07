@@ -81,6 +81,7 @@ enum:
   - user_forum_posts_hide
   - user_blips_delete
   - user_blacklist_changed
+  - totp_reset
   - user_text_change
   - user_custom_title_change
   - user_upload_limit_change

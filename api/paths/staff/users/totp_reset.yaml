@@ -1,0 +1,16 @@
+summary: Reset User TOTP
+operationId: staff/users#totp_reset
+tags:
+  - Staff Users
+security:
+  - basicAuth: []
+description: You must be Admin+. You must have the bd staff flag if the user is Staff+.
+parameters:
+  - $ref: "../../../components/parameters/path/id.yaml"
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  404:
+    $ref: "../../../components/responses/notFound.yaml"
