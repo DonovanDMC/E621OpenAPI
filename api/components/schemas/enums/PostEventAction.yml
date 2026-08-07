@@ -24,3 +24,4 @@ enum:
   - changed_bg_color
   - replacement_penalty_changed
   - owner_changed
+  - replacement_moved

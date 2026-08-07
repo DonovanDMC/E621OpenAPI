@@ -1,0 +1,28 @@
+summary: Transfer Post Replacement
+operationId: post_replacements#transfer
+tags:
+  - Post Replacements
+security:
+  - basicAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - new_post_id
+        properties:
+          new_post_id:
+            type: integer
+description: You must have the "Approve Posts" permission.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
+  412:
+    $ref: "../../components/responses/messageError.yaml"
