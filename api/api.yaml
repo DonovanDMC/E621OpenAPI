@@ -329,6 +329,10 @@ components:
       $ref: "./components/schemas/models/UploadWhitelist.yml"
     User:
       $ref: "./components/schemas/models/User.yml"
+    UserAlt:
+      $ref: "./components/schemas/models/UserAlt.yml"
+    UserAltUser:
+      $ref: "./components/schemas/models/UserAltUser.yml"
     UserAvatarMenu:
       $ref: "./components/schemas/models/UserAvatarMenu.yml"
     UserFeedback:
@@ -1289,6 +1293,10 @@ paths:
       $ref: "./paths/staff/post/approvals/create.yaml"
     delete:
       $ref: "./paths/staff/post/approvals/destroy.yaml"
+
+  /staff/user_alts.json:
+    get:
+      $ref: "./paths/staff/user_alts/show.yaml"
 
   /staff/user_cleanups/{id}/clear_avatar.json:
     post:

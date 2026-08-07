@@ -1,0 +1,26 @@
+summary: Get User Alts
+operationId: staff/user_alts#show
+tags:
+  - User Alts
+security:
+  - basicAuth: []
+description: You must be Moderator+.
+parameters:
+  - name: user_id
+    in: query
+    required: true
+    schema:
+      type: integer
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../../components/schemas/models/UserAlt.yml"
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"

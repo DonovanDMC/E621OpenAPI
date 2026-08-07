@@ -1,0 +1,55 @@
+type: object
+required:
+  - user_id
+  - score
+  - handoff
+  - handoff_users
+  - shared_exact
+  - shared_subnet
+  - total_ips
+  - ratio
+  - rarest_users
+  - overlap_first
+  - overlap_last
+  - last_co_seen
+  - concurrent
+  - deleted
+  - user
+properties:
+  user_id:
+    type: integer
+  score:
+    type: integer
+    format: float
+  handoff:
+    type: boolean
+  handoff_users:
+    type: integer
+    nullable: true
+  shared_exact:
+    type: integer
+  shared_subnet:
+    type: integer
+  total_ips:
+    type: integer
+  ratio:
+    type: integer
+    format: float
+  rarest_users:
+    type: integer
+  overlap_first:
+    type: string
+    format: date-time
+  overlap_last:
+    type: string
+    format: date-time
+  last_co_seen:
+    type: string
+    format: date-time
+  concurrent:
+    type: boolean
+  deleted:
+    type: boolean
+  user:
+    $ref: "./UserAltUser.yml"
+    nullable: true

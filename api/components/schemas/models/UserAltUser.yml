@@ -1,0 +1,16 @@
+type: object
+required:
+  - id
+  - name
+  - level_string
+  - created_at
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  level_string:
+    type: string
+  created_at:
+    type: string
+    format: date-time
