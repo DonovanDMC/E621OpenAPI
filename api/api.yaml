@@ -118,6 +118,8 @@ components:
       $ref: "./components/schemas/enums/TicketStatus.yml"
     TicketType:
       $ref: "./components/schemas/enums/TicketType.yml"
+    UpDownMehFlipVote:
+      $ref: "./components/schemas/enums/UpDownMehFlipVote.yml"
     UpDownMehVote:
       $ref: "./components/schemas/enums/UpDownMehVote.yml"
     UpDownVote:

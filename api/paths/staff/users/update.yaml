@@ -42,6 +42,8 @@ requestBody:
             type: boolean
           custom_title:
             type: string
+          tag_warden:
+            type: boolean
 responses:
   200:
     description: Success

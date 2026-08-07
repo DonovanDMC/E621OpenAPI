@@ -15,7 +15,7 @@ properties:
   creator_id:
     type: integer
   score:
-    type: integer
+    $ref: "../enums/UpDownMehFlipVote.yml"
   created_at:
     type: string
     format: date-time

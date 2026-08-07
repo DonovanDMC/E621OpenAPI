@@ -1,0 +1,6 @@
+type: integer
+enum:
+  - 2
+  - 1
+  - 0
+  - -1

@@ -15,7 +15,7 @@ requestBody:
           - score
         properties:
           score:
-            $ref: "../../components/schemas/enums/UpDownMehVote.yml"
+            $ref: "../../components/schemas/enums/UpDownMehFlipVote.yml"
 responses:
   200:
     description: Success
