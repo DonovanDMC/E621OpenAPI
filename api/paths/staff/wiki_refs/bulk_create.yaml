@@ -1,0 +1,29 @@
+summary: Bulk Create Staff Wiki Ref
+operationId: staff/wiki_refs#bulk_create
+tags:
+  - Staff Wiki Refs
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../../components/parameters/path/id.yaml"
+description: You must be Staff+.
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        required:
+          - urls
+        properties:
+          urls:
+            type: string
+            description: Space separated, parses `users/<id>`, `artists/<id>`, `staff/wiki/<id>`
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../../components/responses/notFound.yaml"

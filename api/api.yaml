@@ -1342,6 +1342,9 @@ paths:
   /staff/wikis/{wiki_id}/references/{id}:
     delete:
       $ref: "./paths/staff/wiki_refs/destroy.yaml"
+  /staff/wikis/{id}/references/bulk_create:
+    post:
+      $ref: "./paths/staff/wiki_refs/bulk_create.yaml"
 
   /staff/wiki_versions.json:
     get:
