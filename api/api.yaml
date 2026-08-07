@@ -104,6 +104,8 @@ components:
       $ref: "./components/schemas/enums/PoolCategory.yml"
     PostEventAction:
       $ref: "./components/schemas/enums/PostEventAction.yml"
+    PostReplacementStatus:
+      $ref: "./components/schemas/enums/PostReplacementStatus.yml"
     Rating:
       $ref: "./components/schemas/enums/Rating.yml"
     StaffWikiRefRelatedType:

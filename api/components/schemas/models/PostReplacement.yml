@@ -15,6 +15,7 @@ required:
   - file_name
   - status
   - reason
+  - sequence_number
 properties:
   id:
     type: integer
@@ -47,12 +48,8 @@ properties:
   file_name:
     type: string
   status:
-    type: string
-    enum:
-      - prompted
-      - approved
-      - rejected
-      - pending
-      - original
+    $ref: "../enums/PostReplacementStatus.yml"
   reason:
     type: string
+  sequence_number:
+    type: integer

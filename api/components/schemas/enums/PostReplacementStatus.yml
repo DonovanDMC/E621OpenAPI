@@ -1,0 +1,7 @@
+type: string
+enum:
+  - promoted
+  - approved
+  - rejected
+  - pending
+  - original
