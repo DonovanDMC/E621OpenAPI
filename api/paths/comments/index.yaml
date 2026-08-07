@@ -36,6 +36,7 @@ parameters:
       type: string
   - in: query
     name: search[post_tags_match]
+    description: Only usable by Member+
     schema:
       type: string
   - in: query
