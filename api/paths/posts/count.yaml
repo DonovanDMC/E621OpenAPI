@@ -1,0 +1,26 @@
+summary: Count Posts
+operationId: posts#count
+tags:
+  - Posts
+parameters:
+  - in: query
+    name: tags
+    schema:
+      type: string
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - count
+            - capped
+          properties:
+            count:
+              type: integer
+            capped:
+              type: boolean
+  400:
+    $ref: "../../components/responses/messageError.yaml"

@@ -793,6 +793,9 @@ paths:
   /posts/random.json:
     get:
       $ref: "./paths/posts/random.yaml"
+  /posts/count.json:
+    get:
+      $ref: "./paths/posts/count.yaml"
   /posts/{id}.json:
     get:
       $ref: "./paths/posts/show.yaml"
