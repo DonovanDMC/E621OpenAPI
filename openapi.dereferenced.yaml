@@ -12,10 +12,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 2f29834
-  x-e621ng-commit: cd2d82f49aa1444b23505f6be8fd7e044f5589ad
-  x-e621ng-master-behind-by: 13
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/cd2d82f49aa1444b23505f6be8fd7e044f5589ad...master
+  version: 14ac6bc
+  x-e621ng-commit: 893a8dc59af2433534cbfa0794ddd00e8a724e7f
+  x-e621ng-master-behind-by: unknown
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/commits/master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -151,6 +151,7 @@ components:
       type: string
       enum:
         - admin_user_delete
+        - artist_delete
         - artist_page_rename
         - artist_page_lock
         - artist_page_unlock
@@ -230,9 +231,13 @@ components:
         - user_forum_posts_hide
         - user_blips_delete
         - user_blacklist_changed
+        - totp_reset
+        - password_reset
         - user_text_change
         - user_custom_title_change
         - user_upload_limit_change
+        - user_karma_change
+        - user_karma_free_toggle
         - user_uploads_toggle
         - user_flags_change
         - user_level_change
@@ -383,6 +388,15 @@ components:
         - changed_bg_color
         - replacement_penalty_changed
         - owner_changed
+        - replacement_moved
+    PostReplacementStatus:
+      type: string
+      enum:
+        - promoted
+        - approved
+        - rejected
+        - pending
+        - original
     Rating:
       type: string
       enum:
@@ -450,6 +464,13 @@ components:
         - user
         - wiki
         - replacement
+    UpDownMehFlipVote:
+      type: integer
+      enum:
+        - 2
+        - 1
+        - 0
+        - -1
     UpDownMehVote:
       type: integer
       enum:
@@ -773,9 +794,9 @@ components:
       required:
         - id
         - user_id
+        - banner_id
         - reason
         - expires_at
-        - banner_id
         - created_at
         - updated_at
       properties:
@@ -785,12 +806,12 @@ components:
           type: integer
         reason:
           type: string
+        banner_id:
+          type: integer
         expires_at:
           type: string
           format: date-time
           nullable: true
-        banner_id:
-          type: integer
         created_at:
           type: string
           format: date-time
@@ -1252,6 +1273,8 @@ components:
             - name
             - level
             - base_upload_limit
+            - upload_karma
+            - upload_karma_free
             - post_upload_count
             - post_update_count
             - note_update_count
@@ -1283,6 +1306,10 @@ components:
                 - 80
             base_upload_limit:
               type: integer
+            upload_karma:
+              type: integer
+            upload_karma_free:
+              type: boolean
             post_upload_count:
               type: integer
             post_update_count:
@@ -2044,6 +2071,11 @@ components:
           type: integer
         score:
           type: integer
+          enum:
+            - 2
+            - 1
+            - 0
+            - -1
         created_at:
           type: string
           format: date-time
@@ -2101,6 +2133,8 @@ components:
                 - name
                 - level
                 - base_upload_limit
+                - upload_karma
+                - upload_karma_free
                 - post_upload_count
                 - post_update_count
                 - note_update_count
@@ -2132,6 +2166,10 @@ components:
                     - 80
                 base_upload_limit:
                   type: integer
+                upload_karma:
+                  type: integer
+                upload_karma_free:
+                  type: boolean
                 post_upload_count:
                   type: integer
                 post_update_count:
@@ -2302,6 +2340,8 @@ components:
                 - name
                 - level
                 - base_upload_limit
+                - upload_karma
+                - upload_karma_free
                 - post_upload_count
                 - post_update_count
                 - note_update_count
@@ -2333,6 +2373,10 @@ components:
                     - 80
                 base_upload_limit:
                   type: integer
+                upload_karma:
+                  type: integer
+                upload_karma_free:
+                  type: boolean
                 post_upload_count:
                   type: integer
                 post_update_count:
@@ -2380,7 +2424,7 @@ components:
                 - positive_feedback_count
                 - neutral_feedback_count
                 - negative_feedback_count
-                - upload_limit
+                - upload_slots
                 - profile_about
                 - profile_artinfo
               properties:
@@ -2404,7 +2448,7 @@ components:
                   type: integer
                 negative_feedback_count:
                   type: integer
-                upload_limit:
+                upload_slots:
                   type: integer
                 profile_about:
                   type: string
@@ -2419,6 +2463,8 @@ components:
             - name
             - level
             - base_upload_limit
+            - upload_karma
+            - upload_karma_free
             - post_upload_count
             - post_update_count
             - note_update_count
@@ -2450,6 +2496,10 @@ components:
                 - 80
             base_upload_limit:
               type: integer
+            upload_karma:
+              type: integer
+            upload_karma_free:
+              type: boolean
             post_upload_count:
               type: integer
             post_update_count:
@@ -2497,7 +2547,7 @@ components:
             - positive_feedback_count
             - neutral_feedback_count
             - negative_feedback_count
-            - upload_limit
+            - upload_slots
             - profile_about
             - profile_artinfo
           properties:
@@ -2521,7 +2571,7 @@ components:
               type: integer
             negative_feedback_count:
               type: integer
-            upload_limit:
+            upload_slots:
               type: integer
             profile_about:
               type: string
@@ -3321,6 +3371,7 @@ components:
           type: string
           enum:
             - admin_user_delete
+            - artist_delete
             - artist_page_rename
             - artist_page_lock
             - artist_page_unlock
@@ -3400,9 +3451,13 @@ components:
             - user_forum_posts_hide
             - user_blips_delete
             - user_blacklist_changed
+            - totp_reset
+            - password_reset
             - user_text_change
             - user_custom_title_change
             - user_upload_limit_change
+            - user_karma_change
+            - user_karma_free_toggle
             - user_uploads_toggle
             - user_flags_change
             - user_level_change
@@ -4378,6 +4433,7 @@ components:
             - changed_bg_color
             - replacement_penalty_changed
             - owner_changed
+            - replacement_moved
         created_at:
           type: string
           format: date-time
@@ -4671,6 +4727,7 @@ components:
         - file_name
         - status
         - reason
+        - sequence_number
       properties:
         id:
           type: integer
@@ -4705,13 +4762,15 @@ components:
         status:
           type: string
           enum:
-            - prompted
+            - promoted
             - approved
             - rejected
             - pending
             - original
         reason:
           type: string
+        sequence_number:
+          type: integer
     PostSampleAlternate:
       type: object
       required:
@@ -5623,6 +5682,220 @@ components:
         updated_at:
           type: string
           format: date-time
+    Stats:
+      type: object
+      required:
+        - started
+        - total_posts
+        - active_posts
+        - deleted_posts
+        - existing_posts
+        - destroyed_posts
+        - total_votes
+        - total_notes
+        - total_favorites
+        - total_pools
+        - public_sets
+        - private_sets
+        - total_sets
+        - average_posts_per_pool
+        - average_posts_per_set
+        - safe_posts
+        - questionable_posts
+        - explicit_posts
+        - jpg_posts
+        - png_posts
+        - webp_posts
+        - gif_posts
+        - swf_posts
+        - webm_posts
+        - mp4_posts
+        - average_file_size
+        - total_file_size
+        - average_posts_per_day
+        - total_users
+        - anonymous_users
+        - blocked_users
+        - member_users
+        - privileged_users
+        - former staff_users
+        - staff_users
+        - janitor_users
+        - moderator_users
+        - admin_users
+        - unactivated_users
+        - total_dmails
+        - average_registrations_per_day
+        - active_users
+        - total_comments
+        - active_comments
+        - hidden_comments
+        - deleted_comments
+        - average_comments_per_day
+        - total_forum_threads
+        - total_forum_posts
+        - average_posts_per_thread
+        - average_forum_posts_per_day
+        - total_blips
+        - active_blips
+        - deleted_blips
+        - destroyed_blips
+        - average_blips_per_day
+        - total_tags
+        - general_tags
+        - species_tags
+        - character_tags
+        - copyright_tags
+        - artist_tags
+        - contributor_tags
+        - invalid_tags
+        - lore_tags
+        - meta_tags
+        - updated_at
+      properties:
+        started:
+          type: string
+          format: date-time
+          description: When the first post was created.
+        total_posts:
+          type: integer
+        active_posts:
+          type: integer
+        deleted_posts:
+          type: integer
+        existing_posts:
+          type: integer
+          description: '`active_posts + deleted_posts`'
+        destroyed_posts:
+          type: integer
+        total_votes:
+          type: integer
+        total_notes:
+          type: integer
+        total_favorites:
+          type: integer
+        total_pools:
+          type: integer
+        public_sets:
+          type: integer
+        private_sets:
+          type: integer
+        total_sets:
+          type: integer
+        average_posts_per_pool:
+          type: number
+          format: float
+        average_posts_per_set:
+          type: number
+          format: float
+        safe_posts:
+          type: integer
+        questionable_posts:
+          type: integer
+        explicit_posts:
+          type: integer
+        jpg_posts:
+          type: integer
+        png_posts:
+          type: integer
+        webp_posts:
+          type: integer
+        gif_posts:
+          type: integer
+        swf_posts:
+          type: integer
+        webm_posts:
+          type: integer
+        mp4_posts:
+          type: integer
+        average_file_size:
+          type: number
+          format: float
+        total_file_size:
+          type: integer
+          format: int64
+        average_posts_per_day:
+          type: integer
+        total_users:
+          type: integer
+        anonymous_users:
+          type: integer
+        blocked_users:
+          type: integer
+        member_users:
+          type: integer
+        privileged_users:
+          type: integer
+        former staff_users:
+          type: integer
+        staff_users:
+          type: integer
+        janitor_users:
+          type: integer
+        moderator_users:
+          type: integer
+        admin_users:
+          type: integer
+        unactivated_users:
+          type: integer
+        total_dmails:
+          type: integer
+        average_registrations_per_day:
+          type: integer
+        active_users:
+          type: integer
+          description: Users who have logged in within the last 3 months.
+        total_comments:
+          type: integer
+        active_comments:
+          type: integer
+        hidden_comments:
+          type: integer
+        deleted_comments:
+          type: integer
+        average_comments_per_day:
+          type: integer
+        total_forum_threads:
+          type: integer
+        total_forum_posts:
+          type: integer
+        average_posts_per_thread:
+          type: integer
+        average_forum_posts_per_day:
+          type: integer
+        total_blips:
+          type: integer
+        active_blips:
+          type: integer
+        deleted_blips:
+          type: integer
+        destroyed_blips:
+          type: integer
+        average_blips_per_day:
+          type: integer
+        total_tags:
+          type: integer
+        general_tags:
+          type: integer
+        species_tags:
+          type: integer
+        character_tags:
+          type: integer
+        copyright_tags:
+          type: integer
+        artist_tags:
+          type: integer
+        contributor_tags:
+          type: integer
+        invalid_tags:
+          type: integer
+        lore_tags:
+          type: integer
+        meta_tags:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
     Tag:
       type: object
       required:
@@ -6282,6 +6555,8 @@ components:
         - name
         - level
         - base_upload_limit
+        - upload_karma
+        - upload_karma_free
         - post_upload_count
         - post_update_count
         - note_update_count
@@ -6313,6 +6588,10 @@ components:
             - 80
         base_upload_limit:
           type: integer
+        upload_karma:
+          type: integer
+        upload_karma_free:
+          type: boolean
         post_upload_count:
           type: integer
         post_update_count:
@@ -6348,6 +6627,94 @@ components:
           type: string
           format: date-time
           description: Only visible to Admin+.
+    UserAlt:
+      type: object
+      required:
+        - user_id
+        - score
+        - handoff
+        - handoff_users
+        - shared_exact
+        - shared_subnet
+        - total_ips
+        - ratio
+        - rarest_users
+        - overlap_first
+        - overlap_last
+        - last_co_seen
+        - concurrent
+        - deleted
+        - user
+      properties:
+        user_id:
+          type: integer
+        score:
+          type: integer
+          format: float
+        handoff:
+          type: boolean
+        handoff_users:
+          type: integer
+          nullable: true
+        shared_exact:
+          type: integer
+        shared_subnet:
+          type: integer
+        total_ips:
+          type: integer
+        ratio:
+          type: integer
+          format: float
+        rarest_users:
+          type: integer
+        overlap_first:
+          type: string
+          format: date-time
+        overlap_last:
+          type: string
+          format: date-time
+        last_co_seen:
+          type: string
+          format: date-time
+        concurrent:
+          type: boolean
+        deleted:
+          type: boolean
+        user:
+          nullable: true
+          type: object
+          required:
+            - id
+            - name
+            - level_string
+            - created_at
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            level_string:
+              type: string
+            created_at:
+              type: string
+              format: date-time
+    UserAltUser:
+      type: object
+      required:
+        - id
+        - name
+        - level_string
+        - created_at
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        level_string:
+          type: string
+        created_at:
+          type: string
+          format: date-time
     UserAvatarMenu:
       type: object
       required:
@@ -6526,6 +6893,8 @@ components:
                 - name
                 - level
                 - base_upload_limit
+                - upload_karma
+                - upload_karma_free
                 - post_upload_count
                 - post_update_count
                 - note_update_count
@@ -6557,6 +6926,10 @@ components:
                     - 80
                 base_upload_limit:
                   type: integer
+                upload_karma:
+                  type: integer
+                upload_karma_free:
+                  type: boolean
                 post_upload_count:
                   type: integer
                 post_update_count:
@@ -6636,6 +7009,8 @@ components:
             - name
             - level
             - base_upload_limit
+            - upload_karma
+            - upload_karma_free
             - post_upload_count
             - post_update_count
             - note_update_count
@@ -6667,6 +7042,10 @@ components:
                 - 80
             base_upload_limit:
               type: integer
+            upload_karma:
+              type: integer
+            upload_karma_free:
+              type: boolean
             post_upload_count:
               type: integer
             post_update_count:
@@ -7562,6 +7941,8 @@ components:
                       - name
                       - level
                       - base_upload_limit
+                      - upload_karma
+                      - upload_karma_free
                       - post_upload_count
                       - post_update_count
                       - note_update_count
@@ -7593,6 +7974,10 @@ components:
                           - 80
                       base_upload_limit:
                         type: integer
+                      upload_karma:
+                        type: integer
+                      upload_karma_free:
+                        type: boolean
                       post_upload_count:
                         type: integer
                       post_update_count:
@@ -7640,7 +8025,7 @@ components:
                       - positive_feedback_count
                       - neutral_feedback_count
                       - negative_feedback_count
-                      - upload_limit
+                      - upload_slots
                       - profile_about
                       - profile_artinfo
                     properties:
@@ -7664,7 +8049,7 @@ components:
                         type: integer
                       negative_feedback_count:
                         type: integer
-                      upload_limit:
+                      upload_slots:
                         type: integer
                       profile_about:
                         type: string
@@ -7679,6 +8064,8 @@ components:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -7710,6 +8097,10 @@ components:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -7880,6 +8271,8 @@ components:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -7911,6 +8304,10 @@ components:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -7958,7 +8355,7 @@ components:
                           - positive_feedback_count
                           - neutral_feedback_count
                           - negative_feedback_count
-                          - upload_limit
+                          - upload_slots
                           - profile_about
                           - profile_artinfo
                         properties:
@@ -7982,7 +8379,7 @@ components:
                             type: integer
                           negative_feedback_count:
                             type: integer
-                          upload_limit:
+                          upload_slots:
                             type: integer
                           profile_about:
                             type: string
@@ -12745,9 +13142,9 @@ paths:
                   required:
                     - id
                     - user_id
+                    - banner_id
                     - reason
                     - expires_at
-                    - banner_id
                     - created_at
                     - updated_at
                   properties:
@@ -12757,12 +13154,12 @@ paths:
                       type: integer
                     reason:
                       type: string
+                    banner_id:
+                      type: integer
                     expires_at:
                       type: string
                       format: date-time
                       nullable: true
-                    banner_id:
-                      type: integer
                     created_at:
                       type: string
                       format: date-time
@@ -12792,9 +13189,9 @@ paths:
                 required:
                   - id
                   - user_id
+                  - banner_id
                   - reason
                   - expires_at
-                  - banner_id
                   - created_at
                   - updated_at
                 properties:
@@ -12804,12 +13201,12 @@ paths:
                     type: integer
                   reason:
                     type: string
+                  banner_id:
+                    type: integer
                   expires_at:
                     type: string
                     format: date-time
                     nullable: true
-                  banner_id:
-                    type: integer
                   created_at:
                     type: string
                     format: date-time
@@ -14094,6 +14491,7 @@ paths:
             type: string
         - in: query
           name: 'search[post_tags_match]'
+          description: Only usable by Member+
           schema:
             type: string
         - in: query
@@ -19145,6 +19543,11 @@ paths:
                       type: integer
                     score:
                       type: integer
+                      enum:
+                        - 2
+                        - 1
+                        - 0
+                        - -1
                     created_at:
                       type: string
                       format: date-time
@@ -19227,6 +19630,7 @@ paths:
                 score:
                   type: integer
                   enum:
+                    - 2
                     - 1
                     - 0
                     - -1
@@ -19254,6 +19658,11 @@ paths:
                     type: integer
                   score:
                     type: integer
+                    enum:
+                      - 2
+                      - 1
+                      - 0
+                      - -1
                   created_at:
                     type: string
                     format: date-time
@@ -22323,6 +22732,7 @@ paths:
             type: string
             enum:
               - admin_user_delete
+              - artist_delete
               - artist_page_rename
               - artist_page_lock
               - artist_page_unlock
@@ -22402,9 +22812,13 @@ paths:
               - user_forum_posts_hide
               - user_blips_delete
               - user_blacklist_changed
+              - totp_reset
+              - password_reset
               - user_text_change
               - user_custom_title_change
               - user_upload_limit_change
+              - user_karma_change
+              - user_karma_free_toggle
               - user_uploads_toggle
               - user_flags_change
               - user_level_change
@@ -22474,6 +22888,7 @@ paths:
                       type: string
                       enum:
                         - admin_user_delete
+                        - artist_delete
                         - artist_page_rename
                         - artist_page_lock
                         - artist_page_unlock
@@ -22553,9 +22968,13 @@ paths:
                         - user_forum_posts_hide
                         - user_blips_delete
                         - user_blacklist_changed
+                        - totp_reset
+                        - password_reset
                         - user_text_change
                         - user_custom_title_change
                         - user_upload_limit_change
+                        - user_karma_change
+                        - user_karma_free_toggle
                         - user_uploads_toggle
                         - user_flags_change
                         - user_level_change
@@ -22636,6 +23055,7 @@ paths:
                     type: string
                     enum:
                       - admin_user_delete
+                      - artist_delete
                       - artist_page_rename
                       - artist_page_lock
                       - artist_page_unlock
@@ -22715,9 +23135,13 @@ paths:
                       - user_forum_posts_hide
                       - user_blips_delete
                       - user_blacklist_changed
+                      - totp_reset
+                      - password_reset
                       - user_text_change
                       - user_custom_title_change
                       - user_upload_limit_change
+                      - user_karma_change
+                      - user_karma_free_toggle
                       - user_uploads_toggle
                       - user_flags_change
                       - user_level_change
@@ -23099,6 +23523,7 @@ paths:
             type: integer
         - in: query
           name: 'search[post_tags_match]'
+          description: Only usable by Member+
           schema:
             type: string
         - in: query
@@ -28768,6 +29193,49 @@ paths:
                     type: string
                     enum:
                       - not found
+  /posts/count.json:
+    get:
+      summary: Count Posts
+      operationId: posts#count
+      tags:
+        - Posts
+      parameters:
+        - in: query
+          name: tags
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - count
+                  - capped
+                properties:
+                  count:
+                    type: integer
+                  capped:
+                    type: boolean
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - message
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  code:
+                    type: string
+                    nullable: true
   '/posts/{id}.json':
     get:
       summary: Get Post
@@ -36194,6 +36662,7 @@ paths:
               - id_desc
         - name: 'search[post_tags_match]'
           in: query
+          description: Only usable by Member+
           schema:
             type: string
         - name: 'search[user_id]'
@@ -36320,6 +36789,7 @@ paths:
               - changed_bg_color
               - replacement_penalty_changed
               - owner_changed
+              - replacement_moved
       responses:
         '200':
           description: Success
@@ -36377,6 +36847,7 @@ paths:
                                 - changed_bg_color
                                 - replacement_penalty_changed
                                 - owner_changed
+                                - replacement_moved
                             created_at:
                               type: string
                               format: date-time
@@ -36425,6 +36896,7 @@ paths:
                             - changed_bg_color
                             - replacement_penalty_changed
                             - owner_changed
+                            - replacement_moved
                         created_at:
                           type: string
                           format: date-time
@@ -36487,6 +36959,7 @@ paths:
             type: integer
         - in: query
           name: 'search[post_tags_match]'
+          description: Only usable by Member+
           schema:
             type: string
         - in: query
@@ -36940,6 +37413,7 @@ paths:
                     - file_name
                     - status
                     - reason
+                    - sequence_number
                   properties:
                     id:
                       type: integer
@@ -36974,13 +37448,15 @@ paths:
                     status:
                       type: string
                       enum:
-                        - prompted
+                        - promoted
                         - approved
                         - rejected
                         - pending
                         - original
                     reason:
                       type: string
+                    sequence_number:
+                      type: integer
     post:
       summary: Create Post Replacement
       operationId: post_replacements#create
@@ -37640,6 +38116,84 @@ paths:
                     type: array
                     items:
                       type: string
+  '/post_replacements/{id}/transfer.json':
+    put:
+      summary: Transfer Post Replacement
+      operationId: post_replacements#transfer
+      tags:
+        - Post Replacements
+      security:
+        - basicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - new_post_id
+              properties:
+                new_post_id:
+                  type: integer
+      description: You must have the "Approve Posts" permission.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Success
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+        '412':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - message
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  code:
+                    type: string
+                    nullable: true
   /post_versions.json:
     get:
       summary: Post Versions Index
@@ -40700,7 +41254,7 @@ paths:
                 'session[password]':
                   type: string
       responses:
-        '302':
+        '200':
           description: Success
           headers:
             Set-Cookie:
@@ -40708,6 +41262,42 @@ paths:
               schema:
                 type: string
                 example: _danbooru_session=(...); path=/; secure; httponly; samesite=lax
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                  - code
+                  - url
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                    enum:
+                      - totp_required
+                  url:
+                    type: string
+        '401':
+          description: Two-factor authentication required - verification required within 5 minutes
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                  - code
+                  - url
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                    enum:
+                      - totp_required
+                  url:
+                    type: string
         '403':
           description: Access Denied
           content:
@@ -40765,6 +41355,89 @@ paths:
                       - Access Denied
         '406':
           description: Failure
+  /session/verify_totp.json:
+    post:
+      summary: Verify TOTP
+      operationId: sessions#verify_totp
+      tags:
+        - Sessions
+      security:
+        - csrfToken: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - authenticity_token
+                - 'totp[code]'
+              properties:
+                authenticity_token:
+                  type: string
+                  description: CSRF Token
+                'totp[code]':
+                  type: string
+                  description: Code or backup code
+      responses:
+        '200':
+          description: Success
+          headers:
+            Set-Cookie:
+              description: The session cookie.
+              schema:
+                type: string
+                example: _danbooru_session=(...); path=/; secure; httponly; samesite=lax
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - url
+                properties:
+                  url:
+                    type: string
+        '401':
+          description: Challenge expired or code incorrect
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                    enum:
+                      - challenge_expired
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '429':
+          description: Ratelimited
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
   /staff_notes.json:
     get:
       summary: Staff Notes Index
@@ -43560,6 +44233,7 @@ paths:
               - post_upload_count
               - note_count
               - post_update_count
+              - upload_karma
         - in: query
           name: 'search[name_matches]'
           schema:
@@ -43619,6 +44293,13 @@ paths:
           schema:
             type: boolean
         - in: query
+          name: 'search[can_karma_free]'
+          description: |
+            Only permitted if `upload_karma_free_threshold` != nil
+            Always true in prod.
+          schema:
+            type: boolean
+        - in: query
           name: 'search[can_approve_posts]'
           schema:
             type: boolean
@@ -43643,6 +44324,8 @@ paths:
                         - name
                         - level
                         - base_upload_limit
+                        - upload_karma
+                        - upload_karma_free
                         - post_upload_count
                         - post_update_count
                         - note_update_count
@@ -43674,6 +44357,10 @@ paths:
                             - 80
                         base_upload_limit:
                           type: integer
+                        upload_karma:
+                          type: integer
+                        upload_karma_free:
+                          type: boolean
                         post_upload_count:
                           type: integer
                         post_update_count:
@@ -43718,6 +44405,8 @@ paths:
                                 - name
                                 - level
                                 - base_upload_limit
+                                - upload_karma
+                                - upload_karma_free
                                 - post_upload_count
                                 - post_update_count
                                 - note_update_count
@@ -43749,6 +44438,10 @@ paths:
                                     - 80
                                 base_upload_limit:
                                   type: integer
+                                upload_karma:
+                                  type: integer
+                                upload_karma_free:
+                                  type: boolean
                                 post_upload_count:
                                   type: integer
                                 post_update_count:
@@ -43919,6 +44612,8 @@ paths:
                                 - name
                                 - level
                                 - base_upload_limit
+                                - upload_karma
+                                - upload_karma_free
                                 - post_upload_count
                                 - post_update_count
                                 - note_update_count
@@ -43950,6 +44645,10 @@ paths:
                                     - 80
                                 base_upload_limit:
                                   type: integer
+                                upload_karma:
+                                  type: integer
+                                upload_karma_free:
+                                  type: boolean
                                 post_upload_count:
                                   type: integer
                                 post_update_count:
@@ -43997,7 +44696,7 @@ paths:
                                 - positive_feedback_count
                                 - neutral_feedback_count
                                 - negative_feedback_count
-                                - upload_limit
+                                - upload_slots
                                 - profile_about
                                 - profile_artinfo
                               properties:
@@ -44021,7 +44720,7 @@ paths:
                                   type: integer
                                 negative_feedback_count:
                                   type: integer
-                                upload_limit:
+                                upload_slots:
                                   type: integer
                                 profile_about:
                                   type: string
@@ -44051,6 +44750,8 @@ paths:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -44082,6 +44783,10 @@ paths:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -44252,6 +44957,8 @@ paths:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -44283,6 +44990,10 @@ paths:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -44330,7 +45041,7 @@ paths:
                           - positive_feedback_count
                           - neutral_feedback_count
                           - negative_feedback_count
-                          - upload_limit
+                          - upload_slots
                           - profile_about
                           - profile_artinfo
                         properties:
@@ -44354,7 +45065,7 @@ paths:
                             type: integer
                           negative_feedback_count:
                             type: integer
-                          upload_limit:
+                          upload_slots:
                             type: integer
                           profile_about:
                             type: string
@@ -44453,6 +45164,8 @@ paths:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -44484,6 +45197,10 @@ paths:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -44531,7 +45248,7 @@ paths:
                           - positive_feedback_count
                           - neutral_feedback_count
                           - negative_feedback_count
-                          - upload_limit
+                          - upload_slots
                           - profile_about
                           - profile_artinfo
                         properties:
@@ -44555,7 +45272,7 @@ paths:
                             type: integer
                           negative_feedback_count:
                             type: integer
-                          upload_limit:
+                          upload_slots:
                             type: integer
                           profile_about:
                             type: string
@@ -44570,6 +45287,8 @@ paths:
                               - name
                               - level
                               - base_upload_limit
+                              - upload_karma
+                              - upload_karma_free
                               - post_upload_count
                               - post_update_count
                               - note_update_count
@@ -44601,6 +45320,10 @@ paths:
                                   - 80
                               base_upload_limit:
                                 type: integer
+                              upload_karma:
+                                type: integer
+                              upload_karma_free:
+                                type: boolean
                               post_upload_count:
                                 type: integer
                               post_update_count:
@@ -44771,6 +45494,8 @@ paths:
                               - name
                               - level
                               - base_upload_limit
+                              - upload_karma
+                              - upload_karma_free
                               - post_upload_count
                               - post_update_count
                               - note_update_count
@@ -44802,6 +45527,10 @@ paths:
                                   - 80
                               base_upload_limit:
                                 type: integer
+                              upload_karma:
+                                type: integer
+                              upload_karma_free:
+                                type: boolean
                               post_upload_count:
                                 type: integer
                               post_update_count:
@@ -44849,7 +45578,7 @@ paths:
                               - positive_feedback_count
                               - neutral_feedback_count
                               - negative_feedback_count
-                              - upload_limit
+                              - upload_slots
                               - profile_about
                               - profile_artinfo
                             properties:
@@ -44873,7 +45602,7 @@ paths:
                                 type: integer
                               negative_feedback_count:
                                 type: integer
-                              upload_limit:
+                              upload_slots:
                                 type: integer
                               profile_about:
                                 type: string
@@ -45048,6 +45777,8 @@ paths:
                           - name
                           - level
                           - base_upload_limit
+                          - upload_karma
+                          - upload_karma_free
                           - post_upload_count
                           - post_update_count
                           - note_update_count
@@ -45079,6 +45810,10 @@ paths:
                               - 80
                           base_upload_limit:
                             type: integer
+                          upload_karma:
+                            type: integer
+                          upload_karma_free:
+                            type: boolean
                           post_upload_count:
                             type: integer
                           post_update_count:
@@ -45126,7 +45861,7 @@ paths:
                           - positive_feedback_count
                           - neutral_feedback_count
                           - negative_feedback_count
-                          - upload_limit
+                          - upload_slots
                           - profile_about
                           - profile_artinfo
                         properties:
@@ -45150,7 +45885,7 @@ paths:
                             type: integer
                           negative_feedback_count:
                             type: integer
-                          upload_limit:
+                          upload_slots:
                             type: integer
                           profile_about:
                             type: string
@@ -45165,6 +45900,8 @@ paths:
                               - name
                               - level
                               - base_upload_limit
+                              - upload_karma
+                              - upload_karma_free
                               - post_upload_count
                               - post_update_count
                               - note_update_count
@@ -45196,6 +45933,10 @@ paths:
                                   - 80
                               base_upload_limit:
                                 type: integer
+                              upload_karma:
+                                type: integer
+                              upload_karma_free:
+                                type: boolean
                               post_upload_count:
                                 type: integer
                               post_update_count:
@@ -45366,6 +46107,8 @@ paths:
                               - name
                               - level
                               - base_upload_limit
+                              - upload_karma
+                              - upload_karma_free
                               - post_upload_count
                               - post_update_count
                               - note_update_count
@@ -45397,6 +46140,10 @@ paths:
                                   - 80
                               base_upload_limit:
                                 type: integer
+                              upload_karma:
+                                type: integer
+                              upload_karma_free:
+                                type: boolean
                               post_upload_count:
                                 type: integer
                               post_update_count:
@@ -45444,7 +46191,7 @@ paths:
                               - positive_feedback_count
                               - neutral_feedback_count
                               - negative_feedback_count
-                              - upload_limit
+                              - upload_slots
                               - profile_about
                               - profile_artinfo
                             properties:
@@ -45468,7 +46215,7 @@ paths:
                                 type: integer
                               negative_feedback_count:
                                 type: integer
-                              upload_limit:
+                              upload_slots:
                                 type: integer
                               profile_about:
                                 type: string
@@ -45651,6 +46398,61 @@ paths:
                     type: string
                     enum:
                       - not found
+  '/users/{idOrName}/toggle_karma_free':
+    get:
+      summary: User Toggle Karma Free
+      operationId: users#toggle_karma_free
+      tags:
+        - Users
+      security:
+        - basicAuth: []
+      parameters:
+        - name: idOrName
+          in: path
+          required: true
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          description: An ID that can be either an integer or a name.
+      description: You must be Janitor+.
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
   '/users/{idOrName}/disable_uploads':
     post:
       summary: Disable User Uploads
@@ -45671,13 +46473,78 @@ paths:
         - basicAuth: []
       requestBody:
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               required:
-                - body
+                - 'staff_note[body]'
               properties:
-                body:
+                'staff_note[body]':
+                  type: string
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/users/{idOrName}/disable_karma_free':
+    post:
+      summary: User Disable Karma Free
+      operationId: users#disable_karma_free
+      tags:
+        - Users
+      description: You must be Janitor+.
+      security:
+        - basicAuth: []
+      parameters:
+        - name: idOrName
+          in: path
+          required: true
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          description: An ID that can be either an integer or a name.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - 'staff_note[body]'
+              properties:
+                'staff_note[body]':
                   type: string
       responses:
         '302':
@@ -47629,6 +48496,10 @@ paths:
                   type: boolean
                 custom_title:
                   type: string
+                tag_warden:
+                  type: boolean
+                raised_favorite_limit:
+                  type: boolean
       responses:
         '200':
           description: Success
@@ -47707,6 +48578,43 @@ paths:
       security:
         - basicAuth: []
       description: You must have the bd staff user flag. Cannot be used on staff.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
+  '/staff/users/{id}/totp_reset':
+    post:
+      summary: Reset User TOTP
+      operationId: staff/users#totp_reset
+      tags:
+        - Staff Users
+      security:
+        - basicAuth: []
+      description: You must be Admin+. You must have the bd staff flag if the user is Staff+.
       parameters:
         - name: id
           in: path
@@ -50184,6 +51092,131 @@ paths:
                     type: string
                     enum:
                       - not found
+  /staff/user_alts.json:
+    get:
+      summary: Get User Alts
+      operationId: staff/user_alts#show
+      tags:
+        - User Alts
+      security:
+        - basicAuth: []
+      description: You must be Moderator+.
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - user_id
+                    - score
+                    - handoff
+                    - handoff_users
+                    - shared_exact
+                    - shared_subnet
+                    - total_ips
+                    - ratio
+                    - rarest_users
+                    - overlap_first
+                    - overlap_last
+                    - last_co_seen
+                    - concurrent
+                    - deleted
+                    - user
+                  properties:
+                    user_id:
+                      type: integer
+                    score:
+                      type: integer
+                      format: float
+                    handoff:
+                      type: boolean
+                    handoff_users:
+                      type: integer
+                      nullable: true
+                    shared_exact:
+                      type: integer
+                    shared_subnet:
+                      type: integer
+                    total_ips:
+                      type: integer
+                    ratio:
+                      type: integer
+                      format: float
+                    rarest_users:
+                      type: integer
+                    overlap_first:
+                      type: string
+                      format: date-time
+                    overlap_last:
+                      type: string
+                      format: date-time
+                    last_co_seen:
+                      type: string
+                      format: date-time
+                    concurrent:
+                      type: boolean
+                    deleted:
+                      type: boolean
+                    user:
+                      nullable: true
+                      type: object
+                      required:
+                        - id
+                        - name
+                        - level_string
+                        - created_at
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        level_string:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
   '/staff/user_cleanups/{id}/clear_avatar.json':
     post:
       summary: Clear User Avatar
@@ -50973,7 +52006,7 @@ paths:
             type: integer
       requestBody:
         content:
-          multipart/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -51206,7 +52239,7 @@ paths:
       description: You must be Staff+
       requestBody:
         content:
-          multipart/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               required:
@@ -51394,7 +52427,7 @@ paths:
             type: integer
       requestBody:
         content:
-          multipart/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -51876,6 +52909,70 @@ paths:
                     type: string
                     enum:
                       - not found
+  '/staff/wikis/{id}/references/bulk_create':
+    post:
+      summary: Bulk Create Staff Wiki Ref
+      operationId: staff/wiki_refs#bulk_create
+      tags:
+        - Staff Wiki Refs
+      security:
+        - basicAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the item.
+          required: true
+          schema:
+            type: integer
+      description: You must be Staff+.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - urls
+              properties:
+                urls:
+                  type: string
+                  description: 'Space separated, parses `users/<id>`, `artists/<id>`, `staff/wiki/<id>`'
+      responses:
+        '302':
+          description: |
+            Redirect
+            Success should be determined based on the html, any errors will be present in an alert.
+        '403':
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - Access Denied
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - reason
+                properties:
+                  success:
+                    type: boolean
+                  reason:
+                    type: string
+                    enum:
+                      - not found
   /staff/wiki_versions.json:
     get:
       summary: Staff Wiki Versions Index
@@ -52212,6 +53309,8 @@ paths:
                                 - name
                                 - level
                                 - base_upload_limit
+                                - upload_karma
+                                - upload_karma_free
                                 - post_upload_count
                                 - post_update_count
                                 - note_update_count
@@ -52243,6 +53342,10 @@ paths:
                                     - 80
                                 base_upload_limit:
                                   type: integer
+                                upload_karma:
+                                  type: integer
+                                upload_karma_free:
+                                  type: boolean
                                 post_upload_count:
                                   type: integer
                                 post_update_count:
@@ -52670,3 +53773,228 @@ paths:
                     type: string
                     enum:
                       - Access Denied
+  /stats.json:
+    get:
+      summary: Get Site Stats
+      operationId: stats#index
+      tags:
+        - Stats
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - started
+                  - total_posts
+                  - active_posts
+                  - deleted_posts
+                  - existing_posts
+                  - destroyed_posts
+                  - total_votes
+                  - total_notes
+                  - total_favorites
+                  - total_pools
+                  - public_sets
+                  - private_sets
+                  - total_sets
+                  - average_posts_per_pool
+                  - average_posts_per_set
+                  - safe_posts
+                  - questionable_posts
+                  - explicit_posts
+                  - jpg_posts
+                  - png_posts
+                  - webp_posts
+                  - gif_posts
+                  - swf_posts
+                  - webm_posts
+                  - mp4_posts
+                  - average_file_size
+                  - total_file_size
+                  - average_posts_per_day
+                  - total_users
+                  - anonymous_users
+                  - blocked_users
+                  - member_users
+                  - privileged_users
+                  - former staff_users
+                  - staff_users
+                  - janitor_users
+                  - moderator_users
+                  - admin_users
+                  - unactivated_users
+                  - total_dmails
+                  - average_registrations_per_day
+                  - active_users
+                  - total_comments
+                  - active_comments
+                  - hidden_comments
+                  - deleted_comments
+                  - average_comments_per_day
+                  - total_forum_threads
+                  - total_forum_posts
+                  - average_posts_per_thread
+                  - average_forum_posts_per_day
+                  - total_blips
+                  - active_blips
+                  - deleted_blips
+                  - destroyed_blips
+                  - average_blips_per_day
+                  - total_tags
+                  - general_tags
+                  - species_tags
+                  - character_tags
+                  - copyright_tags
+                  - artist_tags
+                  - contributor_tags
+                  - invalid_tags
+                  - lore_tags
+                  - meta_tags
+                  - updated_at
+                properties:
+                  started:
+                    type: string
+                    format: date-time
+                    description: When the first post was created.
+                  total_posts:
+                    type: integer
+                  active_posts:
+                    type: integer
+                  deleted_posts:
+                    type: integer
+                  existing_posts:
+                    type: integer
+                    description: '`active_posts + deleted_posts`'
+                  destroyed_posts:
+                    type: integer
+                  total_votes:
+                    type: integer
+                  total_notes:
+                    type: integer
+                  total_favorites:
+                    type: integer
+                  total_pools:
+                    type: integer
+                  public_sets:
+                    type: integer
+                  private_sets:
+                    type: integer
+                  total_sets:
+                    type: integer
+                  average_posts_per_pool:
+                    type: number
+                    format: float
+                  average_posts_per_set:
+                    type: number
+                    format: float
+                  safe_posts:
+                    type: integer
+                  questionable_posts:
+                    type: integer
+                  explicit_posts:
+                    type: integer
+                  jpg_posts:
+                    type: integer
+                  png_posts:
+                    type: integer
+                  webp_posts:
+                    type: integer
+                  gif_posts:
+                    type: integer
+                  swf_posts:
+                    type: integer
+                  webm_posts:
+                    type: integer
+                  mp4_posts:
+                    type: integer
+                  average_file_size:
+                    type: number
+                    format: float
+                  total_file_size:
+                    type: integer
+                    format: int64
+                  average_posts_per_day:
+                    type: integer
+                  total_users:
+                    type: integer
+                  anonymous_users:
+                    type: integer
+                  blocked_users:
+                    type: integer
+                  member_users:
+                    type: integer
+                  privileged_users:
+                    type: integer
+                  former staff_users:
+                    type: integer
+                  staff_users:
+                    type: integer
+                  janitor_users:
+                    type: integer
+                  moderator_users:
+                    type: integer
+                  admin_users:
+                    type: integer
+                  unactivated_users:
+                    type: integer
+                  total_dmails:
+                    type: integer
+                  average_registrations_per_day:
+                    type: integer
+                  active_users:
+                    type: integer
+                    description: Users who have logged in within the last 3 months.
+                  total_comments:
+                    type: integer
+                  active_comments:
+                    type: integer
+                  hidden_comments:
+                    type: integer
+                  deleted_comments:
+                    type: integer
+                  average_comments_per_day:
+                    type: integer
+                  total_forum_threads:
+                    type: integer
+                  total_forum_posts:
+                    type: integer
+                  average_posts_per_thread:
+                    type: integer
+                  average_forum_posts_per_day:
+                    type: integer
+                  total_blips:
+                    type: integer
+                  active_blips:
+                    type: integer
+                  deleted_blips:
+                    type: integer
+                  destroyed_blips:
+                    type: integer
+                  average_blips_per_day:
+                    type: integer
+                  total_tags:
+                    type: integer
+                  general_tags:
+                    type: integer
+                  species_tags:
+                    type: integer
+                  character_tags:
+                    type: integer
+                  copyright_tags:
+                    type: integer
+                  artist_tags:
+                    type: integer
+                  contributor_tags:
+                    type: integer
+                  invalid_tags:
+                    type: integer
+                  lore_tags:
+                    type: integer
+                  meta_tags:
+                    type: integer
+                  updated_at:
+                    type: string
+                    format: date-time
