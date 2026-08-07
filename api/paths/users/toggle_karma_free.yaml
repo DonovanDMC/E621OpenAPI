@@ -1,0 +1,18 @@
+summary: User Toggle Karma Free
+operationId: users#toggle_karma_free
+tags:
+  - Users
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../components/parameters/path/idOrName.yaml"
+description: You must be Janitor+.
+responses:
+  302:
+    description: |
+      Redirect
+      Success should be determined based on the html, any errors will be present in an alert.
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"

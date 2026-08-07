@@ -1,12 +1,12 @@
-summary: Disable User Uploads
-operationId: users#disable_uploads
+summary: User Disable Karma Free
+operationId: users#disable_karma_free
 tags:
   - Users
 description: You must be Janitor+.
-parameters:
-  - $ref: "../../components/parameters/path/idOrName.yaml"
 security:
   - basicAuth: []
+parameters:
+  - $ref: "../../components/parameters/path/idOrName.yaml"
 requestBody:
   content:
     application/x-www-form-urlencoded:

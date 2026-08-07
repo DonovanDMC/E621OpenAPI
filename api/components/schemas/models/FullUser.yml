@@ -12,7 +12,7 @@ allOf:
       - positive_feedback_count
       - neutral_feedback_count
       - negative_feedback_count
-      - upload_limit
+      - upload_slots
       - profile_about
       - profile_artinfo
     properties:
@@ -36,7 +36,7 @@ allOf:
         type: integer
       negative_feedback_count:
         type: integer
-      upload_limit:
+      upload_slots:
         type: integer
       profile_about:
         type: string

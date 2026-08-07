@@ -5,6 +5,8 @@ required:
   - name
   - level
   - base_upload_limit
+  - upload_karma
+  - upload_karma_free
   - post_upload_count
   - post_update_count
   - note_update_count
@@ -26,6 +28,10 @@ properties:
     $ref: "../enums/UserLevel.yml"
   base_upload_limit:
     type: integer
+  upload_karma:
+    type: integer
+  upload_karma_free:
+    type: boolean
   post_upload_count:
     type: integer
   post_update_count:

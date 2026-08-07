@@ -1138,9 +1138,15 @@ paths:
   /users/{idOrName}/toggle_uploads:
     get:
       $ref: "./paths/users/toggle_uploads.yaml"
+  /users/{idOrName}/toggle_karma_free:
+    get:
+      $ref: "./paths/users/toggle_karma_free.yaml"
   /users/{idOrName}/disable_uploads:
     post:
       $ref: "./paths/users/disable_uploads.yaml"
+  /users/{idOrName}/disable_karma_free:
+    post:
+      $ref: "./paths/users/disable_karma_free.yaml"
 
   /user_reverts:
     post:
