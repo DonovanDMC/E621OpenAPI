@@ -44,6 +44,8 @@ requestBody:
             type: string
           tag_warden:
             type: boolean
+          raised_favorite_limit:
+            type: boolean
 responses:
   200:
     description: Success
