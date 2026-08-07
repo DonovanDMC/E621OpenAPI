@@ -18,6 +18,7 @@ parameters:
         - post_upload_count
         - note_count
         - post_update_count
+        - upload_karma
   - in: query
     name: search[name_matches]
     schema:
@@ -44,6 +45,13 @@ parameters:
       $ref: "../../components/schemas/enums/UserLevel.yml"
   - in: query
     name: search[can_upload_free]
+    schema:
+      type: boolean
+  - in: query
+    name: search[can_karma_free]
+    description: |
+      Only permitted if `upload_karma_free_threshold` != nil
+      Always true in prod.
     schema:
       type: boolean
   - in: query

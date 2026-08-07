@@ -5,7 +5,7 @@
   "post_sets#maintainers": "HTML only route",
   "search_trends#settings": "HTML only route",
   "staff/post/posts#{confirm_delete,confirm_move_favorites}": "HTML only route",
-  "staff/users#{anonymize,edit_blacklist,password_reset,request_password_reset,update_blacklist,remove_totp}": "HTML only route",
+  "staff/users#{anonymize,edit_blacklist,request_password_reset,update_blacklist,remove_totp}": "HTML only route",
   "staff/wiki_versions#diff": "HTML only route",
   "users#{home,settings}": "HTML only route",
   "wiki_page_versions#diff": "HTML only route",
@@ -46,6 +46,7 @@
   "oauth_authorized_applications#*": "Intentionally excluded",
   "staff/security#*": "Intentionally excluded",
   "totps#*": "Intentionally excluded",
+  "staff/users#password_reset": "Intentionally excluded",
 
   "doorkeeper/openid_connect/discovery#webfinger": "Consistently errors",
   "posts_short#show": "Not worth documenting",
