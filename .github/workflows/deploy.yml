@@ -18,3 +18,4 @@ jobs:
         with:
           directory: dist
           token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          domain: e621.wiki
