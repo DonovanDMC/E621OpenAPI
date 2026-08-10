@@ -5,6 +5,7 @@ tags:
 parameters:
   - in: query
     name: tags
+    required: true
     schema:
       type: string
 responses:
