@@ -1,33 +1,20 @@
-name: Deploy Github Pages
+name: Deploy Pages
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm
       - name: Build Webpack
         run: pnpm run build:webpack:production
-      - name: Upload Build
-        uses: actions/upload-pages-artifact@v3
+      - uses: DonovanDMC/PagesDeployServer@master
         with:
-          path: dist
-
-  deploy:
-    needs: build
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          directory: dist
+          token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
