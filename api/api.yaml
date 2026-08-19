@@ -15,7 +15,7 @@ info:
   contact:
     name: Donovan_DMC
     url: https://e621.net/forum_topics/46279
-  version: "ffabc04"
+  version: "4ecdf55"
   x-e621ng-commit: "__E621NG_COMMIT__"
   x-e621ng-master-behind-by: "__E621NG_MASTER_BEHIND_BY__"
   x-e621ng-master-compare-url: "__E621NG_MASTER_COMPARE_URL__"

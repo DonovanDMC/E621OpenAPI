@@ -12,9 +12,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: ffabc04
+  version: 4ecdf55
   x-e621ng-commit: 60c8ebfe42fc647c4e0897dc1c2c814e92dfcb32
-  x-e621ng-master-behind-by: 0
+  x-e621ng-master-behind-by: 35
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/60c8ebfe42fc647c4e0897dc1c2c814e92dfcb32...master
 servers:
   - url: 'https://e621.net'
@@ -6722,23 +6722,6 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/comments/{id}/for_post.json':
-    get:
-      summary: Comments For Post
-      operationId: comments#for_post
-      tags:
-        - Comments
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DTextResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
   '/comments/{id}/hide.json':
     post:
       summary: Hide Comment
@@ -9962,6 +9945,23 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/posts/{id}/comments.json':
+    get:
+      summary: Comments For Post
+      operationId: comments#for_post
+      tags:
+        - Comments
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DTextResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
   '/posts/{id}/similar/artist.json':
     get:
       summary: Get Recommended Posts For Artist
