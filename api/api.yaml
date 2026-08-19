@@ -521,9 +521,6 @@ paths:
       $ref: "./paths/comments/update.yaml"
     delete:
       $ref: "./paths/comments/destroy.yaml"
-  /comments/{id}/for_post.json:
-    get:
-      $ref: "./paths/comments/for_post.yaml"
   /comments/{id}/hide.json:
     post:
       $ref: "./paths/comments/hide.yaml"
@@ -835,6 +832,9 @@ paths:
       $ref: "./paths/post_votes/create.yaml"
     delete:
       $ref: "./paths/post_votes/destroy.yaml"
+  /posts/{id}/comments.json:
+    get:
+      $ref: "./paths/comments/for_post.yaml"
   /posts/{id}/similar/artist.json:
     get:
       $ref: "./paths/post_recommendations/artist.yaml"
