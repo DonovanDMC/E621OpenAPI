@@ -1,15 +1,16 @@
 summary: Delete Post
 operationId: staff/post/posts#delete
 tags:
-  - Posts
+- Posts
 security:
-  - basicAuth: []
-description: You must have the "Approve Posts" permission. `commit=Delete` must be set.
+- basicAuth: []
+description: You must have the "Approve Posts" permission. `commit=Delete` must be
+  set.
 parameters:
-  - $ref: "../../../../components/parameters/path/id.yaml"
+- "$ref": "../../../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
@@ -51,14 +52,13 @@ requestBody:
             type: string
             description: If not set, nothing will happen.
             enum:
-              - Delete
-
+            - Delete
 responses:
   302:
     description: Success
   403:
-    $ref: "../../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../../components/responses/notFound.yaml"
+    "$ref": "../../../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../../components/responses/expectedError.yaml"
+    "$ref": "../../../../components/responses/expectedError.yaml"

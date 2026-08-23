@@ -1,17 +1,17 @@
 summary: Revert User
 operationId: user_reverts#create
 tags:
-  - Users
+- Users
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Moderator+.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - user_id
+        - user_id
         properties:
           user_id:
             type: integer
@@ -21,6 +21,6 @@ responses:
       Redirect
       Success should be determined based on the html, any errors will be present in an alert.
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"

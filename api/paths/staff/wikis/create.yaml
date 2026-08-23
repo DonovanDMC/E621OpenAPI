@@ -1,31 +1,28 @@
 summary: Create Staff Wiki
 operationId: staff/wikis#create
 tags:
-  - Staff Wikis
+- Staff Wikis
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Staff+
 requestBody:
   content:
-    multipart/form-data:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - staff_wiki[title]
+        - staff_wiki[title]
         properties:
           staff_wiki[title]:
             type: string
           staff_wiki[body]:
             type: string
-          # allowed by code but errors
-          #staff_wiki[edit_reason]:
-          #  type: string
           staff_wiki[related_type]:
             type: string
             enum:
-              - User
-              - Artist
-              - StaffWiki
+            - User
+            - Artist
+            - StaffWiki
           staff_wiki[related_id]:
             type: integer
 responses:
@@ -34,8 +31,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../../components/schemas/models/StaffWiki.yml"
+          "$ref": "../../../components/schemas/models/StaffWiki.yml"
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../../components/responses/expectedError.yaml"
+    "$ref": "../../../components/responses/expectedError.yaml"

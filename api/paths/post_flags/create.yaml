@@ -1,36 +1,36 @@
 summary: Create Post Flag
 operationId: post_flags#create
 tags:
-  - Post Flags
+- Post Flags
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Will error if post_id is not provided.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
-          - reason_name
+        - post_flag[post_id]
+        - post_flag[reason_name]
         properties:
-          post_id:
+          post_flag[post_id]:
             type: integer
-          reason_name:
+          post_flag[reason_name]:
             type: string
             enum:
-              - uploading_guidelines
-              - young_human
-              - dnp_artist
-              - pay_content
-              - trace
-              - previously_deleted
-              - real_porn
-              - corrupt
-              - inferior
-          parent_id:
+            - uploading_guidelines
+            - young_human
+            - dnp_artist
+            - pay_content
+            - trace
+            - previously_deleted
+            - real_porn
+            - corrupt
+            - inferior
+          post_flag[parent_id]:
             type: integer
-          note:
+          post_flag[note]:
             type: string
 responses:
   201:
@@ -38,8 +38,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/PostFlag.yml"
+          "$ref": "../../components/schemas/models/PostFlag.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

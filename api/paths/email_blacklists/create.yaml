@@ -1,22 +1,22 @@
 summary: Create Email Blacklist
 operationId: email_blacklists#create
 tags:
-  - Email Blacklists
+- Email Blacklists
 description: You must be Admin+.
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - domain
-          - reason
+        - email_blacklist[domain]
+        - email_blacklist[reason]
         properties:
-          domain:
+          email_blacklist[domain]:
             type: string
-          reason:
+          email_blacklist[reason]:
             type: string
 responses:
   201:
@@ -24,6 +24,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/EmailBlacklist.yml"
+          "$ref": "../../components/schemas/models/EmailBlacklist.yml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

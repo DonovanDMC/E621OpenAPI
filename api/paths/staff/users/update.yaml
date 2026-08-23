@@ -1,59 +1,59 @@
 summary: Admin Edit User
 operationId: staff/users#update
 tags:
-  - Staff Users
+- Staff Users
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Admin+. If editing an Admin+, you must be Owner+.
 parameters:
-  - $ref: "../../../components/parameters/path/id.yaml"
+- "$ref": "../../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          verified:
+          user[verified]:
             type: boolean
             description: Must have the bd staff user flag to use.
-          level:
-            $ref: "../../../components/schemas/enums/UserLevel.yml"
+          user[level]:
+            "$ref": "../../../components/schemas/enums/UserLevel.yml"
             description: Must have the bd staff user flag to promote to Admin+.
-          name:
+          user[name]:
             type: string
-          profile_about:
+          user[profile_about]:
             type: string
-          profile_artinfo:
+          user[profile_artinfo]:
             type: string
-          base_upload_limit:
+          user[base_upload_limit]:
             type: integer
-          enable_privacy_mode:
+          user[enable_privacy_mode]:
             type: boolean
-          email:
+          user[email]:
             type: string
             description: Must have the bd staff user flag to use.
-          can_approve_posts:
+          user[can_approve_posts]:
             type: boolean
-          can_upload_free:
+          user[can_upload_free]:
             type: boolean
-          no_flagging:
+          user[no_flagging]:
             type: boolean
-          replacements_beta:
+          user[replacements_beta]:
             type: boolean
-          custom_title:
+          user[custom_title]:
             type: string
-          tag_warden:
+          user[tag_warden]:
             type: boolean
-          raised_favorite_limit:
+          user[raised_favorite_limit]:
             type: boolean
 responses:
   200:
     description: Success
   400:
-    $ref: "../../../components/responses/messageError.yaml"
+    "$ref": "../../../components/responses/messageError.yaml"
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    "$ref": "../../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../components/responses/expectedError.yaml"
+    "$ref": "../../../components/responses/expectedError.yaml"

@@ -1,33 +1,33 @@
 summary: Update Upload Whitelist
 operationId: upload_whitelists#update
 tags:
-  - Upload Whitelists
+- Upload Whitelists
 security:
-  - basicAuth: []
+- basicAuth: []
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          allowed:
+          upload_whitelist[allowed]:
             type: string
-          pattern:
+          upload_whitelist[pattern]:
             type: string
-          reason:
+          upload_whitelist[reason]:
             type: string
-          note:
+          upload_whitelist[note]:
             type: string
-          hidden:
+          upload_whitelist[hidden]:
             type: boolean
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

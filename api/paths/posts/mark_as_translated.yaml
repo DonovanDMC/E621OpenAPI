@@ -1,30 +1,30 @@
 summary: Mark Post As Translated
 operationId: posts#mark_as_translated
 tags:
-  - Posts
+- Posts
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Will error if no body is provided.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
-  - $ref: "../../components/parameters/query/v2.yaml"
-  - $ref: "../../components/parameters/query/mode.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/query/v2.yaml"
+- "$ref": "../../components/parameters/query/mode.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          translation_check:
+          post[translation_check]:
             type: boolean
-          partially_translated:
+          post[partially_translated]:
             type: boolean
 responses:
   200:
-    $ref: "../../components/responses/post.yaml"
+    "$ref": "../../components/responses/post.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

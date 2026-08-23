@@ -1,55 +1,55 @@
 summary: Update Wiki Page
 operationId: wiki_pages#update
 tags:
-  - Wiki Pages
+- Wiki Pages
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Staff+ if the wiki page is locked.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
-    required: true
-    description: The ID of the wiki page.
-    schema:
-      type: integer
+- "$ref": "../../components/parameters/path/id.yaml"
+  required: true
+  description: The ID of the wiki page.
+  schema:
+    type: integer
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          body:
+          wiki_page[body]:
             type: string
-          edit_reason:
+          wiki_page[edit_reason]:
             type: string
-          parent:
+          wiki_page[parent]:
             type: string
             description: Must be Privileged+ to use.
-          title:
+          wiki_page[title]:
             type: string
             description: Must be Staff+ to use.
-          is_locked:
+          wiki_page[is_locked]:
             type: boolean
             description: Must be Staff+ to use.
-          is_deleted:
+          wiki_page[is_deleted]:
             type: boolean
             description: Must be Staff+ to use.
-          skip_secondary_validations:
+          wiki_page[skip_secondary_validations]:
             type: boolean
             description: Must be Staff+ to use.
-          category_id:
-            $ref: "../../components/schemas/enums/TagCategory.yml"
-          category_is_locked:
+          wiki_page[category_id]:
+            "$ref": "../../components/schemas/enums/TagCategory.yml"
+          wiki_page[category_is_locked]:
             type: boolean
             description: Must be Admin+ to use.
-          featured_posts_string:
+          wiki_page[featured_posts_string]:
             type: string
             description: Space separated
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

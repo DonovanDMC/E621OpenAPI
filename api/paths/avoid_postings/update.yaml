@@ -1,46 +1,44 @@
 summary: Update Avoid Posting
 operationId: avoid_postings#update
 tags:
-  - Avoid Postings
+- Avoid Postings
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Must have the bd staff user flag.
 parameters:
-  - $ref: "../../components/parameters/path/idOrName.yaml"
+- "$ref": "../../components/parameters/path/idOrName.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          details:
+          avoid_posting[details]:
             type: string
-          staff_notes:
+          avoid_posting[staff_notes]:
             type: string
-          is_active:
+          avoid_posting[is_active]:
             type: boolean
-          artist_attributes:
-            type: object
-            properties:
-              name:
-                type: string
-                description: If provided and the artist does not exist, an artist will be created.
-              other_names_string:
-                type: string
-              other_names:
-                type: array
-                items:
-                  type: string
-              group_name:
-                type: string
-              linked_user_id:
-                type: integer
+          avoid_posting[artist_attributes][name]:
+            type: string
+            description: If provided and the artist does not exist, an artist will
+              be created.
+          avoid_posting[artist_attributes][other_names_string]:
+            type: string
+          avoid_posting[artist_attributes][other_names][]:
+            type: array
+            items:
+              type: string
+          avoid_posting[artist_attributes][group_name]:
+            type: string
+          avoid_posting[artist_attributes][linked_user_id]:
+            type: integer
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

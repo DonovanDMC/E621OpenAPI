@@ -1,21 +1,21 @@
 summary: Create Forum Post
 operationId: forum_posts#create
 tags:
-  - Forum Posts
+- Forum Posts
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - body
-          - topic_id
+        - forum_post[body]
+        - forum_post[topic_id]
         properties:
-          body:
+          forum_post[body]:
             type: string
-          topic_id:
+          forum_post[topic_id]:
             type: integer
 responses:
   201:
@@ -23,8 +23,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/ForumPost.yml"
+          "$ref": "../../components/schemas/models/ForumPost.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

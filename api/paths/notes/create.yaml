@@ -1,35 +1,35 @@
 summary: Create Note
 operationId: notes#create
 tags:
-  - Notes
+- Notes
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
-          - x
-          - y
-          - width
-          - height
-          - body
+        - note[post_id]
+        - note[x]
+        - note[y]
+        - note[width]
+        - note[height]
+        - note[body]
         properties:
-          post_id:
+          note[post_id]:
             type: integer
-          x:
+          note[x]:
             type: integer
-          y:
+          note[y]:
             type: integer
-          width:
+          note[width]:
             type: integer
-          height:
+          note[height]:
             type: integer
-          body:
+          note[body]:
             type: string
-          html_id:
+          note[html_id]:
             type: string
             description: Passthrough, used in frontend.
 responses:
@@ -39,15 +39,15 @@ responses:
       application/json:
         schema:
           allOf:
-            - $ref: "../../components/schemas/models/Note.yml"
-            - type: object
-              required:
-                - html_id
-              properties:
-                html_id:
-                  type: string
-                  description: Passthrough, used in frontend.
+          - "$ref": "../../components/schemas/models/Note.yml"
+          - type: object
+            required:
+            - html_id
+            properties:
+              html_id:
+                type: string
+                description: Passthrough, used in frontend.
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

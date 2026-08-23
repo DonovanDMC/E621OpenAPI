@@ -20,6 +20,10 @@ requestBody:
             type: string
           mascot[background_color]:
             type: string
+          mascot[foreground_color]:
+            type: string
+          mascot[is_layered]:
+            type: boolean
           mascot[artist_url]:
             type: string
           mascot[artist_name]:
@@ -28,8 +32,6 @@ requestBody:
             type: string
             description: Comma separated site names.
           mascot[active]:
-            type: boolean
-          mascot[hide_anonymous]:
             type: boolean
 responses:
   204:

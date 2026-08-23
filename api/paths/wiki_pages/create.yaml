@@ -1,37 +1,37 @@
 summary: Create Wiki Page
 operationId: wiki_pages#create
 tags:
-  - Wiki Pages
+- Wiki Pages
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - title
-          - body
+        - wiki_page[title]
+        - wiki_page[body]
         properties:
-          title:
+          wiki_page[title]:
             type: string
-          body:
+          wiki_page[body]:
             type: string
-          edit_reason:
+          wiki_page[edit_reason]:
             type: string
-          parent:
+          wiki_page[parent]:
             type: string
             description: Must be Privileged+ to use.
-          is_locked:
+          wiki_page[is_locked]:
             type: boolean
             description: Must be Staff+ to use.
-          is_deleted:
+          wiki_page[is_deleted]:
             type: boolean
             description: Must be Staff+ to use.
-          skip_secondary_validations:
+          wiki_page[skip_secondary_validations]:
             type: boolean
             description: Must be Staff+ to use.
-          featured_posts_string:
+          wiki_page[featured_posts_string]:
             type: string
             description: Space separated
 responses:
@@ -40,8 +40,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/WikiPage.yml"
+          "$ref": "../../components/schemas/models/WikiPage.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

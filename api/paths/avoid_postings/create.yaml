@@ -1,50 +1,46 @@
 summary: Create Avoid Posting
 operationId: avoid_postings#create
 tags:
-  - Avoid Postings
+- Avoid Postings
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Must have the bd staff user flag.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - artist_attributes
+        - avoid_posting[artist_attributes][name]
         properties:
-          details:
+          avoid_posting[details]:
             type: string
-          staff_notes:
+          avoid_posting[staff_notes]:
             type: string
-          is_active:
+          avoid_posting[is_active]:
             type: boolean
-          artist_attributes:
-            type: object
-            required:
-              - name
-            properties:
-              name:
-                type: string
-                description: If provided and the artist does not exist, an artist will be created.
-              other_names_string:
-                type: string
-              other_names:
-                type: array
-                items:
-                  type: string
-              group_name:
-                type: string
-              linked_user_id:
-                type: integer
+          avoid_posting[artist_attributes][name]:
+            type: string
+            description: If provided and the artist does not exist, an artist will
+              be created.
+          avoid_posting[artist_attributes][other_names_string]:
+            type: string
+          avoid_posting[artist_attributes][other_names][]:
+            type: array
+            items:
+              type: string
+          avoid_posting[artist_attributes][group_name]:
+            type: string
+          avoid_posting[artist_attributes][linked_user_id]:
+            type: integer
 responses:
   201:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/AvoidPosting.yml"
+          "$ref": "../../components/schemas/models/AvoidPosting.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

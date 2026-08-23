@@ -1,19 +1,19 @@
 summary: Count Matching Posts
 operationId: takedowns#count_matching_posts
 tags:
-  - Takedowns
+- Takedowns
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must have the bd staff user flag.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_tags
+        - post_tags
         properties:
           post_tags:
             type: string
@@ -25,11 +25,11 @@ responses:
         schema:
           type: object
           required:
-            - matched_post_count
+          - matched_post_count
           properties:
             matched_post_count:
               type: integer
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"

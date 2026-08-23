@@ -1,15 +1,15 @@
 summary: Update Staff Wiki
 operationId: staff/wikis#update
 tags:
-  - Staff Wikis
+- Staff Wikis
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Staff+
 parameters:
-  - $ref: "../../../components/parameters/path/id.yaml"
+- "$ref": "../../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    multipart/form-data:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
@@ -17,15 +17,12 @@ requestBody:
             type: string
           staff_wiki[body]:
             type: string
-          # allowed by code but errors
-          #staff_wiki[edit_reason]:
-          #  type: string
 responses:
   204:
     description: Success
   403:
-    $ref: "../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../components/responses/notFound.yaml"
+    "$ref": "../../../components/responses/notFound.yaml"
   422:
-    $ref: "../../../components/responses/expectedError.yaml"
+    "$ref": "../../../components/responses/expectedError.yaml"

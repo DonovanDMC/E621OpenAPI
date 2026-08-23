@@ -1,25 +1,25 @@
 summary: Create User Name Change Request
 operationId: user_name_change_requests#create
 tags:
-  - User Name Change Requests
+- User Name Change Requests
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - desired_name
+        - user_name_change_request[desired_name]
         properties:
-          desired_name:
+          user_name_change_request[desired_name]:
             type: string
-          change_reason:
+          user_name_change_request[change_reason]:
             type: string
 responses:
   302:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

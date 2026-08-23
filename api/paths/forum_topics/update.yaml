@@ -1,42 +1,39 @@
 summary: Update Forum Topic
 operationId: forum_topics#update
 tags:
-  - Forum Topics
+- Forum Topics
 security:
-  - basicAuth: []
+- basicAuth: []
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          title:
+          forum_topic[title]:
             type: string
-          category_id:
+          forum_topic[category_id]:
             type: integer
-          is_sticky:
+          forum_topic[is_sticky]:
             type: boolean
             description: You must be Moderator+.
-          is_locked:
+          forum_topic[is_locked]:
             type: boolean
             description: You must be Moderator+.
-          original_post_attributes:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: Forum post ID. Silently ignored
-              body:
-                type: string
-                description: First forum post body.
+          forum_topic[original_post_attributes][id]:
+            type: integer
+            description: Forum post ID. Silently ignored
+          forum_topic[original_post_attributes][body]:
+            type: string
+            description: First forum post body.
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

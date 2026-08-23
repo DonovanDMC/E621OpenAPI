@@ -1,16 +1,16 @@
 summary: Mark All Forum Topics As Read
 operationId: forum_topics#mark_all_as_read
 tags:
-  - Forum Topics
+- Forum Topics
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - category_id
+        - category_id
         properties:
           category_id:
             type: integer
@@ -18,4 +18,4 @@ responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"

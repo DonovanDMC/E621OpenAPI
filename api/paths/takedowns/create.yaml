@@ -1,44 +1,44 @@
 summary: Create Takedown
 operationId: takedowns#create
 tags:
-  - Takedowns
+- Takedowns
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - email
-          - reason
+        - takedown[email]
+        - takedown[reason]
         properties:
-          email:
+          takedown[email]:
             type: string
-          source:
+          takedown[source]:
             type: string
-          instructions:
+          takedown[instructions]:
             type: string
-          reason:
+          takedown[reason]:
             type: string
-          post_ids:
+          takedown[post_ids][]:
             type: array
-            description: post_ids][]=1&takedown[post_ids][=2
+            description: takedown[post_ids][]=1&takedown[post_ids][]=2
             items:
               type: integer
-          reason_hidden:
+          takedown[reason_hidden]:
             type: boolean
-          notes:
+          takedown[notes]:
             type: string
             description: Must have the bd staff user flag to use.
-          del_post_ids:
+          takedown[del_post_ids][]:
             type: array
             description: |
               Must have the bd staff user flag to use.
-              del_post_ids][]=1&takedown[del_post_ids][=2
+              takedown[del_post_ids][]=1&takedown[del_post_ids][]=2
             items:
               type: integer
-          status:
+          takedown[status]:
             type: string
             description: Must have the bd staff user flag to use.
 responses:
@@ -47,8 +47,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/Takedown.yml"
+          "$ref": "../../components/schemas/models/Takedown.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

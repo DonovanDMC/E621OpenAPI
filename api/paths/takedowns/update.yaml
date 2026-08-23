@@ -1,21 +1,21 @@
 summary: Update Takedown
 operationId: takedowns#update
 tags:
-  - Takedowns
+- Takedowns
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must have the bd staff user flag.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          notes:
+          takedown[notes]:
             type: string
-          reason_hidden:
+          takedown[reason_hidden]:
             type: boolean
           takedown_posts:
             type: string
@@ -28,8 +28,8 @@ responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

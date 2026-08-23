@@ -1,29 +1,30 @@
 summary: Update Pool
 operationId: pools#update
 tags:
-  - Pools
+- Pools
 security:
-  - basicAuth: []
+- basicAuth: []
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          name:
+          pool[name]:
             type: string
-          description:
+          pool[description]:
             type: string
-          is_active:
+          pool[is_active]:
             type: boolean
-          category:
-            $ref: "../../components/schemas/enums/PoolCategory.yml"
-          post_ids_string:
+          pool[category]:
+            "$ref": "../../components/schemas/enums/PoolCategory.yml"
+          pool[post_ids_string]:
             type: string
-            description: Space separated list of post IDs. Mutually exclusive with post_ids.
-          post_ids:
+            description: Space separated list of post IDs. Mutually exclusive with
+              post_ids.
+          pool[post_ids][]:
             type: array
             description: Array of post IDs. Mutually exclusive with post_ids_string.
             items:
@@ -32,8 +33,8 @@ responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

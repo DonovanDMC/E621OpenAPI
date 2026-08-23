@@ -1,33 +1,35 @@
 summary: Update Comment
 operationId: comments#update
 tags:
-  - Comments
+- Comments
 security:
-  - basicAuth: []
-description: |
-  You must be the creator of the comment, or Admin+ to edit. Marked comments cannot be edited.
+- basicAuth: []
+description: 'You must be the creator of the comment, or Admin+ to edit. Marked comments
+  cannot be edited.
+
+  '
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          body:
+          comment[body]:
             type: string
-          is_sticky:
+          comment[is_sticky]:
             type: boolean
             description: Only usable for Staff+
-          is_hidden:
+          comment[is_hidden]:
             type: boolean
             description: Only usable for Moderator+
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

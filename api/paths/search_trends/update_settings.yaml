@@ -1,37 +1,37 @@
 summary: Update Search Trends Settings
 operationId: search_trends#update_settings
 tags:
-  - Search Trends
+- Search Trends
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Admin+.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          trends_enabled:
+          search_trend_settings[trends_enabled]:
             type: boolean
-          trends_displayed:
+          search_trend_settings[trends_displayed]:
             type: boolean
-          trends_min_today:
+          search_trend_settings[trends_min_today]:
             type: integer
-          trends_min_dleta:
+          search_trend_settings[trends_min_delta]:
             type: integer
-          trends_min_ratio:
+          search_trend_settings[trends_min_ratio]:
             type: number
             format: float
-          trends_ip_limit:
+          search_trend_settings[trends_ip_limit]:
             type: integer
-          trends_ip_window:
+          search_trend_settings[trends_ip_window]:
             type: integer
-          trends_tag_limit:
+          search_trend_settings[trends_tag_limit]:
             type: integer
-          trends_tag_window:
+          search_trend_settings[trends_tag_window]:
             type: integer
 responses:
   200:
-    $ref: "../../components/responses/messageSuccess.yaml"
+    "$ref": "../../components/responses/messageSuccess.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"

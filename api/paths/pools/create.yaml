@@ -1,29 +1,30 @@
 summary: Create Pool
 operationId: pools#create
 tags:
-  - Pools
+- Pools
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - name
+        - pool[name]
         properties:
-          name:
+          pool[name]:
             type: string
-          description:
+          pool[description]:
             type: string
-          category:
-            $ref: "../../components/schemas/enums/PoolCategory.yml"
-          is_active:
+          pool[category]:
+            "$ref": "../../components/schemas/enums/PoolCategory.yml"
+          pool[is_active]:
             type: boolean
-          post_ids_string:
+          pool[post_ids_string]:
             type: string
-            description: Space separated list of post IDs. Mutually exclusive with post_ids.
-          post_ids:
+            description: Space separated list of post IDs. Mutually exclusive with
+              post_ids.
+          pool[post_ids][]:
             type: array
             description: Array of post IDs. Mutually exclusive with post_ids_string.
             items:
@@ -34,8 +35,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/Pool.yml"
+          "$ref": "../../components/schemas/models/Pool.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

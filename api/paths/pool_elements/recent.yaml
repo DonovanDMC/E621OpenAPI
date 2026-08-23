@@ -1,16 +1,16 @@
 summary: Get Recent Pools
 operationId: pool_elements#recent
 tags:
-  - Pools
+- Pools
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
+        - post_id
         properties:
           pool_id:
             type: integer
@@ -30,8 +30,8 @@ responses:
           items:
             type: object
             required:
-              - id
-              - name
+            - id
+            - name
             properties:
               id:
                 type: string

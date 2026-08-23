@@ -1,18 +1,18 @@
 summary: Approve Post
 operationId: staff/post/approvals#create
 tags:
-  - Posts
-  - Post Approvals
+- Posts
+- Post Approvals
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must have the "Approve Posts" permission.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
+        - post_id
         properties:
           post_id:
             type: integer
@@ -29,6 +29,6 @@ responses:
   204:
     description: Failure
   403:
-    $ref: "../../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../../../components/responses/notFound.yaml"
+    "$ref": "../../../../components/responses/notFound.yaml"

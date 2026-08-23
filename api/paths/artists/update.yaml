@@ -1,9 +1,9 @@
 summary: Update Artist
 operationId: artists#update
 tags:
-  - Artists
+- Artists
 security:
-  - basicAuth: []
+- basicAuth: []
 description: |
   If an artist is locked, you must be Staff+ to edit them.
   `other_names` & `urls` are silently truncated to 25 entries.
@@ -11,41 +11,41 @@ description: |
   Individual `other_names` are silently truncated to 100 characters.
   If an artist is on the avoid posting list, you must have the bd staff user flag to edit name, other_names, or group_name.
 parameters:
-  - $ref: "../../components/parameters/path/idOrName.yaml"
+- "$ref": "../../components/parameters/path/idOrName.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          name:
+          artist[name]:
             type: string
             description: Only usable for Staff+
-          other_names:
+          artist[other_names][]:
             type: array
             items:
               type: string
-          other_names_string:
+          artist[other_names_string]:
             type: string
-          url_string:
+          artist[url_string]:
             type: string
-          notes:
+          artist[notes]:
             type: string
-          group_name:
+          artist[group_name]:
             type: string
-          linked_user_id:
+          artist[linked_user_id]:
             type: integer
             nullable: true
             description: Only usable for Staff+
-          is_locked:
+          artist[is_locked]:
             type: boolean
             description: Only usable for Staff+
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

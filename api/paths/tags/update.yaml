@@ -6,24 +6,27 @@ security:
   - basicAuth: []
 description: Must be Admin+ if the tag is locked or post count is >100.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+  - "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          category:
-            $ref: "../../components/schemas/enums/TagCategory.yml"
-          is_locked:
+          tag[category]:
+            "$ref": "../../components/schemas/enums/TagCategory.yml"
+          tag[is_locked]:
             description: Must be Admin+.
             type: boolean
+# technically usable, but only ephemerally used for html redirects
+#          tag[from_wiki]:
+#            type: boolean
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

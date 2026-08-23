@@ -1,22 +1,22 @@
 summary: Create IP Ban
 operationId: ip_bans#create
 tags:
-  - IP Bans
+- IP Bans
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Admin+.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - ip_addr
-          - reason
+        - ip_ban[ip_addr]
+        - ip_ban[reason]
         properties:
-          ip_addr:
+          ip_ban[ip_addr]:
             type: string
-          reason:
+          ip_ban[reason]:
             type: string
 responses:
   201:
@@ -24,8 +24,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/IPBan.yml"
+          "$ref": "../../components/schemas/models/IPBan.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

@@ -1,18 +1,18 @@
 summary: Update Avatar Crop
 operationId: maintenance/user/avatars#update
 tags:
-  - Users
+- Users
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - avatar_crop_x
-          - avatar_crop_y
-          - avatar_crop_w
+        - avatar_crop_x
+        - avatar_crop_y
+        - avatar_crop_w
         properties:
           avatar_crop_x:
             type: integer
@@ -22,11 +22,12 @@ requestBody:
             description: The y coordinate of the top left corner of the crop area.
           avatar_crop_w:
             type: integer
-            description: The width of the crop area. The height is always the same as the width.
+            description: The width of the crop area. The height is always the same
+              as the width.
 responses:
   302:
     description: |
       Redirect
       Success should be determined based on the html, any errors will be present in an alert.
   403:
-    $ref: "../../../../components/responses/accessDenied.yaml"
+    "$ref": "../../../../components/responses/accessDenied.yaml"

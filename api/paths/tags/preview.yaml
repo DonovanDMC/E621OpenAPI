@@ -1,16 +1,16 @@
 summary: Preview Tags
 operationId: tags#preview
 tags:
-  - Tags
+- Tags
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - tags
+        - tags
         properties:
           tags:
             type: string
@@ -23,6 +23,6 @@ responses:
         schema:
           type: array
           items:
-            $ref: "../../components/schemas/models/TagPreview.yml"
+            "$ref": "../../components/schemas/models/TagPreview.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"

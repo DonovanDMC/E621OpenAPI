@@ -1,35 +1,35 @@
 summary: Create User Feedback
 operationId: user_feedbacks#create
 tags:
-  - User Feedbacks
+- User Feedbacks
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Moderator+.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - body
-          - category
+        - user_feedback[body]
+        - user_feedback[category]
         properties:
-          user_id:
+          user_feedback[user_id]:
             type: integer
-          user_name:
+          user_feedback[user_name]:
             type: string
-          body:
+          user_feedback[body]:
             type: string
-          category:
-            $ref: "../../components/schemas/enums/UserFeedbackCategory.yml"
+          user_feedback[category]:
+            "$ref": "../../components/schemas/enums/UserFeedbackCategory.yml"
 responses:
   201:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/UserFeedback.yml"
+          "$ref": "../../components/schemas/models/UserFeedback.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

@@ -1,27 +1,30 @@
 summary: List Bulk Related Tags
 operationId: related_tags#bulk
 tags:
-  - Related Tags
+- Related Tags
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
           query:
             type: string
           category_id:
-            $ref: "../../components/schemas/enums/TagCategory.yml"
+            "$ref": "../../components/schemas/enums/TagCategory.yml"
 responses:
   200:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/BulkRelatedTag.yml"
+          "$ref": "../../components/schemas/models/BulkRelatedTag.yml"
           example:
-            - {"male":[{"name":"male","count":0,"category_id":0}]}
+          - male:
+            - name: male
+              count: 0
+              category_id: 0
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"

@@ -1,16 +1,16 @@
 summary: Remove Post From Pool
 operationId: pool_elements#destroy
 tags:
-  - Pools
+- Pools
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
+        - post_id
         properties:
           pool_id:
             type: integer
@@ -24,4 +24,4 @@ responses:
   204:
     description: Success
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"

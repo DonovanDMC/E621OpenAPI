@@ -1,85 +1,91 @@
 summary: Update Post
 operationId: posts#update
 tags:
-  - Posts
+- Posts
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Most errors are silently swallowed.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
-  - $ref: "../../components/parameters/query/v2.yaml"
-  - $ref: "../../components/parameters/query/mode.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/query/v2.yaml"
+- "$ref": "../../components/parameters/query/mode.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          tag_string:
+          post[tag_string]:
             type: string
             description: Replaces all tags on the post.
-          old_tag_string:
+          post[old_tag_string]:
             type: string
             description: The tag string before your edits, used to reconcile conflicts.
-          tag_string_diff:
+          post[tag_string_diff]:
             type: string
-            description: Tags with a minus are removed, else they are added. Mutually exclusive with tag_string.
-          source_diff:
+            description: Tags with a minus are removed, else they are added. Mutually
+              exclusive with tag_string.
+          post[source_diff]:
             type: string
-            description: Sources with a minus are removed, else they are added. It is not possible to add inactive sources through this. Mutually exclusive with source.
-          source:
+            description: Sources with a minus are removed, else they are added. It
+              is not possible to add inactive sources through this. Mutually exclusive
+              with source.
+          post[source]:
             type: string
             description: Replaces all sources on the post.
-          old_source:
+          post[old_source]:
             type: string
             description: The sources before your edits, used to reconcile conflicts.
-          parent_id:
+          post[parent_id]:
             type: integer
-          old_parent_id:
+          post[old_parent_id]:
             type: integer
-          description:
+          post[description]:
             type: string
-          old_description:
+          post[old_description]:
             type: string
-          rating:
-            $ref: "../../components/schemas/enums/Rating.yml"
-          old_rating:
-            $ref: "../../components/schemas/enums/Rating.yml"
-          edit_reason:
+          post[rating]:
+            "$ref": "../../components/schemas/enums/Rating.yml"
+          post[old_rating]:
+            "$ref": "../../components/schemas/enums/Rating.yml"
+          post[edit_reason]:
             type: string
-          is_rating_locked:
+          post[is_rating_locked]:
             type: boolean
             description: You must be Privileged+.
-          is_note_locked:
+          post[is_note_locked]:
             type: boolean
             description: You must be Staff+.
-          bg_color:
+          post[bg_color]:
             type: string
             description: You must be Staff+.
-          is_comment_locked:
+          post[is_comment_locked]:
             type: boolean
             description: You must be Moderator+.
-          is_comment_disabled:
+          post[is_comment_disabled]:
             type: boolean
             description: You must be Admin+.
-          is_status_locked:
+          post[is_status_locked]:
             type: boolean
             description: You must be Admin+.
-          locked_tags:
+          post[locked_tags]:
             type: string
             description: You must be Admin+.
-          hide_from_anonymous:
+          post[hide_from_anonymous]:
             type: boolean
             description: You must be Admin+.
-          hide_from_search_engines:
+          post[hide_from_search_engines]:
+            type: boolean
+            description: You must be Admin+.
+          post[hide_favorites_list]:
             type: boolean
             description: You must be Admin+.
 responses:
   200:
-    $ref: "../../components/responses/post.yaml"
+    "$ref": "../../components/responses/post.yaml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

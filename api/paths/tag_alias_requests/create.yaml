@@ -1,33 +1,33 @@
 summary: Create Tag Alias
 operationId: tag_alias_requests#create
 tags:
-  - Tag Aliases
+- Tag Aliases
 security:
-  - basicAuth: []
+- basicAuth: []
 description: Errors will result in a 406 with no information.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - antecedent_name
-          - consequent_name
-          - reason
+        - tag_alias_request[antecedent_name]
+        - tag_alias_request[consequent_name]
+        - tag_alias_request[reason]
         properties:
-          antecedent_name:
+          tag_alias_request[antecedent_name]:
             type: string
-          consequent_name:
+          tag_alias_request[consequent_name]:
             type: string
-          reason:
+          tag_alias_request[reason]:
             type: string
-          skip_forum:
+          tag_alias_request[skip_forum]:
             type: boolean
             description: Must be Admin+.
 responses:
   302:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   406:
     description: Failure

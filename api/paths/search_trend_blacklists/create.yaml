@@ -1,22 +1,22 @@
 summary: Create Search Trend Blacklist
 operationId: search_trend_blacklists#create
 tags:
-  - Search Trend Blacklists
+- Search Trend Blacklists
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Admin+.
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - tag
-          - reason
+        - search_trend_blacklist[tag]
+        - search_trend_blacklist[reason]
         properties:
-          tag:
+          search_trend_blacklist[tag]:
             type: string
-          reason:
+          search_trend_blacklist[reason]:
             type: string
 responses:
   201:
@@ -24,8 +24,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/SearchTrendBlacklist.yml"
+          "$ref": "../../components/schemas/models/SearchTrendBlacklist.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

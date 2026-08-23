@@ -1,29 +1,29 @@
 summary: Create Bulk Update Request
 operationId: bulk_update_requests#create
 tags:
-  - Bulk Update Requests
+- Bulk Update Requests
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - script
-          - title
-          - reason
+        - bulk_update_request[script]
+        - bulk_update_request[title]
+        - bulk_update_request[reason]
         properties:
-          script:
+          bulk_update_request[script]:
             type: string
-          title:
+          bulk_update_request[title]:
             type: string
-          reason:
+          bulk_update_request[reason]:
             type: string
-          forum_topic_id:
+          bulk_update_request[forum_topic_id]:
             type: integer
             description: You must be able to reply to the topic.
-          skip_forum:
+          bulk_update_request[skip_forum]:
             type: boolean
             description: Only usable for Admin+
 responses:
@@ -32,8 +32,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/BulkUpdateRequest.yml"
+          "$ref": "../../components/schemas/models/BulkUpdateRequest.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

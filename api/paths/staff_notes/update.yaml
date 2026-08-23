@@ -1,19 +1,19 @@
 summary: Update Staff Note
 operationId: staff_notes#update
 tags:
-  - Staff Notes
+- Staff Notes
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be the creator or Admin+.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          body:
+          staff_note[body]:
             type: string
 responses:
   200:
@@ -21,10 +21,10 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/StaffNote.yml"
+          "$ref": "../../components/schemas/models/StaffNote.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

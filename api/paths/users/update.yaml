@@ -1,84 +1,84 @@
 summary: Update Current User
 operationId: users#update
 tags:
-  - Users
+- Users
 parameters:
-  - $ref: "../../components/parameters/path/idOrName.yaml"
+- "$ref": "../../components/parameters/path/idOrName.yaml"
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         properties:
-          comment_threshold:
+          user[comment_threshold]:
             type: integer
-          default_image_size:
+          user[default_image_size]:
             type: string
             enum:
-              - large
-              - fit
-              - fitv
-              - original
-          favorite_tags:
+            - large
+            - fit
+            - fitv
+            - original
+          user[favorite_tags]:
             type: string
-          blacklisted_tags:
+          user[blacklisted_tags]:
             type: string
-          time_zone:
+          user[time_zone]:
             type: string
             description: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          per_page:
+          user[per_page]:
             type: integer
-          custom_style:
+          user[custom_style]:
             type: string
-          description_collapsed_initially:
+          user[description_collapsed_initially]:
             type: boolean
-          hide_comments:
+          user[hide_comments]:
             type: boolean
-          receive_email_notifications:
+          user[receive_email_notifications]:
             type: boolean
-          enable_keyboard_navigation:
+          user[enable_keyboard_navigation]:
             type: boolean
-          enable_privacy_mode:
+          user[enable_privacy_mode]:
             type: boolean
-          disable_user_dmails:
+          user[disable_user_dmails]:
             type: boolean
-          blacklist_users:
+          user[blacklist_users]:
             type: boolean
-          show_post_statistics:
+          user[show_post_statistics]:
             type: boolean
-          style_usernames:
+          user[style_usernames]:
             type: boolean
-          show_hidden_comments:
+          user[show_hidden_comments]:
             type: boolean
-          enable_autocomplete:
+          user[enable_autocomplete]:
             type: boolean
-          disable_cropped_thumbnails:
+          user[disable_cropped_thumbnails]:
             type: boolean
-          enable_safe_mode:
+          user[enable_safe_mode]:
             type: boolean
-          disable_responsive_mode:
+          user[disable_responsive_mode]:
             type: boolean
-          dmail_filter_attributes][id:
+          user[dmail_filter_attributes][id]:
             type: integer
-          dmail_filter_attributes][words:
+          user[dmail_filter_attributes][words]:
             type: string
-          profile_about:
+          user[profile_about]:
             type: string
-          profile_artinfo:
+          user[profile_artinfo]:
             type: string
-          avatar_id:
+          user[avatar_id]:
             type: integer
-          enable_compact_uploader:
+          user[enable_compact_uploader]:
             type: boolean
             description: You must have uploaded at least 10 posts.
-          forum_notification_dot:
+          user[forum_notification_dot]:
             type: boolean
 responses:
   204:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"

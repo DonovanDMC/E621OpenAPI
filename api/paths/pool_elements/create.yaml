@@ -1,16 +1,16 @@
 summary: Add Post To Pool
 operationId: pool_elements#create
 tags:
-  - Pools
+- Pools
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - post_id
+        - post_id
         properties:
           pool_id:
             type: integer
@@ -26,6 +26,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/Pool.yml"
+          "$ref": "../../components/schemas/models/Pool.yml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"

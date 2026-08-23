@@ -1,29 +1,29 @@
 summary: Correct Tag
 operationId: tag_corrections#create
 tags:
-  - Tags
+- Tags
 security:
-  - basicAuth: []
+- basicAuth: []
 description: You must be Staff+. `commit=Fix` must be set.
 parameters:
-  - $ref: "../../components/parameters/path/id.yaml"
+- "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - commit
+        - commit
         properties:
           commit:
             type: string
             enum:
-              - Fix
+            - Fix
             description: If not set, nothing will happen.
 responses:
   302:
     description: Success
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   404:
-    $ref: "../../components/responses/notFound.yaml"
+    "$ref": "../../components/responses/notFound.yaml"

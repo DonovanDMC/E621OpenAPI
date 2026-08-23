@@ -1,47 +1,49 @@
 summary: Create Forum Topic
 operationId: forum_topics#create
 tags:
-  - Forum Topics
+- Forum Topics
 security:
-  - basicAuth: []
+- basicAuth: []
 requestBody:
   content:
-    application/json:
+    application/x-www-form-urlencoded:
       schema:
         type: object
         required:
-          - title
-          - category_id
-          - original_post_attributes
+        - forum_topic[title]
+        - forum_topic[category_id]
+        oneOf:
+        - required:
+          - forum_topic[original_post_attributes][id]
+        - required:
+          - forum_topic[original_post_attributes][body]
         properties:
-          title:
+          forum_topic[title]:
             type: string
-          category_id:
+          forum_topic[category_id]:
             type: integer
-          is_sticky:
+          forum_topic[is_sticky]:
             type: boolean
             description: You must be Moderator+.
-          is_locked:
+          forum_topic[is_locked]:
             type: boolean
             description: You must be Moderator+.
-          original_post_attributes:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: Forum post ID. Mutually exclusive with body, one must be provided.
-              body:
-                type: string
-                description: First forum post body. Mutually exclusive with id, one must be provided.
-
+          forum_topic[original_post_attributes][id]:
+            type: integer
+            description: Forum post ID. Mutually exclusive with body, one must be
+              provided.
+          forum_topic[original_post_attributes][body]:
+            type: string
+            description: First forum post body. Mutually exclusive with id, one must
+              be provided.
 responses:
   201:
     description: Success
     content:
       application/json:
         schema:
-          $ref: "../../components/schemas/models/ForumTopic.yml"
+          "$ref": "../../components/schemas/models/ForumTopic.yml"
   403:
-    $ref: "../../components/responses/accessDenied.yaml"
+    "$ref": "../../components/responses/accessDenied.yaml"
   422:
-    $ref: "../../components/responses/expectedError.yaml"
+    "$ref": "../../components/responses/expectedError.yaml"
