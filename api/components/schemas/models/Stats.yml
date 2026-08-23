@@ -33,7 +33,7 @@ required:
   - blocked_users
   - member_users
   - privileged_users
-  - "former staff_users" # TODO: https://github.com/e621ng/e621ng/pull/2388
+  - former_staff_users
   - staff_users
   - janitor_users
   - moderator_users
@@ -141,7 +141,7 @@ properties:
     type: integer
   privileged_users:
     type: integer
-  "former staff_users":
+  former_staff_users:
     type: integer
   staff_users:
     type: integer
