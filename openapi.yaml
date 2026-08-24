@@ -12,10 +12,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 4ecdf55
-  x-e621ng-commit: 60c8ebfe42fc647c4e0897dc1c2c814e92dfcb32
-  x-e621ng-master-behind-by: 35
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/60c8ebfe42fc647c4e0897dc1c2c814e92dfcb32...master
+  version: 6a38e3d
+  x-e621ng-commit: 439f6f8770e17a58b595988a1891c35e9d833c33
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/439f6f8770e17a58b595988a1891c35e9d833c33...master
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
@@ -214,8 +214,10 @@ components:
         - tag_destroy
         - tag_alias_create
         - tag_alias_update
+        - tag_alias_undo
         - tag_implication_create
         - tag_implication_update
+        - tag_implication_undo
         - ticket_claim
         - ticket_unclaim
         - ticket_update
@@ -860,15 +862,6 @@ components:
           type: integer
         creator_name:
           type: string
-    BulkRelatedTag:
-      allOf:
-        - $ref: '#/components/schemas/RelatedTag'
-        - type: object
-          required:
-            - count
-          properties:
-            count:
-              type: integer
     BulkUpdateRequest:
       type: object
       required:
@@ -1007,7 +1000,6 @@ components:
             - receive_email_notifications
             - enable_keyboard_navigation
             - enable_privacy_mode
-            - style_usernames
             - enable_auto_complete
             - disable_cropped_thumbnails
             - enable_safe_mode
@@ -1053,8 +1045,6 @@ components:
             enable_keyboard_navigation:
               type: boolean
             enable_privacy_mode:
-              type: boolean
-            style_usernames:
               type: boolean
             enable_auto_complete:
               type: boolean
@@ -3431,16 +3421,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PostRecommendation'
-    RelatedTag:
-      type: object
-      required:
-        - name
-        - category_id
-      properties:
-        name:
-          type: string
-        category_id:
-          $ref: '#/components/schemas/TagCategory'
     RisingSearchTrend:
       type: object
       required:
@@ -3744,7 +3724,7 @@ components:
         - blocked_users
         - member_users
         - privileged_users
-        - former staff_users
+        - former_staff_users
         - staff_users
         - janitor_users
         - moderator_users
@@ -3852,7 +3832,7 @@ components:
           type: integer
         privileged_users:
           type: integer
-        former staff_users:
+        former_staff_users:
           type: integer
         staff_users:
           type: integer
@@ -4120,6 +4100,19 @@ components:
         tag_id:
           type: integer
         creator_id:
+          type: integer
+    TagWithCount:
+      type: object
+      required:
+        - name
+        - category_id
+        - count
+      properties:
+        name:
+          type: string
+        category_id:
+          $ref: '#/components/schemas/TagCategory'
+        count:
           type: integer
     Takedown:
       type: object
@@ -11218,8 +11211,6 @@ paths:
                 'tag[is_locked]':
                   description: Must be Admin+.
                   type: boolean
-                'tag[from_wiki]':
-                  type: boolean
       responses:
         '204':
           description: Success
@@ -11511,6 +11502,26 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/tag_aliases/{id}/undo.json':
+    post:
+      summary: Undo Tag Alias
+      operationId: tag_aliases#undo
+      tags:
+        - Tag Aliases
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
   /tag_alias_requests.json:
     post:
       summary: Create Tag Alias
@@ -11701,6 +11712,26 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  '/tag_implications/{id}/undo.json':
+    post:
+      summary: Undo Tag Implication
+      operationId: tag_implications#undo
+      tags:
+        - Tag Implications
+      security:
+        - basicAuth: []
+      description: You must be Admin+.
+      parameters:
+        - $ref: '#/components/parameters/idPath'
+      responses:
+        '204':
+          description: Success
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ExpectedError'
   /tag_implication_requests.json:
     post:
       summary: Create Tag Implication
@@ -11760,7 +11791,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkRelatedTag'
+                $ref: '#/components/schemas/TagWithCount'
                 example:
                   - male:
                       - name: male
@@ -13398,6 +13429,37 @@ paths:
                 $ref: '#/components/schemas/UserAvatarMenu'
         '403':
           $ref: '#/components/responses/AccessDenied'
+  /users/upload_tags.json:
+    get:
+      summary: Get Upload Tags
+      operationId: users#upload_tags
+      description: |
+        Returns the current user's favorite tags and recently used tags, for use in the upload tag editor.
+      tags:
+        - Users
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - upload_tags
+                  - recent_tags
+                properties:
+                  upload_tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TagWithCount'
+                  recent_tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TagWithCount'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
   /users/custom_style.css:
     get:
       summary: Get Custom Style
@@ -13476,8 +13538,6 @@ paths:
                 'user[blacklist_users]':
                   type: boolean
                 'user[show_post_statistics]':
-                  type: boolean
-                'user[style_usernames]':
                   type: boolean
                 'user[show_hidden_comments]':
                   type: boolean
