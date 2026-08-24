@@ -64,8 +64,10 @@ enum:
   - tag_destroy
   - tag_alias_create
   - tag_alias_update
+  - tag_alias_undo
   - tag_implication_create
   - tag_implication_update
+  - tag_implication_undo
   - ticket_claim
   - ticket_unclaim
   - ticket_update

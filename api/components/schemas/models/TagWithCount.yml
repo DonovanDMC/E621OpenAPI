@@ -2,11 +2,11 @@ type: object
 required:
   - name
   - category_id
-    - count
+  - count
 properties:
   name:
     type: string
   category_id:
     $ref: "../enums/TagCategory.yml"
-    count:
-      type: integer
+  count:
+    type: integer

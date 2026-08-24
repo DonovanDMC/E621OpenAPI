@@ -973,6 +973,9 @@ paths:
   /tag_aliases/{id}/approve.json:
     post:
       $ref: "./paths/tag_aliases/approve.yaml"
+  /tag_aliases/{id}/undo.json:
+    post:
+      $ref: "./paths/tag_aliases/undo.yaml"
   /tag_alias_requests.json:
     post:
       $ref: "./paths/tag_alias_requests/create.yaml"
@@ -990,6 +993,9 @@ paths:
   /tag_implications/{id}/approve.json:
     post:
       $ref: "./paths/tag_implications/approve.yaml"
+  /tag_implications/{id}/undo.json:
+    post:
+      $ref: "./paths/tag_implications/undo.yaml"
   /tag_implication_requests.json:
     post:
       $ref: "./paths/tag_implication_requests/create.yaml"
