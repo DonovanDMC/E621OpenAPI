@@ -4,7 +4,8 @@ info:
   description: |
     OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)<br>
     This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).<br>
-    If the api is not working, you can check this [Unofficial Status Page](https://status.e621.church).
+    If the api is not working, you can check this [Unofficial Status Page](https://status.e621.church).<br>
+    An MCP server exposing this API to Claude and other MCP clients is available at [mcp.e621.wiki](https://mcp.e621.wiki) (also reachable at [e621.wiki/mcp](https://e621.wiki/mcp)); see its [README](https://github.com/DonovanDMC/E621OpenAPI/tree/master/mcp) for details.
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
@@ -12,10 +13,11 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 6a38e3d
+  version: dd249c6
   x-e621ng-commit: 439f6f8770e17a58b595988a1891c35e9d833c33
-  x-e621ng-master-behind-by: 0
+  x-e621ng-master-behind-by: 5
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/439f6f8770e17a58b595988a1891c35e9d833c33...master
+  x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
     description: E621 (Production)
