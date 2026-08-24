@@ -10,7 +10,6 @@ allOf:
       - receive_email_notifications
       - enable_keyboard_navigation
       - enable_privacy_mode
-      - style_usernames
       - enable_auto_complete
       - disable_cropped_thumbnails
       - enable_safe_mode
@@ -56,8 +55,6 @@ allOf:
       enable_keyboard_navigation:
         type: boolean
       enable_privacy_mode:
-        type: boolean
-      style_usernames:
         type: boolean
       enable_auto_complete:
         type: boolean

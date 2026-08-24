@@ -1,11 +1,11 @@
 summary: Update Current User
 operationId: users#update
 tags:
-- Users
+  - Users
 parameters:
-- "$ref": "../../components/parameters/path/idOrName.yaml"
+  - "$ref": "../../components/parameters/path/idOrName.yaml"
 security:
-- basicAuth: []
+  - basicAuth: []
 requestBody:
   content:
     application/x-www-form-urlencoded:
@@ -17,10 +17,10 @@ requestBody:
           user[default_image_size]:
             type: string
             enum:
-            - large
-            - fit
-            - fitv
-            - original
+              - large
+              - fit
+              - fitv
+              - original
           user[favorite_tags]:
             type: string
           user[blacklisted_tags]:
@@ -47,8 +47,6 @@ requestBody:
           user[blacklist_users]:
             type: boolean
           user[show_post_statistics]:
-            type: boolean
-          user[style_usernames]:
             type: boolean
           user[show_hidden_comments]:
             type: boolean
