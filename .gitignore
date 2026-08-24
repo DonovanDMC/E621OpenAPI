@@ -5,3 +5,5 @@ compile-doc.sh
 _build
 .vscode
 .idea
+.wrangler
+.dev.vars

@@ -1,0 +1,35 @@
+{
+  "name": "e621-mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Remote MCP server exposing the e621.net API (as documented by ../openapi.yaml) as tools for Claude.",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:catalog && tsc --noEmit",
+    "build:catalog": "node scripts/build-catalog.mjs",
+    "typecheck": "npm run build:catalog && tsc --noEmit",
+    "predev": "npm run build:catalog",
+    "dev": "wrangler dev",
+    "predeploy": "npm run build:catalog",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@cloudflare/workers-oauth-provider": "^0.10.3",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "agents": "^0.21.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260823.1",
+    "typescript": "^5.4.5",
+    "wrangler": "^4.125.0",
+    "yaml": "^2.9.0"
+  },
+  "allowScripts": {
+    "core-js-pure@3.50.0": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.28.1": true,
+    "workerd@1.20260820.1": true
+  }
+}
