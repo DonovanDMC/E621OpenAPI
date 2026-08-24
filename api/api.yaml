@@ -155,8 +155,6 @@ components:
       $ref: "./components/schemas/models/BasicPost.yml"
     Blip:
       $ref: "./components/schemas/models/Blip.yml"
-    BulkRelatedTag:
-      $ref: "./components/schemas/models/BulkRelatedTag.yml"
     BulkUpdateRequest:
       $ref: "./components/schemas/models/BulkUpdateRequest.yml"
     Comment:
@@ -315,6 +313,8 @@ components:
       $ref: "./components/schemas/models/TagPreview.yml"
     TagTypeVersion:
       $ref: "./components/schemas/models/TagTypeVersion.yml"
+    TagWithCount:
+      $ref: "./components/schemas/models/TagWithCount.yml"
     Takedown:
       $ref: "./components/schemas/models/Takedown.yml"
     ThumbnailPost:
@@ -1130,6 +1130,9 @@ paths:
   /users/avatar_menu.json:
     get:
       $ref: "./paths/users/avatar_menu.yaml"
+  /users/upload_tags.json:
+    get:
+      $ref: "./paths/users/upload_tags.yaml"
   /users/custom_style.css:
     get:
       $ref: "./paths/users/custom_style.yaml"

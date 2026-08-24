@@ -1,0 +1,12 @@
+type: object
+required:
+  - name
+  - category_id
+    - count
+properties:
+  name:
+    type: string
+  category_id:
+    $ref: "../enums/TagCategory.yml"
+    count:
+      type: integer

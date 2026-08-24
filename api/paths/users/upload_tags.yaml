@@ -1,0 +1,29 @@
+summary: Get Upload Tags
+operationId: users#upload_tags
+description: |
+  Returns the current user's favorite tags and recently used tags, for use in the upload tag editor.
+tags:
+  - Users
+security:
+  - basicAuth: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - upload_tags
+            - recent_tags
+          properties:
+            upload_tags:
+              type: array
+              items:
+                $ref: "../../components/schemas/models/TagWithCount.yml"
+            recent_tags:
+              type: array
+              items:
+                $ref: "../../components/schemas/models/TagWithCount.yml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"

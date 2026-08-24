@@ -1,8 +1,0 @@
-allOf:
-  - $ref: "./RelatedTag.yml"
-  - type: object
-    required:
-      - count
-    properties:
-      count:
-        type: integer

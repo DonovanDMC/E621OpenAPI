@@ -20,7 +20,7 @@ responses:
     content:
       application/json:
         schema:
-          "$ref": "../../components/schemas/models/BulkRelatedTag.yml"
+          "$ref": "../../components/schemas/models/TagWithCount.yml"
           example:
           - male:
             - name: male
