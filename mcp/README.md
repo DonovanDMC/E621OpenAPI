@@ -14,7 +14,7 @@ The server answers at two mount points — `https://mcp.e621.wiki` (root) and `h
 
 ## Auth
 
-e621 has no OAuth — API access is HTTP Basic auth with a username + personal API key (from *e621.net → My Account*). Since this server is meant to be added by anyone as a shared connector, it runs its **own** OAuth authorization server (via `@cloudflare/workers-oauth-provider`) whose "login" step is a small form asking for that username + API key. The key is verified against `GET /users/me.json` and then carried as MCP `props` for the session — it's never persisted outside the OAuth grant record in `OAUTH_KV`.
+e621 has no OAuth — API access is HTTP Basic auth with a username + personal API key (from *e621.net → My Account*). Since this server is meant to be added by anyone as a shared connector, it runs its **own** OAuth authorization server (via `@cloudflare/workers-oauth-provider`) whose "login" step is a small form asking for that username + API key. The key is verified against `GET /users/me.json` through the internal `E621_PROXY_BASE` when configured and then carried as MCP `props` for the session — it's never persisted outside the OAuth grant record in `OAUTH_KV`.
 
 If you only want this for yourself, it's simpler to skip the OAuth flow entirely and hardcode credentials from `wrangler secret` — see `references/auth.md`'s "Tier 1" pattern in the `build-mcp-server` skill if you want to swap to that.
 

@@ -33,3 +33,6 @@ id = "897d39b6060c4ceda796c686f98cc8b6"
 [vars]
 E621_API_BASE = "https://e621.net"
 E621_USER_AGENT = "e621-mcp-server/0.1 (by DonovanDMC; https://e621.wiki)"
+
+[secrets]
+required = ["E621_PROXY_BASE", "E621_PROXY_TOKEN"]
