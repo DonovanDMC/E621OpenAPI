@@ -100,13 +100,13 @@ export async function callE621({ env, operation, credentials, pathParams = {}, q
     return { json, status: response.status };
 }
 
-interface AvatarMenuResponse {
+interface CurrentUserResponse {
     id?: number;
     name?: string;
 }
 
 export async function verifyE621Credentials(env: E621Env, credentials: E621Credentials): Promise<{ id: number; name: string } | null> {
-    const url = new URL("/users/avatar_menu.json", env.E621_API_BASE);
+    const url = new URL("/users/me.json", env.E621_API_BASE);
     const response = await fetch(url, {
         headers: {
             "User-Agent": env.E621_USER_AGENT,
@@ -115,7 +115,7 @@ export async function verifyE621Credentials(env: E621Env, credentials: E621Crede
         },
     });
     if (!response.ok) return null;
-    const data = await response.json<AvatarMenuResponse>();
-    if (!data.name) return null;
+    const data = await response.json<CurrentUserResponse>();
+    if (data.name?.toLowerCase() !== credentials.username.toLowerCase()) return null;
     return { id: data.id ?? 0, name: data.name };
 }

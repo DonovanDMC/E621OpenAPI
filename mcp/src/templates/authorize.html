@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>e621 MCP Server</title>
+  <link rel="stylesheet" href="{{stylesheetHref}}">
+</head>
+<body>
+  <h1>Connect your e621 account</h1>
+  <p><strong>{{clientName}}</strong> wants to use your e621 account to call the e621 API on your behalf.</p>
+  {{errorHtml}}
+  <p class="hint">You can find existing API keys at <a href="https://e621.net/api_keys" target="_blank" rel="noopener">e621.net/api_keys</a>, or create a new one at <a href="https://e621.net/api_keys/new" target="_blank" rel="noopener">e621.net/api_keys/new</a>. e621 may ask you to log in again before showing or creating API keys. The key is stored only to authorize this connector session and is sent solely to e621.net.</p>
+  <form method="POST" action="/authorize">
+    <input type="hidden" name="oauthReqInfo" value="{{oauthReqInfo}}">
+    <label>e621 username</label>
+    <input type="text" name="username" value="{{username}}" autocomplete="username" required>
+    <label>e621 API key</label>
+    <input type="password" name="apiKey" autocomplete="current-password" required>
+    <button type="submit">Authorize</button>
+  </form>
+</body>
+</html>

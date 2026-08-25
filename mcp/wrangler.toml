@@ -3,6 +3,11 @@ main = "src/index.ts"
 compatibility_date = "2025-03-10"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
+[[rules]]
+type = "Text"
+globs = ["**/*.css"]
+fallthrough = true
+
 [[routes]]
 pattern = "mcp.e621.wiki"
 custom_domain = true
