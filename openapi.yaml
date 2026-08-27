@@ -13,9 +13,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 4cc2d9f
+  version: 2464d9d
   x-e621ng-commit: 439f6f8770e17a58b595988a1891c35e9d833c33
-  x-e621ng-master-behind-by: 5
+  x-e621ng-master-behind-by: 15
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/439f6f8770e17a58b595988a1891c35e9d833c33...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
@@ -5027,7 +5027,7 @@ components:
               - record_type
             properties:
               record_type:
-                $ref: '#/components/schemas/WarningRecordType'
+                $ref: '#/components/schemas/WarningType'
 paths:
   /api_keys.json:
     get:
