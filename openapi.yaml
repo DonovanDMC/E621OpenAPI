@@ -13,7 +13,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: '5411355'
+  version: 2325d36
   x-e621ng-commit: 2da4b89799b7799a4920adfe14112939976b4fcd
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/2da4b89799b7799a4920adfe14112939976b4fcd...master
@@ -516,6 +516,13 @@ components:
         - Janitor
         - Moderator
         - Admin
+    WarningRecordType:
+      type: string
+      enum:
+        - warning
+        - record
+        - ban
+        - unmark
     WarningType:
       type: string
       enum:
@@ -4680,18 +4687,6 @@ components:
           type: integer
         uploader:
           $ref: '#/components/schemas/User'
-    WarningRecordType:
-      type: object
-      required:
-        - record_type
-      properties:
-        record_type:
-          type: string
-          enum:
-            - unmark
-            - ban
-            - record
-            - warning
     WikiPage:
       type: object
       required:
@@ -5027,7 +5022,7 @@ components:
               - record_type
             properties:
               record_type:
-                $ref: '#/components/schemas/WarningType'
+                $ref: '#/components/schemas/WarningRecordType'
 paths:
   /api_keys.json:
     get:
@@ -12924,7 +12919,7 @@ paths:
                 'ticket[response]':
                   type: string
                 'ticket[record_type]':
-                  $ref: '#/components/schemas/WarningType'
+                  $ref: '#/components/schemas/WarningRecordType'
                 'ticket[send_update_dmail]':
                   type: boolean
                   description: An update dmail will always be sent when the status is changed.
