@@ -1,0 +1,12 @@
+type: string
+enum:
+  - approved
+  - unapproved
+  - deleted
+  - undeleted
+  - replacement_penalty
+  - replacement_penalty_reversed
+  - replacement_transfer
+  - owner_change
+  - staff_override
+  - queue_bypass

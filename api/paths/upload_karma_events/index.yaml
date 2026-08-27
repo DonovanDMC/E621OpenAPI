@@ -1,0 +1,42 @@
+summary: Upload Karma Events Index
+operationId: upload_karma_events#index
+tags:
+  - Upload Karma Events
+parameters:
+  - $ref: "../../components/parameters/query/limit.yaml"
+  - $ref: "../../components/parameters/query/page.yaml"
+  - $ref: "../../components/parameters/query/id.yaml"
+  - $ref: "../../components/parameters/query/order.yaml"
+  - in: query
+    name: search[user_id]
+    schema:
+      type: integer
+  - in: query
+    name: search[user_name]
+    schema:
+      type: string
+  - in: query
+    name: search[creator_id]
+    schema:
+      type: integer
+  - in: query
+    name: search[creator_name]
+    schema:
+      type: string
+  - in: query
+    name: search[post_id]
+    schema:
+      type: integer
+  - in: query
+    name: search[reason]
+    schema:
+      $ref: "../../components/schemas/enums/UploadKarmaEventReason.yml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/models/UploadKarmaEvent.yml"
