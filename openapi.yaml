@@ -13,10 +13,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 2464d9d
-  x-e621ng-commit: 439f6f8770e17a58b595988a1891c35e9d833c33
-  x-e621ng-master-behind-by: 15
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/439f6f8770e17a58b595988a1891c35e9d833c33...master
+  version: '5411355'
+  x-e621ng-commit: 2da4b89799b7799a4920adfe14112939976b4fcd
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/2da4b89799b7799a4920adfe14112939976b4fcd...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -12979,6 +12979,93 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  /upload_karma_events.json:
+    get:
+      summary: Upload Karma Events Index
+      operationId: upload_karma_events#index
+      tags:
+        - Upload Karma Events
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - $ref: '#/components/parameters/idQuery'
+        - $ref: '#/components/parameters/orderQuery'
+        - in: query
+          name: 'search[user_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[user_name]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[creator_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[creator_name]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[post_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[reason]'
+          schema:
+            type: string
+            enum:
+              - approved
+              - unapproved
+              - deleted
+              - undeleted
+              - replacement_penalty
+              - replacement_penalty_reversed
+              - replacement_transfer
+              - owner_change
+              - staff_override
+              - queue_bypass
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - user_id
+                    - creator_id
+                    - post_id
+                    - reason
+                    - delta
+                    - balance
+                    - extra_data
+                    - created_at
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    creator_id:
+                      type: integer
+                    post_id:
+                      type: integer
+                      nullable: true
+                    reason:
+                      $ref: '#/paths/~1upload_karma_events.json/get/parameters/9/schema'
+                    delta:
+                      type: integer
+                    balance:
+                      type: integer
+                    extra_data:
+                      type: object
+                      additionalProperties: true
+                    created_at:
+                      type: string
+                      format: date-time
   /uploads.json:
     get:
       summary: Uploads Index
@@ -14301,11 +14388,6 @@ paths:
                 'wiki_page[skip_secondary_validations]':
                   type: boolean
                   description: Must be Staff+ to use.
-                'wiki_page[category_id]':
-                  $ref: '#/components/schemas/TagCategory'
-                'wiki_page[category_is_locked]':
-                  type: boolean
-                  description: Must be Admin+ to use.
                 'wiki_page[featured_posts_string]':
                   type: string
                   description: Space separated

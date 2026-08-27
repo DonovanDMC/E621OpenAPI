@@ -13,10 +13,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 2464d9d
-  x-e621ng-commit: 439f6f8770e17a58b595988a1891c35e9d833c33
-  x-e621ng-master-behind-by: 15
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/439f6f8770e17a58b595988a1891c35e9d833c33...master
+  version: '5411355'
+  x-e621ng-commit: 2da4b89799b7799a4920adfe14112939976b4fcd
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/2da4b89799b7799a4920adfe14112939976b4fcd...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -43453,6 +43453,129 @@ paths:
                     type: string
                     enum:
                       - not found
+  /upload_karma_events.json:
+    get:
+      summary: Upload Karma Events Index
+      operationId: upload_karma_events#index
+      tags:
+        - Upload Karma Events
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return. Between 0 and 320.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 320
+        - name: page
+          in: query
+          description: The page number of results to get. Between 1 and 750.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 750
+        - name: 'search[id]'
+          in: query
+          description: 'Search for a specific id. Multiple can be separated by commas, up to 320.'
+          schema:
+            oneOf:
+              - type: string
+              - type: integer
+        - name: 'search[order]'
+          in: query
+          description: The order of the results.
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+        - in: query
+          name: 'search[user_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[user_name]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[creator_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[creator_name]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[post_id]'
+          schema:
+            type: integer
+        - in: query
+          name: 'search[reason]'
+          schema:
+            type: string
+            enum:
+              - approved
+              - unapproved
+              - deleted
+              - undeleted
+              - replacement_penalty
+              - replacement_penalty_reversed
+              - replacement_transfer
+              - owner_change
+              - staff_override
+              - queue_bypass
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - user_id
+                    - creator_id
+                    - post_id
+                    - reason
+                    - delta
+                    - balance
+                    - extra_data
+                    - created_at
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    creator_id:
+                      type: integer
+                    post_id:
+                      type: integer
+                      nullable: true
+                    reason:
+                      type: string
+                      enum:
+                        - approved
+                        - unapproved
+                        - deleted
+                        - undeleted
+                        - replacement_penalty
+                        - replacement_penalty_reversed
+                        - replacement_transfer
+                        - owner_change
+                        - staff_override
+                        - queue_bypass
+                    delta:
+                      type: integer
+                    balance:
+                      type: integer
+                    extra_data:
+                      type: object
+                      additionalProperties: true
+                    created_at:
+                      type: string
+                      format: date-time
   /uploads.json:
     get:
       summary: Uploads Index
@@ -48171,21 +48294,6 @@ paths:
                 'wiki_page[skip_secondary_validations]':
                   type: boolean
                   description: Must be Staff+ to use.
-                'wiki_page[category_id]':
-                  type: integer
-                  enum:
-                    - 0
-                    - 1
-                    - 2
-                    - 3
-                    - 4
-                    - 5
-                    - 6
-                    - 7
-                    - 8
-                'wiki_page[category_is_locked]':
-                  type: boolean
-                  description: Must be Admin+ to use.
                 'wiki_page[featured_posts_string]':
                   type: string
                   description: Space separated
