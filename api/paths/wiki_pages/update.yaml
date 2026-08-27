@@ -1,16 +1,16 @@
 summary: Update Wiki Page
 operationId: wiki_pages#update
 tags:
-- Wiki Pages
+  - Wiki Pages
 security:
-- basicAuth: []
+  - basicAuth: []
 description: You must be Staff+ if the wiki page is locked.
 parameters:
-- "$ref": "../../components/parameters/path/id.yaml"
-  required: true
-  description: The ID of the wiki page.
-  schema:
-    type: integer
+  - "$ref": "../../components/parameters/path/id.yaml"
+    required: true
+    description: The ID of the wiki page.
+    schema:
+      type: integer
 requestBody:
   content:
     application/x-www-form-urlencoded:
@@ -36,11 +36,6 @@ requestBody:
           wiki_page[skip_secondary_validations]:
             type: boolean
             description: Must be Staff+ to use.
-          wiki_page[category_id]:
-            "$ref": "../../components/schemas/enums/TagCategory.yml"
-          wiki_page[category_is_locked]:
-            type: boolean
-            description: Must be Admin+ to use.
           wiki_page[featured_posts_string]:
             type: string
             description: Space separated
