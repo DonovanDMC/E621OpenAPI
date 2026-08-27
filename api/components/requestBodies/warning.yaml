@@ -6,4 +6,4 @@ content:
         - record_type
       properties:
         record_type:
-          "$ref": "../schemas/enums/WarningType.yml"
+          "$ref": "../schemas/enums/WarningRecordType.yml"

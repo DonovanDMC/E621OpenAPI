@@ -23,7 +23,7 @@ requestBody:
           ticket[response]:
             type: string
           ticket[record_type]:
-            "$ref": "../../components/schemas/enums/WarningType.yml"
+            "$ref": "../../components/schemas/enums/WarningRecordType.yml"
           ticket[send_update_dmail]:
             type: boolean
             description: An update dmail will always be sent when the status is changed.

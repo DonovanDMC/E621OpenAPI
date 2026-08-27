@@ -134,6 +134,8 @@ components:
       $ref: "./components/schemas/enums/UserLevel.yml"
     UserLevelName:
       $ref: "./components/schemas/enums/UserLevelName.yml"
+    WarningRecordType:
+      $ref: "./components/schemas/enums/WarningRecordType.yml"
     WarningType:
       $ref: "./components/schemas/enums/WarningType.yml"
     # Models
@@ -345,8 +347,6 @@ components:
       $ref: "./components/schemas/models/VoteTrendMetatag.yml"
     VoteTrendUploader:
       $ref: "./components/schemas/models/VoteTrendUploader.yml"
-    WarningRecordType:
-      $ref: "./components/schemas/models/WarningRecordType.yml"
     WikiPage:
       $ref: "./components/schemas/models/WikiPage.yml"
     WikiPageVersion:
