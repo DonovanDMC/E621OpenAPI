@@ -36,3 +36,11 @@ E621_USER_AGENT = "e621-mcp-server/0.1 (by DonovanDMC; https://e621.wiki)"
 
 [secrets]
 required = ["E621_PROXY_BASE", "E621_PROXY_TOKEN"]
+
+[observability.traces]
+enabled = true
+destinations = ["yiff-space-otel-traces"]
+
+[observability.logs]
+enabled = true
+destinations = ["yiff-space-otel-logs"]
