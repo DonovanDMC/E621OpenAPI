@@ -13,10 +13,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: '3673675'
-  x-e621ng-commit: 2da4b89799b7799a4920adfe14112939976b4fcd
-  x-e621ng-master-behind-by: 1
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/2da4b89799b7799a4920adfe14112939976b4fcd...master
+  version: 56cac5e
+  x-e621ng-commit: a460a25ed0e2ebec16a2f17b83722661b8001751
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/a460a25ed0e2ebec16a2f17b83722661b8001751...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
