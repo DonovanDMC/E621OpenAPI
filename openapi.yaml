@@ -13,10 +13,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 56cac5e
-  x-e621ng-commit: a460a25ed0e2ebec16a2f17b83722661b8001751
+  version: c0cca20
+  x-e621ng-commit: 495637130a6ec5078dc9f362ab71bfa76f979d23
   x-e621ng-master-behind-by: 0
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/a460a25ed0e2ebec16a2f17b83722661b8001751...master
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/495637130a6ec5078dc9f362ab71bfa76f979d23...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -6860,7 +6860,7 @@ paths:
               - id_desc
               - ip_addr
         - in: query
-          name: 'search[post_id]'
+          name: 'search[comment_id]'
           schema:
             type: integer
         - in: query
@@ -6883,14 +6883,18 @@ paths:
             type: integer
         - in: query
           name: 'search[user_ip_addr]'
-          description: 'You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
+          description: 'You must be Admin+. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
           schema:
             type: string
         - in: query
           name: 'search[score]'
-          description: 'Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.'
           schema:
             $ref: '#/components/schemas/UpDownVote'
+        - in: query
+          name: 'search[timeframe]'
+          description: Only return votes updated within the last N days.
+          schema:
+            type: integer
         - in: query
           name: 'search[duplicates_only]'
           description: 'You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.'
@@ -9837,8 +9841,12 @@ paths:
                   type: string
                   description: Approves the post if set to "approve".
       responses:
-        '204':
+        '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RawPost'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -11037,14 +11045,18 @@ paths:
             type: integer
         - in: query
           name: 'search[user_ip_addr]'
-          description: 'You must be Admin+. Only usable if one of `post_id`, `user_name`, or `user_id` is also provided. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
+          description: 'You must be Admin+. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
           schema:
             type: string
         - in: query
           name: 'search[score]'
-          description: 'Only usable if one of `post_id`, `user_name`, or `user_id` is also provided.'
           schema:
             $ref: '#/components/schemas/UpDownVote'
+        - in: query
+          name: 'search[timeframe]'
+          description: Only return votes updated within the last N days.
+          schema:
+            type: integer
         - in: query
           name: 'search[duplicates_only]'
           description: 'You must be Admin+. Only usable if one of `post_id`, `user_name`, or `user_id` is also provided.'

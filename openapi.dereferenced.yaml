@@ -13,10 +13,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 56cac5e
-  x-e621ng-commit: a460a25ed0e2ebec16a2f17b83722661b8001751
+  version: c0cca20
+  x-e621ng-commit: 495637130a6ec5078dc9f362ab71bfa76f979d23
   x-e621ng-master-behind-by: 0
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/a460a25ed0e2ebec16a2f17b83722661b8001751...master
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/495637130a6ec5078dc9f362ab71bfa76f979d23...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -15520,7 +15520,7 @@ paths:
               - id_desc
               - ip_addr
         - in: query
-          name: 'search[post_id]'
+          name: 'search[comment_id]'
           schema:
             type: integer
         - in: query
@@ -15543,17 +15543,21 @@ paths:
             type: integer
         - in: query
           name: 'search[user_ip_addr]'
-          description: 'You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
+          description: 'You must be Admin+. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
           schema:
             type: string
         - in: query
           name: 'search[score]'
-          description: 'Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.'
           schema:
             type: integer
             enum:
               - 1
               - -1
+        - in: query
+          name: 'search[timeframe]'
+          description: Only return votes updated within the last N days.
+          schema:
+            type: integer
         - in: query
           name: 'search[duplicates_only]'
           description: 'You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.'
@@ -34840,8 +34844,206 @@ paths:
                   type: string
                   description: Approves the post if set to "approve".
       responses:
-        '204':
+        '200':
           description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - created_at
+                  - updated_at
+                  - up_score
+                  - down_score
+                  - score
+                  - source
+                  - md5
+                  - rating
+                  - is_note_locked
+                  - is_rating_locked
+                  - is_status_locked
+                  - is_pending
+                  - is_flagged
+                  - is_deleted
+                  - uploader_id
+                  - approver_id
+                  - last_noted_at
+                  - last_comment_bumped_at
+                  - fav_count
+                  - tag_string
+                  - tag_count
+                  - tag_count_general
+                  - tag_count_artist
+                  - tag_count_character
+                  - tag_count_copyright
+                  - file_ext
+                  - file_size
+                  - image_width
+                  - image_height
+                  - parent_id
+                  - has_children
+                  - last_commented_at
+                  - has_active_children
+                  - bit_flags
+                  - tag_count_meta
+                  - locked_tags
+                  - tag_count_species
+                  - tag_count_invalid
+                  - description
+                  - comment_count
+                  - change_seq
+                  - tag_count_lore
+                  - bg_color
+                  - generated_samples
+                  - duration
+                  - is_comment_disabled
+                  - is_comment_locked
+                  - has_large
+                  - has_visible_children
+                  - children_ids
+                  - pool_ids
+                  - is_favorited
+                properties:
+                  id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  up_score:
+                    type: integer
+                  down_score:
+                    type: integer
+                  score:
+                    type: integer
+                  source:
+                    type: string
+                  md5:
+                    type: string
+                  rating:
+                    type: string
+                    enum:
+                      - s
+                      - q
+                      - e
+                  is_note_locked:
+                    type: boolean
+                  is_rating_locked:
+                    type: boolean
+                  is_status_locked:
+                    type: boolean
+                  is_pending:
+                    type: boolean
+                  is_flagged:
+                    type: boolean
+                  is_deleted:
+                    type: boolean
+                  uploader_id:
+                    type: integer
+                  approver_id:
+                    type: integer
+                  last_noted_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  last_comment_bumped_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  fav_count:
+                    type: integer
+                  tag_string:
+                    type: string
+                  tag_count:
+                    type: integer
+                  tag_count_general:
+                    type: integer
+                  tag_count_artist:
+                    type: integer
+                  tag_count_character:
+                    type: integer
+                  tag_count_copyright:
+                    type: integer
+                  file_ext:
+                    type: string
+                  file_size:
+                    type: integer
+                    format: int64
+                  image_width:
+                    type: integer
+                  image_height:
+                    type: integer
+                  parent_id:
+                    type: integer
+                    nullable: true
+                  has_children:
+                    type: boolean
+                  last_commented_at:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  has_active_children:
+                    type: boolean
+                  bit_flags:
+                    type: integer
+                  tag_count_meta:
+                    type: integer
+                  locked_tags:
+                    type: string
+                    nullable: true
+                  tag_count_species:
+                    type: integer
+                  tag_count_invalid:
+                    type: integer
+                  description:
+                    type: string
+                  comment_count:
+                    type: integer
+                  change_seq:
+                    type: integer
+                  tag_count_lore:
+                    type: integer
+                  bg_color:
+                    type: string
+                    nullable: true
+                  generated_samples:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+                      enum:
+                        - 720p
+                        - 480p
+                        - original
+                  duration:
+                    type: string
+                    nullable: true
+                  is_comment_disabled:
+                    type: boolean
+                  is_comment_locked:
+                    type: boolean
+                  has_large:
+                    type: boolean
+                  has_visible_children:
+                    type: boolean
+                  children_ids:
+                    type: string
+                    nullable: true
+                  pool_ids:
+                    type: array
+                    items:
+                      type: integer
+                  is_favorited:
+                    type: boolean
+                  file_url:
+                    type: string
+                  large_file_url:
+                    type: string
+                  preview_file_url:
+                    type: string
         '403':
           description: Access Denied
           content:
@@ -38601,17 +38803,21 @@ paths:
             type: integer
         - in: query
           name: 'search[user_ip_addr]'
-          description: 'You must be Admin+. Only usable if one of `post_id`, `user_name`, or `user_id` is also provided. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
+          description: 'You must be Admin+. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).'
           schema:
             type: string
         - in: query
           name: 'search[score]'
-          description: 'Only usable if one of `post_id`, `user_name`, or `user_id` is also provided.'
           schema:
             type: integer
             enum:
               - 1
               - -1
+        - in: query
+          name: 'search[timeframe]'
+          description: Only return votes updated within the last N days.
+          schema:
+            type: integer
         - in: query
           name: 'search[duplicates_only]'
           description: 'You must be Admin+. Only usable if one of `post_id`, `user_name`, or `user_id` is also provided.'
