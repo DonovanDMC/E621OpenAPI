@@ -19,7 +19,7 @@ parameters:
         - id_desc
         - ip_addr
   - in: query
-    name: search[post_id]
+    name: search[comment_id]
     schema:
       type: integer
   - in: query
@@ -42,14 +42,18 @@ parameters:
       type: integer
   - in: query
     name: search[user_ip_addr]
-    description: You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).
+    description: You must be Admin+. See [the PostgreSQL documentation](https://www.postgresql.org/docs/9.3/functions-net.html) for information on how this is parsed. Specifically, "is contained within or equals" (`<<=`).
     schema:
       type: string
   - in: query
     name: search[score]
-    description: Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.
     schema:
       $ref: "../../components/schemas/enums/UpDownVote.yml"
+  - in: query
+    name: search[timeframe]
+    description: Only return votes updated within the last N days.
+    schema:
+      type: integer
   - in: query
     name: search[duplicates_only]
     description: You must be Admin+. Only usable if one of `comment_id`, `user_name`, or `user_id` is also provided.
