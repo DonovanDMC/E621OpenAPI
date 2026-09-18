@@ -72,6 +72,9 @@ properties:
       url:
         type: string
         nullable: true
+      alt:
+        type: string
+        nullable: true
   sample:
     type: object
     required:
@@ -90,6 +93,9 @@ properties:
         type: integer
         nullable: true
       url:
+        type: string
+        nullable: true
+      alt:
         type: string
         nullable: true
       alternates:
