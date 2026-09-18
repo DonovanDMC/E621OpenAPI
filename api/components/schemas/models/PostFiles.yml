@@ -13,3 +13,29 @@ properties:
     $ref: "./PostFilesPreview.yml"
   sample:
     $ref: "./PostFilesSample.yml"
+  video:
+    type: object
+    required:
+      - has
+      - original
+      - variants
+      - samples
+    properties:
+      has:
+        type: boolean
+      original:
+        $ref: "./PostSampleAlternate.yml"
+      variants:
+        type: object
+        properties:
+          webm:
+            $ref: "./PostSampleAlternate.yml"
+          mp4:
+            $ref: "./PostSampleAlternate.yml"
+      samples:
+        type: object
+        properties:
+          480p:
+            $ref: "./PostSampleAlternate.yml"
+          720p:
+            $ref: "./PostSampleAlternate.yml"

@@ -12,6 +12,7 @@ properties:
     format: float
   codec:
     type: string
+    nullable: true
   size:
     type: integer
     format: int64
@@ -22,3 +23,4 @@ properties:
   url:
     type: string
     format: uri
+    nullable: true
