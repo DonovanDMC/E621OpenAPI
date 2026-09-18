@@ -13,7 +13,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: c0cca20
+  version: 6e7877a
   x-e621ng-commit: 495637130a6ec5078dc9f362ab71bfa76f979d23
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/495637130a6ec5078dc9f362ab71bfa76f979d23...master
@@ -1919,6 +1919,9 @@ components:
             url:
               type: string
               nullable: true
+            alt:
+              type: string
+              nullable: true
         sample:
           type: object
           required:
@@ -1937,6 +1940,9 @@ components:
               type: integer
               nullable: true
             url:
+              type: string
+              nullable: true
+            alt:
               type: string
               nullable: true
             alternates:
@@ -2766,6 +2772,32 @@ components:
           $ref: '#/components/schemas/PostFilesPreview'
         sample:
           $ref: '#/components/schemas/PostFilesSample'
+        video:
+          type: object
+          required:
+            - has
+            - original
+            - variants
+            - samples
+          properties:
+            has:
+              type: boolean
+            original:
+              $ref: '#/components/schemas/PostSampleAlternate'
+            variants:
+              type: object
+              properties:
+                webm:
+                  $ref: '#/components/schemas/PostSampleAlternate'
+                mp4:
+                  $ref: '#/components/schemas/PostSampleAlternate'
+            samples:
+              type: object
+              properties:
+                480p:
+                  $ref: '#/components/schemas/PostSampleAlternate'
+                720p:
+                  $ref: '#/components/schemas/PostSampleAlternate'
     PostFilesMeta:
       type: object
       required:
@@ -3024,6 +3056,7 @@ components:
           format: float
         codec:
           type: string
+          nullable: true
         size:
           type: integer
           format: int64
@@ -3034,6 +3067,7 @@ components:
         url:
           type: string
           format: uri
+          nullable: true
     PostSet:
       type: object
       required:
@@ -3083,6 +3117,7 @@ components:
         - is_favorited
         - vote
         - comment_count
+        - hotness
       properties:
         score:
           $ref: '#/components/schemas/PostStatsScore'
@@ -3094,6 +3129,9 @@ components:
           $ref: '#/components/schemas/UpDownMehVote'
         comment_count:
           type: integer
+        hotness:
+          type: number
+          format: float
     PostStatsScore:
       type: object
       required:
