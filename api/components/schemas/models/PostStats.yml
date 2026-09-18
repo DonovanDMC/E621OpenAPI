@@ -5,6 +5,7 @@ required:
   - is_favorited
   - vote
   - comment_count
+  - hotness
 properties:
   score:
     $ref: "./PostStatsScore.yml"
@@ -16,3 +17,6 @@ properties:
     $ref: "../enums/UpDownMehVote.yml"
   comment_count:
     type: integer
+  hotness:
+    type: number
+    format: float
