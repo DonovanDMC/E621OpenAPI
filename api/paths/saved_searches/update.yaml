@@ -1,0 +1,44 @@
+summary: Update Saved Search
+operationId: saved_searches#update
+tags:
+  - Saved Searches
+security:
+  - basicAuth: []
+description: You must be the owner of the saved search. The subscription search cannot be updated.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          saved_search[query]:
+            type: string
+            maxLength: 500
+          saved_search[name]:
+            type: string
+            minLength: 3
+            maxLength: 100
+            pattern: ^\d*[a-z_]\w*$
+            description: Used to reference the search with `search:<name>`. Cannot be `subscriptions`.
+          saved_search[is_tracked]:
+            type: boolean
+            description: Track new posts matching the search. Changing this resets the seen post.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/models/SavedSearch.yml"
+  403:
+    description: Access Denied, or the saved search is the subscription search
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/responses/MessageErrorResponse.yml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
+  422:
+    $ref: "../../components/responses/messageError.yaml"

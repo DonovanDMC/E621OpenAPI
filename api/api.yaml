@@ -279,6 +279,8 @@ components:
       $ref: "./components/schemas/models/RecommendedPosts.yml"
     RisingSearchTrend:
       $ref: "./components/schemas/models/RisingSearchTrend.yml"
+    SavedSearch:
+      $ref: "./components/schemas/models/SavedSearch.yml"
     SearchTrend:
       $ref: "./components/schemas/models/SearchTrend.yml"
     SearchTrendBlacklist:
@@ -936,6 +938,25 @@ paths:
   /post_votes/delete.json:
     post:
       $ref: "./paths/post_votes/delete.yaml"
+
+  /saved_searches.json:
+    get:
+      $ref: "./paths/saved_searches/index.yaml"
+    post:
+      $ref: "./paths/saved_searches/create.yaml"
+  /saved_searches/{id}.json:
+    get:
+      $ref: "./paths/saved_searches/show.yaml"
+    patch:
+      $ref: "./paths/saved_searches/update.yaml"
+    delete:
+      $ref: "./paths/saved_searches/destroy.yaml"
+  /saved_searches/mark_all_seen.json:
+    post:
+      $ref: "./paths/saved_searches/mark_all_seen.yaml"
+  /saved_searches/badge.json:
+    get:
+      $ref: "./paths/saved_searches/badge.yaml"
 
   /tags.json:
     get:

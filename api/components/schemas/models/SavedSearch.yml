@@ -1,0 +1,41 @@
+type: object
+required:
+  - id
+  - query
+  - name
+  - is_tracked
+  - is_subscription
+  - last_seen_post_id
+  - created_at
+  - updated_at
+  - new_count
+properties:
+  id:
+    type: integer
+  query:
+    type: string
+    description: Empty for the subscription search, its tags are managed through tag subscriptions.
+  name:
+    type: string
+    nullable: true
+  is_tracked:
+    type: boolean
+  is_subscription:
+    type: boolean
+    description: True for the search that holds the user's tag subscriptions.
+  last_seen_post_id:
+    type: integer
+    nullable: true
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  tag_count:
+    type: integer
+    description: Only present on the subscription search.
+  new_count:
+    type: integer
+    nullable: true
+    description: New posts since the search was last seen, capped at 100. Null for untracked searches, when no counts are cached, or when the search could not be evaluated.

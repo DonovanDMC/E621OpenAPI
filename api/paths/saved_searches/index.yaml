@@ -1,0 +1,18 @@
+summary: List Saved Searches
+operationId: saved_searches#index
+tags:
+  - Saved Searches
+security:
+  - basicAuth: []
+description: Lists the current user's saved searches. New post counts are refreshed when this is called.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/models/SavedSearch.yml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"

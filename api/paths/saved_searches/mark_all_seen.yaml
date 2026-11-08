@@ -1,0 +1,11 @@
+summary: Mark All Saved Searches Seen
+operationId: saved_searches#mark_all_seen
+tags:
+  - Saved Searches
+security:
+  - basicAuth: []
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"

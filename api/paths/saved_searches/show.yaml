@@ -1,0 +1,20 @@
+summary: Get Saved Search
+operationId: saved_searches#show
+tags:
+  - Saved Searches
+security:
+  - basicAuth: []
+description: You must be the owner of the saved search. `new_count` is read from cache and may be stale.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/models/SavedSearch.yml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
