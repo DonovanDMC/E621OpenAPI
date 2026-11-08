@@ -13,6 +13,7 @@ required:
   - locked_tags
   - added_tags
   - removed_tags
+  - original_tags
   - added_locked_tags
   - removed_locked_tags
   - rating_changed
@@ -58,6 +59,11 @@ properties:
       type: string
   removed_tags:
     type: array
+    items:
+      type: string
+  original_tags:
+    type: array
+    description: The tag changes as the user submitted them, before aliases, implications, and automatic tags. Removed tags are prefixed with `-`. May include metatags such as `rating:`, `pool:`, `parent:`, and `source:`.
     items:
       type: string
   added_locked_tags:
