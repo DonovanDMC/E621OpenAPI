@@ -5,31 +5,11 @@
     <title>E621 OpenAPI Documentation</title>
     <script defer data-domain="e621.wiki" src="https://plausible.furry.computer/js/script.tagged-events.js"></script>
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
-    <style>
-      .page-nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px 18px;
-        padding: 12px 16px;
-        border-bottom: 1px solid #3e4346;
-        font-family: sans-serif;
-        font-size: 14px;
-      }
-      .page-nav a {
-        color: #a9cbea;
-        text-decoration: none;
-      }
-      .page-nav a:hover { text-decoration: underline; }
-    </style>
+    <style><%= headerStyle %></style>
   </head>
 
   <body>
-    <nav class="page-nav" aria-label="Guides">
-      <% for (const page of pages) { %>
-      <a href="/<%- page.name %>/"><%- page.title %></a>
-      <% } %>
-    </nav>
+    <%= header %>
     <div id="swagger-ui"></div>
   </body>
 </html>

@@ -1,0 +1,27 @@
+body { margin: 0; }
+.site-header {
+  border-bottom: 1px solid #3e4346;
+  padding-bottom: 16px;
+}
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+  padding: 12px 16px 0;
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.site-nav a {
+  color: #a9cbea;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover { text-decoration: underline; }
+.site-nav a.active {
+  color: #fff;
+  font-weight: bold;
+  border-bottom-color: #a9cbea;
+}
+.site-nav a.active:hover { text-decoration: none; }

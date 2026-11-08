@@ -29,7 +29,6 @@
         margin: 0 auto;
         padding: 24px 16px 64px;
       }
-      nav { margin-bottom: 24px; }
       a { color: var(--link); }
       h1, h2, h3, h4 { color: var(--heading); }
       h2 {
@@ -73,11 +72,12 @@
         :not(pre) > code { white-space: nowrap; }
       }
     </style>
+    <style><%= headerStyle %></style>
   </head>
 
   <body>
+    <%= header %>
     <main>
-      <nav><a href="/">&larr; API Documentation</a></nav>
       <%= content %>
     </main>
   </body>
