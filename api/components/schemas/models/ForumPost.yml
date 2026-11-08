@@ -10,6 +10,7 @@ required:
   - updated_at
   - warning_type
   - warning_user_id
+  - vote_score
 properties:
   id:
     type: integer
@@ -34,3 +35,7 @@ properties:
   warning_user_id:
     type: integer
     nullable: true
+  vote_score:
+    type: string
+    nullable: true
+    description: Net votes divided by total votes, from -1 to 1. Null if the post has never been voted on.

@@ -17,6 +17,8 @@ parameters:
         - updated_at
         - name
         - tag_count
+        - score_desc
+        - score_asc
   - in: query
     name: search[name_matches]
     schema:

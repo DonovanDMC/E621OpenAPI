@@ -16,6 +16,8 @@ parameters:
         - status_desc
         - updated_at_desc
         - updated_at_asc
+        - score_desc
+        - score_asc
   - name: search[user_id]
     in: query
     schema:
