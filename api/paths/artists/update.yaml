@@ -9,6 +9,7 @@ description: |
   `other_names` & `urls` are silently truncated to 25 entries.
   `notes` is silently truncated to the wiki page limit (250,000).
   Individual `other_names` are silently truncated to 100 characters.
+  Individual `urls` cannot be longer than 512 characters.
   If an artist is on the avoid posting list, you must have the bd staff user flag to edit name, other_names, or group_name.
 parameters:
 - "$ref": "../../components/parameters/path/idOrName.yaml"
