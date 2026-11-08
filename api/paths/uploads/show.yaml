@@ -2,7 +2,7 @@ summary: Get Upload
 operationId: uploads#show
 tags:
   - Uploads
-description: You must be Staff+.
+description: You must be the uploader, or Staff+. Can be polled while an upload is processing.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:

@@ -47,13 +47,16 @@ parameters:
     name: search[status]
     schema:
       type: string
-      description: |
-        Note: The "error" status will be proceeded by an error, ex: "error: RuntimeError - No file or source URL provided"
       enum:
         - completed
+        - failed
         - processing
+        - queued
         - pending
-        - error
+  - in: query
+    name: search[error_message]
+    schema:
+      type: string
   - in: query
     name: search[backtrace]
     schema:

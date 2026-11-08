@@ -6,9 +6,7 @@ required:
   - uploader_id
   - tag_string
   - status
-  - backtrace
   - post_id
-  - md5_confirmation
   - created_at
   - updated_at
   - parent_id
@@ -18,7 +16,21 @@ required:
   - image_width
   - image_height
   - description
+  - processing_step
+  - error_message
+  - warning_messages
+  - is_animated
+  - duration
+  - has_sound
+  - locked_tags
+  - locked_rating
+  - as_pending
+  - submitted_tag_string
+  - processing_started_at
+  - processed_at
+  - requeued_at
   - uploader_name
+  - duplicate_post_id
 properties:
   id:
     type: integer
@@ -33,16 +45,18 @@ properties:
   status:
     type: string
     description: |
-      Note: The "error" status will be proceeded by an error, ex: "error: RuntimeError - No file or source URL provided"
+      Note: The "duplicate" status will be followed by the duplicate post's id, ex: "duplicate: 123"
     enum:
       - completed
       - duplicate
-      - error
+      - failed
       - processing
+      - queued
       - pending
   backtrace:
     type: string
     nullable: true
+    description: Only visible to Staff+.
   post_id:
     type: integer
     nullable: true
@@ -50,6 +64,7 @@ properties:
     type: string
     nullable: true
     deprecated: true
+    description: Only visible to Staff+.
   created_at:
     type: string
     format: date-time
@@ -76,5 +91,54 @@ properties:
     nullable: true
   description:
     type: string
+  processing_step:
+    type: string
+    nullable: true
+    description: The step currently being processed.
+    enum:
+      - integrity
+      - thumbnail
+      - sound
+      - post
+      - null
+  error_message:
+    type: string
+    nullable: true
+  warning_messages:
+    type: array
+    items:
+      type: string
+  is_animated:
+    type: boolean
+  duration:
+    type: string
+    nullable: true
+  has_sound:
+    type: boolean
+  locked_tags:
+    type: string
+    nullable: true
+  locked_rating:
+    type: boolean
+  as_pending:
+    type: boolean
+  submitted_tag_string:
+    type: string
+    nullable: true
+  processing_started_at:
+    type: string
+    format: date-time
+    nullable: true
+  processed_at:
+    type: string
+    format: date-time
+    nullable: true
+  requeued_at:
+    type: string
+    format: date-time
+    nullable: true
   uploader_name:
     type: string
+  duplicate_post_id:
+    type: integer
+    nullable: true

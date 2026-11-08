@@ -50,7 +50,7 @@ responses:
           required:
             - success
             - location
-            - post_id
+            - upload_id
           properties:
             success:
               type: boolean
@@ -58,7 +58,11 @@ responses:
                 - true
             location:
               type: string
+              description: The post, or the upload if it is still being processed.
             post_id:
+              type: integer
+              description: Not present if the upload is still being processed.
+            upload_id:
               type: integer
   403:
     $ref: "../../components/responses/accessDenied.yaml"
