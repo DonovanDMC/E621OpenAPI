@@ -23,64 +23,73 @@ async function buildPages() {
   });
 
   return fs.readdirSync(pagesDir).filter(file => file.endsWith(".md")).map(file => {
+    const name = path.basename(file, ".md");
     const source = fs.readFileSync(path.join(pagesDir, file), "utf8");
-    const title = source.match(/^# (.+)$/m)?.[1] ?? path.basename(file, ".md");
-    return new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "page.html"),
-      filename: `${path.basename(file, ".md")}/index.html`,
-      chunks: [],
-      minify: false,
-      templateParameters: { title, content: marked.parse(source) },
-    });
-  });
+    const title = source.match(/^# (.+)$/m)?.[1] ?? name;
+    return {
+      name,
+      title,
+      plugin: new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "page.html"),
+        filename: `${name}/index.html`,
+        chunks: [],
+        minify: false,
+        templateParameters: { title, content: marked.parse(source) },
+      }),
+    };
+  }).sort((a, b) => a.title.localeCompare(b.title));
 }
 
-module.exports = async () => ({
-  mode: process.env.NODE_ENV || "development",
-  entry: path.resolve(__dirname, "./src/index.ts"),
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.yaml$/,
-        use: [
-          { loader: "json-loader" },
-          { loader: "yaml-loader", options: { asJSON: true } }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-        ]
-      }
-    ],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new FaviconsWebpackPlugin(path.resolve(__dirname, "icon.png")),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "index.html"),
-      minify: false
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, "openapi.yaml"), to: "openapi.yaml" },
-        { from: path.resolve(__dirname, "openapi.dereferenced.yaml"), to: "openapi.dereferenced.yaml" },
+module.exports = async () => {
+  const pages = await buildPages();
+  return {
+    mode: process.env.NODE_ENV || "development",
+    entry: path.resolve(__dirname, "./src/index.ts"),
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/,
+        },
+        {
+          test: /\.yaml$/,
+          use: [
+            { loader: "json-loader" },
+            { loader: "yaml-loader", options: { asJSON: true } }
+          ]
+        },
+        {
+          test: /\.css$/,
+          use: [
+            { loader: "style-loader" },
+            { loader: "css-loader" },
+          ]
+        }
       ],
-    }),
-    ...await buildPages(),
-  ],
-  resolve: {
-    extensions: [".tsx", ".ts", ".js"],
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-  },
-});
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new FaviconsWebpackPlugin(path.resolve(__dirname, "icon.png")),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "index.html"),
+        minify: false,
+        templateParameters: { pages },
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: path.resolve(__dirname, "openapi.yaml"), to: "openapi.yaml" },
+          { from: path.resolve(__dirname, "openapi.dereferenced.yaml"), to: "openapi.dereferenced.yaml" },
+        ],
+      }),
+      ...pages.map(page => page.plugin),
+    ],
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"],
+    },
+    output: {
+      filename: "bundle.js",
+      path: path.resolve(__dirname, "dist"),
+    },
+  };
+};
