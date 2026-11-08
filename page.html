@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%- title %> - E621 OpenAPI Documentation</title>
+    <script defer data-domain="e621.wiki" src="https://plausible.furry.computer/js/script.tagged-events.js"></script>
+    <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <style>
+      :root {
+        --bg: #1c1c21;
+        --surface: #242424;
+        --border: #3e4346;
+        --text: #bfbfbf;
+        --heading: #fff;
+        --link: #a9cbea;
+        --code: #e69999;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: sans-serif;
+        line-height: 1.5;
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px 16px 64px;
+      }
+      nav { margin-bottom: 24px; }
+      a { color: var(--link); }
+      h1, h2, h3, h4 { color: var(--heading); }
+      h2 {
+        margin-top: 40px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+      }
+      h3 { margin-top: 28px; }
+      code {
+        font-family: monospace;
+        font-size: 0.95em;
+        color: var(--code);
+        background: var(--surface);
+        padding: 1px 4px;
+        border-radius: 3px;
+      }
+      pre {
+        background: var(--surface);
+        padding: 12px;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+      pre code { padding: 0; }
+      .table-wrap { overflow-x: auto; }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 12px 0;
+      }
+      th, td {
+        border: 1px solid var(--border);
+        padding: 6px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        color: var(--heading);
+        background: var(--surface);
+      }
+      @media (min-width: 700px) {
+        code { white-space: nowrap; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <nav><a href="/">&larr; API Documentation</a></nav>
+      <%= content %>
+    </main>
+  </body>
+</html>
