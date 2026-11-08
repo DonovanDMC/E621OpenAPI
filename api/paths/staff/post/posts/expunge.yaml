@@ -21,12 +21,7 @@ responses:
     content:
       application/json:
         schema:
-          type: object
-          required:
-          - post
-          properties:
-            post:
-              "$ref": "../../../../components/schemas/models/Post.yml"
+          "$ref": "../../../../components/schemas/models/RawPost.yml"
   403:
     "$ref": "../../../../components/responses/accessDenied.yaml"
   404:

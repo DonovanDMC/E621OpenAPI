@@ -8,7 +8,7 @@ description: You must be Janitor+
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
 responses:
-  201:
+  200:
     description: Success
     content:
       application/json:

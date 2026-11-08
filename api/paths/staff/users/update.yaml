@@ -47,8 +47,8 @@ requestBody:
           user[raised_favorite_limit]:
             type: boolean
 responses:
-  200:
-    description: Success
+  302:
+    description: Success, redirects to the user
   400:
     "$ref": "../../../components/responses/messageError.yaml"
   403:
