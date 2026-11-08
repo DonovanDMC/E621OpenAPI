@@ -9,6 +9,7 @@ parameters:
   - $ref: "../../components/parameters/query/mode.yaml"
   - in: query
     name: tags
+    description: See [Search Syntax](https://e621.wiki/searching/).
     schema:
       type: string
   - in: query

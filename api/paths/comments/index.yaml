@@ -36,7 +36,7 @@ parameters:
       type: string
   - in: query
     name: search[post_tags_match]
-    description: Only usable by Member+
+    description: Only usable by Member+. See [Search Syntax](https://e621.wiki/searching/).
     schema:
       type: string
   - in: query

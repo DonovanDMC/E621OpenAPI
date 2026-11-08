@@ -16,6 +16,7 @@ requestBody:
         - post_tags
         properties:
           post_tags:
+            description: See [Search Syntax](https://e621.wiki/searching/).
             type: string
 responses:
   200:

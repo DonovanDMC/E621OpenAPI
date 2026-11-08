@@ -4,6 +4,10 @@ This repository is the home of OpenAPI documentation for https://e621.net. It is
 
 If you'd like to ask any questions, you can do so [in this forum topic](https://e621.net/forum_topics/46279).
 
+## Pages
+Markdown files in `pages/` are built into their own pages, `pages/<name>.md` is served at `https://e621.wiki/<name>/`.
+* [Search Syntax](https://e621.wiki/searching/)
+
 ## Raw
 If you need the full spec as a url for an IDE or something similar, this url should always serve the latest version.
 ```

@@ -5,6 +5,7 @@ info:
   description: |
     OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)<br>
     This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).<br>
+    See [Search Syntax](https://e621.wiki/searching/) for the tags and metatags accepted by post searches.<br>
     If the api is not working, you can check this [Unofficial Status Page](https://status.e621.church).<br>
     An MCP server exposing this API to Claude and other MCP clients is available at [mcp.e621.wiki](https://mcp.e621.wiki) (also reachable at [e621.wiki/mcp](https://e621.wiki/mcp)); see its [README](https://github.com/DonovanDMC/E621OpenAPI/tree/master/mcp) for details.
   license:

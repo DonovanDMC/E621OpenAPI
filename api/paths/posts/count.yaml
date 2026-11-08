@@ -5,6 +5,7 @@ tags:
 parameters:
   - in: query
     name: tags
+    description: See [Search Syntax](https://e621.wiki/searching/).
     required: true
     schema:
       type: string

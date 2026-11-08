@@ -9,7 +9,7 @@ parameters:
   - $ref: "../../components/parameters/query/order.yaml"
   - name: search[post_tags_match]
     in: query
-    description: Only usable by Member+
+    description: Only usable by Member+. See [Search Syntax](https://e621.wiki/searching/).
     schema:
       type: string
   - name: search[user_id]
