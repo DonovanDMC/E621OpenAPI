@@ -48,10 +48,28 @@ responses:
               description: The new format, returned with `v2=true`.
               items:
                 $ref: "../../../components/schemas/responses/IQDBResponseV2.yml"
+  400:
+    description: Invalid input, or IQDB is disabled
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/responses/MessageErrorResponse.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"
   422:
     description: The file could not be downloaded, or is too large
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/responses/MessageErrorResponse.yml"
+  429:
+    description: Ratelimited, or IQDB is busy
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/responses/MessageErrorResponse.yml"
+  503:
+    description: IQDB is unavailable
     content:
       application/json:
         schema:
