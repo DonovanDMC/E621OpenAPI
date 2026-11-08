@@ -4,7 +4,7 @@ tags:
 - Takedowns
 security:
 - basicAuth: []
-description: You must have the bd staff user flag.
+description: You must have the bd staff user flag. Deleted posts are not counted.
 parameters:
 - "$ref": "../../components/parameters/path/id.yaml"
 requestBody:
