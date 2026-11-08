@@ -6,7 +6,15 @@ If you'd like to ask any questions, you can do so [in this forum topic](https://
 
 ## Pages
 Markdown files in `pages/` are built into their own pages, `pages/<name>.md` is served at `https://e621.wiki/<name>/`.
+* [Authentication](https://e621.wiki/authentication/)
+* [Pagination](https://e621.wiki/pagination/)
+* [Errors and Rate Limits](https://e621.wiki/errors/)
 * [Search Syntax](https://e621.wiki/searching/)
+* [Post Files](https://e621.wiki/post-files/)
+* [DText](https://e621.wiki/dtext/)
+* [User Levels](https://e621.wiki/user-levels/)
+* [Tag Categories](https://e621.wiki/tag-categories/)
+* [DB Exports](https://e621.wiki/db-exports/)
 
 ## Raw
 If you need the full spec as a url for an IDE or something similar, this url should always serve the latest version.
