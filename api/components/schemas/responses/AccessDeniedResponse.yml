@@ -7,5 +7,5 @@ properties:
     type: boolean
   reason:
     type: string
-    enum:
-      - "Access Denied"
+    description: "Usually `Access Denied`, but may include more detail, ex: `Access Denied: Must be logged in`."
+    example: "Access Denied"
