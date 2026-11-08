@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 2b880ac
+  version: aac2254
   x-e621ng-commit: f7c916997c870b4ce1c614dbf4e89827b73e8d61
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f7c916997c870b4ce1c614dbf4e89827b73e8d61...master
@@ -10838,7 +10838,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
-        '201':
+        '200':
           description: Success
           content:
             application/json:
@@ -15254,8 +15254,8 @@ paths:
                 'user[raised_favorite_limit]':
                   type: boolean
       responses:
-        '200':
-          description: Success
+        '302':
+          description: 'Success, redirects to the user'
         '400':
           $ref: '#/components/responses/MessageError'
         '403':
@@ -15622,12 +15622,30 @@ paths:
                   enum:
                     - Delete
       responses:
-        '302':
+        '201':
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RawPost'
+        '302':
+          description: 'No reason was given, redirects to the confirmation page'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+        '409':
+          description: The post is already deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - reason
+                properties:
+                  reason:
+                    type: string
+                    example: 'Post #123 is already deleted'
         '422':
           $ref: '#/components/responses/ExpectedError'
   '/staff/post/posts/{id}/undelete.json':
@@ -15647,12 +15665,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - post
-                properties:
-                  post:
-                    $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/RawPost'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -15733,12 +15746,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - post
-                properties:
-                  post:
-                    $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/RawPost'
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
