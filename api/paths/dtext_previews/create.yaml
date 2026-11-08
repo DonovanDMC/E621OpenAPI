@@ -2,11 +2,9 @@ summary: Preview DText
 operationId: dtext_previews#create
 tags:
 - DText
-description: Note while this route does not require auth, without auth it requires
-  a CSRF token. For that reason it has been marked as requiring auth.
+description: Limited to 20 requests per minute.
 security:
 - basicAuth: []
-- csrfToken: []
 requestBody:
   content:
     application/x-www-form-urlencoded:
@@ -17,6 +15,9 @@ requestBody:
         properties:
           body:
             type: string
+            maxLength: 250000
+          allow_color:
+            type: boolean
 responses:
   200:
     description: Success
@@ -24,3 +25,17 @@ responses:
       application/json:
         schema:
           "$ref": "../../components/schemas/responses/DTextResponse.yml"
+  403:
+    "$ref": "../../components/responses/accessDenied.yaml"
+  413:
+    description: The body or the rendered output is too large
+    content:
+      application/json:
+        schema:
+          "$ref": "../../components/schemas/responses/MessageErrorResponse.yml"
+  429:
+    description: Ratelimited
+    content:
+      application/json:
+        schema:
+          "$ref": "../../components/schemas/responses/MessageErrorResponse.yml"
