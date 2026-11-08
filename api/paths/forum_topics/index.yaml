@@ -8,12 +8,21 @@ parameters:
   - $ref: "../../components/parameters/query/id.yaml"
   - name: search[order]
     in: query
+    description: "`sticky` sorts by last bumped, `sticky_updated` by last updated."
     schema:
       type: string
       enum:
         - id_asc
         - id_desc
         - sticky
+        - sticky_updated
+        - created_at
+        - created_at_desc
+        - created_at_asc
+        - updated_at
+        - updated_at_desc
+        - updated_at_asc
+        - bumped
   - in: query
     name: search[title]
     schema:

@@ -11,6 +11,7 @@ required:
   - created_at
   - updated_at
   - category_id
+  - last_bumped_at
 properties:
   id:
     type: integer
@@ -36,3 +37,6 @@ properties:
     format: date-time
   category_id:
     type: integer
+  last_bumped_at:
+    type: string
+    format: date-time

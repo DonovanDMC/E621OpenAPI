@@ -17,6 +17,9 @@ requestBody:
             type: string
           forum_post[topic_id]:
             type: integer
+          forum_post[do_not_bump_topic]:
+            type: boolean
+            description: Don't bump the topic.
 responses:
   201:
     description: Success

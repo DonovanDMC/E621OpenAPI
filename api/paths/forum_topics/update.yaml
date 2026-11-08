@@ -19,6 +19,9 @@ requestBody:
           forum_topic[is_sticky]:
             type: boolean
             description: You must be Moderator+.
+          forum_topic[do_not_bump]:
+            type: boolean
+            description: Don't bump the topic when changing the title or category.
           forum_topic[is_locked]:
             type: boolean
             description: You must be Moderator+.
