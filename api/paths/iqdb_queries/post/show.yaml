@@ -50,3 +50,9 @@ responses:
                 $ref: "../../../components/schemas/responses/IQDBResponseV2.yml"
   403:
     $ref: "../../../components/responses/accessDenied.yaml"
+  422:
+    description: The file could not be downloaded, or is too large
+    content:
+      application/json:
+        schema:
+          $ref: "../../../components/schemas/responses/MessageErrorResponse.yml"
