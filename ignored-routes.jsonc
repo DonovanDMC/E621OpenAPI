@@ -11,6 +11,7 @@
   "staff/wiki_versions#diff": "HTML only route",
   "users#{home,settings}": "HTML only route",
   "wiki_page_versions#diff": "HTML only route",
+  "artists_short#show": "HTML only route",
   "auths#{login,totp}": "HTML only route",
   "emails#*": "HTML only route",
   "maintenance/user/deletions#show": "HTML only route",
