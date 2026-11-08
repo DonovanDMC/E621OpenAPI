@@ -1,0 +1,25 @@
+summary: Clear Posts
+operationId: takedowns#clear_posts
+tags:
+- Takedowns
+security:
+- basicAuth: []
+description: You must have the bd staff user flag. Removes all posts from the takedown.
+parameters:
+- "$ref": "../../components/parameters/path/id.yaml"
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+          - removed_count
+          properties:
+            removed_count:
+              type: integer
+  403:
+    "$ref": "../../components/responses/accessDenied.yaml"
+  404:
+    "$ref": "../../components/responses/notFound.yaml"

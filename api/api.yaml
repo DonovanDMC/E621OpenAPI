@@ -1120,6 +1120,9 @@ paths:
   /takedowns/{id}/remove_by_ids.json:
     post:
       $ref: "./paths/takedowns/remove_by_ids.yaml"
+  /takedowns/{id}/clear_posts.json:
+    post:
+      $ref: "./paths/takedowns/clear_posts.yaml"
 
   /tickets.json:
     get:
