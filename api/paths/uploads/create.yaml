@@ -67,4 +67,45 @@ responses:
   403:
     $ref: "../../components/responses/accessDenied.yaml"
   412:
-    $ref: "../../components/responses/messageError.yaml"
+    description: The upload was invalid, failed, or is a duplicate
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - type: object
+              required:
+                - success
+                - reason
+                - message
+              properties:
+                success:
+                  type: boolean
+                  enum:
+                    - false
+                reason:
+                  type: string
+                  enum:
+                    - invalid
+                message:
+                  type: string
+            - type: object
+              required:
+                - success
+                - reason
+                - location
+                - post_id
+              properties:
+                success:
+                  type: boolean
+                  enum:
+                    - false
+                reason:
+                  type: string
+                  enum:
+                    - duplicate
+                location:
+                  type: string
+                  description: The duplicate post.
+                post_id:
+                  type: integer
+                  description: The duplicate post's id.
