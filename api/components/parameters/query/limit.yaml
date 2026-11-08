@@ -1,6 +1,6 @@
 name: limit
 in: query
-description: The maximum number of results to return. Between 0 and 320.
+description: The maximum number of results to return. Between 0 and 320. See [Pagination](https://e621.wiki/pagination/).
 schema:
   type: integer
   minimum: 0

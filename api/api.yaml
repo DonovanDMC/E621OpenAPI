@@ -5,7 +5,7 @@ info:
   description: |
     OpenAPI definition for E621's API. You can find the source [here](https://github.com/DonovanDMC/E621OpenAPI)<br>
     This document is intended to compliment E621's existing [API Documentation](https://e621.net/help/api).<br>
-    See [Search Syntax](https://e621.wiki/searching/) for the tags and metatags accepted by post searches.<br>
+    Guides: [Authentication](https://e621.wiki/authentication/), [Pagination](https://e621.wiki/pagination/), [Errors and Rate Limits](https://e621.wiki/errors/), [Search Syntax](https://e621.wiki/searching/), [Post Files](https://e621.wiki/post-files/), [DText](https://e621.wiki/dtext/), [User Levels](https://e621.wiki/user-levels/), [Tag Categories](https://e621.wiki/tag-categories/), [DB Exports](https://e621.wiki/db-exports/).<br>
     If the api is not working, you can check this [Unofficial Status Page](https://status.e621.church).<br>
     An MCP server exposing this API to Claude and other MCP clients is available at [mcp.e621.wiki](https://mcp.e621.wiki) (also reachable at [e621.wiki/mcp](https://e621.wiki/mcp)); see its [README](https://github.com/DonovanDMC/E621OpenAPI/tree/master/mcp) for details.
   license:
@@ -36,6 +36,7 @@ components:
     basicAuth:
       type: http
       scheme: basic
+      description: "Your username and API key. See [Authentication](https://e621.wiki/authentication/)."
     browserAuth:
       type: apiKey
       in: cookie

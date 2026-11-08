@@ -1,5 +1,5 @@
 in: query
 name: v2
-description: Use the new V2 format. See the `v2=true` responses.
+description: Use the new V2 format. See the `v2=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).
 schema:
   type: boolean
