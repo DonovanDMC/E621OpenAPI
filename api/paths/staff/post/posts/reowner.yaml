@@ -40,3 +40,9 @@ responses:
     $ref: "../../../../components/responses/accessDenied.yaml"
   404:
     $ref: "../../../../components/responses/notFound.yaml"
+  422:
+    description: The new owner could not be found
+    content:
+      application/json:
+        schema:
+          $ref: "../../../../components/schemas/responses/MessageErrorResponse.yml"
