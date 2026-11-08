@@ -1,0 +1,18 @@
+summary: List Tag Subscriptions
+operationId: tag_subscriptions#index
+tags:
+  - Tag Subscriptions
+security:
+  - basicAuth: []
+description: Lists the current user's tag subscriptions, ordered by tag name.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/models/TagSubscription.yml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"

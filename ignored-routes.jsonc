@@ -4,6 +4,7 @@
   "pools#gallery": "HTML only route",
   "post_sets#maintainers": "HTML only route",
   "saved_searches#visit": "HTML only route",
+  "tag_subscriptions#visit": "HTML only route",
   "search_trends#settings": "HTML only route",
   "staff/post/posts#{confirm_delete,confirm_move_favorites}": "HTML only route",
   "staff/users#{anonymize,edit_blacklist,request_password_reset,update_blacklist,remove_totp}": "HTML only route",

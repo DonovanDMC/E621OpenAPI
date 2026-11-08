@@ -1,0 +1,19 @@
+type: object
+required:
+  - id
+  - tag_id
+  - created_at
+  - tag_name
+  - category
+properties:
+  id:
+    type: integer
+  tag_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  tag_name:
+    type: string
+  category:
+    $ref: "../enums/TagCategory.yml"

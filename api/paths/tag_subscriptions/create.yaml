@@ -1,0 +1,53 @@
+summary: Create Tag Subscriptions
+operationId: tag_subscriptions#create
+tags:
+  - Tag Subscriptions
+security:
+  - basicAuth: []
+description: |
+  Subscribes to one or more tags, following aliases. Users can subscribe to up to 500 tags.
+  Subscribed tags can be searched with the `search:subscriptions` metatag.
+requestBody:
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          tag_name:
+            type: string
+            description: A single tag. Ignored if `tag_names` is present.
+          tag_names:
+            type: string
+            description: Space separated list of tags.
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - added
+            - skipped
+          properties:
+            added:
+              type: array
+              items:
+                $ref: "../../components/schemas/models/TagSubscription.yml"
+            skipped:
+              type: array
+              items:
+                type: object
+                required:
+                  - name
+                  - reason
+                properties:
+                  name:
+                    type: string
+                  reason:
+                    type: string
+                    description: One of `does not exist`, `already subscribed`, `over the limit of <limit>`, or `too many tags in one request`.
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  422:
+    $ref: "../../components/responses/messageError.yaml"

@@ -315,6 +315,8 @@ components:
       $ref: "./components/schemas/models/TagImplication.yml"
     TagPreview:
       $ref: "./components/schemas/models/TagPreview.yml"
+    TagSubscription:
+      $ref: "./components/schemas/models/TagSubscription.yml"
     TagTypeVersion:
       $ref: "./components/schemas/models/TagTypeVersion.yml"
     TagWithCount:
@@ -1020,6 +1022,15 @@ paths:
   /tag_implication_requests.json:
     post:
       $ref: "./paths/tag_implication_requests/create.yaml"
+
+  /tag_subscriptions.json:
+    get:
+      $ref: "./paths/tag_subscriptions/index.yaml"
+    post:
+      $ref: "./paths/tag_subscriptions/create.yaml"
+  /tag_subscriptions/{id}.json:
+    delete:
+      $ref: "./paths/tag_subscriptions/destroy.yaml"
 
   /related_tag/bulk.json:
     post:

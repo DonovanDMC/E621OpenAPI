@@ -1,0 +1,16 @@
+summary: Delete Tag Subscription
+operationId: tag_subscriptions#destroy
+tags:
+  - Tag Subscriptions
+security:
+  - basicAuth: []
+description: You must be the owner of the tag subscription.
+parameters:
+  - $ref: "../../components/parameters/path/id.yaml"
+responses:
+  204:
+    description: Success
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"
