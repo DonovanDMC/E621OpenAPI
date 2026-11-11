@@ -1,24 +1,21 @@
-import { verifyE621Credentials } from "./e621Client.js";
+import { authorizeUrl, exchangeCode, randomToken, type E621OAuthEnv } from "./e621OAuth.js";
 import authorizeStyles from "./templates/authorize.css";
 import authorizeTemplate from "./templates/authorize.html";
 
-import type { E621Env } from "./e621Client.js";
+import type { AuthRequest, OAuthHelpers } from "@cloudflare/workers-oauth-provider";
 
-interface OAuthHelpers {
-    completeAuthorization(options: {
-        metadata: Record<string, unknown>;
-        props: Record<string, unknown>;
-        request: Record<string, unknown>;
-        scope: Array<string>;
-        userId: string;
-    }): Promise<{ redirectTo: string }>;
-    lookupClient(clientId: string): Promise<{ clientName?: string } | null>;
-    parseAuthRequest(request: Request): Promise<Record<string, unknown>>;
-}
-
-interface Env extends E621Env {
+interface Env extends E621OAuthEnv {
+    OAUTH_KV: KVNamespace;
     OAUTH_PROVIDER: OAuthHelpers;
 }
+
+interface PendingAuthorization {
+    codeVerifier: string;
+    oauthReqInfo: AuthRequest;
+}
+
+const STATE_COOKIE = "e621_mcp_state";
+const STATE_TTL = 600;
 
 function escapeHtml(value: string): string {
     return value
@@ -32,25 +29,47 @@ function renderTemplate(template: string, values: Record<string, string>): strin
     return template.replaceAll(/\{\{(\w+)\}\}/g, (_match, key: string) => values[key] ?? "");
 }
 
-function stylesheetHref(url: URL): string {
-    return url.pathname.startsWith("/mcp/") ? "/mcp/application.css" : "/authorize.css";
+function callbackUrl(url: URL): string {
+    return `${url.origin}/callback`;
 }
 
-function authorizePage({ clientName, errorMessage, oauthReqInfo, stylesheetHref, username = "" }: {
-    clientName: string;
-    errorMessage?: string;
-    oauthReqInfo: string;
-    stylesheetHref: string;
-    username?: string;
-}): Response {
+function stateCookie(value: string, maxAge: number): string {
+    return `${STATE_COOKIE}=${value}; Path=/; Max-Age=${maxAge}; HttpOnly; Secure; SameSite=Lax`;
+}
+
+function readStateCookie(request: Request): string | undefined {
+    for (const part of request.headers.get("cookie")?.split(";") ?? []) {
+        const [name, ...value] = part.trim().split("=");
+        if (name === STATE_COOKIE) return value.join("=");
+    }
+    return undefined;
+}
+
+function errorPage(url: URL, message: string, status = 400): Response {
     const html = renderTemplate(authorizeTemplate, {
-        clientName: escapeHtml(clientName),
-        errorHtml: errorMessage ? `<p class="error">${escapeHtml(errorMessage)}</p>` : "",
-        oauthReqInfo: escapeHtml(oauthReqInfo),
-        stylesheetHref: escapeHtml(stylesheetHref),
-        username: escapeHtml(username),
+        stylesheetHref: "/authorize.css",
+        body: `<h1>Couldn't connect your e621 account</h1><p class="error">${escapeHtml(message)}</p><p class="hint">Go back to your MCP client and try connecting again.</p>`,
     });
-    return new Response(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+    return new Response(html, { status, headers: { "content-type": "text/html; charset=utf-8" } });
+}
+
+function consentPage(url: URL, { clientName, redirectHost, state }: { clientName: string; redirectHost: string; state: string }): Response {
+    const html = renderTemplate(authorizeTemplate, {
+        stylesheetHref: "/authorize.css",
+        body: `<h1>Connect your e621 account</h1>
+  <p><strong>${escapeHtml(clientName)}</strong> wants to connect to the e621 MCP server. e621 will confirm who you are; the server can't act as you, and only makes anonymous, read-only API calls.</p>
+  <p class="hint">After approving, you'll be sent back to <strong>${escapeHtml(redirectHost)}</strong>. Only continue if you started this from a client you trust.</p>
+  <form method="POST" action="/authorize">
+    <input type="hidden" name="state" value="${escapeHtml(state)}">
+    <button type="submit">Continue to e621</button>
+  </form>`,
+    });
+    return new Response(html, {
+        headers: {
+            "content-type": "text/html; charset=utf-8",
+            "set-cookie": stateCookie(state, STATE_TTL),
+        },
+    });
 }
 
 function authorizeStylesheet(): Response {
@@ -64,69 +83,89 @@ function authorizeStylesheet(): Response {
 
 async function handleAuthorizeGet(request: Request, env: Env, url: URL): Promise<Response> {
     const oauthReqInfo = await env.OAUTH_PROVIDER.parseAuthRequest(request);
-    const clientInfo = await env.OAUTH_PROVIDER.lookupClient(String(oauthReqInfo.clientId));
-    const clientName = clientInfo?.clientName ?? "An MCP client";
-    const state = btoa(JSON.stringify(oauthReqInfo));
+    const clientInfo = await env.OAUTH_PROVIDER.lookupClient(oauthReqInfo.clientId);
+    if (!clientInfo) return errorPage(url, "Unknown MCP client.");
 
-    return authorizePage({ clientName, oauthReqInfo: state, stylesheetHref: stylesheetHref(url) });
+    // The pending request lives in KV so the browser only ever holds an opaque state value.
+    const state = randomToken();
+    const pending: PendingAuthorization = { oauthReqInfo, codeVerifier: randomToken() };
+    await env.OAUTH_KV.put(`e621_auth:${state}`, JSON.stringify(pending), { expirationTtl: STATE_TTL });
+
+    return consentPage(url, {
+        clientName: clientInfo.clientName ?? "An MCP client",
+        redirectHost: new URL(oauthReqInfo.redirectUri).host,
+        state,
+    });
 }
 
 async function handleAuthorizePost(request: Request, env: Env, url: URL): Promise<Response> {
     const form = await request.formData();
-    const encodedReqInfo = form.get("oauthReqInfo");
-    const username = form.get("username");
-    const apiKey = form.get("apiKey");
-
-    if (typeof encodedReqInfo !== "string" || typeof username !== "string" || typeof apiKey !== "string") {
-        return authorizePage({
-            clientName: "e621 MCP Server",
-            errorMessage: "Malformed request. Go back and try again.",
-            oauthReqInfo: "",
-            stylesheetHref: stylesheetHref(url),
-        });
+    const state = form.get("state");
+    if (typeof state !== "string" || state !== readStateCookie(request)) {
+        return errorPage(url, "This authorization request is invalid or has expired.");
     }
 
-    const oauthReqInfo = JSON.parse(atob(encodedReqInfo)) as Record<string, unknown>;
-    const user = await verifyE621Credentials(env, { username, apiKey });
+    const pending = await env.OAUTH_KV.get<PendingAuthorization>(`e621_auth:${state}`, "json");
+    if (!pending) return errorPage(url, "This authorization request has expired.");
 
-    if (!user) {
-        const state = btoa(JSON.stringify(oauthReqInfo));
-        return authorizePage({
-            clientName: "e621 MCP Server",
-            errorMessage: "Those credentials didn't work. Double-check your username and API key.",
-            oauthReqInfo: state,
-            stylesheetHref: stylesheetHref(url),
-            username,
-        });
+    return Response.redirect(await authorizeUrl(env, {
+        redirectUri: callbackUrl(url),
+        state,
+        codeVerifier: pending.codeVerifier,
+    }), 302);
+}
+
+async function handleCallback(request: Request, env: Env, url: URL): Promise<Response> {
+    const state = url.searchParams.get("state");
+    if (!state || state !== readStateCookie(request)) {
+        return errorPage(url, "This authorization request is invalid or has expired.");
+    }
+
+    const key = `e621_auth:${state}`;
+    const pending = await env.OAUTH_KV.get<PendingAuthorization>(key, "json");
+    if (!pending) return errorPage(url, "This authorization request has expired.");
+    await env.OAUTH_KV.delete(key);
+
+    const upstreamError = url.searchParams.get("error");
+    if (upstreamError) {
+        return errorPage(url, url.searchParams.get("error_description") ?? `e621 denied the request (${upstreamError}).`);
+    }
+    const code = url.searchParams.get("code");
+    if (!code) return errorPage(url, "e621 didn't return an authorization code.");
+
+    let user;
+    try {
+        user = await exchangeCode(env, { code, codeVerifier: pending.codeVerifier, redirectUri: callbackUrl(url) });
+    } catch (error) {
+        console.error("e621 code exchange failed:", error instanceof Error ? error.message : error);
+        return errorPage(url, "e621 rejected the authorization. Try again.", 502);
     }
 
     const { redirectTo } = await env.OAUTH_PROVIDER.completeAuthorization({
-        request: oauthReqInfo,
+        request: pending.oauthReqInfo,
         userId: String(user.id),
-        scope: Array.isArray(oauthReqInfo.scope) ? oauthReqInfo.scope as Array<string> : [],
+        scope: pending.oauthReqInfo.scope,
         metadata: { username: user.name },
-        props: { e621Username: user.name, e621ApiKey: apiKey },
+        props: { e621UserId: user.id, e621Username: user.name },
     });
 
-    return Response.redirect(redirectTo, 302);
+    return new Response(null, {
+        status: 302,
+        headers: { "location": redirectTo, "set-cookie": stateCookie("", 0) },
+    });
 }
 
 export const authHandler = {
     async fetch(request: Request, env: Env): Promise<Response> {
         const url = new URL(request.url);
+        const { pathname } = url;
 
-        if ((url.pathname === "/authorize" || url.pathname === "/mcp/authorize") && request.method === "GET") {
-            return handleAuthorizeGet(request, env, url);
-        }
-        if ((url.pathname === "/authorize" || url.pathname === "/mcp/authorize") && request.method === "POST") {
-            return handleAuthorizePost(request, env, url);
-        }
-        if ((url.pathname === "/authorize.css" || url.pathname === "/mcp/application.css") && request.method === "GET") {
-            return authorizeStylesheet();
-        }
-        // "/" and "/mcp" are both claimed by the MCP apiHandlers (see index.ts) — an
-        // unauthenticated request there gets OAuthProvider's 401 challenge directly,
-        // never reaching this defaultHandler.
+        if (pathname === "/authorize" && request.method === "GET") return handleAuthorizeGet(request, env, url);
+        if (pathname === "/authorize" && request.method === "POST") return handleAuthorizePost(request, env, url);
+        if (pathname === "/callback" && request.method === "GET") return handleCallback(request, env, url);
+        if (pathname === "/authorize.css" && request.method === "GET") return authorizeStylesheet();
+        // "/" and "/mcp*" are claimed by the MCP apiHandlers (see index.ts), so this only
+        // ever sees requests on mcp.e621.wiki.
         return new Response("Not found", { status: 404 });
     },
 };

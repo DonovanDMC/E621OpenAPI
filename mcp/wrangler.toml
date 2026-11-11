@@ -18,6 +18,11 @@ custom_domain = true
 pattern = "e621.wiki/mcp*"
 zone_name = "e621.wiki"
 
+# Protected resource metadata for e621.wiki/mcp, which points clients at mcp.e621.wiki for OAuth.
+[[routes]]
+pattern = "e621.wiki/.well-known/oauth-protected-resource/mcp*"
+zone_name = "e621.wiki"
+
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["E621MCP"]
@@ -35,7 +40,7 @@ E621_API_BASE = "https://e621.net"
 E621_USER_AGENT = "e621-mcp-server/0.1 (by DonovanDMC; https://e621.wiki)"
 
 [secrets]
-required = ["E621_PROXY_BASE", "E621_PROXY_TOKEN"]
+required = ["E621_OAUTH_CLIENT_ID", "E621_OAUTH_CLIENT_SECRET", "E621_PROXY_BASE", "E621_PROXY_TOKEN"]
 
 [observability.traces]
 enabled = true

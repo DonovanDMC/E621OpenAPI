@@ -35,7 +35,8 @@ export interface CatalogOperation {
     tags: Array<string>;
 }
 
-const CATALOG = operations as Array<CatalogOperation>;
+// Calls are made anonymously, so only public reads are exposed.
+const CATALOG = (operations as Array<CatalogOperation>).filter(op => op.method === "GET" && !op.requiresAuth);
 const BY_ID = new Map(CATALOG.map(op => [op.operationId, op]));
 
 export function getOperation(operationId: string): CatalogOperation | undefined {

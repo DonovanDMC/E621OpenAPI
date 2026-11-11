@@ -1,5 +1,7 @@
 interface Env {
     E621_API_BASE: string;
+    E621_OAUTH_CLIENT_ID: string;
+    E621_OAUTH_CLIENT_SECRET: string;
     E621_PROXY_BASE?: string;
     E621_PROXY_TOKEN?: string;
     E621_USER_AGENT: string;

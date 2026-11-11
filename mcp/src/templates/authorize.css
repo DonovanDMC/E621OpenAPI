@@ -16,18 +16,6 @@ a {
     color: #93c5fd;
 }
 
-input {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    margin: .25rem 0 1rem;
-    padding: .5rem;
-    border: 1px solid #4b5563;
-    border-radius: 4px;
-    background: #1f2937;
-    color: #f9fafb;
-}
-
 button {
     padding: .5rem 1.5rem;
     border: none;
