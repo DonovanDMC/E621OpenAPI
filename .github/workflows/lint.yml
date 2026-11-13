@@ -32,6 +32,14 @@ jobs:
       - uses: ./.github/actions/download-build
       - name: Lint
         run: pnpm run lint:validate
+  mod-actions:
+    runs-on: ubuntu-latest
+    name: Validate Mod Actions
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm
+      - name: Validate Mod Actions
+        run: pnpm run validate:mod-actions
   operation-ids:
     runs-on: ubuntu-latest
     name: Validate Operation IDs

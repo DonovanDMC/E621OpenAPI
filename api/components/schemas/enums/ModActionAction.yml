@@ -55,6 +55,9 @@ enum:
   - staff_file_update # Staff+
   - staff_file_delete # Staff+
   - pool_delete
+  - flag_reason_create
+  - flag_reason_update
+  - flag_reason_delete
   - report_reason_create
   - report_reason_delete
   - report_reason_update

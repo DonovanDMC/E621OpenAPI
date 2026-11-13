@@ -14,3 +14,4 @@ npm run build:openapi
 npm run lint:validate
 npm run lint:api
 npm run validate:operation-ids
+npm run validate:mod-actions
