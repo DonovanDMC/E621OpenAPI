@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: d9a0ab1
+  version: '69e2424'
   x-e621ng-commit: f7c916997c870b4ce1c614dbf4e89827b73e8d61
   x-e621ng-master-behind-by: 46
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f7c916997c870b4ce1c614dbf4e89827b73e8d61...master
@@ -492,6 +492,18 @@ components:
       enum:
         - 1
         - -1
+    UploadStatus:
+      oneOf:
+        - type: string
+          enum:
+            - completed
+            - failed
+            - processing
+            - queued
+            - pending
+        - type: string
+          description: 'The upload is a duplicate of an existing post, ex: `duplicate: 123`. The post id is also in `duplicate_post_id`.'
+          pattern: '^duplicate: \d+$'
     UserFeedbackCategory:
       type: string
       enum:
@@ -8861,16 +8873,17 @@ components:
         tag_string:
           type: string
         status:
-          type: string
-          description: |
-            Note: The "duplicate" status will be followed by the duplicate post's id, ex: "duplicate: 123"
-          enum:
-            - completed
-            - duplicate
-            - failed
-            - processing
-            - queued
-            - pending
+          oneOf:
+            - type: string
+              enum:
+                - completed
+                - failed
+                - processing
+                - queued
+                - pending
+            - type: string
+              description: 'The upload is a duplicate of an existing post, ex: `duplicate: 123`. The post id is also in `duplicate_post_id`.'
+              pattern: '^duplicate: \d+$'
         backtrace:
           type: string
           nullable: true
@@ -55509,16 +55522,17 @@ paths:
                     tag_string:
                       type: string
                     status:
-                      type: string
-                      description: |
-                        Note: The "duplicate" status will be followed by the duplicate post's id, ex: "duplicate: 123"
-                      enum:
-                        - completed
-                        - duplicate
-                        - failed
-                        - processing
-                        - queued
-                        - pending
+                      oneOf:
+                        - type: string
+                          enum:
+                            - completed
+                            - failed
+                            - processing
+                            - queued
+                            - pending
+                        - type: string
+                          description: 'The upload is a duplicate of an existing post, ex: `duplicate: 123`. The post id is also in `duplicate_post_id`.'
+                          pattern: '^duplicate: \d+$'
                     backtrace:
                       type: string
                       nullable: true
@@ -55807,16 +55821,17 @@ paths:
                   tag_string:
                     type: string
                   status:
-                    type: string
-                    description: |
-                      Note: The "duplicate" status will be followed by the duplicate post's id, ex: "duplicate: 123"
-                    enum:
-                      - completed
-                      - duplicate
-                      - failed
-                      - processing
-                      - queued
-                      - pending
+                    oneOf:
+                      - type: string
+                        enum:
+                          - completed
+                          - failed
+                          - processing
+                          - queued
+                          - pending
+                      - type: string
+                        description: 'The upload is a duplicate of an existing post, ex: `duplicate: 123`. The post id is also in `duplicate_post_id`.'
+                        pattern: '^duplicate: \d+$'
                   backtrace:
                     type: string
                     nullable: true
