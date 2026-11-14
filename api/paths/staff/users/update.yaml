@@ -40,6 +40,8 @@ requestBody:
             type: boolean
           user[replacements_beta]:
             type: boolean
+          user[oauth_applications_beta]:
+            type: boolean
           user[custom_title]:
             type: string
           user[tag_warden]:

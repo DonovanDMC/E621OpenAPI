@@ -39,6 +39,7 @@ allOf:
       - tag_query_limit
       - has_mail
       - forum_notification_dot
+      - oauth_applications_beta
     properties:
       blacklist_users:
         type: boolean
@@ -124,3 +125,6 @@ allOf:
         type: boolean
       forum_notification_dot:
         type: boolean
+      oauth_applications_beta:
+        type: boolean
+        description: Lets the user create OAuth applications.

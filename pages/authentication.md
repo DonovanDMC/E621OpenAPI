@@ -48,7 +48,7 @@ e621 is also an OAuth 2.0 and OpenID Connect provider, for apps acting on behalf
 - Only the authorization code flow is supported, with PKCE (`S256`), and refresh tokens.
 - Send the access token as `Authorization: Bearer <token>`.
 - API requests need the `full` scope. `openid`, `profile`, and `email` only cover the OpenID Connect endpoints like [`/oauth/userinfo`](/#/OpenID%20Connect).
-- Applications can only be registered by Staff+, and can require a minimum user level.
+- Applications can only be registered by Staff+, or users given access to the OAuth applications beta, and can require a minimum user level.
 
 ## CSRF Tokens
 
