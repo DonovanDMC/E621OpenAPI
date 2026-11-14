@@ -3,8 +3,11 @@ operationId: staff/users#totp_reset
 tags:
   - Staff Users
 security:
-  - basicAuth: []
-description: You must be Admin+. You must have the bd staff flag if the user is Staff+.
+  - browserAuth: []
+    csrfToken: []
+description: |
+  You must be Admin+. You must have the bd staff flag if the user is Staff+.<br>
+  Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
 parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 responses:

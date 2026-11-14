@@ -41,6 +41,8 @@ If you can't set headers, you can send `login` and `api_key` as query or body pa
 https://e621.net/posts.json?login=username&api_key=your_api_key
 ```
 
+Either way, API keys are only accepted on `.json`, `.xml`, or `.atom` requests made by an API client or with `fetch()`/`XMLHttpRequest`. Requests that look like a browser loading a page, image, or embed are refused with a `401`, even if the key is valid.
+
 ## OAuth
 
 e621 is also an OAuth 2.0 and OpenID Connect provider, for apps acting on behalf of other users. The configuration is at [`/.well-known/openid-configuration`](https://e621.net/.well-known/openid-configuration).
@@ -58,7 +60,7 @@ Browser sessions (the `_danbooru_session` cookie) need a CSRF token for anything
 
 | Status | Meaning |
 |---|---|
-| `401` | The credentials were wrong, the account is banned, or an OAuth token is missing the `full` scope or is below the application's minimum level |
+| `401` | The credentials were wrong, the account is banned, an API key was sent on a request that isn't an API request (see [API Keys](#api-keys)), or an OAuth token is missing the `full` scope or is below the application's minimum level |
 | `403` | You're logged in but can't do that, or the request is missing a user agent. See [Errors](/errors/). |
 
 Invalid credentials always fail, they never fall back to being logged out.

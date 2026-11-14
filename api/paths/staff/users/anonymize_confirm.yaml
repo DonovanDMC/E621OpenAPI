@@ -3,8 +3,11 @@ operationId: staff/users#anonymize_confirm
 tags:
   - Staff Users
 security:
-  - basicAuth: []
-description: You must have the bd staff user flag. Cannot be used on staff.
+  - browserAuth: []
+    csrfToken: []
+description: |
+  You must have the bd staff user flag. Cannot be used on staff.<br>
+  Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
 parameters:
   - $ref: "../../../components/parameters/path/id.yaml"
 responses:
