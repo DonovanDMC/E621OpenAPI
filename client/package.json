@@ -20,7 +20,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "generate": "openapi-ts",
+    "generate": "openapi-ts && node scripts/replace-types.mjs",
     "build": "npm run generate && tsc",
     "prepublishOnly": "npm run build && node scripts/stamp-readme.mjs",
     "postpublish": "git checkout -- README.md"

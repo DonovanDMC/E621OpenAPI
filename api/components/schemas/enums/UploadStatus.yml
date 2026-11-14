@@ -1,0 +1,11 @@
+oneOf:
+  - type: string
+    enum:
+      - completed
+      - failed
+      - processing
+      - queued
+      - pending
+  - type: string
+    description: 'The upload is a duplicate of an existing post, ex: `duplicate: 123`. The post id is also in `duplicate_post_id`.'
+    pattern: "^duplicate: \\d+$"

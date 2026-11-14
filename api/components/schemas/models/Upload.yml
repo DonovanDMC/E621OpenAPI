@@ -43,16 +43,7 @@ properties:
   tag_string:
     type: string
   status:
-    type: string
-    description: |
-      Note: The "duplicate" status will be followed by the duplicate post's id, ex: "duplicate: 123"
-    enum:
-      - completed
-      - duplicate
-      - failed
-      - processing
-      - queued
-      - pending
+    $ref: "../enums/UploadStatus.yml"
   backtrace:
     type: string
     nullable: true

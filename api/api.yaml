@@ -130,6 +130,8 @@ components:
       $ref: "./components/schemas/enums/UpDownMehVote.yml"
     UpDownVote:
       $ref: "./components/schemas/enums/UpDownVote.yml"
+    UploadStatus:
+      $ref: "./components/schemas/enums/UploadStatus.yml"
     UserFeedbackCategory:
       $ref: "./components/schemas/enums/UserFeedbackCategory.yml"
     UserLevel:
