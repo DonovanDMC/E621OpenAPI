@@ -14,12 +14,13 @@ if (git("status", "--porcelain", "--", "../openapi.yaml")) {
 
 const sha = git("rev-parse", "HEAD");
 const readme = readFileSync("README.md", "utf8");
-const pattern = /(<!-- spec-commit -->).*?(<!-- \/spec-commit -->)/;
+// the markers are replaced too, the readme is restored from git after publishing
+const pattern = /<!-- spec-commit -->[\s\S]*?<!-- \/spec-commit -->/;
 if (!pattern.test(readme)) {
     console.error("Could not find the spec-commit markers in README.md");
     process.exit(1);
 }
 
 const line = `Generated from spec commit [\`${sha.slice(0, 7)}\`](https://github.com/DonovanDMC/E621OpenAPI/blob/${sha}/openapi.yaml).`;
-writeFileSync("README.md", readme.replace(pattern, `$1${line}$2`));
+writeFileSync("README.md", readme.replace(pattern, line));
 console.log(`Stamped README.md with ${sha}`);

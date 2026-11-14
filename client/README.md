@@ -2,7 +2,11 @@
 
 TypeScript types, JSON schemas, and a fetch-based SDK for the [e621.net](https://e621.net) API, generated with [@hey-api/openapi-ts](https://heyapi.dev) from the [E621OpenAPI](https://github.com/DonovanDMC/E621OpenAPI) spec. A new version is published every time the spec is updated.
 
-<!-- spec-commit -->Generated from the latest version of the spec.<!-- /spec-commit -->
+<!-- spec-commit -->
+
+Generated from the latest version of the spec.
+
+<!-- /spec-commit -->
 
 This is the raw generated code. For a higher level client, see [e621](https://www.npmjs.com/package/e621).
 
