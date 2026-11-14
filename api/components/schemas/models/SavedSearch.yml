@@ -26,6 +26,7 @@ properties:
   last_seen_post_id:
     type: integer
     nullable: true
+    description: The newest post seen for this search on the site serving the request. Sites like e926.net track this separately, but seeing posts on e621.net counts for them too.
   created_at:
     type: string
     format: date-time
