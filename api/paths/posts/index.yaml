@@ -74,3 +74,9 @@ responses:
               properties:
                 post:
                   $ref: "../../components/schemas/models/LegacyPost.yml"
+  422:
+    description: The search is invalid, has too many tags, timed out, or is too complex to process. See [Search Syntax](https://e621.wiki/searching/).
+    content:
+      application/json:
+        schema:
+          $ref: "../../components/schemas/responses/MessageErrorResponse.yml"
