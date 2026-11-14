@@ -1,0 +1,49 @@
+{
+  "name": "e621-openapi",
+  "version": "0.0.0",
+  "description": "TypeScript types, schemas, and a fetch-based SDK for the e621.net API, generated from the E621OpenAPI spec.",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "generate": "openapi-ts",
+    "build": "npm run generate && tsc",
+    "prepublishOnly": "npm run build && node scripts/stamp-readme.mjs",
+    "postpublish": "git checkout -- README.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonovanDMC/E621OpenAPI.git",
+    "directory": "client"
+  },
+  "keywords": [
+    "e621",
+    "e621-api",
+    "e926",
+    "openapi"
+  ],
+  "author": "Donovan_DMC <hewwo@yiff.rocks>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DonovanDMC/E621OpenAPI/issues"
+  },
+  "homepage": "https://e621.wiki",
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.97.3",
+    "typescript": "^5.9.3"
+  }
+}

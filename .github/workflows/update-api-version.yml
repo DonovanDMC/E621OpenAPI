@@ -62,3 +62,9 @@ jobs:
               run: gh workflow run deploy-mcp.yml --ref "$GITHUB_REF_NAME"
               env:
                   GH_TOKEN: ${{ github.token }}
+            # e621-openapi on npm is generated from openapi.yaml
+            - name: Trigger Client Publish
+              shell: bash
+              run: gh workflow run publish-client.yml --ref "$GITHUB_REF_NAME"
+              env:
+                  GH_TOKEN: ${{ github.token }}
