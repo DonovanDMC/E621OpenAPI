@@ -14,9 +14,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 55b4ea3
+  version: 281126a
   x-e621ng-commit: f7c916997c870b4ce1c614dbf4e89827b73e8d61
-  x-e621ng-master-behind-by: 22
+  x-e621ng-master-behind-by: 46
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f7c916997c870b4ce1c614dbf4e89827b73e8d61...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
@@ -210,6 +210,9 @@ components:
         - staff_file_update
         - staff_file_delete
         - pool_delete
+        - flag_reason_create
+        - flag_reason_update
+        - flag_reason_delete
         - report_reason_create
         - report_reason_delete
         - report_reason_update
@@ -3684,6 +3687,7 @@ components:
         - created_at
         - updated_at
         - action
+        - values
       properties:
         id:
           type: integer
@@ -3753,6 +3757,9 @@ components:
             - staff_file_update
             - staff_file_delete
             - pool_delete
+            - flag_reason_create
+            - flag_reason_update
+            - flag_reason_delete
             - report_reason_create
             - report_reason_delete
             - report_reason_update
@@ -3827,6 +3834,1653 @@ components:
             - post_replacement_accept
             - post_replacement_reject
             - post_replacement_delete
+        values:
+          type: object
+          description: |
+            The values logged with the action. The keys depend on `action`.<br>
+            Non-admins only see the keys listed for the action. Older entries may be missing keys.
+      oneOf:
+        - title: admin_user_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - admin_user_delete
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: artist_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_delete
+            values:
+              type: object
+              properties:
+                artist_id:
+                  type: integer
+                artist_name:
+                  type: string
+        - title: artist_page_rename
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_page_rename
+            values:
+              type: object
+              properties:
+                old_name:
+                  type: string
+                new_name:
+                  type: string
+        - title: artist_page_lock
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_page_lock
+            values:
+              type: object
+              properties:
+                artist_page:
+                  type: integer
+                  description: The ID of the artist.
+        - title: artist_page_unlock
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_page_unlock
+            values:
+              type: object
+              properties:
+                artist_page:
+                  type: integer
+                  description: The ID of the artist.
+        - title: artist_user_linked
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_user_linked
+            values:
+              type: object
+              properties:
+                artist_page:
+                  type: integer
+                  description: The ID of the artist.
+                user_id:
+                  type: integer
+        - title: artist_user_unlinked
+          properties:
+            action:
+              type: string
+              enum:
+                - artist_user_unlinked
+            values:
+              type: object
+              properties:
+                artist_page:
+                  type: integer
+                  description: The ID of the artist.
+                user_id:
+                  type: integer
+        - title: avoid_posting_create
+          properties:
+            action:
+              type: string
+              enum:
+                - avoid_posting_create
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                artist_name:
+                  type: string
+        - title: avoid_posting_update
+          properties:
+            action:
+              type: string
+              enum:
+                - avoid_posting_update
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                artist_name:
+                  type: string
+                details:
+                  type: string
+                old_details:
+                  type: string
+                staff_notes:
+                  type: string
+                old_staff_notes:
+                  type: string
+        - title: avoid_posting_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - avoid_posting_delete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                artist_name:
+                  type: string
+        - title: avoid_posting_undelete
+          properties:
+            action:
+              type: string
+              enum:
+                - avoid_posting_undelete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                artist_name:
+                  type: string
+        - title: avoid_posting_destroy
+          properties:
+            action:
+              type: string
+              enum:
+                - avoid_posting_destroy
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                artist_name:
+                  type: string
+        - title: staff_note_create
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_note_create
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                user_id:
+                  type: integer
+                body:
+                  type: string
+        - title: staff_note_update
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_note_update
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                user_id:
+                  type: integer
+                body:
+                  type: string
+                old_body:
+                  type: string
+        - title: staff_note_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_note_delete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: staff_note_undelete
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_note_undelete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: blip_destroy
+          properties:
+            action:
+              type: string
+              enum:
+                - blip_destroy
+            values:
+              type: object
+              properties:
+                blip_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: blip_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - blip_delete
+            values:
+              type: object
+              properties:
+                blip_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: blip_undelete
+          properties:
+            action:
+              type: string
+              enum:
+                - blip_undelete
+            values:
+              type: object
+              properties:
+                blip_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: blip_update
+          properties:
+            action:
+              type: string
+              enum:
+                - blip_update
+            values:
+              type: object
+              properties:
+                blip_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: comment_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - comment_delete
+            values:
+              type: object
+              properties:
+                comment_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: comment_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - comment_hide
+            values:
+              type: object
+              properties:
+                comment_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: comment_unhide
+          properties:
+            action:
+              type: string
+              enum:
+                - comment_unhide
+            values:
+              type: object
+              properties:
+                comment_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: comment_update
+          properties:
+            action:
+              type: string
+              enum:
+                - comment_update
+            values:
+              type: object
+              properties:
+                comment_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: forum_category_create
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_category_create
+            values:
+              type: object
+              properties:
+                forum_category_id:
+                  type: integer
+        - title: forum_category_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_category_delete
+            values:
+              type: object
+              properties:
+                forum_category_id:
+                  oneOf:
+                    - type: integer
+                    - type: string
+                  description: Older entries contain the ID as a string.
+        - title: forum_category_update
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_category_update
+            values:
+              type: object
+              properties:
+                forum_category_id:
+                  type: integer
+        - title: forum_post_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_post_delete
+            values:
+              type: object
+              properties:
+                forum_post_id:
+                  type: integer
+                forum_topic_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: forum_post_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_post_hide
+            values:
+              type: object
+              properties:
+                forum_post_id:
+                  type: integer
+                forum_topic_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: forum_post_unhide
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_post_unhide
+            values:
+              type: object
+              properties:
+                forum_post_id:
+                  type: integer
+                forum_topic_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: forum_post_update
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_post_update
+            values:
+              type: object
+              properties:
+                forum_post_id:
+                  type: integer
+                forum_topic_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: forum_topic_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_delete
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_hide
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_unhide
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_unhide
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_lock
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_lock
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_unlock
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_unlock
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_stick
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_stick
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_unstick
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_unstick
+            values:
+              type: object
+              properties:
+                forum_topic_id:
+                  type: integer
+                forum_topic_title:
+                  type: string
+                user_id:
+                  type: integer
+        - title: forum_topic_update
+          properties:
+            action:
+              type: string
+              enum:
+                - forum_topic_update
+            values:
+              type: object
+              properties: {}
+        - title: help_create
+          properties:
+            action:
+              type: string
+              enum:
+                - help_create
+            values:
+              type: object
+              properties:
+                name:
+                  type: string
+                wiki_page:
+                  type: string
+        - title: help_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - help_delete
+            values:
+              type: object
+              properties:
+                name:
+                  type: string
+                wiki_page:
+                  type: string
+        - title: help_update
+          properties:
+            action:
+              type: string
+              enum:
+                - help_update
+            values:
+              type: object
+              properties:
+                name:
+                  type: string
+                wiki_page:
+                  type: string
+        - title: ip_ban_create
+          properties:
+            action:
+              type: string
+              enum:
+                - ip_ban_create
+            values:
+              type: object
+              description: Values are empty for non-admins.
+              properties:
+                ip_addr:
+                  type: string
+                reason:
+                  type: string
+        - title: ip_ban_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - ip_ban_delete
+            values:
+              type: object
+              description: Values are empty for non-admins.
+              properties:
+                ip_addr:
+                  type: string
+                reason:
+                  type: string
+        - title: search_trend_blacklist_create
+          properties:
+            action:
+              type: string
+              enum:
+                - search_trend_blacklist_create
+            values:
+              type: object
+              properties:
+                tag:
+                  type: string
+                reason:
+                  type: string
+        - title: search_trend_blacklist_update
+          properties:
+            action:
+              type: string
+              enum:
+                - search_trend_blacklist_update
+            values:
+              type: object
+              properties:
+                tag:
+                  type: string
+                reason:
+                  type: string
+        - title: search_trend_blacklist_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - search_trend_blacklist_delete
+            values:
+              type: object
+              properties:
+                tag:
+                  type: string
+                reason:
+                  type: string
+        - title: search_trend_blacklist_purge
+          properties:
+            action:
+              type: string
+              enum:
+                - search_trend_blacklist_purge
+            values:
+              type: object
+              properties:
+                tag:
+                  type: string
+                reason:
+                  type: string
+                deleted_count:
+                  type: integer
+        - title: mascot_create
+          properties:
+            action:
+              type: string
+              enum:
+                - mascot_create
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+        - title: mascot_update
+          properties:
+            action:
+              type: string
+              enum:
+                - mascot_update
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+        - title: mascot_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - mascot_delete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+        - title: staff_file_create
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_file_create
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                filename:
+                  type: string
+                file_size:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: staff_file_update
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_file_update
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                filename:
+                  type: string
+                user_id:
+                  type: integer
+        - title: staff_file_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - staff_file_delete
+            values:
+              type: object
+              properties:
+                id:
+                  type: integer
+                filename:
+                  type: string
+                user_id:
+                  type: integer
+        - title: pool_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - pool_delete
+            values:
+              type: object
+              properties:
+                pool_id:
+                  type: integer
+                pool_name:
+                  type: string
+                user_id:
+                  type: integer
+        - title: flag_reason_create
+          properties:
+            action:
+              type: string
+              enum:
+                - flag_reason_create
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+                text:
+                  type: string
+        - title: flag_reason_update
+          properties:
+            action:
+              type: string
+              enum:
+                - flag_reason_update
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+                text:
+                  type: string
+                text_was:
+                  type: string
+        - title: flag_reason_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - flag_reason_delete
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+        - title: report_reason_create
+          properties:
+            action:
+              type: string
+              enum:
+                - report_reason_create
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+        - title: report_reason_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - report_reason_delete
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+                user_id:
+                  type: integer
+        - title: report_reason_update
+          properties:
+            action:
+              type: string
+              enum:
+                - report_reason_update
+            values:
+              type: object
+              properties:
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+                description:
+                  type: string
+                description_was:
+                  type: string
+        - title: set_update
+          properties:
+            action:
+              type: string
+              enum:
+                - set_update
+            values:
+              type: object
+              properties:
+                set_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: set_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - set_delete
+            values:
+              type: object
+              properties:
+                set_id:
+                  type: integer
+                user_id:
+                  type: integer
+        - title: set_change_visibility
+          properties:
+            action:
+              type: string
+              enum:
+                - set_change_visibility
+            values:
+              type: object
+              properties:
+                set_id:
+                  type: integer
+                user_id:
+                  type: integer
+                is_public:
+                  type: boolean
+        - title: tag_destroy
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_destroy
+            values:
+              type: object
+              properties:
+                name:
+                  type: string
+        - title: tag_alias_create
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_alias_create
+            values:
+              type: object
+              properties:
+                alias_id:
+                  type: integer
+                alias_desc:
+                  type: string
+        - title: tag_alias_update
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_alias_update
+            values:
+              type: object
+              properties:
+                alias_id:
+                  type: integer
+                alias_desc:
+                  type: string
+                change_desc:
+                  type: string
+        - title: tag_alias_undo
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_alias_undo
+            values:
+              type: object
+              properties:
+                alias_id:
+                  type: integer
+                alias_desc:
+                  type: string
+        - title: tag_implication_create
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_implication_create
+            values:
+              type: object
+              properties:
+                implication_id:
+                  type: integer
+                implication_desc:
+                  type: string
+        - title: tag_implication_update
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_implication_update
+            values:
+              type: object
+              properties:
+                implication_id:
+                  type: integer
+                implication_desc:
+                  type: string
+                change_desc:
+                  type: string
+        - title: tag_implication_undo
+          properties:
+            action:
+              type: string
+              enum:
+                - tag_implication_undo
+            values:
+              type: object
+              properties:
+                implication_id:
+                  type: integer
+                implication_desc:
+                  type: string
+        - title: ticket_claim
+          properties:
+            action:
+              type: string
+              enum:
+                - ticket_claim
+            values:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+        - title: ticket_unclaim
+          properties:
+            action:
+              type: string
+              enum:
+                - ticket_unclaim
+            values:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+        - title: ticket_update
+          properties:
+            action:
+              type: string
+              enum:
+                - ticket_update
+            values:
+              type: object
+              description: Only `ticket_id` is shown to non-moderators.
+              properties:
+                ticket_id:
+                  type: integer
+                status:
+                  type: string
+                response:
+                  type: string
+                status_was:
+                  type: string
+                response_was:
+                  type: string
+        - title: appeal_claim
+          properties:
+            action:
+              type: string
+              enum:
+                - appeal_claim
+            values:
+              type: object
+              properties:
+                appeal_id:
+                  type: integer
+        - title: appeal_unclaim
+          properties:
+            action:
+              type: string
+              enum:
+                - appeal_unclaim
+            values:
+              type: object
+              properties:
+                appeal_id:
+                  type: integer
+        - title: appeal_update
+          properties:
+            action:
+              type: string
+              enum:
+                - appeal_update
+            values:
+              type: object
+              description: Only `appeal_id` is shown to non-staff.
+              properties:
+                appeal_id:
+                  type: integer
+                status:
+                  type: string
+                response:
+                  type: string
+                status_was:
+                  type: string
+                response_was:
+                  type: string
+        - title: upload_whitelist_create
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_whitelist_create
+            values:
+              type: object
+              description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+              properties:
+                domain:
+                  type: string
+                path:
+                  type: string
+                note:
+                  type: string
+                hidden:
+                  type: boolean
+        - title: upload_whitelist_update
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_whitelist_update
+            values:
+              type: object
+              description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+              properties:
+                domain:
+                  type: string
+                path:
+                  type: string
+                note:
+                  type: string
+                old_domain:
+                  type: string
+                old_path:
+                  type: string
+                hidden:
+                  type: boolean
+        - title: upload_whitelist_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_whitelist_delete
+            values:
+              type: object
+              description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+              properties:
+                domain:
+                  type: string
+                path:
+                  type: string
+                note:
+                  type: string
+                hidden:
+                  type: boolean
+        - title: user_avatar_clear
+          properties:
+            action:
+              type: string
+              enum:
+                - user_avatar_clear
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_profile_clear
+          properties:
+            action:
+              type: string
+              enum:
+                - user_profile_clear
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_comments_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - user_comments_hide
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_forum_posts_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - user_forum_posts_hide
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_blips_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - user_blips_delete
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_blacklist_changed
+          properties:
+            action:
+              type: string
+              enum:
+                - user_blacklist_changed
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_text_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_text_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_custom_title_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_custom_title_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                old_custom_title:
+                  type: string
+                new_custom_title:
+                  type: string
+        - title: user_upload_limit_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_upload_limit_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                old_upload_limit:
+                  type: integer
+                new_upload_limit:
+                  type: integer
+        - title: user_karma_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_karma_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                old_karma:
+                  type: integer
+                new_karma:
+                  type: integer
+        - title: user_karma_free_toggle
+          properties:
+            action:
+              type: string
+              enum:
+                - user_karma_free_toggle
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                disabled:
+                  type: boolean
+        - title: user_uploads_toggle
+          properties:
+            action:
+              type: string
+              enum:
+                - user_uploads_toggle
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                disabled:
+                  type: boolean
+        - title: user_flags_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_flags_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                added:
+                  type: array
+                  items:
+                    type: string
+                removed:
+                  type: array
+                  items:
+                    type: string
+        - title: user_level_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_level_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                level:
+                  type: string
+                level_was:
+                  type: string
+        - title: user_name_change
+          properties:
+            action:
+              type: string
+              enum:
+                - user_name_change
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: totp_reset
+          properties:
+            action:
+              type: string
+              enum:
+                - totp_reset
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: password_reset
+          properties:
+            action:
+              type: string
+              enum:
+                - password_reset
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                invalidated:
+                  type: boolean
+                credentials_revoked:
+                  type: boolean
+        - title: user_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - user_delete
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_ban
+          properties:
+            action:
+              type: string
+              enum:
+                - user_ban
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                duration:
+                  type: integer
+                  description: 'Some historical entries contain a non-integer string, such as `permanent`.'
+                reason:
+                  type: string
+        - title: user_ban_update
+          properties:
+            action:
+              type: string
+              enum:
+                - user_ban_update
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                ban_id:
+                  type: integer
+                expires_at:
+                  type: string
+                  format: date-time
+                  nullable: true
+                expires_at_was:
+                  type: string
+                  format: date-time
+                  nullable: true
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+        - title: user_unban
+          properties:
+            action:
+              type: string
+              enum:
+                - user_unban
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: user_feedback_create
+          properties:
+            action:
+              type: string
+              enum:
+                - user_feedback_create
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                reason:
+                  type: string
+                type:
+                  type: string
+                record_id:
+                  type: integer
+        - title: user_feedback_update
+          properties:
+            action:
+              type: string
+              enum:
+                - user_feedback_update
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+                type:
+                  type: string
+                type_was:
+                  type: string
+                record_id:
+                  type: integer
+        - title: user_feedback_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - user_feedback_delete
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+                type:
+                  type: string
+                type_was:
+                  type: string
+                record_id:
+                  type: integer
+        - title: user_feedback_undelete
+          properties:
+            action:
+              type: string
+              enum:
+                - user_feedback_undelete
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                reason:
+                  type: string
+                reason_was:
+                  type: string
+                type:
+                  type: string
+                type_was:
+                  type: string
+                record_id:
+                  type: integer
+        - title: user_feedback_destroy
+          properties:
+            action:
+              type: string
+              enum:
+                - user_feedback_destroy
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                reason:
+                  type: string
+                type:
+                  type: string
+                record_id:
+                  type: integer
+        - title: user_flush_favorites
+          properties:
+            action:
+              type: string
+              enum:
+                - user_flush_favorites
+            values:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+        - title: wiki_page_rename
+          properties:
+            action:
+              type: string
+              enum:
+                - wiki_page_rename
+            values:
+              type: object
+              properties:
+                new_title:
+                  type: string
+                old_title:
+                  type: string
+        - title: wiki_page_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - wiki_page_delete
+            values:
+              type: object
+              properties:
+                wiki_page:
+                  type: string
+                wiki_page_id:
+                  type: integer
+        - title: wiki_page_lock
+          properties:
+            action:
+              type: string
+              enum:
+                - wiki_page_lock
+            values:
+              type: object
+              properties:
+                wiki_page:
+                  type: string
+        - title: wiki_page_unlock
+          properties:
+            action:
+              type: string
+              enum:
+                - wiki_page_unlock
+            values:
+              type: object
+              properties:
+                wiki_page:
+                  type: string
+        - title: mass_update
+          properties:
+            action:
+              type: string
+              enum:
+                - mass_update
+            values:
+              type: object
+              properties:
+                antecedent:
+                  type: string
+                consequent:
+                  type: string
+        - title: nuke_tag
+          properties:
+            action:
+              type: string
+              enum:
+                - nuke_tag
+            values:
+              type: object
+              properties:
+                tag_name:
+                  type: string
+        - title: takedown_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - takedown_delete
+            values:
+              type: object
+              properties:
+                takedown_id:
+                  type: integer
+        - title: takedown_process
+          properties:
+            action:
+              type: string
+              enum:
+                - takedown_process
+            values:
+              type: object
+              properties:
+                takedown_id:
+                  type: integer
+        - title: post_version_hide
+          properties:
+            action:
+              type: string
+              enum:
+                - post_version_hide
+            values:
+              type: object
+              properties:
+                version:
+                  type: integer
+                post_id:
+                  type: integer
+        - title: post_version_unhide
+          properties:
+            action:
+              type: string
+              enum:
+                - post_version_unhide
+            values:
+              type: object
+              properties:
+                version:
+                  type: integer
+                post_id:
+                  type: integer
+        - title: legacy
+          description: Actions that are no longer logged. Values are empty for non-admins.
+          properties:
+            action:
+              type: string
+              enum:
+                - created_positive_record
+                - created_neutral_record
+                - created_negative_record
+                - created_flag_reason
+                - edited_flag_reason
+                - deleted_flag_reason
+                - post_move_favorites
+                - post_delete
+                - post_undelete
+                - post_destroy
+                - post_rating_lock
+                - post_unapprove
+                - post_replacement_accept
+                - post_replacement_reject
+                - post_replacement_delete
+            values:
+              type: object
     NewsUpdate:
       type: object
       required:
@@ -25252,6 +26906,9 @@ paths:
               - staff_file_update
               - staff_file_delete
               - pool_delete
+              - flag_reason_create
+              - flag_reason_update
+              - flag_reason_delete
               - report_reason_create
               - report_reason_delete
               - report_reason_update
@@ -25341,6 +26998,7 @@ paths:
                     - created_at
                     - updated_at
                     - action
+                    - values
                   properties:
                     id:
                       type: integer
@@ -25410,6 +27068,9 @@ paths:
                         - staff_file_update
                         - staff_file_delete
                         - pool_delete
+                        - flag_reason_create
+                        - flag_reason_update
+                        - flag_reason_delete
                         - report_reason_create
                         - report_reason_delete
                         - report_reason_update
@@ -25484,6 +27145,1653 @@ paths:
                         - post_replacement_accept
                         - post_replacement_reject
                         - post_replacement_delete
+                    values:
+                      type: object
+                      description: |
+                        The values logged with the action. The keys depend on `action`.<br>
+                        Non-admins only see the keys listed for the action. Older entries may be missing keys.
+                  oneOf:
+                    - title: admin_user_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - admin_user_delete
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: artist_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_delete
+                        values:
+                          type: object
+                          properties:
+                            artist_id:
+                              type: integer
+                            artist_name:
+                              type: string
+                    - title: artist_page_rename
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_page_rename
+                        values:
+                          type: object
+                          properties:
+                            old_name:
+                              type: string
+                            new_name:
+                              type: string
+                    - title: artist_page_lock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_page_lock
+                        values:
+                          type: object
+                          properties:
+                            artist_page:
+                              type: integer
+                              description: The ID of the artist.
+                    - title: artist_page_unlock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_page_unlock
+                        values:
+                          type: object
+                          properties:
+                            artist_page:
+                              type: integer
+                              description: The ID of the artist.
+                    - title: artist_user_linked
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_user_linked
+                        values:
+                          type: object
+                          properties:
+                            artist_page:
+                              type: integer
+                              description: The ID of the artist.
+                            user_id:
+                              type: integer
+                    - title: artist_user_unlinked
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - artist_user_unlinked
+                        values:
+                          type: object
+                          properties:
+                            artist_page:
+                              type: integer
+                              description: The ID of the artist.
+                            user_id:
+                              type: integer
+                    - title: avoid_posting_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - avoid_posting_create
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            artist_name:
+                              type: string
+                    - title: avoid_posting_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - avoid_posting_update
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            artist_name:
+                              type: string
+                            details:
+                              type: string
+                            old_details:
+                              type: string
+                            staff_notes:
+                              type: string
+                            old_staff_notes:
+                              type: string
+                    - title: avoid_posting_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - avoid_posting_delete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            artist_name:
+                              type: string
+                    - title: avoid_posting_undelete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - avoid_posting_undelete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            artist_name:
+                              type: string
+                    - title: avoid_posting_destroy
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - avoid_posting_destroy
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            artist_name:
+                              type: string
+                    - title: staff_note_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_note_create
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_id:
+                              type: integer
+                            body:
+                              type: string
+                    - title: staff_note_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_note_update
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_id:
+                              type: integer
+                            body:
+                              type: string
+                            old_body:
+                              type: string
+                    - title: staff_note_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_note_delete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: staff_note_undelete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_note_undelete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: blip_destroy
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - blip_destroy
+                        values:
+                          type: object
+                          properties:
+                            blip_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: blip_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - blip_delete
+                        values:
+                          type: object
+                          properties:
+                            blip_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: blip_undelete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - blip_undelete
+                        values:
+                          type: object
+                          properties:
+                            blip_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: blip_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - blip_update
+                        values:
+                          type: object
+                          properties:
+                            blip_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: comment_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - comment_delete
+                        values:
+                          type: object
+                          properties:
+                            comment_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: comment_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - comment_hide
+                        values:
+                          type: object
+                          properties:
+                            comment_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: comment_unhide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - comment_unhide
+                        values:
+                          type: object
+                          properties:
+                            comment_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: comment_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - comment_update
+                        values:
+                          type: object
+                          properties:
+                            comment_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: forum_category_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_category_create
+                        values:
+                          type: object
+                          properties:
+                            forum_category_id:
+                              type: integer
+                    - title: forum_category_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_category_delete
+                        values:
+                          type: object
+                          properties:
+                            forum_category_id:
+                              oneOf:
+                                - type: integer
+                                - type: string
+                              description: Older entries contain the ID as a string.
+                    - title: forum_category_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_category_update
+                        values:
+                          type: object
+                          properties:
+                            forum_category_id:
+                              type: integer
+                    - title: forum_post_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_post_delete
+                        values:
+                          type: object
+                          properties:
+                            forum_post_id:
+                              type: integer
+                            forum_topic_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: forum_post_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_post_hide
+                        values:
+                          type: object
+                          properties:
+                            forum_post_id:
+                              type: integer
+                            forum_topic_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: forum_post_unhide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_post_unhide
+                        values:
+                          type: object
+                          properties:
+                            forum_post_id:
+                              type: integer
+                            forum_topic_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: forum_post_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_post_update
+                        values:
+                          type: object
+                          properties:
+                            forum_post_id:
+                              type: integer
+                            forum_topic_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: forum_topic_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_delete
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_hide
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_unhide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_unhide
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_lock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_lock
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_unlock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_unlock
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_stick
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_stick
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_unstick
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_unstick
+                        values:
+                          type: object
+                          properties:
+                            forum_topic_id:
+                              type: integer
+                            forum_topic_title:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: forum_topic_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - forum_topic_update
+                        values:
+                          type: object
+                          properties: {}
+                    - title: help_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - help_create
+                        values:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            wiki_page:
+                              type: string
+                    - title: help_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - help_delete
+                        values:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            wiki_page:
+                              type: string
+                    - title: help_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - help_update
+                        values:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            wiki_page:
+                              type: string
+                    - title: ip_ban_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ip_ban_create
+                        values:
+                          type: object
+                          description: Values are empty for non-admins.
+                          properties:
+                            ip_addr:
+                              type: string
+                            reason:
+                              type: string
+                    - title: ip_ban_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ip_ban_delete
+                        values:
+                          type: object
+                          description: Values are empty for non-admins.
+                          properties:
+                            ip_addr:
+                              type: string
+                            reason:
+                              type: string
+                    - title: search_trend_blacklist_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - search_trend_blacklist_create
+                        values:
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            reason:
+                              type: string
+                    - title: search_trend_blacklist_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - search_trend_blacklist_update
+                        values:
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            reason:
+                              type: string
+                    - title: search_trend_blacklist_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - search_trend_blacklist_delete
+                        values:
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            reason:
+                              type: string
+                    - title: search_trend_blacklist_purge
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - search_trend_blacklist_purge
+                        values:
+                          type: object
+                          properties:
+                            tag:
+                              type: string
+                            reason:
+                              type: string
+                            deleted_count:
+                              type: integer
+                    - title: mascot_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - mascot_create
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                    - title: mascot_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - mascot_update
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                    - title: mascot_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - mascot_delete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                    - title: staff_file_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_file_create
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            filename:
+                              type: string
+                            file_size:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: staff_file_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_file_update
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            filename:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: staff_file_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - staff_file_delete
+                        values:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            filename:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: pool_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - pool_delete
+                        values:
+                          type: object
+                          properties:
+                            pool_id:
+                              type: integer
+                            pool_name:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: flag_reason_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - flag_reason_create
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                            text:
+                              type: string
+                    - title: flag_reason_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - flag_reason_update
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                            text:
+                              type: string
+                            text_was:
+                              type: string
+                    - title: flag_reason_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - flag_reason_delete
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                    - title: report_reason_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - report_reason_create
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                    - title: report_reason_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - report_reason_delete
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                            user_id:
+                              type: integer
+                    - title: report_reason_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - report_reason_update
+                        values:
+                          type: object
+                          properties:
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                            description:
+                              type: string
+                            description_was:
+                              type: string
+                    - title: set_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - set_update
+                        values:
+                          type: object
+                          properties:
+                            set_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: set_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - set_delete
+                        values:
+                          type: object
+                          properties:
+                            set_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                    - title: set_change_visibility
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - set_change_visibility
+                        values:
+                          type: object
+                          properties:
+                            set_id:
+                              type: integer
+                            user_id:
+                              type: integer
+                            is_public:
+                              type: boolean
+                    - title: tag_destroy
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_destroy
+                        values:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                    - title: tag_alias_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_alias_create
+                        values:
+                          type: object
+                          properties:
+                            alias_id:
+                              type: integer
+                            alias_desc:
+                              type: string
+                    - title: tag_alias_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_alias_update
+                        values:
+                          type: object
+                          properties:
+                            alias_id:
+                              type: integer
+                            alias_desc:
+                              type: string
+                            change_desc:
+                              type: string
+                    - title: tag_alias_undo
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_alias_undo
+                        values:
+                          type: object
+                          properties:
+                            alias_id:
+                              type: integer
+                            alias_desc:
+                              type: string
+                    - title: tag_implication_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_implication_create
+                        values:
+                          type: object
+                          properties:
+                            implication_id:
+                              type: integer
+                            implication_desc:
+                              type: string
+                    - title: tag_implication_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_implication_update
+                        values:
+                          type: object
+                          properties:
+                            implication_id:
+                              type: integer
+                            implication_desc:
+                              type: string
+                            change_desc:
+                              type: string
+                    - title: tag_implication_undo
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - tag_implication_undo
+                        values:
+                          type: object
+                          properties:
+                            implication_id:
+                              type: integer
+                            implication_desc:
+                              type: string
+                    - title: ticket_claim
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ticket_claim
+                        values:
+                          type: object
+                          properties:
+                            ticket_id:
+                              type: integer
+                    - title: ticket_unclaim
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ticket_unclaim
+                        values:
+                          type: object
+                          properties:
+                            ticket_id:
+                              type: integer
+                    - title: ticket_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ticket_update
+                        values:
+                          type: object
+                          description: Only `ticket_id` is shown to non-moderators.
+                          properties:
+                            ticket_id:
+                              type: integer
+                            status:
+                              type: string
+                            response:
+                              type: string
+                            status_was:
+                              type: string
+                            response_was:
+                              type: string
+                    - title: appeal_claim
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - appeal_claim
+                        values:
+                          type: object
+                          properties:
+                            appeal_id:
+                              type: integer
+                    - title: appeal_unclaim
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - appeal_unclaim
+                        values:
+                          type: object
+                          properties:
+                            appeal_id:
+                              type: integer
+                    - title: appeal_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - appeal_update
+                        values:
+                          type: object
+                          description: Only `appeal_id` is shown to non-staff.
+                          properties:
+                            appeal_id:
+                              type: integer
+                            status:
+                              type: string
+                            response:
+                              type: string
+                            status_was:
+                              type: string
+                            response_was:
+                              type: string
+                    - title: upload_whitelist_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - upload_whitelist_create
+                        values:
+                          type: object
+                          description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                          properties:
+                            domain:
+                              type: string
+                            path:
+                              type: string
+                            note:
+                              type: string
+                            hidden:
+                              type: boolean
+                    - title: upload_whitelist_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - upload_whitelist_update
+                        values:
+                          type: object
+                          description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                          properties:
+                            domain:
+                              type: string
+                            path:
+                              type: string
+                            note:
+                              type: string
+                            old_domain:
+                              type: string
+                            old_path:
+                              type: string
+                            hidden:
+                              type: boolean
+                    - title: upload_whitelist_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - upload_whitelist_delete
+                        values:
+                          type: object
+                          description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                          properties:
+                            domain:
+                              type: string
+                            path:
+                              type: string
+                            note:
+                              type: string
+                            hidden:
+                              type: boolean
+                    - title: user_avatar_clear
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_avatar_clear
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_profile_clear
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_profile_clear
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_comments_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_comments_hide
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_forum_posts_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_forum_posts_hide
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_blips_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_blips_delete
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_blacklist_changed
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_blacklist_changed
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_text_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_text_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_custom_title_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_custom_title_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            old_custom_title:
+                              type: string
+                            new_custom_title:
+                              type: string
+                    - title: user_upload_limit_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_upload_limit_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            old_upload_limit:
+                              type: integer
+                            new_upload_limit:
+                              type: integer
+                    - title: user_karma_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_karma_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            old_karma:
+                              type: integer
+                            new_karma:
+                              type: integer
+                    - title: user_karma_free_toggle
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_karma_free_toggle
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            disabled:
+                              type: boolean
+                    - title: user_uploads_toggle
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_uploads_toggle
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            disabled:
+                              type: boolean
+                    - title: user_flags_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_flags_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            added:
+                              type: array
+                              items:
+                                type: string
+                            removed:
+                              type: array
+                              items:
+                                type: string
+                    - title: user_level_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_level_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            level:
+                              type: string
+                            level_was:
+                              type: string
+                    - title: user_name_change
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_name_change
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: totp_reset
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - totp_reset
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: password_reset
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - password_reset
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            invalidated:
+                              type: boolean
+                            credentials_revoked:
+                              type: boolean
+                    - title: user_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_delete
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_ban
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_ban
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            duration:
+                              type: integer
+                              description: 'Some historical entries contain a non-integer string, such as `permanent`.'
+                            reason:
+                              type: string
+                    - title: user_ban_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_ban_update
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            ban_id:
+                              type: integer
+                            expires_at:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            expires_at_was:
+                              type: string
+                              format: date-time
+                              nullable: true
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                    - title: user_unban
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_unban
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: user_feedback_create
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_feedback_create
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            reason:
+                              type: string
+                            type:
+                              type: string
+                            record_id:
+                              type: integer
+                    - title: user_feedback_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_feedback_update
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                            type:
+                              type: string
+                            type_was:
+                              type: string
+                            record_id:
+                              type: integer
+                    - title: user_feedback_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_feedback_delete
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                            type:
+                              type: string
+                            type_was:
+                              type: string
+                            record_id:
+                              type: integer
+                    - title: user_feedback_undelete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_feedback_undelete
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            reason:
+                              type: string
+                            reason_was:
+                              type: string
+                            type:
+                              type: string
+                            type_was:
+                              type: string
+                            record_id:
+                              type: integer
+                    - title: user_feedback_destroy
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_feedback_destroy
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                            reason:
+                              type: string
+                            type:
+                              type: string
+                            record_id:
+                              type: integer
+                    - title: user_flush_favorites
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - user_flush_favorites
+                        values:
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                    - title: wiki_page_rename
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - wiki_page_rename
+                        values:
+                          type: object
+                          properties:
+                            new_title:
+                              type: string
+                            old_title:
+                              type: string
+                    - title: wiki_page_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - wiki_page_delete
+                        values:
+                          type: object
+                          properties:
+                            wiki_page:
+                              type: string
+                            wiki_page_id:
+                              type: integer
+                    - title: wiki_page_lock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - wiki_page_lock
+                        values:
+                          type: object
+                          properties:
+                            wiki_page:
+                              type: string
+                    - title: wiki_page_unlock
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - wiki_page_unlock
+                        values:
+                          type: object
+                          properties:
+                            wiki_page:
+                              type: string
+                    - title: mass_update
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - mass_update
+                        values:
+                          type: object
+                          properties:
+                            antecedent:
+                              type: string
+                            consequent:
+                              type: string
+                    - title: nuke_tag
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - nuke_tag
+                        values:
+                          type: object
+                          properties:
+                            tag_name:
+                              type: string
+                    - title: takedown_delete
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - takedown_delete
+                        values:
+                          type: object
+                          properties:
+                            takedown_id:
+                              type: integer
+                    - title: takedown_process
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - takedown_process
+                        values:
+                          type: object
+                          properties:
+                            takedown_id:
+                              type: integer
+                    - title: post_version_hide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - post_version_hide
+                        values:
+                          type: object
+                          properties:
+                            version:
+                              type: integer
+                            post_id:
+                              type: integer
+                    - title: post_version_unhide
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - post_version_unhide
+                        values:
+                          type: object
+                          properties:
+                            version:
+                              type: integer
+                            post_id:
+                              type: integer
+                    - title: legacy
+                      description: Actions that are no longer logged. Values are empty for non-admins.
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - created_positive_record
+                            - created_neutral_record
+                            - created_negative_record
+                            - created_flag_reason
+                            - edited_flag_reason
+                            - deleted_flag_reason
+                            - post_move_favorites
+                            - post_delete
+                            - post_undelete
+                            - post_destroy
+                            - post_rating_lock
+                            - post_unapprove
+                            - post_replacement_accept
+                            - post_replacement_reject
+                            - post_replacement_delete
+                        values:
+                          type: object
   '/mod_actions/{id}.json':
     get:
       summary: Get Mod Action
@@ -25510,6 +28818,7 @@ paths:
                   - created_at
                   - updated_at
                   - action
+                  - values
                 properties:
                   id:
                     type: integer
@@ -25579,6 +28888,9 @@ paths:
                       - staff_file_update
                       - staff_file_delete
                       - pool_delete
+                      - flag_reason_create
+                      - flag_reason_update
+                      - flag_reason_delete
                       - report_reason_create
                       - report_reason_delete
                       - report_reason_update
@@ -25653,6 +28965,1653 @@ paths:
                       - post_replacement_accept
                       - post_replacement_reject
                       - post_replacement_delete
+                  values:
+                    type: object
+                    description: |
+                      The values logged with the action. The keys depend on `action`.<br>
+                      Non-admins only see the keys listed for the action. Older entries may be missing keys.
+                oneOf:
+                  - title: admin_user_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - admin_user_delete
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: artist_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_delete
+                      values:
+                        type: object
+                        properties:
+                          artist_id:
+                            type: integer
+                          artist_name:
+                            type: string
+                  - title: artist_page_rename
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_page_rename
+                      values:
+                        type: object
+                        properties:
+                          old_name:
+                            type: string
+                          new_name:
+                            type: string
+                  - title: artist_page_lock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_page_lock
+                      values:
+                        type: object
+                        properties:
+                          artist_page:
+                            type: integer
+                            description: The ID of the artist.
+                  - title: artist_page_unlock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_page_unlock
+                      values:
+                        type: object
+                        properties:
+                          artist_page:
+                            type: integer
+                            description: The ID of the artist.
+                  - title: artist_user_linked
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_user_linked
+                      values:
+                        type: object
+                        properties:
+                          artist_page:
+                            type: integer
+                            description: The ID of the artist.
+                          user_id:
+                            type: integer
+                  - title: artist_user_unlinked
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - artist_user_unlinked
+                      values:
+                        type: object
+                        properties:
+                          artist_page:
+                            type: integer
+                            description: The ID of the artist.
+                          user_id:
+                            type: integer
+                  - title: avoid_posting_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - avoid_posting_create
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          artist_name:
+                            type: string
+                  - title: avoid_posting_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - avoid_posting_update
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          artist_name:
+                            type: string
+                          details:
+                            type: string
+                          old_details:
+                            type: string
+                          staff_notes:
+                            type: string
+                          old_staff_notes:
+                            type: string
+                  - title: avoid_posting_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - avoid_posting_delete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          artist_name:
+                            type: string
+                  - title: avoid_posting_undelete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - avoid_posting_undelete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          artist_name:
+                            type: string
+                  - title: avoid_posting_destroy
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - avoid_posting_destroy
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          artist_name:
+                            type: string
+                  - title: staff_note_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_note_create
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user_id:
+                            type: integer
+                          body:
+                            type: string
+                  - title: staff_note_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_note_update
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user_id:
+                            type: integer
+                          body:
+                            type: string
+                          old_body:
+                            type: string
+                  - title: staff_note_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_note_delete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: staff_note_undelete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_note_undelete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: blip_destroy
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - blip_destroy
+                      values:
+                        type: object
+                        properties:
+                          blip_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: blip_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - blip_delete
+                      values:
+                        type: object
+                        properties:
+                          blip_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: blip_undelete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - blip_undelete
+                      values:
+                        type: object
+                        properties:
+                          blip_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: blip_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - blip_update
+                      values:
+                        type: object
+                        properties:
+                          blip_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: comment_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - comment_delete
+                      values:
+                        type: object
+                        properties:
+                          comment_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: comment_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - comment_hide
+                      values:
+                        type: object
+                        properties:
+                          comment_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: comment_unhide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - comment_unhide
+                      values:
+                        type: object
+                        properties:
+                          comment_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: comment_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - comment_update
+                      values:
+                        type: object
+                        properties:
+                          comment_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: forum_category_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_category_create
+                      values:
+                        type: object
+                        properties:
+                          forum_category_id:
+                            type: integer
+                  - title: forum_category_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_category_delete
+                      values:
+                        type: object
+                        properties:
+                          forum_category_id:
+                            oneOf:
+                              - type: integer
+                              - type: string
+                            description: Older entries contain the ID as a string.
+                  - title: forum_category_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_category_update
+                      values:
+                        type: object
+                        properties:
+                          forum_category_id:
+                            type: integer
+                  - title: forum_post_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_post_delete
+                      values:
+                        type: object
+                        properties:
+                          forum_post_id:
+                            type: integer
+                          forum_topic_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: forum_post_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_post_hide
+                      values:
+                        type: object
+                        properties:
+                          forum_post_id:
+                            type: integer
+                          forum_topic_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: forum_post_unhide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_post_unhide
+                      values:
+                        type: object
+                        properties:
+                          forum_post_id:
+                            type: integer
+                          forum_topic_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: forum_post_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_post_update
+                      values:
+                        type: object
+                        properties:
+                          forum_post_id:
+                            type: integer
+                          forum_topic_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: forum_topic_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_delete
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_hide
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_unhide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_unhide
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_lock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_lock
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_unlock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_unlock
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_stick
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_stick
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_unstick
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_unstick
+                      values:
+                        type: object
+                        properties:
+                          forum_topic_id:
+                            type: integer
+                          forum_topic_title:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: forum_topic_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - forum_topic_update
+                      values:
+                        type: object
+                        properties: {}
+                  - title: help_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - help_create
+                      values:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          wiki_page:
+                            type: string
+                  - title: help_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - help_delete
+                      values:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          wiki_page:
+                            type: string
+                  - title: help_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - help_update
+                      values:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          wiki_page:
+                            type: string
+                  - title: ip_ban_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ip_ban_create
+                      values:
+                        type: object
+                        description: Values are empty for non-admins.
+                        properties:
+                          ip_addr:
+                            type: string
+                          reason:
+                            type: string
+                  - title: ip_ban_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ip_ban_delete
+                      values:
+                        type: object
+                        description: Values are empty for non-admins.
+                        properties:
+                          ip_addr:
+                            type: string
+                          reason:
+                            type: string
+                  - title: search_trend_blacklist_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - search_trend_blacklist_create
+                      values:
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          reason:
+                            type: string
+                  - title: search_trend_blacklist_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - search_trend_blacklist_update
+                      values:
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          reason:
+                            type: string
+                  - title: search_trend_blacklist_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - search_trend_blacklist_delete
+                      values:
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          reason:
+                            type: string
+                  - title: search_trend_blacklist_purge
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - search_trend_blacklist_purge
+                      values:
+                        type: object
+                        properties:
+                          tag:
+                            type: string
+                          reason:
+                            type: string
+                          deleted_count:
+                            type: integer
+                  - title: mascot_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - mascot_create
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                  - title: mascot_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - mascot_update
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                  - title: mascot_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - mascot_delete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                  - title: staff_file_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_file_create
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          filename:
+                            type: string
+                          file_size:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: staff_file_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_file_update
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          filename:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: staff_file_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - staff_file_delete
+                      values:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          filename:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: pool_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - pool_delete
+                      values:
+                        type: object
+                        properties:
+                          pool_id:
+                            type: integer
+                          pool_name:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: flag_reason_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - flag_reason_create
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                          text:
+                            type: string
+                  - title: flag_reason_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - flag_reason_update
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                          text:
+                            type: string
+                          text_was:
+                            type: string
+                  - title: flag_reason_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - flag_reason_delete
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                  - title: report_reason_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - report_reason_create
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                  - title: report_reason_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - report_reason_delete
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                          user_id:
+                            type: integer
+                  - title: report_reason_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - report_reason_update
+                      values:
+                        type: object
+                        properties:
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                          description:
+                            type: string
+                          description_was:
+                            type: string
+                  - title: set_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - set_update
+                      values:
+                        type: object
+                        properties:
+                          set_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: set_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - set_delete
+                      values:
+                        type: object
+                        properties:
+                          set_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                  - title: set_change_visibility
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - set_change_visibility
+                      values:
+                        type: object
+                        properties:
+                          set_id:
+                            type: integer
+                          user_id:
+                            type: integer
+                          is_public:
+                            type: boolean
+                  - title: tag_destroy
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_destroy
+                      values:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                  - title: tag_alias_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_alias_create
+                      values:
+                        type: object
+                        properties:
+                          alias_id:
+                            type: integer
+                          alias_desc:
+                            type: string
+                  - title: tag_alias_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_alias_update
+                      values:
+                        type: object
+                        properties:
+                          alias_id:
+                            type: integer
+                          alias_desc:
+                            type: string
+                          change_desc:
+                            type: string
+                  - title: tag_alias_undo
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_alias_undo
+                      values:
+                        type: object
+                        properties:
+                          alias_id:
+                            type: integer
+                          alias_desc:
+                            type: string
+                  - title: tag_implication_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_implication_create
+                      values:
+                        type: object
+                        properties:
+                          implication_id:
+                            type: integer
+                          implication_desc:
+                            type: string
+                  - title: tag_implication_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_implication_update
+                      values:
+                        type: object
+                        properties:
+                          implication_id:
+                            type: integer
+                          implication_desc:
+                            type: string
+                          change_desc:
+                            type: string
+                  - title: tag_implication_undo
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - tag_implication_undo
+                      values:
+                        type: object
+                        properties:
+                          implication_id:
+                            type: integer
+                          implication_desc:
+                            type: string
+                  - title: ticket_claim
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ticket_claim
+                      values:
+                        type: object
+                        properties:
+                          ticket_id:
+                            type: integer
+                  - title: ticket_unclaim
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ticket_unclaim
+                      values:
+                        type: object
+                        properties:
+                          ticket_id:
+                            type: integer
+                  - title: ticket_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ticket_update
+                      values:
+                        type: object
+                        description: Only `ticket_id` is shown to non-moderators.
+                        properties:
+                          ticket_id:
+                            type: integer
+                          status:
+                            type: string
+                          response:
+                            type: string
+                          status_was:
+                            type: string
+                          response_was:
+                            type: string
+                  - title: appeal_claim
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - appeal_claim
+                      values:
+                        type: object
+                        properties:
+                          appeal_id:
+                            type: integer
+                  - title: appeal_unclaim
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - appeal_unclaim
+                      values:
+                        type: object
+                        properties:
+                          appeal_id:
+                            type: integer
+                  - title: appeal_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - appeal_update
+                      values:
+                        type: object
+                        description: Only `appeal_id` is shown to non-staff.
+                        properties:
+                          appeal_id:
+                            type: integer
+                          status:
+                            type: string
+                          response:
+                            type: string
+                          status_was:
+                            type: string
+                          response_was:
+                            type: string
+                  - title: upload_whitelist_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - upload_whitelist_create
+                      values:
+                        type: object
+                        description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                        properties:
+                          domain:
+                            type: string
+                          path:
+                            type: string
+                          note:
+                            type: string
+                          hidden:
+                            type: boolean
+                  - title: upload_whitelist_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - upload_whitelist_update
+                      values:
+                        type: object
+                        description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                        properties:
+                          domain:
+                            type: string
+                          path:
+                            type: string
+                          note:
+                            type: string
+                          old_domain:
+                            type: string
+                          old_path:
+                            type: string
+                          hidden:
+                            type: boolean
+                  - title: upload_whitelist_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - upload_whitelist_delete
+                      values:
+                        type: object
+                        description: 'For non-admins, only `hidden` is shown if the entry is hidden, otherwise only `hidden` and `note`.'
+                        properties:
+                          domain:
+                            type: string
+                          path:
+                            type: string
+                          note:
+                            type: string
+                          hidden:
+                            type: boolean
+                  - title: user_avatar_clear
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_avatar_clear
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_profile_clear
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_profile_clear
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_comments_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_comments_hide
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_forum_posts_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_forum_posts_hide
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_blips_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_blips_delete
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_blacklist_changed
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_blacklist_changed
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_text_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_text_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_custom_title_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_custom_title_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          old_custom_title:
+                            type: string
+                          new_custom_title:
+                            type: string
+                  - title: user_upload_limit_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_upload_limit_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          old_upload_limit:
+                            type: integer
+                          new_upload_limit:
+                            type: integer
+                  - title: user_karma_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_karma_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          old_karma:
+                            type: integer
+                          new_karma:
+                            type: integer
+                  - title: user_karma_free_toggle
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_karma_free_toggle
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          disabled:
+                            type: boolean
+                  - title: user_uploads_toggle
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_uploads_toggle
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          disabled:
+                            type: boolean
+                  - title: user_flags_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_flags_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          added:
+                            type: array
+                            items:
+                              type: string
+                          removed:
+                            type: array
+                            items:
+                              type: string
+                  - title: user_level_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_level_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          level:
+                            type: string
+                          level_was:
+                            type: string
+                  - title: user_name_change
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_name_change
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: totp_reset
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - totp_reset
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: password_reset
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - password_reset
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          invalidated:
+                            type: boolean
+                          credentials_revoked:
+                            type: boolean
+                  - title: user_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_delete
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_ban
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_ban
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          duration:
+                            type: integer
+                            description: 'Some historical entries contain a non-integer string, such as `permanent`.'
+                          reason:
+                            type: string
+                  - title: user_ban_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_ban_update
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          ban_id:
+                            type: integer
+                          expires_at:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          expires_at_was:
+                            type: string
+                            format: date-time
+                            nullable: true
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                  - title: user_unban
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_unban
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: user_feedback_create
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_feedback_create
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          reason:
+                            type: string
+                          type:
+                            type: string
+                          record_id:
+                            type: integer
+                  - title: user_feedback_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_feedback_update
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                          type:
+                            type: string
+                          type_was:
+                            type: string
+                          record_id:
+                            type: integer
+                  - title: user_feedback_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_feedback_delete
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                          type:
+                            type: string
+                          type_was:
+                            type: string
+                          record_id:
+                            type: integer
+                  - title: user_feedback_undelete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_feedback_undelete
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          reason:
+                            type: string
+                          reason_was:
+                            type: string
+                          type:
+                            type: string
+                          type_was:
+                            type: string
+                          record_id:
+                            type: integer
+                  - title: user_feedback_destroy
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_feedback_destroy
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                          reason:
+                            type: string
+                          type:
+                            type: string
+                          record_id:
+                            type: integer
+                  - title: user_flush_favorites
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - user_flush_favorites
+                      values:
+                        type: object
+                        properties:
+                          user_id:
+                            type: integer
+                  - title: wiki_page_rename
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - wiki_page_rename
+                      values:
+                        type: object
+                        properties:
+                          new_title:
+                            type: string
+                          old_title:
+                            type: string
+                  - title: wiki_page_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - wiki_page_delete
+                      values:
+                        type: object
+                        properties:
+                          wiki_page:
+                            type: string
+                          wiki_page_id:
+                            type: integer
+                  - title: wiki_page_lock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - wiki_page_lock
+                      values:
+                        type: object
+                        properties:
+                          wiki_page:
+                            type: string
+                  - title: wiki_page_unlock
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - wiki_page_unlock
+                      values:
+                        type: object
+                        properties:
+                          wiki_page:
+                            type: string
+                  - title: mass_update
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - mass_update
+                      values:
+                        type: object
+                        properties:
+                          antecedent:
+                            type: string
+                          consequent:
+                            type: string
+                  - title: nuke_tag
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - nuke_tag
+                      values:
+                        type: object
+                        properties:
+                          tag_name:
+                            type: string
+                  - title: takedown_delete
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - takedown_delete
+                      values:
+                        type: object
+                        properties:
+                          takedown_id:
+                            type: integer
+                  - title: takedown_process
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - takedown_process
+                      values:
+                        type: object
+                        properties:
+                          takedown_id:
+                            type: integer
+                  - title: post_version_hide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - post_version_hide
+                      values:
+                        type: object
+                        properties:
+                          version:
+                            type: integer
+                          post_id:
+                            type: integer
+                  - title: post_version_unhide
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - post_version_unhide
+                      values:
+                        type: object
+                        properties:
+                          version:
+                            type: integer
+                          post_id:
+                            type: integer
+                  - title: legacy
+                    description: Actions that are no longer logged. Values are empty for non-admins.
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - created_positive_record
+                          - created_neutral_record
+                          - created_negative_record
+                          - created_flag_reason
+                          - edited_flag_reason
+                          - deleted_flag_reason
+                          - post_move_favorites
+                          - post_delete
+                          - post_undelete
+                          - post_destroy
+                          - post_rating_lock
+                          - post_unapprove
+                          - post_replacement_accept
+                          - post_replacement_reject
+                          - post_replacement_delete
+                      values:
+                        type: object
         '403':
           description: Access Denied
           content:
