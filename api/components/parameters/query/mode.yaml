@@ -1,6 +1,6 @@
 in: query
 name: mode
-description: Set the mode for the V2 format. Ignored if `v2` is not set or false. See the `v2=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).
+description: Set which fields are returned. Ignored if `v1=true`. See [Post Files](https://e621.wiki/post-files/#formats).
 schema:
   type: string
   enum:

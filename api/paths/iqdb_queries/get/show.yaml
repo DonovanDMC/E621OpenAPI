@@ -3,7 +3,7 @@ operationId: iqdb_queries#show
 tags:
   - IQDB
 parameters:
-  - $ref: "../../../components/parameters/query/v2.yaml"
+  - $ref: "../../../components/parameters/query/v1.yaml"
   - name: search[score_cutoff]
     in: query
     schema:
@@ -28,13 +28,13 @@ responses:
         schema:
           oneOf:
             - type: array
-              description: The legacy format, returned by default. This format is deprecated.
-              items:
-                $ref: "../../../components/schemas/responses/IQDBResponse.yml"
-            - type: array
-              description: The new format, returned with `v2=true`.
+              description: The new format, returned by default.
               items:
                 $ref: "../../../components/schemas/responses/IQDBResponseV2.yml"
+            - type: array
+              description: The legacy format, returned with `v1=true`. This format is deprecated.
+              items:
+                $ref: "../../../components/schemas/responses/IQDBResponse.yml"
   400:
     description: Invalid input, or IQDB is disabled
     content:

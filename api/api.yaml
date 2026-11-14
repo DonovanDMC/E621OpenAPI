@@ -60,8 +60,8 @@ components:
       $ref: "./components/parameters/query/ipAddr.yaml"
     orderQuery:
       $ref: "./components/parameters/query/order.yaml"
-    v2Query:
-      $ref: "./components/parameters/query/v2.yaml"
+    v1Query:
+      $ref: "./components/parameters/query/v1.yaml"
     modeQuery:
       $ref: "./components/parameters/query/mode.yaml"
     idPath:

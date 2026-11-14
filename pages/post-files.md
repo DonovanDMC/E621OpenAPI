@@ -18,24 +18,14 @@ Every post's files are named by the file's MD5, and stored in folders named afte
 | MP4 variant | `https://static1.e621.net/data/sample/f3/59/f3590a911a687c67c74fb4665a9635d3_alt.mp4` |
 
 - **Previews** are thumbnails, at most 256 pixels on each side, in `.jpg` and `.webp`. Images and videos have one, Flash posts don't.
-- **Samples** are smaller versions of large images, 850 pixels wide, in `.jpg` and `.webp`. Videos have one too, used as the poster image. Check `sample.has` (or `files.meta.has_sample` in the v2 format) before using it.
+- **Samples** are smaller versions of large images, 850 pixels wide, in `.jpg` and `.webp`. Videos have one too, used as the poster image. Check `files.meta.has_sample` (or `sample.has` in the legacy format) before using it.
 - Use the URLs from the API instead of building them, the format isn't guaranteed to stay the same.
 
 ## Formats
 
 Post endpoints return one of two formats.
 
-The default (legacy) format has `file`, `preview`, and `sample` objects:
-
-```json
-{
-  "file": { "width": 640, "height": 640, "ext": "webm", "size": 216387, "md5": "f3590a...", "url": "..." },
-  "preview": { "width": 256, "height": 256, "url": "...", "alt": "..." },
-  "sample": { "has": true, "width": 850, "height": 850, "url": "...", "alt": "...", "alternates": { ... } }
-}
-```
-
-With `v2=true`, all of this is in a single `files` object instead:
+The default format has all of a post's files in a single `files` object:
 
 ```json
 {
@@ -49,11 +39,21 @@ With `v2=true`, all of this is in a single `files` object instead:
 }
 ```
 
-The `mode` parameter changes which fields are returned with `v2=true`. `thumbnail` returns a flat, much smaller object with just what's needed to show a thumbnail (`file_url`, `preview_url`, `sample_url`, `duration`, and so on).
+The `mode` parameter changes which fields are returned. `thumbnail` returns a flat, much smaller object with just what's needed to show a thumbnail (`file_url`, `preview_url`, `sample_url`, `duration`, and so on).
+
+The legacy format, returned with `v1=true`, has `file`, `preview`, and `sample` objects instead. It's deprecated and will be removed, and `mode` is ignored with it:
+
+```json
+{
+  "file": { "width": 640, "height": 640, "ext": "webm", "size": 216387, "md5": "f3590a...", "url": "..." },
+  "preview": { "width": 256, "height": 256, "url": "...", "alt": "..." },
+  "sample": { "has": true, "width": 850, "height": 850, "url": "...", "alt": "...", "alternates": { ... } }
+}
+```
 
 ## Video Files
 
-Videos have extra files, in `sample.alternates` (legacy) or `files.video` (v2):
+Videos have extra files, in `files.video` (or `sample.alternates` in the legacy format):
 
 | Key | What it is |
 |---|---|

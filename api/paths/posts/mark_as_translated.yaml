@@ -7,7 +7,7 @@ security:
 description: Will error if no body is provided.
 parameters:
 - "$ref": "../../components/parameters/path/id.yaml"
-- "$ref": "../../components/parameters/query/v2.yaml"
+- "$ref": "../../components/parameters/query/v1.yaml"
 - "$ref": "../../components/parameters/query/mode.yaml"
 requestBody:
   content:

@@ -7,7 +7,7 @@ security:
 description: You must be Admin+.
 parameters:
   - $ref: "../../components/parameters/path/id.yaml"
-  - $ref: "../../components/parameters/query/v2.yaml"
+  - $ref: "../../components/parameters/query/v1.yaml"
   - $ref: "../../components/parameters/query/mode.yaml"
 responses:
   200:

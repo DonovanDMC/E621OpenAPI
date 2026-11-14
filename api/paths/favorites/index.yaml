@@ -5,7 +5,7 @@ tags:
 parameters:
   - $ref: "../../components/parameters/query/limit.yaml"
   - $ref: "../../components/parameters/query/page.yaml"
-  - $ref: "../../components/parameters/query/v2.yaml"
+  - $ref: "../../components/parameters/query/v1.yaml"
   - $ref: "../../components/parameters/query/mode.yaml"
 responses:
   200:

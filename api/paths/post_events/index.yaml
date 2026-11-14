@@ -9,7 +9,7 @@ parameters:
   - $ref: "../../components/parameters/query/page.yaml"
   - $ref: "../../components/parameters/query/id.yaml"
   - $ref: "../../components/parameters/query/order.yaml"
-  - $ref: "../../components/parameters/query/v2.yaml"
+  - $ref: "../../components/parameters/query/v1.yaml"
   - in: query
     name: search[post_id]
     schema:
@@ -33,8 +33,12 @@ responses:
       application/json:
         schema:
           oneOf:
+            - type: array
+              description: The new format, returned by default.
+              items:
+                $ref: "../../components/schemas/models/PostEvent.yml"
             - type: object
-              description: The legacy format, returned by default. This format is deprecated.
+              description: The legacy format, returned with `v1=true`. This format is deprecated.
               required:
                 - post_events
               properties:
@@ -42,7 +46,3 @@ responses:
                   type: array
                   items:
                     $ref: "../../components/schemas/models/PostEvent.yml"
-            - type: array
-              description: The new format, returned with `v2=true`.
-              items:
-                $ref: "../../components/schemas/models/PostEvent.yml"

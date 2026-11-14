@@ -1,12 +1,24 @@
 description: |
   Success
-  if `v2=true`, open the schema and find the schema for the mode being used.
+  Open the schema and find the schema for the mode being used.
 content:
   application/json:
     schema:
       oneOf:
+        - type: array
+          description: The basic format, returned by default, or with `mode=basic`.
+          items:
+            $ref: "../schemas/models/BasicPost.yml"
+        - type: array
+          description: The extended format, returned with `mode=extended`.
+          items:
+            $ref: "../schemas/models/ExtendedPost.yml"
+        - type: array
+          description: The thumbnail format, returned with `mode=thumbnail`.
+          items:
+            $ref: "../schemas/models/ThumbnailPost.yml"
         - type: object
-          description: The legacy format, returned by default. This format is deprecated.
+          description: The legacy format, returned with `v1=true`. This format is deprecated.
           required:
             - posts
           properties:
@@ -14,15 +26,3 @@ content:
               type: array
               items:
                 $ref: "../schemas/models/LegacyPost.yml"
-        - type: array
-          description: The basic format, returned with `v2=true` and mode is not set.
-          items:
-            $ref: "../schemas/models/BasicPost.yml"
-        - type: array
-          description: The extended format, returned with `v2=true` and `mode=extended`.
-          items:
-            $ref: "../schemas/models/ExtendedPost.yml"
-        - type: array
-          description: The thumbnail format, returned with `v2=true` and `mode=thumbnail`.
-          items:
-            $ref: "../schemas/models/ThumbnailPost.yml"

@@ -1,0 +1,5 @@
+in: query
+name: v1
+description: Use the legacy format. This format is deprecated and will be removed. See the `v1=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).
+schema:
+  type: boolean

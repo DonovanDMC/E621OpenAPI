@@ -3,7 +3,7 @@ operationId: posts#random
 tags:
   - Posts
 parameters:
-  - $ref: "../../components/parameters/query/v2.yaml"
+  - $ref: "../../components/parameters/query/v1.yaml"
   - $ref: "../../components/parameters/query/mode.yaml"
   - name: tags
     description: See [Search Syntax](https://e621.wiki/searching/).
