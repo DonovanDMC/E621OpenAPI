@@ -3,15 +3,21 @@ operationId: user_name_change_requests#create
 tags:
 - User Name Change Requests
 security:
-- basicAuth: []
+- browserAuth: []
+  csrfToken: []
+description: Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
 requestBody:
   content:
     application/x-www-form-urlencoded:
       schema:
         type: object
         required:
+        - authenticity_token
         - user_name_change_request[desired_name]
         properties:
+          authenticity_token:
+            type: string
+            description: CSRF Token
           user_name_change_request[desired_name]:
             type: string
           user_name_change_request[change_reason]:
