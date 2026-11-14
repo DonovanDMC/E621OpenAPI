@@ -14,10 +14,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: '69e2424'
-  x-e621ng-commit: f7c916997c870b4ce1c614dbf4e89827b73e8d61
-  x-e621ng-master-behind-by: 46
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f7c916997c870b4ce1c614dbf4e89827b73e8d61...master
+  version: a253d53
+  x-e621ng-commit: 13366ed4d735ce5446c8d934fd00d0c5697591ec
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/13366ed4d735ce5446c8d934fd00d0c5697591ec...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -85,16 +85,16 @@ components:
         enum:
           - id_asc
           - id_desc
-    v2Query:
+    v1Query:
       in: query
-      name: v2
-      description: 'Use the new V2 format. See the `v2=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).'
+      name: v1
+      description: 'Use the legacy format. This format is deprecated and will be removed. See the `v1=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).'
       schema:
         type: boolean
     modeQuery:
       in: query
       name: mode
-      description: 'Set the mode for the V2 format. Ignored if `v2` is not set or false. See the `v2=true` responses, and [Post Files](https://e621.wiki/post-files/#formats).'
+      description: 'Set which fields are returned. Ignored if `v1=true`. See [Post Files](https://e621.wiki/post-files/#formats).'
       schema:
         type: string
         enum:
@@ -1056,6 +1056,7 @@ components:
             - tag_query_limit
             - has_mail
             - forum_notification_dot
+            - oauth_applications_beta
           properties:
             blacklist_users:
               type: boolean
@@ -1141,6 +1142,9 @@ components:
               type: boolean
             forum_notification_dot:
               type: boolean
+            oauth_applications_beta:
+              type: boolean
+              description: Lets the user create OAuth applications.
     DBExport:
       type: object
       required:
@@ -1366,8 +1370,10 @@ components:
           type: string
         extra_params:
           type: object
+          description: Emails and IP addresses are scrubbed for non-admins. The user agent only has emails scrubbed.
         message:
           type: string
+          description: Emails and IP addresses are scrubbed for non-admins.
         trace:
           type: string
         code:
@@ -5206,6 +5212,7 @@ components:
         last_seen_post_id:
           type: integer
           nullable: true
+          description: 'The newest post seen for this search on the site serving the request. Sites like e926.net track this separately, but seeing posts on e621.net counts for them too.'
         created_at:
           type: string
           format: date-time
@@ -6814,37 +6821,49 @@ components:
     PostResponse:
       description: |
         Success
-        if `v2=true`, open the schema and find the schema for the mode being used.
+        Open the schema and find the schema for the mode being used.
       content:
         application/json:
           schema:
             oneOf:
+              - allOf:
+                  - $ref: '#/components/schemas/BasicPost'
+                  - description: 'The basic format, returned by default, or with `mode=basic`.'
+              - allOf:
+                  - $ref: '#/components/schemas/ExtendedPost'
+                  - description: 'The extended format, returned with `mode=extended`.'
+              - allOf:
+                  - $ref: '#/components/schemas/ThumbnailPost'
+                  - description: 'The thumbnail format, returned with `mode=thumbnail`.'
               - type: object
-                description: 'The legacy format, returned by default. This format is deprecated.'
+                description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
                 required:
                   - post
                 properties:
                   post:
                     $ref: '#/components/schemas/LegacyPost'
-              - allOf:
-                  - $ref: '#/components/schemas/BasicPost'
-                  - description: 'The basic format, returned with `v2=true` and mode is not set.'
-              - allOf:
-                  - $ref: '#/components/schemas/ExtendedPost'
-                  - description: 'The extended format, returned with `v2=true` and `mode=extended`.'
-              - allOf:
-                  - $ref: '#/components/schemas/ThumbnailPost'
-                  - description: 'The thumbnail format, returned with `v2=true` and `mode=thumbnail`.'
     PostsResponse:
       description: |
         Success
-        if `v2=true`, open the schema and find the schema for the mode being used.
+        Open the schema and find the schema for the mode being used.
       content:
         application/json:
           schema:
             oneOf:
+              - type: array
+                description: 'The basic format, returned by default, or with `mode=basic`.'
+                items:
+                  $ref: '#/components/schemas/BasicPost'
+              - type: array
+                description: 'The extended format, returned with `mode=extended`.'
+                items:
+                  $ref: '#/components/schemas/ExtendedPost'
+              - type: array
+                description: 'The thumbnail format, returned with `mode=thumbnail`.'
+                items:
+                  $ref: '#/components/schemas/ThumbnailPost'
               - type: object
-                description: 'The legacy format, returned by default. This format is deprecated.'
+                description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
                 required:
                   - posts
                 properties:
@@ -6852,18 +6871,6 @@ components:
                     type: array
                     items:
                       $ref: '#/components/schemas/LegacyPost'
-              - type: array
-                description: 'The basic format, returned with `v2=true` and mode is not set.'
-                items:
-                  $ref: '#/components/schemas/BasicPost'
-              - type: array
-                description: 'The extended format, returned with `v2=true` and `mode=extended`.'
-                items:
-                  $ref: '#/components/schemas/ExtendedPost'
-              - type: array
-                description: 'The thumbnail format, returned with `v2=true` and `mode=thumbnail`.'
-                items:
-                  $ref: '#/components/schemas/ThumbnailPost'
   requestBodies:
     warning:
       content:
@@ -9463,7 +9470,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
       responses:
         '200':
@@ -10364,7 +10371,7 @@ paths:
       tags:
         - IQDB
       parameters:
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - name: 'search[score_cutoff]'
           in: query
           schema:
@@ -10389,13 +10396,13 @@ paths:
               schema:
                 oneOf:
                   - type: array
-                    description: 'The legacy format, returned by default. This format is deprecated.'
-                    items:
-                      $ref: '#/components/schemas/IQDBResponse'
-                  - type: array
-                    description: 'The new format, returned with `v2=true`.'
+                    description: 'The new format, returned by default.'
                     items:
                       $ref: '#/components/schemas/IQDBResponseV2'
+                  - type: array
+                    description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
+                    items:
+                      $ref: '#/components/schemas/IQDBResponse'
         '400':
           description: 'Invalid input, or IQDB is disabled'
           content:
@@ -10428,7 +10435,7 @@ paths:
       tags:
         - IQDB
       parameters:
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
       requestBody:
         content:
           multipart/form-data:
@@ -10466,13 +10473,13 @@ paths:
               schema:
                 oneOf:
                   - type: array
-                    description: 'The legacy format, returned by default. This format is deprecated.'
-                    items:
-                      $ref: '#/components/schemas/IQDBResponse'
-                  - type: array
-                    description: 'The new format, returned with `v2=true`.'
+                    description: 'The new format, returned by default.'
                     items:
                       $ref: '#/components/schemas/IQDBResponseV2'
+                  - type: array
+                    description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
+                    items:
+                      $ref: '#/components/schemas/IQDBResponse'
         '400':
           description: 'Invalid input, or IQDB is disabled'
           content:
@@ -11370,7 +11377,7 @@ paths:
       tags:
         - Popular
       parameters:
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
         - name: date
           in: query
@@ -11401,7 +11408,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/limitQuery'
         - $ref: '#/components/parameters/pageQuery'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
         - in: query
           name: tags
@@ -11420,13 +11427,40 @@ paths:
         '200':
           description: |
             Success
-            if `v2=true`, open the schema and find the schema for the mode being used.
+            Open the schema and find the schema for the mode being used.
           content:
             application/json:
               schema:
                 oneOf:
+                  - type: array
+                    description: 'The basic format, returned by default, or with `mode=basic`.'
+                    items:
+                      $ref: '#/components/schemas/BasicPost'
+                  - type: array
+                    description: 'The extended format, returned with `mode=extended`.'
+                    items:
+                      $ref: '#/components/schemas/ExtendedPost'
+                  - type: array
+                    description: 'The thumbnail format, returned with `mode=thumbnail`.'
+                    items:
+                      $ref: '#/components/schemas/ThumbnailPost'
+                  - allOf:
+                      - $ref: '#/components/schemas/BasicPost'
+                      - description: |
+                          When searching by md5.
+                          The basic format, returned by default, or with `mode=basic`.
+                  - allOf:
+                      - $ref: '#/components/schemas/ExtendedPost'
+                      - description: |
+                          When searching by md5.
+                          The extended format, returned with `mode=extended`.
+                  - allOf:
+                      - $ref: '#/components/schemas/ThumbnailPost'
+                      - description: |
+                          When searching by md5.
+                          The thumbnail format, returned with `mode=thumbnail`.
                   - type: object
-                    description: 'The legacy format, returned by default. This format is deprecated.'
+                    description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
                     required:
                       - posts
                     properties:
@@ -11434,42 +11468,21 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/LegacyPost'
-                  - type: array
-                    description: 'The basic format, returned with `v2=true` and mode is not set.'
-                    items:
-                      $ref: '#/components/schemas/BasicPost'
-                  - type: array
-                    description: 'The extended format, returned with `v2=true` and `mode=extended`.'
-                    items:
-                      $ref: '#/components/schemas/ExtendedPost'
-                  - type: array
-                    description: 'The thumbnail format, returned with `v2=true` and `mode=thumbnail`.'
-                    items:
-                      $ref: '#/components/schemas/ThumbnailPost'
                   - type: object
                     description: |
                       When searching by md5.
-                      The legacy format, returned by default. This format is deprecated.
+                      The legacy format, returned with `v1=true`. This format is deprecated.
                     required:
                       - post
                     properties:
                       post:
                         $ref: '#/components/schemas/LegacyPost'
-                  - allOf:
-                      - $ref: '#/components/schemas/BasicPost'
-                      - description: |
-                          When searching by md5.
-                          The basic format, returned with `v2=true` and mode is not set.
-                  - allOf:
-                      - $ref: '#/components/schemas/ExtendedPost'
-                      - description: |
-                          When searching by md5.
-                          The extended format, returned with `v2=true` and `mode=extended`.
-                  - allOf:
-                      - $ref: '#/components/schemas/ThumbnailPost'
-                      - description: |
-                          When searching by md5.
-                          The thumbnail format, returned with `v2=true` and `mode=thumbnail`.
+        '422':
+          description: 'The search is invalid, has too many tags, timed out, or is too complex to process. See [Search Syntax](https://e621.wiki/searching/).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   /posts/random.json:
     get:
       summary: Get Random Post
@@ -11477,7 +11490,7 @@ paths:
       tags:
         - Posts
       parameters:
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
         - name: tags
           description: 'See [Search Syntax](https://e621.wiki/searching/).'
@@ -11489,6 +11502,12 @@ paths:
           $ref: '#/components/responses/PostResponse'
         '404':
           $ref: '#/components/responses/NotFound'
+        '422':
+          description: 'The search is invalid, has too many tags, timed out, or is too complex to process. See [Search Syntax](https://e621.wiki/searching/).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   /posts/count.json:
     get:
       summary: Count Posts
@@ -11527,7 +11546,7 @@ paths:
         - Posts
       parameters:
         - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
       responses:
         '200':
@@ -11544,7 +11563,7 @@ paths:
       description: Most errors are silently swallowed.
       parameters:
         - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
       requestBody:
         content:
@@ -11634,7 +11653,7 @@ paths:
       description: You must be Admin+.
       parameters:
         - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
       responses:
         '200':
@@ -11656,7 +11675,7 @@ paths:
       description: Will error if no body is provided.
       parameters:
         - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
       requestBody:
         content:
@@ -11739,7 +11758,7 @@ paths:
         - Posts
       parameters:
         - $ref: '#/components/parameters/idPath'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - $ref: '#/components/parameters/modeQuery'
         - name: seq
           in: query
@@ -12330,7 +12349,7 @@ paths:
         - $ref: '#/components/parameters/pageQuery'
         - $ref: '#/components/parameters/idQuery'
         - $ref: '#/components/parameters/orderQuery'
-        - $ref: '#/components/parameters/v2Query'
+        - $ref: '#/components/parameters/v1Query'
         - in: query
           name: 'search[post_id]'
           schema:
@@ -12354,8 +12373,12 @@ paths:
             application/json:
               schema:
                 oneOf:
+                  - type: array
+                    description: 'The new format, returned by default.'
+                    items:
+                      $ref: '#/components/schemas/PostEvent'
                   - type: object
-                    description: 'The legacy format, returned by default. This format is deprecated.'
+                    description: 'The legacy format, returned with `v1=true`. This format is deprecated.'
                     required:
                       - post_events
                     properties:
@@ -12363,10 +12386,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/PostEvent'
-                  - type: array
-                    description: 'The new format, returned with `v2=true`.'
-                    items:
-                      $ref: '#/components/schemas/PostEvent'
   /post_flags.json:
     get:
       summary: Post Flags Index
@@ -14339,11 +14358,14 @@ paths:
                   description: CSRF Token
                 'session[url]':
                   type: string
-                  description: 'Optional relative URL to redirect to after login, defaults to `/posts`.'
+                  description: 'Optional local path (starting with `/`) to redirect to after login. Anything else is ignored, and `/posts` is used.'
                 'session[name]':
                   type: string
                 'session[password]':
                   type: string
+                'session[remember]':
+                  type: boolean
+                  description: Stay logged in after the browser is closed.
       responses:
         '200':
           description: Success
@@ -14358,41 +14380,54 @@ paths:
               schema:
                 type: object
                 required:
-                  - error
-                  - code
                   - url
                 properties:
-                  error:
-                    type: string
-                  code:
-                    type: string
-                    enum:
-                      - totp_required
                   url:
                     type: string
+                    description: 'Where to go next, `session[url]` or `/posts`.'
         '401':
-          description: Two-factor authentication required - verification required within 5 minutes
+          description: 'The username or password was incorrect, or two-factor authentication is required (verification required within 5 minutes)'
           content:
             application/json:
               schema:
                 type: object
                 required:
                   - error
-                  - code
-                  - url
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                    description: Only present when two-factor authentication is required.
+                    enum:
+                      - totp_required
+                  url:
+                    type: string
+                    description: The two-factor authentication page. Only present when two-factor authentication is required.
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '406':
+          description: Failure
+        '429':
+          description: |
+            Ratelimited, either too many failed logins from your IP, or for this account.<br>
+            If it's for the account and captchas are enabled, `code` is `captcha_required` and the login has to be completed through `url` on the website.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
                 properties:
                   error:
                     type: string
                   code:
                     type: string
                     enum:
-                      - totp_required
+                      - captcha_required
                   url:
                     type: string
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '406':
-          description: Failure
+                    description: The login page with the captcha. Only present with `captcha_required`.
     delete:
       summary: Logout
       operationId: sessions#destroy
@@ -16462,15 +16497,21 @@ paths:
       tags:
         - User Name Change Requests
       security:
-        - basicAuth: []
+        - browserAuth: []
+          csrfToken: []
+      description: 'Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).'
       requestBody:
         content:
           application/x-www-form-urlencoded:
             schema:
               type: object
               required:
+                - authenticity_token
                 - 'user_name_change_request[desired_name]'
               properties:
+                authenticity_token:
+                  type: string
+                  description: CSRF Token
                 'user_name_change_request[desired_name]':
                   type: string
                 'user_name_change_request[change_reason]':
@@ -16901,6 +16942,8 @@ paths:
                   type: boolean
                 'user[replacements_beta]':
                   type: boolean
+                'user[oauth_applications_beta]':
+                  type: boolean
                 'user[custom_title]':
                   type: string
                 'user[tag_warden]':
@@ -16925,8 +16968,11 @@ paths:
       tags:
         - Staff Users
       security:
-        - basicAuth: []
-      description: You must have the bd staff user flag. Cannot be used on staff.
+        - browserAuth: []
+          csrfToken: []
+      description: |
+        You must have the bd staff user flag. Cannot be used on staff.<br>
+        Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
@@ -16943,8 +16989,11 @@ paths:
       tags:
         - Staff Users
       security:
-        - basicAuth: []
-      description: You must be Admin+. You must have the bd staff flag if the user is Staff+.
+        - browserAuth: []
+          csrfToken: []
+      description: |
+        You must be Admin+. You must have the bd staff flag if the user is Staff+.<br>
+        Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
       parameters:
         - $ref: '#/components/parameters/idPath'
       responses:
