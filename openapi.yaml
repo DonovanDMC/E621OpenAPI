@@ -14,9 +14,9 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 9476dcd
+  version: eeba772
   x-e621ng-commit: 13366ed4d735ce5446c8d934fd00d0c5697591ec
-  x-e621ng-master-behind-by: 0
+  x-e621ng-master-behind-by: 6
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/13366ed4d735ce5446c8d934fd00d0c5697591ec...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
@@ -492,6 +492,19 @@ components:
       enum:
         - 1
         - -1
+    UploadKarmaEventReason:
+      type: string
+      enum:
+        - approved
+        - unapproved
+        - deleted
+        - undeleted
+        - replacement_penalty
+        - replacement_penalty_reversed
+        - replacement_transfer
+        - owner_change
+        - staff_override
+        - queue_bypass
     UploadStatus:
       oneOf:
         - type: string
@@ -6248,6 +6261,40 @@ components:
         duplicate_post_id:
           type: integer
           nullable: true
+    UploadKarmaEvent:
+      type: object
+      required:
+        - id
+        - user_id
+        - creator_id
+        - post_id
+        - reason
+        - delta
+        - balance
+        - extra_data
+        - created_at
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        creator_id:
+          type: integer
+        post_id:
+          type: integer
+          nullable: true
+        reason:
+          $ref: '#/components/schemas/UploadKarmaEventReason'
+        delta:
+          type: integer
+        balance:
+          type: integer
+        extra_data:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
     UploadWhitelist:
       type: object
       required:
@@ -15309,18 +15356,7 @@ paths:
         - in: query
           name: 'search[reason]'
           schema:
-            type: string
-            enum:
-              - approved
-              - unapproved
-              - deleted
-              - undeleted
-              - replacement_penalty
-              - replacement_penalty_reversed
-              - replacement_transfer
-              - owner_change
-              - staff_override
-              - queue_bypass
+            $ref: '#/components/schemas/UploadKarmaEventReason'
       responses:
         '200':
           description: Success
@@ -15329,39 +15365,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  required:
-                    - id
-                    - user_id
-                    - creator_id
-                    - post_id
-                    - reason
-                    - delta
-                    - balance
-                    - extra_data
-                    - created_at
-                  properties:
-                    id:
-                      type: integer
-                    user_id:
-                      type: integer
-                    creator_id:
-                      type: integer
-                    post_id:
-                      type: integer
-                      nullable: true
-                    reason:
-                      $ref: '#/paths/~1upload_karma_events.json/get/parameters/9/schema'
-                    delta:
-                      type: integer
-                    balance:
-                      type: integer
-                    extra_data:
-                      type: object
-                      additionalProperties: true
-                    created_at:
-                      type: string
-                      format: date-time
+                  $ref: '#/components/schemas/UploadKarmaEvent'
   /uploads.json:
     get:
       summary: Uploads Index
