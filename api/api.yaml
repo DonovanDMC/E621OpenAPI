@@ -130,6 +130,8 @@ components:
       $ref: "./components/schemas/enums/UpDownMehVote.yml"
     UpDownVote:
       $ref: "./components/schemas/enums/UpDownVote.yml"
+    UploadKarmaEventReason:
+      $ref: "./components/schemas/enums/UploadKarmaEventReason.yml"
     UploadStatus:
       $ref: "./components/schemas/enums/UploadStatus.yml"
     UserFeedbackCategory:
@@ -335,6 +337,8 @@ components:
       $ref: "./components/schemas/models/TrackedSearchTrend.yml"
     Upload:
       $ref: "./components/schemas/models/Upload.yml"
+    UploadKarmaEvent:
+      $ref: "./components/schemas/models/UploadKarmaEvent.yml"
     UploadWhitelist:
       $ref: "./components/schemas/models/UploadWhitelist.yml"
     User:

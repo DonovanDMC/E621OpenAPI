@@ -40,6 +40,14 @@ jobs:
       - uses: ./.github/actions/pnpm
       - name: Validate Mod Actions
         run: pnpm run validate:mod-actions
+  components:
+    runs-on: ubuntu-latest
+    name: Validate Components
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm
+      - name: Validate Components
+        run: pnpm run validate:components
   operation-ids:
     runs-on: ubuntu-latest
     name: Validate Operation IDs

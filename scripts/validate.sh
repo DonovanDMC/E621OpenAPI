@@ -10,6 +10,7 @@ cleanup() {
 trap cleanup EXIT
 cp openapi.yaml openapi.yaml.bck
 
+npm run validate:components
 npm run build:openapi
 npm run lint:validate
 npm run lint:api
