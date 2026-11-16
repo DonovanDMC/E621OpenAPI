@@ -41,3 +41,7 @@ properties:
   notes:
     type: string
     nullable: true
+  urls:
+    type: array
+    items:
+      $ref: "./ArtistURL.yml"
