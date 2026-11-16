@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: eeba772
+  version: 81d8e3f
   x-e621ng-commit: 13366ed4d735ce5446c8d934fd00d0c5697591ec
   x-e621ng-master-behind-by: 6
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/13366ed4d735ce5446c8d934fd00d0c5697591ec...master
@@ -695,6 +695,10 @@ components:
         notes:
           type: string
           nullable: true
+        urls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtistURL'
     ArtistURL:
       type: object
       required:

@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: eeba772
+  version: 81d8e3f
   x-e621ng-commit: 13366ed4d735ce5446c8d934fd00d0c5697591ec
   x-e621ng-master-behind-by: 6
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/13366ed4d735ce5446c8d934fd00d0c5697591ec...master
@@ -702,6 +702,37 @@ components:
         notes:
           type: string
           nullable: true
+        urls:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - artist_id
+              - url
+              - normalized_url
+              - created_at
+              - updated_at
+              - is_active
+            properties:
+              id:
+                type: integer
+              artist_id:
+                type: integer
+              url:
+                type: string
+                format: uri
+              normalized_url:
+                type: string
+                format: uri
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              is_active:
+                type: boolean
     ArtistURL:
       type: object
       required:
@@ -14922,6 +14953,37 @@ paths:
                         notes:
                           type: string
                           nullable: true
+                        urls:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                              - id
+                              - artist_id
+                              - url
+                              - normalized_url
+                              - created_at
+                              - updated_at
+                              - is_active
+                            properties:
+                              id:
+                                type: integer
+                              artist_id:
+                                type: integer
+                              url:
+                                type: string
+                                format: uri
+                              normalized_url:
+                                type: string
+                                format: uri
+                              created_at:
+                                type: string
+                                format: date-time
+                              updated_at:
+                                type: string
+                                format: date-time
+                              is_active:
+                                type: boolean
                     - type: object
                       required:
                         - urls
@@ -15047,6 +15109,37 @@ paths:
                   notes:
                     type: string
                     nullable: true
+                  urls:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - id
+                        - artist_id
+                        - url
+                        - normalized_url
+                        - created_at
+                        - updated_at
+                        - is_active
+                      properties:
+                        id:
+                          type: integer
+                        artist_id:
+                          type: integer
+                        url:
+                          type: string
+                          format: uri
+                        normalized_url:
+                          type: string
+                          format: uri
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                        is_active:
+                          type: boolean
         '403':
           description: Access Denied
           content:
@@ -15145,6 +15238,37 @@ paths:
                       notes:
                         type: string
                         nullable: true
+                      urls:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - id
+                            - artist_id
+                            - url
+                            - normalized_url
+                            - created_at
+                            - updated_at
+                            - is_active
+                          properties:
+                            id:
+                              type: integer
+                            artist_id:
+                              type: integer
+                            url:
+                              type: string
+                              format: uri
+                            normalized_url:
+                              type: string
+                              format: uri
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            is_active:
+                              type: boolean
                   - type: object
                     required:
                       - domains
@@ -15732,6 +15856,37 @@ paths:
                             notes:
                               type: string
                               nullable: true
+                            urls:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                  - id
+                                  - artist_id
+                                  - url
+                                  - normalized_url
+                                  - created_at
+                                  - updated_at
+                                  - is_active
+                                properties:
+                                  id:
+                                    type: integer
+                                  artist_id:
+                                    type: integer
+                                  url:
+                                    type: string
+                                    format: uri
+                                  normalized_url:
+                                    type: string
+                                    format: uri
+                                  created_at:
+                                    type: string
+                                    format: date-time
+                                  updated_at:
+                                    type: string
+                                    format: date-time
+                                  is_active:
+                                    type: boolean
   /avoid_postings.json:
     get:
       summary: Avoid Posting Index
