@@ -49,6 +49,7 @@
   "oauth_authorized_applications#*": "Intentionally excluded",
   "staff/security#*": "Intentionally excluded",
   "totps#*": "Intentionally excluded",
+  "uploads#preview": "Intentionally excluded",
   "staff/users#password_reset": "Intentionally excluded",
 
   "doorkeeper/openid_connect/discovery#webfinger": "Consistently errors",
