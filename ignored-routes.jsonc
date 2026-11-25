@@ -14,6 +14,7 @@
   "artists_short#show": "HTML only route",
   "auths#{login,totp}": "HTML only route",
   "emails#*": "HTML only route",
+  "forums#*": "HTML only route",
   "maintenance/user/deletions#show": "HTML only route",
   "maintenance/user/email_{changes,notifications}#*": "HTML only route",
   "maintenance/user/password_resets#*": "HTML only route",
