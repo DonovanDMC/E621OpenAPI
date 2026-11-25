@@ -1332,7 +1332,7 @@ paths:
   /staff/post/posts/{id}/previous_owners.json:
     get:
       $ref: "./paths/staff/post/posts/previous_owners.yaml"
-  /staff/post/posts/{id}/reowner:
+  /staff/post/posts/{id}/reowner.json:
     post:
       $ref: "./paths/staff/post/posts/reowner.yaml"
   /staff/post/approval.json:
