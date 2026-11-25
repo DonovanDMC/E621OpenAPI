@@ -14,10 +14,10 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 81d8e3f
-  x-e621ng-commit: 13366ed4d735ce5446c8d934fd00d0c5697591ec
-  x-e621ng-master-behind-by: 6
-  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/13366ed4d735ce5446c8d934fd00d0c5697591ec...master
+  version: 9b979e9
+  x-e621ng-commit: f11125f4903abb684bfe625501a236b5d1f15f80
+  x-e621ng-master-behind-by: 0
+  x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f11125f4903abb684bfe625501a236b5d1f15f80...master
   x-mcp-server: 'https://mcp.e621.wiki'
 servers:
   - url: 'https://e621.net'
@@ -31,7 +31,7 @@ components:
     basicAuth:
       type: http
       scheme: basic
-      description: 'Your username and API key. See [Authentication](https://e621.wiki/authentication/).'
+      description: 'Your username and API key. Only accepted on `.json`, `.xml`, and `.atom` requests, never on html pages. See [Authentication](https://e621.wiki/authentication/).'
     browserAuth:
       type: apiKey
       in: cookie
@@ -235,6 +235,9 @@ components:
         - upload_whitelist_create
         - upload_whitelist_update
         - upload_whitelist_delete
+        - upload_url_rule_create
+        - upload_url_rule_update
+        - upload_url_rule_delete
         - user_avatar_clear
         - user_profile_clear
         - user_comments_hide
@@ -413,12 +416,6 @@ components:
         - s
         - q
         - e
-    StaffWikiRefRelatedType:
-      type: string
-      enum:
-        - User
-        - Artist
-        - StaffWiki
     TagCategory:
       type: integer
       enum:
@@ -3372,6 +3369,89 @@ components:
                   type: string
                 hidden:
                   type: boolean
+        - title: upload_url_rule_create
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_url_rule_create
+            values:
+              type: object
+              properties:
+                label:
+                  type: string
+                pattern:
+                  type: string
+                replacement:
+                  type: string
+                handling:
+                  type: string
+                  enum:
+                    - recommend
+                    - block
+                message:
+                  type: string
+                enabled:
+                  type: boolean
+        - title: upload_url_rule_update
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_url_rule_update
+            values:
+              type: object
+              properties:
+                label:
+                  type: string
+                pattern:
+                  type: string
+                replacement:
+                  type: string
+                handling:
+                  type: string
+                  enum:
+                    - recommend
+                    - block
+                message:
+                  type: string
+                enabled:
+                  type: boolean
+                old_label:
+                  type: string
+                old_pattern:
+                  type: string
+                old_replacement:
+                  type: string
+                old_handling:
+                  type: string
+                  enum:
+                    - recommend
+                    - block
+        - title: upload_url_rule_delete
+          properties:
+            action:
+              type: string
+              enum:
+                - upload_url_rule_delete
+            values:
+              type: object
+              properties:
+                label:
+                  type: string
+                pattern:
+                  type: string
+                replacement:
+                  type: string
+                handling:
+                  type: string
+                  enum:
+                    - recommend
+                    - block
+                message:
+                  type: string
+                enabled:
+                  type: boolean
         - title: user_avatar_clear
           properties:
             action:
@@ -6299,6 +6379,54 @@ components:
         created_at:
           type: string
           format: date-time
+    UploadURLRule:
+      type: object
+      required:
+        - id
+        - label
+        - pattern
+        - replacement
+        - message
+        - handling
+        - enabled
+        - creator_id
+        - updater_id
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+          maxLength: 100
+        pattern:
+          type: string
+          maxLength: 500
+          description: 'A case-insensitive Ruby regex, matched against the canonicalized URL.'
+        replacement:
+          type: string
+          maxLength: 500
+          description: Used with `pattern` to build the suggested url. Empty if there is no suggestion.
+        message:
+          type: string
+          maxLength: 500
+        handling:
+          type: string
+          enum:
+            - recommend
+            - block
+        enabled:
+          type: boolean
+        creator_id:
+          type: integer
+        updater_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     UploadWhitelist:
       type: object
       required:
@@ -7395,6 +7523,49 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '422':
           $ref: '#/components/responses/ExpectedError'
+  /artists/show_or_new.json:
+    get:
+      summary: Get Artist By Name
+      operationId: artists#show_or_new
+      tags:
+        - Artists
+      description: 'Like `GET /artists/{idOrName}.json`, but always looks up by name, even if it is numeric.'
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Artist'
+                  - type: object
+                    required:
+                      - domains
+                      - urls
+                    properties:
+                      domains:
+                        type: array
+                        items:
+                          type: array
+                          example:
+                            - - e621.net
+                              - 1
+                          items:
+                            oneOf:
+                              - type: string
+                              - type: integer
+                      urls:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ArtistURL'
+        '404':
+          $ref: '#/components/responses/NotFound'
   '/artists/{idOrName}.json':
     get:
       summary: Get Artist
@@ -9535,6 +9706,7 @@ paths:
       operationId: favorites#create
       tags:
         - Favorites
+      description: Creates and deletes share a limit of 60 per minute. They don't count towards the general write limit.
       security:
         - basicAuth: []
       requestBody:
@@ -9568,12 +9740,19 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+        '429':
+          description: Ratelimited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   '/favorites/{id}.json':
     delete:
       summary: Delete Favorite
       operationId: favorites#destroy
       tags:
         - Favorites
+      description: Creates and deletes share a limit of 60 per minute. They don't count towards the general write limit.
       security:
         - basicAuth: []
       parameters:
@@ -9599,6 +9778,12 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
+        '429':
+          description: Ratelimited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   /forum_posts.json:
     get:
       summary: Forum Posts Index
@@ -12671,7 +12856,7 @@ paths:
                   description: Mutually exclusive with replacement_url.
                 'post_replacement[replacement_url]':
                   type: string
-                  description: Mutually exclusive with replacement_file.
+                  description: 'Mutually exclusive with replacement_file. Replacements matching a `block` upload URL rule are rejected, see [`GET /upload_url_rules/check.json`](#/Upload%20URL%20Rules).'
                 'post_replacement[reason]':
                   type: string
                 'post_replacement[source]':
@@ -13584,10 +13769,12 @@ paths:
             type: string
         - in: query
           name: 'search[antecedent_name]'
+          description: 'Exact names, case-insensitive. Separate multiple names with spaces or commas.'
           schema:
             type: string
         - in: query
           name: 'search[consequent_name]'
+          description: 'Exact names, case-insensitive. Separate multiple names with spaces or commas.'
           schema:
             type: string
         - in: query
@@ -13796,10 +13983,12 @@ paths:
             type: string
         - in: query
           name: 'search[antecedent_name]'
+          description: 'Exact names, case-insensitive. Separate multiple names with spaces or commas.'
           schema:
             type: string
         - in: query
           name: 'search[consequent_name]'
+          description: 'Exact names, case-insensitive. Separate multiple names with spaces or commas.'
           schema:
             type: string
         - in: query
@@ -14077,6 +14266,7 @@ paths:
       operationId: related_tags#bulk
       tags:
         - Related Tags
+      description: 'Limited to 300 looked up tags per minute, so each tag in `query` counts once.'
       security:
         - basicAuth: []
       requestBody:
@@ -14103,6 +14293,12 @@ paths:
                         category_id: 0
         '403':
           $ref: '#/components/responses/AccessDenied'
+        '429':
+          description: Ratelimited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   /search_trends.json:
     get:
       summary: Search Trends Index
@@ -14416,7 +14612,7 @@ paths:
                   type: string
                 'session[remember]':
                   type: boolean
-                  description: Stay logged in after the browser is closed.
+                  description: 'Stay logged in for 14 days after the browser is closed, through the `remember_session` cookie.'
       responses:
         '200':
           description: Success
@@ -14484,6 +14680,7 @@ paths:
       operationId: sessions#destroy
       tags:
         - Sessions
+      description: 'Ends the login session on the server, so copies of its cookies stop working too.'
       security:
         - csrfToken: []
       requestBody:
@@ -15472,7 +15669,7 @@ paths:
                   description: Mutually exclusive with direct_url.
                 'upload[direct_url]':
                   type: string
-                  description: Mutually exclusive with file.
+                  description: 'Mutually exclusive with file. Uploads matching a `block` upload URL rule are rejected, see [`GET /upload_url_rules/check.json`](#/Upload%20URL%20Rules).'
                 'upload[source]':
                   type: string
                 'upload[tag_string]':
@@ -15581,6 +15778,126 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
+  /upload_url_rules.json:
+    get:
+      summary: Upload URL Rules Index
+      operationId: upload_url_rules#index
+      tags:
+        - Upload URL Rules
+      security:
+        - basicAuth: []
+      parameters:
+        - $ref: '#/components/parameters/limitQuery'
+        - $ref: '#/components/parameters/pageQuery'
+        - $ref: '#/components/parameters/idQuery'
+        - name: 'search[order]'
+          in: query
+          schema:
+            type: string
+            enum:
+              - id_asc
+              - id_desc
+              - label
+              - updated_at
+        - in: query
+          name: 'search[label]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[pattern]'
+          schema:
+            type: string
+        - in: query
+          name: 'search[handling]'
+          schema:
+            type: string
+            enum:
+              - recommend
+              - block
+        - in: query
+          name: 'search[enabled]'
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UploadURLRule'
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+  /upload_url_rules/check.json:
+    get:
+      summary: Check URL Against Upload URL Rules
+      operationId: upload_url_rules#check
+      tags:
+        - Upload URL Rules
+      description: |
+        Checks a direct upload url against the enabled rules. The first matching `block` rule wins, otherwise the first matching `recommend` rule.<br>
+        Limited to 60 requests per minute.
+      security:
+        - basicAuth: []
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+            maxLength: 2000
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - match
+                properties:
+                  match:
+                    type: boolean
+                  handling:
+                    type: string
+                    enum:
+                      - recommend
+                      - block
+                  label:
+                    type: string
+                  message:
+                    type: string
+                  suggested_url:
+                    type: string
+                    nullable: true
+                  canonical_url:
+                    type: string
+        '403':
+          $ref: '#/components/responses/AccessDenied'
+        '422':
+          description: 'The url can''t be checked, or a rule failed to evaluate'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    enum:
+                      - url_uncheckable
+                      - rule_failed
+                  label:
+                    type: string
+                    description: 'The rule that failed, for `rule_failed`.'
+        '429':
+          description: Ratelimited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
   /upload_whitelists.json:
     get:
       summary: Upload Whitelists Index
@@ -15902,21 +16219,6 @@ paths:
                       $ref: '#/components/schemas/TagWithCount'
         '403':
           $ref: '#/components/responses/AccessDenied'
-  /users/custom_style.css:
-    get:
-      summary: Get Custom Style
-      operationId: users#custom_style
-      tags:
-        - Users
-      security:
-        - basicAuth: []
-      responses:
-        '200':
-          description: Success
-          content:
-            application/css: {}
-        '406':
-          description: Not Logged In
   '/users/{idOrName}.json':
     get:
       summary: Get User
@@ -16060,134 +16362,6 @@ paths:
       responses:
         '302':
           description: Success
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/toggle_uploads':
-    get:
-      summary: Toggle User Uploads
-      operationId: users#toggle_uploads
-      tags:
-        - Users
-      description: |
-        You must be Janitor+.
-        This endpoint will return HTML when disabling uploads (due to a reason being required), this endpoint should only be used for reenabling. Use [Disable User Uploads](#operation-Users-disableUserUploads) to disable uploads.
-      parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
-      security:
-        - basicAuth: []
-      responses:
-        '302':
-          description: Success
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/toggle_karma_free':
-    get:
-      summary: User Toggle Karma Free
-      operationId: users#toggle_karma_free
-      tags:
-        - Users
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
-      description: You must be Janitor+.
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/disable_uploads':
-    post:
-      summary: Disable User Uploads
-      operationId: users#disable_uploads
-      tags:
-        - Users
-      description: You must be Janitor+.
-      parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
-      security:
-        - basicAuth: []
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - 'staff_note[body]'
-              properties:
-                'staff_note[body]':
-                  type: string
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/users/{idOrName}/disable_karma_free':
-    post:
-      summary: User Disable Karma Free
-      operationId: users#disable_karma_free
-      tags:
-        - Users
-      description: You must be Janitor+.
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idOrNamePath'
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - 'staff_note[body]'
-              properties:
-                'staff_note[body]':
-                  type: string
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /user_reverts:
-    post:
-      summary: Revert User
-      operationId: user_reverts#create
-      tags:
-        - Users
-      security:
-        - basicAuth: []
-      description: You must be Moderator+.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - user_id
-              properties:
-                user_id:
-                  type: integer
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
         '403':
           $ref: '#/components/responses/AccessDenied'
         '404':
@@ -16969,77 +17143,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/staff/users/{id}/anonymize_confirm':
-    post:
-      summary: Anonymize User
-      operationId: staff/users#anonymize_confirm
-      tags:
-        - Staff Users
-      security:
-        - browserAuth: []
-          csrfToken: []
-      description: |
-        You must have the bd staff user flag. Cannot be used on staff.<br>
-        Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/staff/users/{id}/totp_reset':
-    post:
-      summary: Reset User TOTP
-      operationId: staff/users#totp_reset
-      tags:
-        - Staff Users
-      security:
-        - browserAuth: []
-          csrfToken: []
-      description: |
-        You must be Admin+. You must have the bd staff flag if the user is Staff+.<br>
-        Requires [browser authentication](#operations-Sessions-login) (username & password), as well as hourly password confirmations (reauthentication).
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/staff/users/{id}/update_blacklist':
-    post:
-      summary: Staff Update User Blacklist
-      operationId: staff/users#update_blacklist
-      tags:
-        - Staff Users
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - 'user[blacklisted_tags]'
-              properties:
-                'user[blacklisted_tags]':
-                  type: string
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
   '/staff/users/{user_id}/dmails.json':
     get:
       summary: Audit User DMails
@@ -17547,7 +17650,7 @@ paths:
           $ref: '#/components/responses/AccessDenied'
         '404':
           $ref: '#/components/responses/NotFound'
-  '/staff/post/posts/{id}/reowner':
+  '/staff/post/posts/{id}/reowner.json':
     post:
       summary: Reown Post
       operationId: staff/post/posts#reowner
@@ -18254,96 +18357,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/ExpectedError'
-  '/staff/wikis/{id}/references':
-    post:
-      summary: Create Staff Wiki Ref
-      operationId: staff/wiki_refs#create
-      tags:
-        - Staff Wiki Refs
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      description: You must be Staff+.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - 'staff_wiki_ref[related_type]'
-                - 'staff_wiki_ref[related_id]'
-              properties:
-                'staff_wiki_ref[related_type]':
-                  $ref: '#/components/schemas/StaffWikiRefRelatedType'
-                'staff_wiki_ref[related_id]':
-                  type: integer
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/staff/wikis/{wiki_id}/references/{id}':
-    delete:
-      summary: Delete Staff Wiki Ref
-      operationId: staff/wiki_refs#destroy
-      tags:
-        - Staff Wiki Refs
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-        - name: wiki_id
-          in: path
-          description: The ID of the item.
-          required: true
-          schema:
-            type: integer
-      description: You must be Staff+.
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  '/staff/wikis/{id}/references/bulk_create':
-    post:
-      summary: Bulk Create Staff Wiki Ref
-      operationId: staff/wiki_refs#bulk_create
-      tags:
-        - Staff Wiki Refs
-      security:
-        - basicAuth: []
-      parameters:
-        - $ref: '#/components/parameters/idPath'
-      description: You must be Staff+.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              required:
-                - urls
-              properties:
-                urls:
-                  type: string
-                  description: 'Space separated, parses `users/<id>`, `artists/<id>`, `staff/wiki/<id>`'
-      responses:
-        '302':
-          description: |
-            Redirect
-            Success should be determined based on the html, any errors will be present in an alert.
-        '403':
-          $ref: '#/components/responses/AccessDenied'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /staff/wiki_versions.json:
     get:
       summary: Staff Wiki Versions Index
