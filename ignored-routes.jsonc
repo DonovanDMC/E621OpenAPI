@@ -25,6 +25,7 @@
   "staff/user_cleanups#show": "HTML only route",
   "static#*": "HTML only route",
   "terms_of_uses#*": "HTML only route",
+  "user_sessions#*": "HTML only route",
 
   "edit_histories#{create,destroy,update}": "Route does not exist",
   "ip_bans#{show,update}": "Route does not exist",

@@ -26,7 +26,7 @@ requestBody:
             type: string
           session[remember]:
             type: boolean
-            description: Stay logged in after the browser is closed.
+            description: Stay logged in for 14 days after the browser is closed, through the `remember_session` cookie.
 responses:
   200:
     description: Success

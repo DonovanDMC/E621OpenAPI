@@ -2,6 +2,7 @@ summary: Logout
 operationId: sessions#destroy
 tags:
   - Sessions
+description: Ends the login session on the server, so copies of its cookies stop working too.
 security:
   - csrfToken: []
 requestBody:
