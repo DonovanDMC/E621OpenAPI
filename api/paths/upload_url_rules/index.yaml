@@ -1,0 +1,49 @@
+summary: Upload URL Rules Index
+operationId: upload_url_rules#index
+tags:
+  - Upload URL Rules
+security:
+  - basicAuth: []
+parameters:
+  - $ref: "../../components/parameters/query/limit.yaml"
+  - $ref: "../../components/parameters/query/page.yaml"
+  - $ref: "../../components/parameters/query/id.yaml"
+  - name: search[order]
+    in: query
+    schema:
+      type: string
+      enum:
+        - id_asc
+        - id_desc
+        - label
+        - updated_at
+  - in: query
+    name: search[label]
+    schema:
+      type: string
+  - in: query
+    name: search[pattern]
+    schema:
+      type: string
+  - in: query
+    name: search[handling]
+    schema:
+      type: string
+      enum:
+        - recommend
+        - block
+  - in: query
+    name: search[enabled]
+    schema:
+      type: boolean
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../components/schemas/models/UploadURLRule.yml"
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"

@@ -20,7 +20,7 @@ requestBody:
             description: Mutually exclusive with direct_url.
           upload[direct_url]:
             type: string
-            description: Mutually exclusive with file.
+            description: Mutually exclusive with file. Uploads matching a `block` upload URL rule are rejected, see [`GET /upload_url_rules/check.json`](#/Upload%20URL%20Rules).
           upload[source]:
             type: string
           upload[tag_string]:

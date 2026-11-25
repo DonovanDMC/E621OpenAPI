@@ -339,6 +339,8 @@ components:
       $ref: "./components/schemas/models/Upload.yml"
     UploadKarmaEvent:
       $ref: "./components/schemas/models/UploadKarmaEvent.yml"
+    UploadURLRule:
+      $ref: "./components/schemas/models/UploadURLRule.yml"
     UploadWhitelist:
       $ref: "./components/schemas/models/UploadWhitelist.yml"
     User:
@@ -1159,6 +1161,13 @@ paths:
   /uploads/{id}.json:
     get:
       $ref: "./paths/uploads/show.yaml"
+
+  /upload_url_rules.json:
+    get:
+      $ref: "./paths/upload_url_rules/index.yaml"
+  /upload_url_rules/check.json:
+    get:
+      $ref: "./paths/upload_url_rules/check.yaml"
 
   /upload_whitelists.json:
     get:

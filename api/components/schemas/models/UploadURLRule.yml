@@ -1,0 +1,47 @@
+type: object
+required:
+  - id
+  - label
+  - pattern
+  - replacement
+  - message
+  - handling
+  - enabled
+  - creator_id
+  - updater_id
+  - created_at
+  - updated_at
+properties:
+  id:
+    type: integer
+  label:
+    type: string
+    maxLength: 100
+  pattern:
+    type: string
+    maxLength: 500
+    description: A case-insensitive Ruby regex, matched against the canonicalized URL.
+  replacement:
+    type: string
+    maxLength: 500
+    description: Used with `pattern` to build the suggested url. Empty if there is no suggestion.
+  message:
+    type: string
+    maxLength: 500
+  handling:
+    type: string
+    enum:
+      - recommend
+      - block
+  enabled:
+    type: boolean
+  creator_id:
+    type: integer
+  updater_id:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time

@@ -80,6 +80,9 @@ enum:
   - upload_whitelist_create
   - upload_whitelist_update
   - upload_whitelist_delete
+  - upload_url_rule_create
+  - upload_url_rule_update
+  - upload_url_rule_delete
   - user_avatar_clear
   - user_profile_clear
   - user_comments_hide

@@ -1,0 +1,67 @@
+summary: Check URL Against Upload URL Rules
+operationId: upload_url_rules#check
+tags:
+  - Upload URL Rules
+description: |
+  Checks a direct upload url against the enabled rules. The first matching `block` rule wins, otherwise the first matching `recommend` rule.<br>
+  Limited to 60 requests per minute.
+security:
+  - basicAuth: []
+parameters:
+  - name: url
+    in: query
+    required: true
+    schema:
+      type: string
+      maxLength: 2000
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - match
+          properties:
+            match:
+              type: boolean
+            handling:
+              type: string
+              enum:
+                - recommend
+                - block
+            label:
+              type: string
+            message:
+              type: string
+            suggested_url:
+              type: string
+              nullable: true
+            canonical_url:
+              type: string
+  403:
+    $ref: "../../components/responses/accessDenied.yaml"
+  422:
+    description: The url can't be checked, or a rule failed to evaluate
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - error
+          properties:
+            error:
+              type: string
+              enum:
+                - url_uncheckable
+                - rule_failed
+            label:
+              type: string
+              description: The rule that failed, for `rule_failed`.
+  429:
+    description: Ratelimited
+    content:
+      application/json:
+        schema:
+          "$ref": "../../components/schemas/responses/MessageErrorResponse.yml"

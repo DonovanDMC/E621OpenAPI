@@ -1134,6 +1134,89 @@ oneOf:
             type: string
           hidden:
             type: boolean
+  - title: upload_url_rule_create
+    properties:
+      action:
+        type: string
+        enum:
+          - upload_url_rule_create
+      values:
+        type: object
+        properties:
+          label:
+            type: string
+          pattern:
+            type: string
+          replacement:
+            type: string
+          handling:
+            type: string
+            enum:
+              - recommend
+              - block
+          message:
+            type: string
+          enabled:
+            type: boolean
+  - title: upload_url_rule_update
+    properties:
+      action:
+        type: string
+        enum:
+          - upload_url_rule_update
+      values:
+        type: object
+        properties:
+          label:
+            type: string
+          pattern:
+            type: string
+          replacement:
+            type: string
+          handling:
+            type: string
+            enum:
+              - recommend
+              - block
+          message:
+            type: string
+          enabled:
+            type: boolean
+          old_label:
+            type: string
+          old_pattern:
+            type: string
+          old_replacement:
+            type: string
+          old_handling:
+            type: string
+            enum:
+              - recommend
+              - block
+  - title: upload_url_rule_delete
+    properties:
+      action:
+        type: string
+        enum:
+          - upload_url_rule_delete
+      values:
+        type: object
+        properties:
+          label:
+            type: string
+          pattern:
+            type: string
+          replacement:
+            type: string
+          handling:
+            type: string
+            enum:
+              - recommend
+              - block
+          message:
+            type: string
+          enabled:
+            type: boolean
   - title: user_avatar_clear
     properties:
       action:
