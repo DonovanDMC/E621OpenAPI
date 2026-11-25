@@ -25,10 +25,12 @@ parameters:
       type: string
   - in: query
     name: search[antecedent_name]
+    description: Exact names, case-insensitive. Separate multiple names with spaces or commas.
     schema:
       type: string
   - in: query
     name: search[consequent_name]
+    description: Exact names, case-insensitive. Separate multiple names with spaces or commas.
     schema:
       type: string
   - in: query
