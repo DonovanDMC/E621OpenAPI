@@ -49,7 +49,7 @@ Posts are sorted newest first by default, the same as `order:id_desc`. Almost al
 | `order:change` | Highest change sequence first |
 | `order:mpixels` | Largest resolution first |
 | `order:filesize` | Largest file size first |
-| `order:duration` | Longest videos first |
+| `order:duration` | Longest videos and animations first |
 | `order:landscape` | Wide and short first |
 | `order:portrait` | Tall and thin first |
 | `order:tagcount` | Most tags first |
@@ -125,7 +125,7 @@ All of these support [ranges](#range-syntax).
 | `mpixels:1` | Posts with 1 megapixel |
 | `ratio:4:3` | Posts with a 4:3 aspect ratio. Decimals work too, rounded to 2 digits, ex: `ratio:1.33`. |
 | `filesize:200KB` | Posts around 200 KB (within 5%). Accepts `KB`, `MB`, or bytes. |
-| `duration:>120` | Videos longer than 120 seconds |
+| `duration:>120` | Videos and animations longer than 120 seconds. Animated GIFs, PNGs and WebPs have a duration too. |
 
 ### Status
 
