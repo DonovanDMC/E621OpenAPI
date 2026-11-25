@@ -2,6 +2,7 @@ summary: Create Favorite
 operationId: favorites#create
 tags:
 - Favorites
+description: Creates and deletes share a limit of 60 per minute. They don't count towards the general write limit.
 security:
 - basicAuth: []
 requestBody:
@@ -35,3 +36,9 @@ responses:
     "$ref": "../../components/responses/notFound.yaml"
   422:
     "$ref": "../../components/responses/expectedError.yaml"
+  429:
+    description: Ratelimited
+    content:
+      application/json:
+        schema:
+          "$ref": "../../components/schemas/responses/MessageErrorResponse.yml"
