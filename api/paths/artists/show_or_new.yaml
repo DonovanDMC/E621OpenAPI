@@ -1,0 +1,39 @@
+summary: Get Artist By Name
+operationId: artists#show_or_new
+tags:
+  - Artists
+description: Like `GET /artists/{idOrName}.json`, but always looks up by name, even if it is numeric.
+parameters:
+  - name: name
+    in: query
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          allOf:
+            - $ref: "../../components/schemas/models/Artist.yml"
+            - type: object
+              required:
+                - domains
+                - urls
+              properties:
+                domains:
+                  type: array
+                  items:
+                    type: array
+                    example: [["e621.net", 1]]
+                    items:
+                      oneOf:
+                        - type: string
+                        - type: integer
+                urls:
+                  type: array
+                  items:
+                    $ref: "../../components/schemas/models/ArtistURL.yml"
+  404:
+    $ref: "../../components/responses/notFound.yaml"

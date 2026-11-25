@@ -438,6 +438,9 @@ paths:
       $ref: "./paths/artists/index.yaml"
     post:
       $ref: "./paths/artists/create.yaml"
+  /artists/show_or_new.json:
+    get:
+      $ref: "./paths/artists/show_or_new.yaml"
   /artists/{idOrName}.json:
     get:
       $ref: "./paths/artists/show.yaml"
