@@ -67,7 +67,7 @@ export async function callE621({ env, operation, pathParams = {}, queryParams = 
     try {
         json = text ? JSON.parse(text) : null;
     } catch {
-        // Non-JSON response (rare on e621, e.g. custom_style.css) — surface as raw text.
+        // Non-JSON response (rare on e621) — surface as raw text.
     }
 
     return { json, status: response.status };

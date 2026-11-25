@@ -36,7 +36,7 @@ components:
     basicAuth:
       type: http
       scheme: basic
-      description: "Your username and API key. See [Authentication](https://e621.wiki/authentication/)."
+      description: "Your username and API key. Only accepted on `.json`, `.xml`, and `.atom` requests, never on html pages. See [Authentication](https://e621.wiki/authentication/)."
     browserAuth:
       type: apiKey
       in: cookie
@@ -112,8 +112,6 @@ components:
       $ref: "./components/schemas/enums/PostReplacementStatus.yml"
     Rating:
       $ref: "./components/schemas/enums/Rating.yml"
-    StaffWikiRefRelatedType:
-      $ref: "./components/schemas/enums/StaffWikiRefRelatedType.yml"
     TagCategory:
       $ref: "./components/schemas/enums/TagCategory.yml"
     TagCategoryNames:
@@ -1198,9 +1196,6 @@ paths:
   /users/upload_tags.json:
     get:
       $ref: "./paths/users/upload_tags.yaml"
-  /users/custom_style.css:
-    get:
-      $ref: "./paths/users/custom_style.yaml"
   /users/{idOrName}.json:
     get:
       $ref: "./paths/users/show.yaml"
@@ -1215,22 +1210,6 @@ paths:
   /users/{idOrName}/fix_counts.json:
     get:
       $ref: "./paths/users/fix_counts.yaml"
-  /users/{idOrName}/toggle_uploads:
-    get:
-      $ref: "./paths/users/toggle_uploads.yaml"
-  /users/{idOrName}/toggle_karma_free:
-    get:
-      $ref: "./paths/users/toggle_karma_free.yaml"
-  /users/{idOrName}/disable_uploads:
-    post:
-      $ref: "./paths/users/disable_uploads.yaml"
-  /users/{idOrName}/disable_karma_free:
-    post:
-      $ref: "./paths/users/disable_karma_free.yaml"
-
-  /user_reverts:
-    post:
-      $ref: "./paths/user_reverts/create.yaml"
 
   /maintenance/user/count_fixes.json:
     post:
@@ -1301,15 +1280,6 @@ paths:
   /staff/users/{id}.json:
     patch:
       $ref: "./paths/staff/users/update.yaml"
-  /staff/users/{id}/anonymize_confirm:
-    post:
-      $ref: "./paths/staff/users/anonymize_confirm.yaml"
-  /staff/users/{id}/totp_reset:
-    post:
-      $ref: "./paths/staff/users/totp_reset.yaml"
-  /staff/users/{id}/update_blacklist:
-    post:
-      $ref: "./paths/staff/users/update_blacklist.yaml"
 
   /staff/users/{user_id}/dmails.json:
     get:
@@ -1431,15 +1401,6 @@ paths:
   /staff/wikis/{id}/revert.json:
     put:
       $ref: "./paths/staff/wikis/revert.yaml"
-  /staff/wikis/{id}/references:
-    post:
-      $ref: "./paths/staff/wiki_refs/create.yaml"
-  /staff/wikis/{wiki_id}/references/{id}:
-    delete:
-      $ref: "./paths/staff/wiki_refs/destroy.yaml"
-  /staff/wikis/{id}/references/bulk_create:
-    post:
-      $ref: "./paths/staff/wiki_refs/bulk_create.yaml"
 
   /staff/wiki_versions.json:
     get:
