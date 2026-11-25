@@ -2,6 +2,7 @@ summary: List Bulk Related Tags
 operationId: related_tags#bulk
 tags:
 - Related Tags
+description: Limited to 300 looked up tags per minute, so each tag in `query` counts once.
 security:
 - basicAuth: []
 requestBody:
@@ -28,3 +29,9 @@ responses:
               category_id: 0
   403:
     "$ref": "../../components/responses/accessDenied.yaml"
+  429:
+    description: Ratelimited
+    content:
+      application/json:
+        schema:
+          "$ref": "../../components/schemas/responses/MessageErrorResponse.yml"
