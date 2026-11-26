@@ -9,3 +9,15 @@ enum:
   - 6 # invalid
   - 7 # meta
   - 8 # lore
+x-enum-varnames:
+  [
+    general,
+    artist,
+    contributor,
+    copyright,
+    character,
+    species,
+    invalid,
+    meta,
+    lore,
+  ]
