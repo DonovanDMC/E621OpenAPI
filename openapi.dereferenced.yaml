@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 9b979e9
+  version: 5a5ebab
   x-e621ng-commit: f11125f4903abb684bfe625501a236b5d1f15f80
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f11125f4903abb684bfe625501a236b5d1f15f80...master
@@ -428,6 +428,16 @@ components:
         - 6
         - 7
         - 8
+      x-enum-varnames:
+        - general
+        - artist
+        - contributor
+        - copyright
+        - character
+        - species
+        - invalid
+        - meta
+        - lore
     TagCategoryNames:
       type: string
       enum:
@@ -7712,6 +7722,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
     SavedSearch:
       type: object
       required:
@@ -8411,6 +8431,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         is_locked:
           type: boolean
         created_at:
@@ -8501,6 +8531,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         category_cache:
           type: integer
           enum:
@@ -8513,6 +8553,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         tag:
           type: object
           required:
@@ -8550,6 +8600,16 @@ components:
                 - 6
                 - 7
                 - 8
+              x-enum-varnames:
+                - general
+                - artist
+                - contributor
+                - copyright
+                - character
+                - species
+                - invalid
+                - meta
+                - lore
             is_locked:
               type: boolean
             created_at:
@@ -8638,6 +8698,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         post_count:
           type: integer
         alias:
@@ -8676,6 +8746,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
     TagTypeVersion:
       type: object
       required:
@@ -8708,6 +8788,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         new_type:
           type: integer
           enum:
@@ -8720,6 +8810,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         is_locked:
           type: boolean
         tag_id:
@@ -8747,6 +8847,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         count:
           type: integer
     Takedown:
@@ -9536,6 +9646,16 @@ components:
                 - 6
                 - 7
                 - 8
+              x-enum-varnames:
+                - general
+                - artist
+                - contributor
+                - copyright
+                - character
+                - species
+                - invalid
+                - meta
+                - lore
             is_locked:
               type: boolean
             created_at:
@@ -9832,6 +9952,16 @@ components:
             - 6
             - 7
             - 8
+          x-enum-varnames:
+            - general
+            - artist
+            - contributor
+            - copyright
+            - character
+            - species
+            - invalid
+            - meta
+            - lore
         featured_posts:
           type: array
           items:
@@ -51073,6 +51203,16 @@ paths:
               - 6
               - 7
               - 8
+            x-enum-varnames:
+              - general
+              - artist
+              - contributor
+              - copyright
+              - character
+              - species
+              - invalid
+              - meta
+              - lore
         - in: query
           name: 'search[hide_empty]'
           schema:
@@ -51129,6 +51269,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
                     is_locked:
                       type: boolean
                     created_at:
@@ -51194,6 +51344,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   is_locked:
                     type: boolean
                   created_at:
@@ -51251,6 +51411,16 @@ paths:
                     - 6
                     - 7
                     - 8
+                  x-enum-varnames:
+                    - general
+                    - artist
+                    - contributor
+                    - copyright
+                    - character
+                    - species
+                    - invalid
+                    - meta
+                    - lore
                 'tag[is_locked]':
                   description: Must be Admin+.
                   type: boolean
@@ -51401,6 +51571,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   category_cache:
                     type: integer
                     enum:
@@ -51413,6 +51593,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   tag:
                     type: object
                     required:
@@ -51450,6 +51640,16 @@ paths:
                           - 6
                           - 7
                           - 8
+                        x-enum-varnames:
+                          - general
+                          - artist
+                          - contributor
+                          - copyright
+                          - character
+                          - species
+                          - invalid
+                          - meta
+                          - lore
                       is_locked:
                         type: boolean
                       created_at:
@@ -51586,6 +51786,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
                     post_count:
                       type: integer
                     alias:
@@ -51690,6 +51900,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
                     new_type:
                       type: integer
                       enum:
@@ -51702,6 +51922,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
                     is_locked:
                       type: boolean
                     tag_id:
@@ -51792,6 +52022,16 @@ paths:
               - 6
               - 7
               - 8
+            x-enum-varnames:
+              - general
+              - artist
+              - contributor
+              - copyright
+              - character
+              - species
+              - invalid
+              - meta
+              - lore
         - in: query
           name: 'search[consequent_tag_category]'
           schema:
@@ -51806,6 +52046,16 @@ paths:
               - 6
               - 7
               - 8
+            x-enum-varnames:
+              - general
+              - artist
+              - contributor
+              - copyright
+              - character
+              - species
+              - invalid
+              - meta
+              - lore
         - in: query
           name: 'search[creator_id]'
           schema:
@@ -52375,6 +52625,16 @@ paths:
               - 6
               - 7
               - 8
+            x-enum-varnames:
+              - general
+              - artist
+              - contributor
+              - copyright
+              - character
+              - species
+              - invalid
+              - meta
+              - lore
         - in: query
           name: 'search[consequent_tag_category]'
           schema:
@@ -52389,6 +52649,16 @@ paths:
               - 6
               - 7
               - 8
+            x-enum-varnames:
+              - general
+              - artist
+              - contributor
+              - copyright
+              - character
+              - species
+              - invalid
+              - meta
+              - lore
         - in: query
           name: 'search[creator_id]'
           schema:
@@ -52920,6 +53190,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
         '403':
           description: Access Denied
           content:
@@ -53001,6 +53281,16 @@ paths:
                             - 6
                             - 7
                             - 8
+                          x-enum-varnames:
+                            - general
+                            - artist
+                            - contributor
+                            - copyright
+                            - character
+                            - species
+                            - invalid
+                            - meta
+                            - lore
                   skipped:
                     type: array
                     items:
@@ -53127,6 +53417,16 @@ paths:
                     - 6
                     - 7
                     - 8
+                  x-enum-varnames:
+                    - general
+                    - artist
+                    - contributor
+                    - copyright
+                    - character
+                    - species
+                    - invalid
+                    - meta
+                    - lore
       responses:
         '200':
           description: Success
@@ -53153,6 +53453,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   count:
                     type: integer
                 example:
@@ -53280,6 +53590,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
   /search_trends/track.json:
     get:
       summary: Search Trends Track
@@ -58377,6 +58697,16 @@ paths:
                             - 6
                             - 7
                             - 8
+                          x-enum-varnames:
+                            - general
+                            - artist
+                            - contributor
+                            - copyright
+                            - character
+                            - species
+                            - invalid
+                            - meta
+                            - lore
                         count:
                           type: integer
                   recent_tags:
@@ -58402,6 +58732,16 @@ paths:
                             - 6
                             - 7
                             - 8
+                          x-enum-varnames:
+                            - general
+                            - artist
+                            - contributor
+                            - copyright
+                            - character
+                            - species
+                            - invalid
+                            - meta
+                            - lore
                         count:
                           type: integer
         '403':
@@ -60713,6 +61053,16 @@ paths:
                         - 6
                         - 7
                         - 8
+                      x-enum-varnames:
+                        - general
+                        - artist
+                        - contributor
+                        - copyright
+                        - character
+                        - species
+                        - invalid
+                        - meta
+                        - lore
                     featured_posts:
                       type: array
                       items:
@@ -60817,6 +61167,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   featured_posts:
                     type: array
                     items:
@@ -60932,6 +61292,16 @@ paths:
                       - 6
                       - 7
                       - 8
+                    x-enum-varnames:
+                      - general
+                      - artist
+                      - contributor
+                      - copyright
+                      - character
+                      - species
+                      - invalid
+                      - meta
+                      - lore
                   featured_posts:
                     type: array
                     items:
@@ -66226,6 +66596,16 @@ paths:
                                 - 6
                                 - 7
                                 - 8
+                              x-enum-varnames:
+                                - general
+                                - artist
+                                - contributor
+                                - copyright
+                                - character
+                                - species
+                                - invalid
+                                - meta
+                                - lore
                             is_locked:
                               type: boolean
                             created_at:

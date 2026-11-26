@@ -14,7 +14,7 @@ info:
   contact:
     name: Donovan_DMC
     url: 'https://e621.net/forum_topics/46279'
-  version: 9b979e9
+  version: 5a5ebab
   x-e621ng-commit: f11125f4903abb684bfe625501a236b5d1f15f80
   x-e621ng-master-behind-by: 0
   x-e621ng-master-compare-url: https://github.com/e621ng/e621ng/compare/f11125f4903abb684bfe625501a236b5d1f15f80...master
@@ -428,6 +428,16 @@ components:
         - 6
         - 7
         - 8
+      x-enum-varnames:
+        - general
+        - artist
+        - contributor
+        - copyright
+        - character
+        - species
+        - invalid
+        - meta
+        - lore
     TagCategoryNames:
       type: string
       enum:
