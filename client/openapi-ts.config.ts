@@ -10,8 +10,13 @@ export default defineConfig({
         },
     },
     plugins: [
-        // keep schema type names matching the spec (e.g. `APIKey`, not `ApiKey`)
-        { name: "@hey-api/typescript", definitions: { case: "preserve" } },
+        {
+            name: "@hey-api/typescript",
+            // keep schema type names matching the spec (e.g. `APIKey`, not `ApiKey`)
+            definitions: { case: "preserve" },
+            // this would apply to all enums
+            // enums: { mode: "typescript", case: "SCREAMING_SNAKE_CASE" }
+        },
         "@hey-api/sdk",
         "@hey-api/schemas",
         "@hey-api/client-fetch",

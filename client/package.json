@@ -20,7 +20,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "generate": "openapi-ts && node scripts/replace-types.mjs && node scripts/write-spec.mjs",
+    "generate": "openapi-ts && node scripts/replace-types.mjs && node scripts/write-enums.mjs && node scripts/write-spec.mjs",
     "build": "npm run generate && tsc",
     "prepublishOnly": "npm run build && node scripts/stamp-readme.mjs",
     "postpublish": "git checkout -- README.md"
@@ -44,6 +44,7 @@
   "homepage": "https://e621.wiki",
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.97.3",
+    "js-yaml": "^4.3.2",
     "typescript": "^5.9.3"
   }
 }
